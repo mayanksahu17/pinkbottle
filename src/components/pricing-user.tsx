@@ -71,7 +71,7 @@ export async function PricingUser() {
               </ul>
             </p>
             <Link href="https://buy.stripe.com/test_6oEeXQboMc8X8tG6oo">
-            <button className={styles.getStartedButtonother} onClick={handleCheckout}>Get started</button>
+            <button className={styles.getStartedButtonother}>Get started</button>
             </Link>
           </div>
           <div className="border border-gray-200 rounded-lg p-6">

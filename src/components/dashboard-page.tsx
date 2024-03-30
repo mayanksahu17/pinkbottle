@@ -1,12 +1,13 @@
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { AvatarImage, AvatarFallback, Avatar } from "@/components/ui/avatar"
-import { UserButton, auth, currentUser } from "@clerk/nextjs";
+import { UserButton, auth, clerkClient, currentUser } from "@clerk/nextjs";
 import styles from './Button.module.css';
 
 export async function DashboardPage() {
     const { userId } = auth();
     const user = await currentUser();
+    const sessionId = 'sess_2eHiEwjKEaQzwRroOGamGMt2i9C';
 
     if(!userId || !user){
         return(
