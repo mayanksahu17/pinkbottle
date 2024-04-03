@@ -40,25 +40,26 @@
   }
 
 /* scroller */
-@keyframes scrollLeftToRight {
-  from {
-    transform: translateX(-50%);
+@keyframes scroll-left {
+  0% {
+    top: 0;
+    left: 0;
   }
-  to {
-    transform: translateX(0%);
+  30% {
+    top: 50px;
+  }
+  68%,
+  72% {
+    left: 50px;
+  }
+  100% {
+    top: 100px;
+    left: 100%;
   }
 }
 
-.scrollerContainer {
-  display: flex;
-  justify-content: center;
-  overflow: hidden;
-}
-
-.animateInfiniteScroll {
-  display: flex;
-  width: auto; /* Adjust based on your duplication */
-  animation: scrollLeftToRight 8s linear infinite;
+.animate-scroll-left {
+  animation: scroll-left 20s linear infinite;
 }
 
 /* button */

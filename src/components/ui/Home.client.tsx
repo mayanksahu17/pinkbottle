@@ -1,53 +1,157 @@
+"use client"
 import { Button } from "@/components/ui/button"
-import { auth } from "@clerk/nextjs"
+import React, { SVGProps, useState } from 'react';
+import { auth, useUser } from "@clerk/nextjs"
 import { UserButton } from "@clerk/nextjs/app-beta"
 import Link from "next/link"
-import { deprecate } from "util"
-import styles from './Button.module.css';
+import styles from '../Button.module.css';
 
-export async function UserReviewV2() {
-  const { userId } = auth()
+const HomePage = () => {
+    const { isSignedIn, user } = useUser();
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  return (
-    <div key="1" className="bg-white text-gray-900">
-      <header className="flex items-center justify-between p-4 border-b border-gray-200">
+  const toggleMenu = () => {
+    setIsMenuOpen(prev => !prev);
+  };
 
+  const testimonials = [
+    {
+      imgSrc: '/fb1.png',
+      caption: 'A quick highlight from testimonial 1...',
+    },
+    {
+      imgSrc: '/fb1.png',
+      caption: 'A quick highlight from testimonial 2...',
+    },
+    {
+      imgSrc: '/fb1.png',
+      caption: 'A quick highlight from testimonial 3...',
+    },
+    {
+        imgSrc: '/fb1.png',
+        caption: 'A quick highlight from testimonial 3...',
+      },
+
+    // Add more testimonials as needed
+  ];
+  
+  
+    return (
+        <div className="min-h-screen text-black" style={{ backgroundColor: '#FAF6F6' }}>
+        <header className="flex items-center justify-between p-4 border-b border-gray-200">
+      <Link href="/">
         <img
-          alt="Scale.jobs Logo"
-          className="h-10"
+          alt="Your Logo"
+          className="cursor-pointer h-8 md:h-10"
           src="/Clarksonlogo.png"
-          style={{ aspectRatio: "120/40", objectFit: "cover" }}
         />
-        <nav className="flex gap-4 items-center">
-          <a className="text-sm font-medium text-gray-500 hover:text-green-600" href="/about">
-            About Us
-          </a>
-          <a className="text-sm font-medium text-gray-500 hover:text-green-600" href="#">
-            How it works
-          </a>
-          <a className="text-sm font-medium text-gray-500 hover:text-green-600" href="/pricing">
-            Pricing
-          </a>
-          <a href="/chatBox" className="text-sm bg-green-600 text-white py-2 px-4 rounded-full hover:bg-green-700">
-            Try the Copilot Free
-          </a>
-        </nav>
+      </Link>
+
+      {/* Hamburger Icon for Mobile */}
+      <button className="md:hidden text-gray-600 focus:outline-none" onClick={toggleMenu}>
+        <svg
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          className="w-6 h-6">
+          {isMenuOpen ? (
+          
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M6 18L18 6M6 6l12 12"
+            />
+          ) : (
+        
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M4 6h16M4 12h16m-7 6h7"
+            />
+          )}
+        </svg>
+      </button>
+
+      {/* Mobile Menu Items */}
+      <div className={`fixed inset-x-0 top-16 z-10 bg-white p-4 transform transition-transform duration-300 ease-in-out ${isMenuOpen ? 'block' : 'hidden'} md:hidden`}>
+      <nav className="flex flex-col space-y-2 bg-white p-4">
+  <Link href="/about" passHref>
+    <span className="text-sm font-medium text-gray-700 hover:text-green-500 cursor-pointer block py-2">About Us</span>
+  </Link>
+  <Link href="/works" passHref>
+    <span className="text-sm font-medium text-gray-700 hover:text-green-500 cursor-pointer block py-2">How it works</span>
+  </Link>
+  <Link href="/pricing" passHref>
+    <span className="text-sm font-medium text-gray-700 hover:text-green-500 cursor-pointer block py-2">Pricing</span>
+  </Link>
+  <Link href="/trial" passHref>
+    <span className="text-sm font-medium text-gray-700 hover:text-green-500 cursor-pointer block py-2">Try the Copilot Free</span>
+  </Link>
+  {user ? (
+    <div className="flex flex-col space-y-2">
+      <Link href="/dashboard" passHref>
+        <span className="text-sm font-medium text-gray-700 hover:text-green-500 cursor-pointer block py-2">Dashboard</span>
+      </Link>
+      {/* Assumed 'UserButton' is a styled component you have */}
+      <div className="pt-2">
+        <UserButton afterSignOutUrl="/" />
+      </div>
+    </div>
+  ) : (
+    <div className="flex flex-col space-y-2">
+      <Link href="/sign-in" passHref>
+        <span className="text-sm font-medium text-gray-700 hover:text-green-500 cursor-pointer block py-2">Login</span>
+      </Link>
+      <Link href="/sign-up" passHref>
+        <span className="text-sm font-medium text-gray-700 hover:text-green-500 cursor-pointer block py-2">Sign Up</span>
+      </Link>
+    </div>
+  )}
+</nav>
+
+
+      </div>
+
+      {/* Desktop Menu and Auth Links */}
+      <div className="hidden md:flex md:items-center md:justify-between md:flex-grow">
+        {/* Desktop Menu Links */}
+        <nav className="hidden md:flex md:items-center md:justify-center md:flex-grow">
+  <Link href="/about" passHref>
+    <span className="text-sm font-medium text-gray-500 hover:text-green-600 cursor-pointer mx-2">About Us</span>
+  </Link>
+  <Link href="/how-it-works" passHref>
+    <span className="text-sm font-medium text-gray-500 hover:text-green-600 cursor-pointer mx-2">How it works</span>
+  </Link>
+  <Link href="/pricing" passHref>
+    <span className="text-sm font-medium text-gray-500 hover:text-green-600 cursor-pointer mx-2">Pricing</span>
+  </Link>
+  <Link href="/trial" passHref>
+    <span className="text-sm bg-green-600 text-white py-2 px-4 rounded-full hover:bg-green-700 cursor-pointer mx-2">Try the Copilot Free</span>
+  </Link>
+</nav>
+        {/* Desktop Auth Links */}
+        {/* ... */}
         <div>
-          {userId ? (
+          {user ? (
             <div className="flex gap-4 items-center">
-              <Link href="/dashboard">Dashboard</Link>
+              <Link href="/dashboard" passHref>
+  <span className="text-sm font-medium text-gray-700 bg-white border border-gray-300 hover:border-green-500 rounded-md py-2 px-4 cursor-pointer shadow-sm hover:shadow transition-all duration-150 ease-in-out transform hover:-translate-y-0.5">
+    Dashboard
+  </span>
+</Link>
               <UserButton afterSignOutUrl="/" />
             </div>
           ) : (
             <div className="space-x-4">
-              <a href='/sign-in' className="text-sm">
-                Login
-              </a>
-              <a href='/sign-up' className="text-sm">Sign Up</a>
+              <Link href="/sign-in" passHref><span className="text-sm cursor-pointer">Login</span></Link>
+              <Link href="/sign-up" passHref><span className="text-sm cursor-pointer">Sign Up</span></Link>
             </div>
           )}
         </div>
-      </header>
+      </div>
+    </header>
       <main>
         <section className="bg-white py-24"> {/* Increased padding for more space */}
           <div className="max-w-7xl mx-auto px-4 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center"> {/* Wider container and larger gap */}
@@ -83,24 +187,28 @@ export async function UserReviewV2() {
           </div>
         </section>
 
-    <section className="py-24 bg-[#f7f8fa]">
-      <div className="max-w-7xl mx-auto px-4">
-        <h2 className="text-center text-3xl font-bold mb-12 text-gray-800">Trusted by folks from</h2>
-        <div className={`${styles.scrollerContainer} inline-flex w-full flex-nowrap`}>
-          <ul className={`${styles.animateInfiniteScroll} flex items-center justify-center md:justify-start`}>
-  <li><img className="w-32 mx-8" src="/Clarksonlogo.png" alt="Logo"/></li>
-  <li><img className="w-32 mx-8" src="/usalogo.png" alt="Logo"/></li>
-  <li><img className="w-32 mx-8" src="/ohiologo.webp" alt="Logo"/></li>
-  <li><img className="w-32 mx-8" src="/bsc.svg" alt="Logo"/></li>
-  {/* Repeat the logos again for smooth infinite scroll */}
-  <li><img className="w-32 mx-8" src="/Clarksonlogo.png" alt="Logo"/></li>
-  <li><img className="w-32 mx-8" src="/usalogo.png" alt="Logo"/></li>
-  <li><img className="w-32 mx-8" src="/ohiologo.webp" alt="Logo"/></li>
-  <li><img className="w-32 mx-8" src="/bsc.svg" alt="Logo"/></li>
-</ul>
-      </div>
+        <div className="max-w-sm md:max-w-6xl mx-auto py-6 my-8 sm:my-0 md:pt-8">
+  <div className="text-center">
+    <h2 className="font-logo text-lg md:text-3xl mb-2">Trusted by folks from</h2>
   </div>
-</section>
+  <div className="flex justify-center md:justify-start overflow-x-auto">
+    <ul className="flex items-center space-x-4">
+      <li><img className="w-20" src="/scrlogo/msc.webp" alt="Clarkson University"/></li>
+      <li><img className="w-20" src="/scrlogo/cmu.webp" alt="Cal State"/></li>
+      <li><img className="w-24" src="/scrlogo/ic.webp" alt="Boston University"/></li>
+      <li><img className="w-16" src="/scrlogo/lyft.webp" alt="NYIT"/></li>
+      <li><img className="w-20" src="/scrlogo/nyu.webp" alt="Bridgeport University"/></li>
+      <li><img className="w-20" src="/scrlogo/su.webp" alt="Stevens Institue"/></li>
+      <li><img className="w-20" src="/scrlogo/um.webp" alt="UIL-Chicago"/></li>
+      <li><img className="w-20" src="/scrlogo/dd.webp" alt="Drexel University"/></li>
+      <li><img className="w-20" src="/scrlogo/tesla.webp" alt="Northeastern University"/></li>
+      <li><img className="w-20" src="/scrlogo/meta.webp" alt="USF"/></li>
+      <li><img className="w-20" src="/scrlogo/duke.webp" alt="Pace University"/></li>
+    </ul>
+  </div>
+</div>
+
+
 
 
         <section className="py-16">
@@ -108,14 +216,21 @@ export async function UserReviewV2() {
             <h2 className="text-3xl font-bold mb-8 text-gray-800 ">How it works</h2>
             <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
             <div className="md:col-span-7 lg:col-span-8 pr-30">
-            <div style={{ position: 'relative', paddingBottom: '65.0994575045208%', height: 0 }}>
-  <iframe 
-    src="https://www.loom.com/embed/e666d444912645a08ebaf957573682a4?sid=4eb7374d-c1f0-40b7-b6ae-880111a2d901" 
-    frameBorder="0" 
-    allowFullScreen
-    style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
-  ></iframe>
-</div>
+            <div style={{ position: 'relative', paddingBottom: '62.57242178447277%', height: 0 }}>
+            <iframe
+  src="https://www.loom.com/embed/fc7716dd8976465f8ec74778994b498e?sid=1c5f25c4-ae83-45db-b037-caa4f0533ea3"
+  frameBorder="0"
+  allowFullScreen
+  style={{
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100%'
+  }}
+></iframe>
+
+                    </div>
 </div>
       <div className="md:col-span-5 lg:col-span-4">
                 <div className="mb-4">
@@ -250,12 +365,12 @@ export async function UserReviewV2() {
             <img
               alt="Anshul Jain"
               className="w-full h-full object-cover object-center"
-              src="/placeholder.svg" // Replace with the path to the person's image
+              src="/Mark.jpeg" // Replace with the path to the person's image
             />
           </div>
-          <h3 className="text-xl font-semibold text-gray-800">Anshul Jain</h3>
-          <p className="text-gray-600">Career Strategist</p>
-          <p className="text-gray-500 mt-4">"It is personally gratifying to see my clients landing in their full time after a long hustle"</p>
+          <h3 className="text-xl font-semibold text-gray-800">Mark Benliyan</h3>
+          <p className="text-gray-600">SDE at Figma | EX - Netflix, NASA</p>
+          <p className="text-gray-500 mt-4">"It is personally gratifying to see Jobify helping landing in their full time after a long hustle"</p>
         </div>
       </div>
       {/* ... other cards ... */}
@@ -265,10 +380,24 @@ export async function UserReviewV2() {
             <img
               alt="Anshul Jain"
               className="w-full h-full object-cover object-center"
-              src="/placeholder.svg" // Replace with the path to the person's image
+              src="/Harnoor.jpeg" 
             />
           </div>
-          <h3 className="text-xl font-semibold text-gray-800">Anshul Jain</h3>
+          <h3 className="text-xl font-semibold text-gray-800">Harnoor Singh</h3>
+          <p className="text-gray-600">SDE - Microsoft | Youtuber - 1.11 M Subscriber</p>
+          <p className="text-gray-500 mt-4">"It is personally gratifying to see my clients landing in their full time after a long hustle"</p>
+        </div>
+      </div>
+      <div className="bg-white rounded-xl overflow-hidden shadow-xl hover:shadow-2xl transition-shadow duration-500 ease-in-out">
+        <div className="p-6 text-center">
+          <div className="w-28 h-28 mx-auto mb-6 bg-gradient-to-r from-green-400 to-blue-600 rounded-full overflow-hidden border-4 border-white">
+            <img
+              alt="Anshul Jain"
+              className="w-full h-full object-cover object-center"
+              src="/Sarena.jpeg" 
+            />
+          </div>
+          <h3 className="text-xl font-semibold text-gray-800">Sarena Tseng</h3>
           <p className="text-gray-600">Career Strategist</p>
           <p className="text-gray-500 mt-4">"It is personally gratifying to see my clients landing in their full time after a long hustle"</p>
         </div>
@@ -279,25 +408,11 @@ export async function UserReviewV2() {
             <img
               alt="Anshul Jain"
               className="w-full h-full object-cover object-center"
-              src="/placeholder.svg" // Replace with the path to the person's image
+              src="/Rishi.jpeg" 
             />
           </div>
-          <h3 className="text-xl font-semibold text-gray-800">Anshul Jain</h3>
-          <p className="text-gray-600">Career Strategist</p>
-          <p className="text-gray-500 mt-4">"It is personally gratifying to see my clients landing in their full time after a long hustle"</p>
-        </div>
-      </div>
-      <div className="bg-white rounded-xl overflow-hidden shadow-xl hover:shadow-2xl transition-shadow duration-500 ease-in-out">
-        <div className="p-6 text-center">
-          <div className="w-28 h-28 mx-auto mb-6 bg-gradient-to-r from-green-400 to-blue-600 rounded-full overflow-hidden border-4 border-white">
-            <img
-              alt="Anshul Jain"
-              className="w-full h-full object-cover object-center"
-              src="/placeholder.svg" // Replace with the path to the person's image
-            />
-          </div>
-          <h3 className="text-xl font-semibold text-gray-800">Anshul Jain</h3>
-          <p className="text-gray-600">Career Strategist</p>
+          <h3 className="text-xl font-semibold text-gray-800">Rishi Jain</h3>
+          <p className="text-gray-600">Founder & CEO - Digital Scholar</p>
           <p className="text-gray-500 mt-4">"It is personally gratifying to see my clients landing in their full time after a long hustle"</p>
         </div>
       </div>
@@ -316,7 +431,7 @@ export async function UserReviewV2() {
                 <div className="flex items-center">
                 <div className="w-100 h-100 bg-gray-200 overflow-hidden mr-4">
   <img
-    src="/vettingone.webp" // Replace with your image path
+    src="/vettingone.webp" 
     alt="Description for image 1"
     className=".Sprite w-full h-full"
   />
@@ -330,7 +445,7 @@ export async function UserReviewV2() {
                 <div className="flex items-center">
                 <div className="w-100 h-100 bg-gray-200 overflow-hidden mr-4">
   <img
-    src="/vettingtwo.webp" // Replace with your image path
+    src="/vettingtwo.webp" 
     alt="Description for image 1"
     className=".Sprite w-full h-full"
   />
@@ -344,7 +459,7 @@ export async function UserReviewV2() {
                 <div className="flex items-center">
                 <div className="w-100 h-100 bg-gray-200 overflow-hidden mr-4">
   <img
-    src="/vettingthree.webp" // Replace with your image path
+    src="/vettingthree.webp" 
     alt="Description for image 1"
     className=".Sprite w-full h-full"
   />
@@ -389,28 +504,27 @@ export async function UserReviewV2() {
         </section>
 
         <section className="bg-white py-16">
-  <div className="max-w-6xl mx-auto px-4">
-    <h2 className="text-3xl font-bold mb-8 text-center">We Bring Real Impact 🫶</h2>
-    <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-16">
-      {/* Example testimonial card */}
-      {Array.from({ length: 4 }).map((_, index) => (
-        <div className="group">
-          <div className="text-center mb-4">
-            <figure className="relative">
-              <img
-                src={`/testimonial${index + 1}.jpeg`}
-                alt={`Testimonial ${index + 1}`}
-                className="rounded-lg shadow-lg transition-transform duration-300 hover:scale-105"
-                style={{ aspectRatio: "250/400", objectFit: "cover" }}
-              />
-              <figcaption className="mt-2 text-sm">"A quick highlight from the testimonial..."</figcaption>
-            </figure>
-          </div>
+      <div className="max-w-6xl mx-auto px-4">
+        <h2 className="text-3xl font-bold mb-8 text-center">We Bring Real Impact 🫶</h2>
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-16">
+          {testimonials.map((testimonial, index) => (
+            <div className="group" key={index}>
+              <div className="text-center mb-4">
+                <figure className="relative">
+                  <img
+                    src={testimonial.imgSrc}
+                    alt={`Testimonial ${index + 1}`}
+                    className="rounded-lg shadow-lg transition-transform duration-300 hover:scale-105"
+                    style={{ aspectRatio: "250/400", objectFit: "cover" }}
+                  />
+                  <figcaption className="mt-2 text-sm">{testimonial.caption}</figcaption>
+                </figure>
+              </div>
+            </div>
+          ))}
         </div>
-      ))}
-    </div>
-  </div>
-</section>
+      </div>
+    </section>
 
         <section className="py-16 bg-white">
           <div className="max-w-4xl mx-auto px-4">
@@ -470,16 +584,19 @@ export async function UserReviewV2() {
               <div className="text-center">
               <img
   alt="Investor 1"
-  src="/wing2.jpeg"
+  src="/Mark.jpeg"
   className="w-64 h-64 md:w-64 md:h-64 rounded-full inline-block"
   style={{ border: '3px solid white', boxShadow: '0 4px 10px rgba(0,0,0,0.1)' }}
 />
 
-                <h3 className="text-lg font-semibold mt-4">Prithesh Jagani (Yudi J)</h3>
+                <h3 className="text-lg font-semibold mt-4">Mark Benliyan | Software Engineer</h3>
                 <div className="flex justify-center space-x-2 mt-2">
-                  <a href="#" className="text-blue-600">LinkedIn</a>
-                  <a href="#" className="text-pink-500">Instagram</a>
-                  <a href="#" className="text-red-600">YouTube</a>
+                <a className="text-gray-400 hover:text-gray-500" href="#">
+                  <LinkedinIcon className="h-6 w-6" />
+                </a>
+                <a className="text-gray-400 hover:text-gray-500" href="#">
+                  <InstagramIcon className="h-6 w-6" />
+                </a>
                 </div>
               </div>
               
@@ -487,16 +604,19 @@ export async function UserReviewV2() {
               <div className="text-center">
                 <img
                   alt="Investor 1"
-                  src="/wing2.jpeg"
+                  src="/Rishi.jpeg"
                   className="w-64 h-64 md:w-64 md:h-64 rounded-full inline-block"
                   style={{ border: '3px solid white', boxShadow: '0 4px 10px rgba(0,0,0,0.1)' }}
                 />
-                <h3 className="text-lg font-semibold mt-4">Soundarya Balasubramani</h3>
+                <h3 className="text-lg font-semibold mt-4">Rishi Jain | Founder (Digital Scholar)</h3>
                 <div className="flex justify-center space-x-2 mt-2">
-  <a href="#" className="text-pink-500 text-2xl">📸</a>
-  <a href="#" className="text-blue-600 text-2xl">💼</a> 
-  <a href="#" className="text-red-600 text-2xl">▶️</a>
-</div>
+                <a className="text-gray-400 hover:text-gray-500" href="#">
+                  <LinkedinIcon className="h-6 w-6" />
+                </a>
+                <a className="text-gray-400 hover:text-gray-500" href="#">
+                  <InstagramIcon className="h-6 w-6" />
+                </a>
+                </div>
 
               </div>
             </div>
@@ -543,49 +663,133 @@ export async function UserReviewV2() {
 
 
       </main>
-     <footer className="custom-footer-bg text-black-400 py-12">
-  <div className="max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-12 text-center md:text-left">
-    <div>
-      <img
-        alt="Scale.jobs Logo"
-        className="mx-auto md:mx-0 h-12 mb-4"
-        src="/Clarksonlogo.png"
-        style={{ aspectRatio: "120/40", objectFit: "contain" }}
-      />
-      <p className="text-sm">Made with ❤️ by Anshul. We are hiring!</p>
-    </div>
-    <div className="flex flex-col md:flex-row justify-around">
-      <div>
-        <h3 className="text-white font-semibold mb-4">Company</h3>
-        <ul className="space-y-2">
-          <li><a className="hover:text-white" href="#">About Us</a></li>
-          <li><a className="hover:text-white" href="#">Blog</a></li>
-          <li><a className="hover:text-white" href="#">Jobs</a></li>
-          <li><a className="hover:text-white" href="#">Press</a></li>
-        </ul>
-      </div>
-      <div>
-        <h3 className="text-white font-semibold mb-4">Resources</h3>
-        <ul className="space-y-2">
-          <li><a className="hover:text-white" href="#">Help Center</a></li>
-          <li><a className="hover:text-white" href="#">Privacy Policy</a></li>
-          <li><a className="hover:text-white" href="#">Terms</a></li>
-        </ul>
-      </div>
-    </div>
-    <div>
-      <h3 className="text-white font-semibold mb-4">Follow Us</h3>
-      <div className="flex justify-center md:justify-start gap-4">
-        {/* Replace with actual SVG icons */}
-        <a href="#" className="hover:text-white">FB</a>
-        <a href="#" className="hover:text-white">TW</a>
-        <a href="#" className="hover:text-white">LI</a>
-      </div>
-    </div>
-  </div>
-</footer>
+      <footer className="bg-[#12083b]">
+        <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between">
+            <div>
+              <p className="text-sm text-white">
+                Made with <HeartIcon className="text-white inline" /> by Anshul Jain{""}
+              </p>
+            </div>
+            <div className="grid grid-cols-2 gap-8">
+              <div>
+                <h3 className="text-sm font-semibold text-white uppercase tracking-wider">Company</h3>
+                <ul className="mt-4 space-y-4">
+                  <li>
+                    <a className="text-base text-white hover:text-gray-900" href="#">
+                      Pricing
+                    </a>
+                  </li>
+                  <li>
+                    <a className="text-base text-white hover:text-gray-900" href="#">
+                      Wall of Love
+                    </a>
+                  </li>
+                  <li>
+                    <a className="text-base text-white hover:text-gray-900" href="#">
+                      Join as an Affiliate
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              <div>
+                <h3 className="text-sm font-semibold text-white uppercase tracking-wider">Resources</h3>
+                <ul className="mt-4 space-y-4">
+                  <li>
+                    <a className="text-base text-white hover:text-gray-900" href="#">
+                      Blog
+                    </a>
+                  </li>
+                  <li>
+                    <a className="text-base text-white hover:text-gray-900" href="#">
+                      AI copilot
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div>
+              <h3 className="text-sm font-semibold text-gray-400 uppercase tracking-wider">Follow Us On:</h3>
+              <div className="mt-4 flex space-x-6">
+                <a className="text-gray-400 hover:text-gray-500" href="#">
+                  <InstagramIcon className="h-6 w-6" />
+                </a>
+                <a className="text-gray-400 hover:text-gray-500" href="#">
+                  <LinkedinIcon className="h-6 w-6" />
+                </a>
+                {/* <a className="text-gray-400 hover:text-gray-500" href="#">
+                  <TwitterIcon className="h-6 w-6" />
+                </a> */}
+              </div>
+            </div>
+          </div>
+        </div>
+      </footer>
 
 
     </div>
   )
 }
+
+export default HomePage;
+
+function InstagramIcon(props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) {
+    return (
+      <svg
+        {...props}
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
+        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+        <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
+      </svg>
+    )
+  }
+  
+  function HeartIcon(props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) {
+    return (
+      <svg
+        {...props}
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
+      </svg>
+    )
+  }
+  
+  function LinkedinIcon(props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) {
+    return (
+      <svg
+        {...props}
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+        <rect width="4" height="12" x="2" y="9" />
+        <circle cx="4" cy="4" r="2" />
+      </svg>
+    )
+  }

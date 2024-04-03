@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button"
 import { UserButton, auth } from "@clerk/nextjs"
 import Link from "next/link"
+import { JSX, SVGProps } from "react"
 
 export function AboutUs() {
   const { userId } = auth()
@@ -213,7 +214,7 @@ export function AboutUs() {
 }
 
 
-function HeartHandshakeIcon(props) {
+function HeartHandshakeIcon(props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) {
   return (
     <svg
       {...props}
@@ -236,7 +237,7 @@ function HeartHandshakeIcon(props) {
 }
 
 
-function LinkedinIcon(props) {
+function LinkedinIcon(props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) {
   return (
     <svg
       {...props}
@@ -258,7 +259,7 @@ function LinkedinIcon(props) {
 }
 
 
-function InstagramIcon(props) {
+function InstagramIcon(props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) {
   return (
     <svg
       {...props}

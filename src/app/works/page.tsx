@@ -1,11 +1,11 @@
 import { auth, currentUser } from "@clerk/nextjs";
 import React from "react";
 
-import { ChatBox } from "@/components/chat-box";
+import Working from "@/components/ui/working.client"
 export default function Dashboard() {
     return (
       <main>
-        <ChatBox /> {/* Correct component usage */}
+        <Working />
       </main>
     );
   }

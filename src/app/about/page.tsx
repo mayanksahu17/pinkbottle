@@ -1,6 +1,6 @@
 import React from "react";
 
-import { AboutUs } from "@/components/about-us";
+import AboutUs from "@/components/ui/about.client"
 export default function AboutPage() {
     return (
       <main>

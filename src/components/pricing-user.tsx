@@ -3,6 +3,8 @@ import styles from './Button.module.css';
 import Link from "next/link";
 import { UserButton, auth } from "@clerk/nextjs";
 import { handleCheckout } from './ui/pricing';
+import { JSX, SVGProps } from "react";
+
 
 export async function PricingUser() {
   const { userId } = auth()
@@ -310,7 +312,7 @@ export async function PricingUser() {
 }
 
 
-function CircleIcon(props) {
+function CircleIcon(props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) {
   return (
     <svg
       {...props}
@@ -330,7 +332,7 @@ function CircleIcon(props) {
 }
 
 
-function MusicIcon(props) {
+function MusicIcon(props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) {
   return (
     <svg
       {...props}
@@ -352,7 +354,7 @@ function MusicIcon(props) {
 }
 
 
-function BriefcaseIcon(props) {
+function BriefcaseIcon(props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) {
   return (
     <svg
       {...props}
@@ -373,7 +375,7 @@ function BriefcaseIcon(props) {
 }
 
 
-function GraduationCapIcon(props) {
+function GraduationCapIcon(props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) {
   return (
     <svg
       {...props}
@@ -394,7 +396,7 @@ function GraduationCapIcon(props) {
 }
 
 
-function HeartIcon(props) {
+function HeartIcon(props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) {
   return (
     <svg
       {...props}
@@ -414,7 +416,7 @@ function HeartIcon(props) {
 }
 
 
-function InstagramIcon(props) {
+function InstagramIcon(props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) {
   return (
     <svg
       {...props}
@@ -436,7 +438,7 @@ function InstagramIcon(props) {
 }
 
 
-function LinkedinIcon(props) {
+function LinkedinIcon(props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) {
   return (
     <svg
       {...props}
@@ -458,7 +460,7 @@ function LinkedinIcon(props) {
 }
 
 
-function TwitterIcon(props) {
+function TwitterIcon(props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) {
   return (
     <svg
       {...props}
