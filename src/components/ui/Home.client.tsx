@@ -1,8 +1,7 @@
 "use client"
 import { Button } from "@/components/ui/button"
 import React, { SVGProps, useState } from 'react';
-import { auth, useUser } from "@clerk/nextjs"
-import { UserButton } from "@clerk/nextjs/app-beta"
+import { UserButton, auth, useUser } from "@clerk/nextjs"
 import Link from "next/link"
 import styles from '../Button.module.css';
 
