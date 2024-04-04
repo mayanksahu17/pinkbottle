@@ -32,14 +32,14 @@ const Profile = () => {
   return (
     <div className="bg-white min-h-screen">
      <header className="flex items-center justify-between p-4 border-b border-gray-200">
-        <Link href="/" passHref>
-          <img
-            alt="Scale.jobs Logo"
-            className="h-10 cursor-pointer"
-            src="/Clarksonlogo.png"
-            style={{ aspectRatio: "120/40", objectFit: "cover" }}
-          />
-        </Link>
+     <Link href="/">
+  <img
+    alt="Your Logo"
+    className="cursor-pointer h-8 md:h-10 transform scale-110 ml-4 md:ml-6" // Adjusted with margin-left classes
+    src="/Jobify.png"
+    style={{ transform: 'scale(1.9)' }} // Scaling up by 180%
+  />
+</Link>
         <nav className="flex gap-4 items-center">
           <Link href="/about" passHref><span className="text-sm font-medium text-gray-500 hover:text-green-600 cursor-pointer">About Us</span></Link>
           <Link href="/how-it-works" passHref><span className="text-sm font-medium text-gray-500 hover:text-green-600 cursor-pointer">How it works</span></Link>

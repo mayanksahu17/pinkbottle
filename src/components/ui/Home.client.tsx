@@ -1,13 +1,44 @@
 "use client"
 import { Button } from "@/components/ui/button"
-import React, { SVGProps, useState } from 'react';
+import React, { SVGProps, useEffect, useState } from 'react';
 import { UserButton, auth, useUser } from "@clerk/nextjs"
 import Link from "next/link"
 import styles from '../Button.module.css';
+import { Swiper, SwiperSlide, useSwiperSlide} from 'swiper/react';
+import 'swiper/css';
+
+type WindowSize = {
+  width: number | undefined;
+};
+
+// Custom hook to check window width
+const useWindowSize = (): WindowSize => {
+  const [windowSize, setWindowSize] = useState<WindowSize>({
+    width: undefined,
+  });
+
+  useEffect(() => {
+    function handleResize() {
+      setWindowSize({
+        width: window.innerWidth,
+      });
+    }
+
+    // Set the size initially on client-side
+    handleResize();
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  return windowSize;
+};
 
 const HomePage = () => {
     const { isSignedIn, user } = useUser();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const { width } = useWindowSize();
+    const isMobile = width !== undefined && width < 768;
 
   const toggleMenu = () => {
     setIsMenuOpen(prev => !prev);
@@ -15,36 +46,26 @@ const HomePage = () => {
 
   const testimonials = [
     {
-      imgSrc: '/fb1.png',
-      caption: 'A quick highlight from testimonial 1...',
+      imgSrc: '/Whatsappone.jpeg',
+      // caption: 'A quick highlight from testimonial 1...',
     },
     {
-      imgSrc: '/fb1.png',
-      caption: 'A quick highlight from testimonial 2...',
+      imgSrc: '/Whatsapptwo.jpeg',
+      // caption: 'A quick highlight from testimonial 2...',
     },
-    {
-      imgSrc: '/fb1.png',
-      caption: 'A quick highlight from testimonial 3...',
-    },
-    {
-        imgSrc: '/fb1.png',
-        caption: 'A quick highlight from testimonial 3...',
-      },
-
     // Add more testimonials as needed
   ];
-  
-  
     return (
         <div className="min-h-screen text-black" style={{ backgroundColor: '#FAF6F6' }}>
         <header className="flex items-center justify-between p-4 border-b border-gray-200">
-      <Link href="/">
-        <img
-          alt="Your Logo"
-          className="cursor-pointer h-8 md:h-10"
-          src="/Clarksonlogo.png"
-        />
-      </Link>
+        <Link href="/">
+  <img
+    alt="Your Logo"
+    className="cursor-pointer h-8 md:h-10 transform scale-110 ml-4 md:ml-6" // Adjusted with margin-left classes
+    src="/Jobify.png"
+    style={{ transform: 'scale(1.9)' }} // Scaling up by 180%
+  />
+</Link>
 
       {/* Hamburger Icon for Mobile */}
       <button className="md:hidden text-gray-600 focus:outline-none" onClick={toggleMenu}>
@@ -85,7 +106,7 @@ const HomePage = () => {
   <Link href="/pricing" passHref>
     <span className="text-sm font-medium text-gray-700 hover:text-green-500 cursor-pointer block py-2">Pricing</span>
   </Link>
-  <Link href="/trial" passHref>
+  <Link href="/" passHref>
     <span className="text-sm font-medium text-gray-700 hover:text-green-500 cursor-pointer block py-2">Try the Copilot Free</span>
   </Link>
   {user ? (
@@ -120,13 +141,13 @@ const HomePage = () => {
   <Link href="/about" passHref>
     <span className="text-sm font-medium text-gray-500 hover:text-green-600 cursor-pointer mx-2">About Us</span>
   </Link>
-  <Link href="/how-it-works" passHref>
+  <Link href="/works" passHref>
     <span className="text-sm font-medium text-gray-500 hover:text-green-600 cursor-pointer mx-2">How it works</span>
   </Link>
   <Link href="/pricing" passHref>
     <span className="text-sm font-medium text-gray-500 hover:text-green-600 cursor-pointer mx-2">Pricing</span>
   </Link>
-  <Link href="/trial" passHref>
+  <Link href="/" passHref>
     <span className="text-sm bg-green-600 text-white py-2 px-4 rounded-full hover:bg-green-700 cursor-pointer mx-2">Try the Copilot Free</span>
   </Link>
 </nav>
@@ -191,24 +212,22 @@ const HomePage = () => {
     <h2 className="font-logo text-lg md:text-3xl mb-2">Trusted by folks from</h2>
   </div>
   <div className="flex justify-center md:justify-start overflow-x-auto">
-    <ul className="flex items-center space-x-4">
-      <li><img className="w-20" src="/scrlogo/msc.webp" alt="Clarkson University"/></li>
-      <li><img className="w-20" src="/scrlogo/cmu.webp" alt="Cal State"/></li>
-      <li><img className="w-24" src="/scrlogo/ic.webp" alt="Boston University"/></li>
-      <li><img className="w-16" src="/scrlogo/lyft.webp" alt="NYIT"/></li>
-      <li><img className="w-20" src="/scrlogo/nyu.webp" alt="Bridgeport University"/></li>
-      <li><img className="w-20" src="/scrlogo/su.webp" alt="Stevens Institue"/></li>
-      <li><img className="w-20" src="/scrlogo/um.webp" alt="UIL-Chicago"/></li>
-      <li><img className="w-20" src="/scrlogo/dd.webp" alt="Drexel University"/></li>
-      <li><img className="w-20" src="/scrlogo/tesla.webp" alt="Northeastern University"/></li>
-      <li><img className="w-20" src="/scrlogo/meta.webp" alt="USF"/></li>
-      <li><img className="w-20" src="/scrlogo/duke.webp" alt="Pace University"/></li>
+    <ul className="flex items-center space-x-4 md:space-x-6 justify-center">
+      {/* Increase the base size for better visibility on mobile */}
+      <li><img className="w-48 md:w-48 lg:w-48" src="CalState.jpeg" alt="Cal State"/></li>
+      <li><img className="w-48 md:w-48 lg:w-48" src="BostonUniversity.gif" alt="Boston University"/></li>
+      <li><img className="w-48 md:w-48 lg:w-48" src="RIT.png" alt="NYIT"/></li>
+      <li><img className="w-48 md:w-48 lg:w-48" src="Clarksonlogo.png" alt="Clarkson University"/></li>
+      <li><img className="w-48 md:w-48 lg:w-48" src="Bridgeport.png" alt="Bridgeport University"/></li>
+      <li><img className="w-48 md:w-48 lg:w-48" src="StevensLogo.png" alt="Stevens Institute"/></li>
+      <li><img className="w-48 md:w-48 lg:w-48" src="TexasLogo.png" alt="Texas A&M"/></li>
+      <li><img className="w-48 md:w-48 lg:w-48" src="DrexelLogo.png" alt="Drexel University"/></li>
+      <li><img className="w-48 md:w-48 lg:w-48" src="NortheasternLogo.png" alt="Northeastern University"/></li>
+      <li><img className="w-48 md:w-48 lg:w-48" src="KentState.png" alt="Michigan State"/></li>
+      <li><img className="w-48 md:w-48 lg:w-48" src="Pacelogo.png" alt="Pace University"/></li>
     </ul>
   </div>
 </div>
-
-
-
 
         <section className="py-16">
           <div className="max-w-6xl mx-auto px-4">
@@ -505,23 +524,48 @@ const HomePage = () => {
         <section className="bg-white py-16">
       <div className="max-w-6xl mx-auto px-4">
         <h2 className="text-3xl font-bold mb-8 text-center">We Bring Real Impact 🫶</h2>
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-16">
-          {testimonials.map((testimonial, index) => (
-            <div className="group" key={index}>
-              <div className="text-center mb-4">
-                <figure className="relative">
-                  <img
-                    src={testimonial.imgSrc}
-                    alt={`Testimonial ${index + 1}`}
-                    className="rounded-lg shadow-lg transition-transform duration-300 hover:scale-105"
-                    style={{ aspectRatio: "250/400", objectFit: "cover" }}
-                  />
-                  <figcaption className="mt-2 text-sm">{testimonial.caption}</figcaption>
-                </figure>
+        {isMobile ? (
+          <Swiper
+          spaceBetween={50}
+          slidesPerView={1}
+          onSlideChange={() => console.log('slide change')}
+          onSwiper={(swiper) => console.log(swiper)}
+        >
+            {testimonials.map((testimonial, index) => (
+              <SwiperSlide key={index}>
+                <div className="text-center mb-4">
+                  <figure className="relative inline-block" style={{ width: '60%' }}>
+                    <img
+                      src={testimonial.imgSrc}
+                      alt={`Testimonial ${index + 1}`}
+                      className="rounded-lg shadow-lg mx-auto"
+                      style={{ width: '100%', height: 'auto', objectFit: 'cover' }}
+                    />
+                    {/* <figcaption className="mt-2 text-sm">{testimonial.caption}</figcaption> */}
+                  </figure>
+                </div>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+            {testimonials.map((testimonial, index) => (
+              <div className="group" key={index}>
+                <div className="text-center mb-4">
+                <figure className="relative inline-block" style={{ width: '70%' }}>
+                    <img
+                      src={testimonial.imgSrc}
+                      alt={`Testimonial ${index + 1}`}
+                      className="rounded-lg shadow-lg transition-transform duration-300 hover:scale-105 mx-auto"
+                      style={{ width: '80%', height: 'auto', objectFit: 'cover' }}
+                    />
+                    {/* <figcaption className="mt-2 text-sm">{testimonial.caption}</figcaption> */}
+                  </figure>
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
       </div>
     </section>
 

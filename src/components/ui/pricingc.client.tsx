@@ -89,13 +89,14 @@ const PricingUser = () => {
     return (
         <div className="min-h-screen text-black" style={{ backgroundColor: '#FAF6F6' }}>
         <header className="flex items-center justify-between p-4 border-b border-gray-200">
-      <Link href="/">
-        <img
-          alt="Your Logo"
-          className="cursor-pointer h-8 md:h-10"
-          src="/Clarksonlogo.png"
-        />
-      </Link>
+        <Link href="/">
+  <img
+    alt="Your Logo"
+    className="cursor-pointer h-8 md:h-10 transform scale-110 ml-4 md:ml-6" // Adjusted with margin-left classes
+    src="/Jobify.png"
+    style={{ transform: 'scale(1.9)' }} // Scaling up by 180%
+  />
+</Link>
 
       {/* Hamburger Icon for Mobile */}
       <button className="md:hidden text-gray-600 focus:outline-none" onClick={toggleMenu}>
@@ -130,13 +131,13 @@ const PricingUser = () => {
   <Link href="/about" passHref>
     <span className="text-sm font-medium text-gray-700 hover:text-green-500 cursor-pointer block py-2">About Us</span>
   </Link>
-  <Link href="/how-it-works" passHref>
+  <Link href="/works" passHref>
     <span className="text-sm font-medium text-gray-700 hover:text-green-500 cursor-pointer block py-2">How it works</span>
   </Link>
   <Link href="/pricing" passHref>
     <span className="text-sm font-medium text-gray-700 hover:text-green-500 cursor-pointer block py-2">Pricing</span>
   </Link>
-  <Link href="/trial" passHref>
+  <Link href="/" passHref>
     <span className="text-sm font-medium text-gray-700 hover:text-green-500 cursor-pointer block py-2">Try the Copilot Free</span>
   </Link>
   {user ? (
@@ -171,13 +172,13 @@ const PricingUser = () => {
   <Link href="/about" passHref>
     <span className="text-sm font-medium text-gray-500 hover:text-green-600 cursor-pointer mx-2">About Us</span>
   </Link>
-  <Link href="/how-it-works" passHref>
+  <Link href="/works" passHref>
     <span className="text-sm font-medium text-gray-500 hover:text-green-600 cursor-pointer mx-2">How it works</span>
   </Link>
   <Link href="/pricing" passHref>
     <span className="text-sm font-medium text-gray-500 hover:text-green-600 cursor-pointer mx-2">Pricing</span>
   </Link>
-  <Link href="/trial" passHref>
+  <Link href="/" passHref>
     <span className="text-sm bg-green-600 text-white py-2 px-4 rounded-full hover:bg-green-700 cursor-pointer mx-2">Try the Copilot Free</span>
   </Link>
 </nav>
