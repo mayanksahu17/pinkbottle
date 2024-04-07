@@ -1,7 +1,7 @@
 import { auth, currentUser } from "@clerk/nextjs";
 import React from "react";
 
-import { JobsApplied } from "@/components/jobs-applied";
+import JobsApplied from "@/components/ui/jobs"
 export default function Dashboard() {
     return (
       <main>

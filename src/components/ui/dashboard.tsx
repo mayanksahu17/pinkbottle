@@ -164,25 +164,27 @@ const DashboardPage = () => {
         )}
          <nav className="mt-16 flex flex-col space-y-1">
           {/* Your menu items here */}
+          <Link href="/dashboard">
           <Button className="justify-start text-sm text-black" variant="ghost">
             Dashboard
           </Button>
+          </Link>
           <Link href="/Jobs">
             <Button className="justify-start text-sm text-black" variant="ghost">
               Jobs
             </Button>
           </Link>
-          <Link href="/profile">
+          <Link href="https://apply.neetocal.com/meeting-with-anshul-jain" target="_blank">
             <Button className="justify-start text-sm text-black" variant="ghost">
-              Profile
+             Call with Founders
             </Button>
           </Link>
-          <Button className="justify-start text-sm text-black" variant="ghost">
+          {/* <Button className="justify-start text-sm text-black" variant="ghost">
             Preferences
           </Button>
           <Button className="justify-start text-sm text-black" variant="ghost">
             Add to chrome
-          </Button>
+          </Button> */}
         </nav>
       </aside>
       <main className={`flex-1 px-4 py-6 pt-[4rem] ${isAsideMenuOpen ? 'pt-16' : 'pt-6'}`}>

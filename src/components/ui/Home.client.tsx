@@ -201,7 +201,7 @@ const HomePage = () => {
             <img
               alt="Person using laptop"
               className="rounded-lg shadow-xl"
-              src="/baner.webp"
+              src="/HomeBanner.jpg"
               style={{ width: '100%', height: 'auto' }}
             />
           </div>
