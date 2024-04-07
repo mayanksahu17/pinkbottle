@@ -1,7 +1,7 @@
 import { auth, currentUser } from "@clerk/nextjs";
 import React from "react";
 
-import { DashboardPage } from "@/components/dashboard-page";
+import DashboardPage from "@/components/ui/dashboard"
 export default function Dashboard() {
     return (
       <main>
