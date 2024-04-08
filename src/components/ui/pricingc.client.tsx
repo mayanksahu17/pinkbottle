@@ -5,15 +5,19 @@ import Link from "next/link";
 import { UserButton, auth, useUser } from "@clerk/nextjs";
 import { JSX, SVGProps } from "react";
 import React, { useState } from 'react';
+import { Stripe, loadStripe } from '@stripe/stripe-js';
 
+const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || '');
 
 const PricingUser = () => {
     const { isSignedIn, user } = useUser();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    
     const plans = [
         {
           name: 'Basic',
-          price: '50',
+          price: '100',
+          priceId: 'price_1OvVxzACYURR6mEKx9GlQtlz',
           originalPrice: '100', // Original price before discount
           savings: '100', 
           features: [
@@ -30,7 +34,8 @@ const PricingUser = () => {
         },
         {
             name: 'Standard',
-            price: '100',
+            price: '150',
+            priceId: 'price_1OvW7aACYURR6mEK77mASTOQ',
             originalPrice: '250', // Original price before discount
             savings: '150', 
             features: [
@@ -47,7 +52,8 @@ const PricingUser = () => {
           },
           {
             name: 'Best Value',
-            price: '200',
+            price: '250',
+            priceId: 'price_1OvW9pACYURR6mEKHxSdqfWd',
             originalPrice: '400', // Original price before discount
             savings: '200', // Amount saved
             features: [
@@ -63,7 +69,8 @@ const PricingUser = () => {
         },
           {
             name: 'Ultimate Bundle',
-            price: '250',
+            price: '300',
+            priceId: 'price_1OvWB8ACYURR6mEKgumVgbnF',
             originalPrice: '600', // Original price before discount
             savings: '350', 
             features: [
@@ -84,6 +91,36 @@ const PricingUser = () => {
 
   const toggleMenu = () => {
     setIsMenuOpen(prev => !prev);
+  };
+
+  const handleStripeCheckout = async (priceId: any) => {
+    console.log("I was called")
+    const stripe = await stripePromise;
+    if (!stripe) {
+      console.error('Stripe.js has not loaded properly.');
+      return;
+    }
+
+    const response = await fetch('/api/checkout', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ priceId }),
+    });
+
+    if (response.ok) {
+      const session = await response.json();
+      const result = await stripe.redirectToCheckout({
+        sessionId: session.id,
+      });
+
+      if (result.error) {
+        console.error(result.error.message);
+      }
+    } else {
+      console.error('Failed to create checkout session');
+    }
   };
   
     return (
@@ -231,9 +268,9 @@ const PricingUser = () => {
   ))}
 </ul>
 
-<a href={plan.link} className="mt-6 inline-block w-full text-center text-black font-bold py-3 px-6 rounded-lg border border-transparent hover:border-gray-300 bg-[#dedede] shadow-sm transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-md">
-  Get started
-</a>
+<button key={plan.priceId} onClick={() => handleStripeCheckout(plan.priceId)} className="mt-6 inline-block w-full text-center text-black font-bold py-3 px-6 rounded-lg border border-transparent hover:border-gray-300 bg-[#dedede] shadow-sm transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-md">
+  Get Started
+</button>
 
 
   </div>

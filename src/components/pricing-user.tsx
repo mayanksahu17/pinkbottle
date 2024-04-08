@@ -2,7 +2,6 @@ import { Button } from "@/components/ui/button"
 import styles from './Button.module.css';
 import Link from "next/link";
 import { UserButton, auth } from "@clerk/nextjs";
-import { handleCheckout } from './ui/pricing';
 import { JSX, SVGProps } from "react";
 
 
