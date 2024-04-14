@@ -337,31 +337,6 @@ const PricingUser = () => {
 </div>
 </section>
 
-{/* <div className="bg-gray-100 py-12">
-  <div className="flex justify-center">
-    <div className="border border-gray-200 rounded-lg shadow-sm p-6 bg-white max-w-xs mx-auto">
-
-      <h3 className="text-lg leading-6 font-medium text-gray-900">AI Copilot Premium</h3>
-      <p className="mt-4 text-sm text-gray-600">
-        Get assistance from our purpose-built AI tools while you apply on your own. Increase your Productivity.
-      </p>
-      <ul className="mt-4 list-disc pl-6 space-y-4 text-sm text-gray-700">
-        <li>Keyword based Job Board</li>
-        <li>AI Cover Letter Generator</li>
-        <li>Cold Email/InMail drafts</li>
-        <li>AI Application Responses</li>
-        <li>Referral Request Drafts</li>
-        <li>Chrome extension</li>
-        <li>Unlimited Applications</li>
-      </ul>
-      <p className="mt-4 text-4xl font-extrabold text-gray-900">$9/month</p>
-      <button className="mt-6 w-full text-center py-3 bg-blue-500 text-white font-bold rounded-lg hover:bg-blue-600 transition-colors duration-200 ease-in-out">
-        Try For Free
-      </button>
-    </div>
-  </div>
-</div> */}
-
       <footer className="bg-[#12083b]">
         <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between">
