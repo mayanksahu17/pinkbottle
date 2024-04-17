@@ -19,7 +19,7 @@ export async function POST(req: NextRequest) {
         }],
         mode: 'payment',
         success_url: `${new URL(req.url).origin}/dashboard?success=true`,
-        cancel_url: `${new URL(req.url).origin}/Pricing?canceled=true`,
+        cancel_url: `${new URL(req.url).origin}/pricing?canceled=true`,
       });
 
       return new Response(JSON.stringify({ id: session.id }), {
