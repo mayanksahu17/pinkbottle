@@ -18,7 +18,7 @@ export async function POST(req: NextRequest) {
           quantity: 1,
         }],
         mode: 'payment',
-        success_url: `${new URL(req.url).origin}api/updatepaymentstatus/?success=true`,
+        success_url: `${new URL(req.url).origin}/dashboard?success=true`,
         cancel_url: `${new URL(req.url).origin}/Pricing?canceled=true`,
       });
 
