@@ -6,6 +6,7 @@ import Link from "next/link"
 import styles from '../Button.module.css';
 import { Swiper, SwiperSlide, useSwiperSlide} from 'swiper/react';
 import 'swiper/css';
+import { ContactModal } from "/Users/anshuljain/Documents/Misc/Startup/my-app/src/components/contactModal"
 
 type WindowSize = {
   width: number | undefined;
@@ -39,6 +40,8 @@ const HomePage = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const { width } = useWindowSize();
     const isMobile = width !== undefined && width < 768;
+    const [isOpen, setIsOpen] = useState(false);
+    const toggleModal = () => setIsOpen(!isOpen);
 
   const toggleMenu = () => {
     setIsMenuOpen(prev => !prev);
@@ -191,10 +194,10 @@ const HomePage = () => {
         <path d="m9 18 6-6-6-6"></path>
     </svg>
 </button>
-<a href="https://apply.neetocal.com/meeting-with-anshul-jain" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border-gray-800 bg-transparent shadow-sm hover:bg-accent hover:text-accent-foreground h-9 py-2 relative group md:font-bold px-4 md:px-6 border-2 rounded-xl md:text-md md:h-12" aria-haspopup="dialog" aria-expanded="false">
-  <span className="absolute animate-pulse bottom-auto left-auto right-0 top-0 z-10 inline-block -translate-y-1/2 translate-x-2/4 rotate-0 skew-x-0 skew-y-0 scale-x-100 scale-y-100 rounded-full bg-primary p-1.5 text-xs"></span>
-  Talk to founder<span className="group-hover:animate-bounce ml-2">👋</span>
-</a>
+<a href="#" onClick={toggleModal} className="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border-gray-800 bg-transparent shadow-sm hover:bg-accent hover:text-accent-foreground h-9 py-2 relative group md:font-bold px-4 md:px-6 border-2 rounded-xl md:text-md md:h-12">
+                <span className="absolute animate-pulse bottom-auto left-auto right-0 top-0 z-10 inline-block -translate-y-1/2 translate-x-2/4 rotate-0 skew-x-0 skew-y-0 scale-x-100 scale-y-100 rounded-full bg-primary p-1.5 text-xs"></span>
+                Talk to founder<span className="group-hover:animate-bounce ml-2">👋</span>
+            </a>
 
         </div>
             </div>
@@ -290,10 +293,11 @@ const HomePage = () => {
         <path d="m9 18 6-6-6-6"></path>
     </svg>
 </button>
-                  <a href="https://apply.neetocal.com/meeting-with-anshul-jain" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border-gray-800 bg-transparent shadow-sm hover:bg-accent hover:text-accent-foreground h-9 py-2 relative group md:font-bold px-4 md:px-6 border-2 rounded-xl md:text-md md:h-12" aria-haspopup="dialog" aria-expanded="false">
-  <span className="absolute animate-pulse bottom-auto left-auto right-0 top-0 z-10 inline-block -translate-y-1/2 translate-x-2/4 rotate-0 skew-x-0 skew-y-0 scale-x-100 scale-y-100 rounded-full bg-primary p-1.5 text-xs"></span>
-  Talk to founder<span className="group-hover:animate-bounce ml-2">👋</span>
-</a>
+<a href="#" onClick={toggleModal} className="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border-gray-800 bg-transparent shadow-sm hover:bg-accent hover:text-accent-foreground h-9 py-2 relative group md:font-bold px-4 md:px-6 border-2 rounded-xl md:text-md md:h-12">
+                <span className="absolute animate-pulse bottom-auto left-auto right-0 top-0 z-10 inline-block -translate-y-1/2 translate-x-2/4 rotate-0 skew-x-0 skew-y-0 scale-x-100 scale-y-100 rounded-full bg-primary p-1.5 text-xs"></span>
+                Talk to founder<span className="group-hover:animate-bounce ml-2">👋</span>
+            </a>
+
 
                 </div>
               </div>
@@ -334,10 +338,10 @@ const HomePage = () => {
         <path d="m9 18 6-6-6-6"></path>
     </svg>
 </button>
-<a href="https://apply.neetocal.com/meeting-with-anshul-jain" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border-gray-800 bg-transparent shadow-sm hover:bg-accent hover:text-accent-foreground h-9 py-2 relative group md:font-bold px-4 md:px-6 border-2 rounded-xl md:text-md md:h-12" aria-haspopup="dialog" aria-expanded="false">
-  <span className="absolute animate-pulse bottom-auto left-auto right-0 top-0 z-10 inline-block -translate-y-1/2 translate-x-2/4 rotate-0 skew-x-0 skew-y-0 scale-x-100 scale-y-100 rounded-full bg-primary p-1.5 text-xs"></span>
-  Talk to founder<span className="group-hover:animate-bounce ml-2">👋</span>
-</a>
+<a href="#" onClick={toggleModal} className="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border-gray-800 bg-transparent shadow-sm hover:bg-accent hover:text-accent-foreground h-9 py-2 relative group md:font-bold px-4 md:px-6 border-2 rounded-xl md:text-md md:h-12">
+                <span className="absolute animate-pulse bottom-auto left-auto right-0 top-0 z-10 inline-block -translate-y-1/2 translate-x-2/4 rotate-0 skew-x-0 skew-y-0 scale-x-100 scale-y-100 rounded-full bg-primary p-1.5 text-xs"></span>
+                Talk to founder<span className="group-hover:animate-bounce ml-2">👋</span>
+            </a>
 
         </div>
       </div>
@@ -506,10 +510,10 @@ const HomePage = () => {
         <path d="m9 18 6-6-6-6"></path>
     </svg>
 </button>
-<a href="https://apply.neetocal.com/meeting-with-anshul-jain" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border-gray-800 bg-transparent shadow-sm hover:bg-accent hover:text-accent-foreground h-9 py-2 relative group md:font-bold px-4 md:px-6 border-2 rounded-xl md:text-md md:h-12" aria-haspopup="dialog" aria-expanded="false">
-  <span className="absolute animate-pulse bottom-auto left-auto right-0 top-0 z-10 inline-block -translate-y-1/2 translate-x-2/4 rotate-0 skew-x-0 skew-y-0 scale-x-100 scale-y-100 rounded-full bg-primary p-1.5 text-xs"></span>
-  Talk to founder<span className="group-hover:animate-bounce ml-2">👋</span>
-</a>
+<a href="#" onClick={toggleModal} className="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border-gray-800 bg-transparent shadow-sm hover:bg-accent hover:text-accent-foreground h-9 py-2 relative group md:font-bold px-4 md:px-6 border-2 rounded-xl md:text-md md:h-12">
+                <span className="absolute animate-pulse bottom-auto left-auto right-0 top-0 z-10 inline-block -translate-y-1/2 translate-x-2/4 rotate-0 skew-x-0 skew-y-0 scale-x-100 scale-y-100 rounded-full bg-primary p-1.5 text-xs"></span>
+                Talk to founder<span className="group-hover:animate-bounce ml-2">👋</span>
+            </a>
 
 
 
@@ -611,10 +615,10 @@ const HomePage = () => {
               We understand that you might have questions that are specific to your situation.
               Pick a slot to talk to our founder. Happy to help you out :)
             </p>
-            <a href="https://apply.neetocal.com/meeting-with-anshul-jain" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border-gray-800 bg-transparent shadow-sm hover:bg-accent hover:text-accent-foreground h-9 py-2 relative group md:font-bold px-4 md:px-6 border-2 rounded-xl md:text-md md:h-12" aria-haspopup="dialog" aria-expanded="false">
-  <span className="absolute animate-pulse bottom-auto left-auto right-0 top-0 z-10 inline-block -translate-y-1/2 translate-x-2/4 rotate-0 skew-x-0 skew-y-0 scale-x-100 scale-y-100 rounded-full bg-primary p-1.5 text-xs"></span>
-  Talk to founder<span className="group-hover:animate-bounce ml-2">👋</span>
-</a>
+            <a href="#" onClick={toggleModal} className="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border-gray-800 bg-transparent shadow-sm hover:bg-accent hover:text-accent-foreground h-9 py-2 relative group md:font-bold px-4 md:px-6 border-2 rounded-xl md:text-md md:h-12">
+                <span className="absolute animate-pulse bottom-auto left-auto right-0 top-0 z-10 inline-block -translate-y-1/2 translate-x-2/4 rotate-0 skew-x-0 skew-y-0 scale-x-100 scale-y-100 rounded-full bg-primary p-1.5 text-xs"></span>
+                Talk to founder<span className="group-hover:animate-bounce ml-2">👋</span>
+            </a>
 
           </div>
         </section>
@@ -694,16 +698,16 @@ const HomePage = () => {
         <path d="m9 18 6-6-6-6"></path>
     </svg>
 </button>
-<a href="https://apply.neetocal.com/meeting-with-anshul-jain" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border-gray-800 bg-transparent shadow-sm hover:bg-accent hover:text-accent-foreground h-9 py-2 relative group md:font-bold px-4 md:px-6 border-2 rounded-xl md:text-md md:h-12" aria-haspopup="dialog" aria-expanded="false">
-  <span className="absolute animate-pulse bottom-auto left-auto right-0 top-0 z-10 inline-block -translate-y-1/2 translate-x-2/4 rotate-0 skew-x-0 skew-y-0 scale-x-100 scale-y-100 rounded-full bg-primary p-1.5 text-xs"></span>
-  Talk to founder<span className="group-hover:animate-bounce ml-2">👋</span>
-</a>
+<a href="#" onClick={toggleModal} className="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border-gray-800 bg-transparent shadow-sm hover:bg-accent hover:text-accent-foreground h-9 py-2 relative group md:font-bold px-4 md:px-6 border-2 rounded-xl md:text-md md:h-12">
+                <span className="absolute animate-pulse bottom-auto left-auto right-0 top-0 z-10 inline-block -translate-y-1/2 translate-x-2/4 rotate-0 skew-x-0 skew-y-0 scale-x-100 scale-y-100 rounded-full bg-primary p-1.5 text-xs"></span>
+                Talk to founder<span className="group-hover:animate-bounce ml-2">👋</span>
+            </a>
 
         </div>
   </div>
 </section>
 
-
+{isOpen && <ContactModal onClose={toggleModal} />}
 
       </main>
       <footer className="bg-[#12083b]">
