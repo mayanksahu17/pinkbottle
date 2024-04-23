@@ -6,7 +6,8 @@ import Link from "next/link"
 import styles from '../Button.module.css';
 import { Swiper, SwiperSlide, useSwiperSlide} from 'swiper/react';
 import 'swiper/css';
-import { ContactModal } from "/Users/anshuljain/Documents/Misc/Startup/my-app/src/components/contactModal"
+import { ContactModal } from '../../components/contactModal';
+
 
 type WindowSize = {
   width: number | undefined;

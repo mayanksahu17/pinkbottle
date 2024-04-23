@@ -7,7 +7,8 @@ import { JSX, SVGProps } from "react";
 import React, { useState } from 'react';
 import { AvatarImage, AvatarFallback, Avatar } from "@/components/ui/avatar"
 // Import the ContactModal from its file
-import { ContactModal } from "/Users/anshuljain/Documents/Misc/Startup/my-app/src/components/contactModal"  // Adjust the path according to your file structure
+import { ContactModal } from '../../components/contactModal';
+  // Adjust the path according to your file structure
 
 
 
