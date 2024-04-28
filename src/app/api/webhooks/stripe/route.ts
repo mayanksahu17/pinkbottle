@@ -1,6 +1,7 @@
 import stripe from "stripe";
 import { NextResponse } from "next/server";
 import { updateStudent } from "@/lib/actions/users/user.actions";
+import { createPayment } from "@/lib/actions/payment/payment.actions";
 
 export async function POST(request: Request) {
   const body = await request.text();
@@ -23,11 +24,25 @@ export async function POST(request: Request) {
       break;
     case "checkout.session.completed":
       const checkoutSessionCompleted = event.data.object;
+      const { customer_details } = checkoutSessionCompleted;
+      const { payment_status } = checkoutSessionCompleted;
+      const { metadata } = checkoutSessionCompleted;
+      const paymentDetails = {
+        paymentStatus: payment_status === 'paid' ? "Paid" : "Unpaid" as 'Paid' | 'Unpaid',
+        name: customer_details?.name,
+        email: customer_details?.email,
+        planPurchased: metadata?.planName || null,
+        mobileNumber: customer_details?.phone,
+      };
       const id = event?.data?.object?.metadata?.clerkId;
       // create a new document using subscription schema here and refer it to the user document created below
-      const user = await updateStudent({id:id!, updateDetails:{ payment:{status:"Paid"}} });
-      if(user.success){
-        return NextResponse.json({message:'OK', data: user})
+      const payment = await createPayment(paymentDetails);
+      const user = await updateStudent({
+        id: id!,
+        updateDetails: { payment: { status: "Paid" } },
+      });
+      if (user.success) {
+        return NextResponse.json({ message: "OK", data: user });
       }
       break;
     default:

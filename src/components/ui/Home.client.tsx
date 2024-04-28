@@ -290,61 +290,61 @@ const HomePage = () => {
             </h2>
           </div>
           <div className="flex justify-center md:justify-start overflow-x-auto">
-            <Marquee autoFill={true} pauseOnHover>
+            <Marquee autoFill={true}  pauseOnHover>
               {/* Increase the base size for better visibility on mobile */}
               
                 <img
-                  className="w-24 md:w-24 lg:w-24"
+                  className="w-32 md:w-32 lg:w-32 p-4"
                   src="CalState.jpeg"
                   alt="Cal State"
                 />
                 <img
-                  className="w-24 md:w-24 lg:w-24"
+                  className="w-32 md:w-32 lg:w-32 p-4"
                   src="BostonUniversity.gif"
                   alt="Boston University"
                 />
                 <img
-                  className="w-24 md:w-24 lg:w-24"
+                  className="w-32 md:w-32 lg:w-32 p-4"
                   src="RIT.png"
                   alt="NYIT"
                 />
                 <img
-                  className="w-24 md:w-24 lg:w-24"
+                  className="w-32 md:w-32 lg:w-32 p-4"
                   src="Clarksonlogo.png"
                   alt="Clarkson University"
                 />
                 <img
-                  className="w-24 md:w-24 lg:w-24"
+                  className="w-32 md:w-32 lg:w-32 p-4"
                   src="Bridgeport.png"
                   alt="Bridgeport University"
                 />
                 <img
-                  className="w-24 md:w-24 lg:w-24"
+                  className="w-32 md:w-32 lg:w-32 p-4"
                   src="StevensLogo.png"
                   alt="Stevens Institute"
                 />
                 <img
-                  className="w-24 md:w-24 lg:w-24"
+                  className="w-32 md:w-32 lg:w-32 p-4"
                   src="TexasLogo.png"
                   alt="Texas A&M"
                 />
                 <img
-                  className="w-24 md:w-24 lg:w-24"
+                  className="w-32 md:w-32 lg:w-32 p-4"
                   src="DrexelLogo.png"
                   alt="Drexel University"
                 />
                 <img
-                  className="w-24 md:w-24 lg:w-24"
+                  className="w-32 md:w-32 lg:w-32 p-4"
                   src="NortheasternLogo.png"
                   alt="Northeastern University"
                 />
                 <img
-                  className="w-24 md:w-24 lg:w-24"
+                  className="w-32 md:w-32 lg:w-32 p-4"
                   src="KentState.png"
                   alt="Michigan State"
                 />
                 <img
-                  className="w-24 md:w-24 lg:w-24"
+                  className="w-32 md:w-32 lg:w-32 p-4"
                   src="Pacelogo.png"
                   alt="Pace University"
                 />
