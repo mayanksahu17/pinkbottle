@@ -186,10 +186,10 @@ const Aboutus = () => {
           </div>
           <div className="flex flex-col items-center text-center">
             <img
-              alt="Anshul Jain"
+              alt="Gaurav Jain"
               className="mb-4 rounded-full"
               height="200"
-              src="/wing2.jpeg"
+              src="/Gauravnew.png"
               style={{
                 aspectRatio: "200/200",
                 objectFit: "cover",
@@ -201,14 +201,14 @@ const Aboutus = () => {
               Co-Founder | Tech | <LinkedinIcon className="inline ml-1" />
             </p>
             <p className="text-gray-600 mb-4">
-              From building Pulsejet engines to coding full-stack Apps, I love tinkering and building stuff. Launched a
+              I am ex IITian and Microsoft SDE. From building Pulsejet engines to coding full-stack Apps, I love tinkering and building stuff. Launched a
               couple of startups and failed better each time, now trying to be the best tech wingman.
             </p>
             <div className="flex space-x-2">
               <img
-                alt="Clarkson Logo logo"
+                alt="IIT logo"
                 height="70"
-                src="/Clarksonlogo.png"
+                src="/IIT.png"
                 style={{
                   aspectRatio: "120/40",
                   objectFit: "contain",
@@ -216,14 +216,14 @@ const Aboutus = () => {
                 width="210"
               />
               <img
-                alt="Phonepe logo"
-                height="40"
-                src="/phonepe.svg"
+                alt="Microsoft"
+                height="150"
+                src="/microsoft.png"
                 style={{
                   aspectRatio: "120/40",
                   objectFit: "contain",
                 }}
-                width="120"
+                width="140"
               />
             </div>
           </div>

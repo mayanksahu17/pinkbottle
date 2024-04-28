@@ -7,6 +7,7 @@ import styles from "../Button.module.css";
 import { Swiper, SwiperSlide, useSwiperSlide } from "swiper/react";
 import "swiper/css";
 import Marquee from "react-fast-marquee";
+import { ContactModal } from "../contactModal";
 
 type WindowSize = {
   width: number | undefined;
@@ -36,10 +37,12 @@ const useWindowSize = (): WindowSize => {
 };
 
 const HomePage = () => {
-  const { isSignedIn, user } = useUser();
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { width } = useWindowSize();
-  const isMobile = width !== undefined && width < 768;
+    const { isSignedIn, user } = useUser();
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const { width } = useWindowSize();
+    const isMobile = width !== undefined && width < 768;
+    const [isOpen, setIsOpen] = useState(false);
+    const toggleModal = () => setIsOpen(!isOpen);
 
   const toggleMenu = () => {
     setIsMenuOpen((prev) => !prev);
@@ -421,49 +424,21 @@ const HomePage = () => {
                   </p>
                 </div>
                 <div className="mt-6 flex items-center">
-                  <button className="inline-flex mr-4 items-center justify-center whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 py-2 md:text-lg md:font-light px-4 md:px-6 md:glow-btn rounded-xl md:h-12 shiny-button border border-gray-800">
-                    Explore Platform
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      className="md:ml-1 h-5 w-5 text-gray-400  animate-pulse"
-                    >
-                      <path d="m9 18 6-6-6-6"></path>
-                    </svg>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      className="-ml-3 h-5 w-5 animate-pulse"
-                    >
-                      <path d="m9 18 6-6-6-6"></path>
-                    </svg>
-                  </button>
-                  <a
-                    href="https://apply.neetocal.com/meeting-with-anshul-jain"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border-gray-800 bg-transparent shadow-sm hover:bg-accent hover:text-accent-foreground h-9 py-2 relative group md:font-bold px-4 md:px-6 border-2 rounded-xl md:text-md md:h-12"
-                    aria-haspopup="dialog"
-                    aria-expanded="false"
-                  >
-                    <span className="absolute animate-pulse bottom-auto left-auto right-0 top-0 z-10 inline-block -translate-y-1/2 translate-x-2/4 rotate-0 skew-x-0 skew-y-0 scale-x-100 scale-y-100 rounded-full bg-primary p-1.5 text-xs"></span>
-                    Talk to founder
-                    <span className="group-hover:animate-bounce ml-2">👋</span>
-                  </a>
+                <button className="inline-flex mr-4 items-center justify-center whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 py-2 md:text-lg md:font-light px-4 md:px-6 md:glow-btn rounded-xl md:h-12 shiny-button border border-gray-800">
+    Explore Platform
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="md:ml-1 h-5 w-5 text-gray-400  animate-pulse">
+        <path d="m9 18 6-6-6-6"></path>
+    </svg>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="-ml-3 h-5 w-5 animate-pulse">
+        <path d="m9 18 6-6-6-6"></path>
+    </svg>
+</button>
+<a href="#" onClick={toggleModal} className="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border-gray-800 bg-transparent shadow-sm hover:bg-accent hover:text-accent-foreground h-9 py-2 relative group md:font-bold px-4 md:px-6 border-2 rounded-xl md:text-md md:h-12">
+                <span className="absolute animate-pulse bottom-auto left-auto right-0 top-0 z-10 inline-block -translate-y-1/2 translate-x-2/4 rotate-0 skew-x-0 skew-y-0 scale-x-100 scale-y-100 rounded-full bg-primary p-1.5 text-xs"></span>
+                Talk to founder<span className="group-hover:animate-bounce ml-2">👋</span>
+            </a>
+
+
                 </div>
               </div>
             </div>
@@ -471,98 +446,53 @@ const HomePage = () => {
         </section>
 
         <section className="bg-[#f7f8fa] py-16">
-          <div className="max-w-6xl mx-auto px-4">
-            <h2 className="text-4xl font-bold text-gray-800 mb-12">
-              We got you covered!
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start mb-16">
-              <div>
-                <ul className="text-lg text-gray-700 space-y-4">
-                  {[
-                    "Networking and Interview Prep",
-                    "Dedicated human assistant",
-                    "Diverse Workgroup",
-                    "Virtual One-on-One sessions",
-                    "Customizable Plans",
-                    "Purpose Built AI Tools",
-                    "Open Consultation sessions",
-                  ].map((item, index) => (
-                    <li key={index} className="flex items-center">
-                      <svg
-                        className="text-green-500 w-6 h-6 mr-3"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          d="M16.707 5.293a1 1 0 01.083 1.32l-7 8a1 1 0 01-1.4.083l-4-4a1 1 0 011.32-1.497l3.293 3.293 6.293-7.213a1 1 0 011.41-.086z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-                <div className="mt-10 flex">
-                  <button className="inline-flex mr-4 items-center justify-center whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 py-2 md:text-lg md:font-light px-4 md:px-6 md:glow-btn rounded-xl md:h-12 shiny-button border border-gray-800">
-                    Explore Platform
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      className="md:ml-1 h-5 w-5 text-gray-400  animate-pulse"
-                    >
-                      <path d="m9 18 6-6-6-6"></path>
-                    </svg>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      className="-ml-3 h-5 w-5 animate-pulse"
-                    >
-                      <path d="m9 18 6-6-6-6"></path>
-                    </svg>
-                  </button>
-                  <a
-                    href="https://apply.neetocal.com/meeting-with-anshul-jain"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border-gray-800 bg-transparent shadow-sm hover:bg-accent hover:text-accent-foreground h-9 py-2 relative group md:font-bold px-4 md:px-6 border-2 rounded-xl md:text-md md:h-12"
-                    aria-haspopup="dialog"
-                    aria-expanded="false"
-                  >
-                    <span className="absolute animate-pulse bottom-auto left-auto right-0 top-0 z-10 inline-block -translate-y-1/2 translate-x-2/4 rotate-0 skew-x-0 skew-y-0 scale-x-100 scale-y-100 rounded-full bg-primary p-1.5 text-xs"></span>
-                    Talk to founder
-                    <span className="group-hover:animate-bounce ml-2">👋</span>
-                  </a>
-                </div>
-              </div>
-              <div className="w-full h-auto flex justify-center items-center">
-                <div
-                  className="w-full h-full bg-cover bg-center rounded-lg shadow-xl"
-                  style={{
-                    backgroundImage: 'url("/wegot.webp")',
-                    height: "30rem",
-                  }}
-                >
-                  {/* Content left for image */}
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
+  <div className="max-w-6xl mx-auto px-4">
+    <h2 className="text-4xl font-bold text-gray-800 mb-12">We got you covered!</h2>
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start mb-16">
+      <div>
+        <ul className="text-lg text-gray-700 space-y-4">
+          {[
+            'Networking and Interview Prep',
+            'Dedicated human assistant',
+            'Diverse Workgroup',
+            'Virtual One-on-One sessions',
+            'Customizable Plans',
+            'Purpose Built AI Tools',
+            'Open Consultation sessions'
+          ].map((item, index) => (
+            <li key={index} className="flex items-center">
+              <svg className="text-green-500 w-6 h-6 mr-3" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M16.707 5.293a1 1 0 01.083 1.32l-7 8a1 1 0 01-1.4.083l-4-4a1 1 0 011.32-1.497l3.293 3.293 6.293-7.213a1 1 0 011.41-.086z" clipRule="evenodd" />
+              </svg>
+              {item}
+            </li>
+          ))}
+        </ul>
+        <div className="mt-10 flex">
+        <button className="inline-flex mr-4 items-center justify-center whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 py-2 md:text-lg md:font-light px-4 md:px-6 md:glow-btn rounded-xl md:h-12 shiny-button border border-gray-800">
+    Explore Platform
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="md:ml-1 h-5 w-5 text-gray-400  animate-pulse">
+        <path d="m9 18 6-6-6-6"></path>
+    </svg>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="-ml-3 h-5 w-5 animate-pulse">
+        <path d="m9 18 6-6-6-6"></path>
+    </svg>
+</button>
+<a href="#" onClick={toggleModal} className="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border-gray-800 bg-transparent shadow-sm hover:bg-accent hover:text-accent-foreground h-9 py-2 relative group md:font-bold px-4 md:px-6 border-2 rounded-xl md:text-md md:h-12">
+                <span className="absolute animate-pulse bottom-auto left-auto right-0 top-0 z-10 inline-block -translate-y-1/2 translate-x-2/4 rotate-0 skew-x-0 skew-y-0 scale-x-100 scale-y-100 rounded-full bg-primary p-1.5 text-xs"></span>
+                Talk to founder<span className="group-hover:animate-bounce ml-2">👋</span>
+            </a>
+
+        </div>
+      </div>
+      <div className="w-full h-auto flex justify-center items-center">
+        <div className="w-full h-full bg-cover bg-center rounded-lg shadow-xl" style={{ backgroundImage: 'url("/wegot.webp")', height: '30rem' }}>
+          {/* Content left for image */}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
         <section className="bg-white py-20">
           <div className="max-w-6xl mx-auto px-4">
@@ -759,50 +689,21 @@ const HomePage = () => {
                       they possess the skills and are a cultural fit.
                     </p>
                     <button className="inline-flex mr-4 items-center justify-center whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 py-2 md:text-lg md:font-light px-4 md:px-6 md:glow-btn rounded-xl md:h-12 shiny-button border border-gray-800">
-                      Explore Platform
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        className="md:ml-1 h-5 w-5 text-gray-400  animate-pulse"
-                      >
-                        <path d="m9 18 6-6-6-6"></path>
-                      </svg>
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        className="-ml-3 h-5 w-5 animate-pulse"
-                      >
-                        <path d="m9 18 6-6-6-6"></path>
-                      </svg>
-                    </button>
-                    <a
-                      href="https://apply.neetocal.com/meeting-with-anshul-jain"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border-gray-800 bg-transparent shadow-sm hover:bg-accent hover:text-accent-foreground h-9 py-2 relative group md:font-bold px-4 md:px-6 border-2 rounded-xl md:text-md md:h-12"
-                      aria-haspopup="dialog"
-                      aria-expanded="false"
-                    >
-                      <span className="absolute animate-pulse bottom-auto left-auto right-0 top-0 z-10 inline-block -translate-y-1/2 translate-x-2/4 rotate-0 skew-x-0 skew-y-0 scale-x-100 scale-y-100 rounded-full bg-primary p-1.5 text-xs"></span>
-                      Talk to founder
-                      <span className="group-hover:animate-bounce ml-2">
-                        👋
-                      </span>
-                    </a>
+    Explore Platform
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="md:ml-1 h-5 w-5 text-gray-400  animate-pulse">
+        <path d="m9 18 6-6-6-6"></path>
+    </svg>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="-ml-3 h-5 w-5 animate-pulse">
+        <path d="m9 18 6-6-6-6"></path>
+    </svg>
+</button>
+<a href="#" onClick={toggleModal} className="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border-gray-800 bg-transparent shadow-sm hover:bg-accent hover:text-accent-foreground h-9 py-2 relative group md:font-bold px-4 md:px-6 border-2 rounded-xl md:text-md md:h-12">
+                <span className="absolute animate-pulse bottom-auto left-auto right-0 top-0 z-10 inline-block -translate-y-1/2 translate-x-2/4 rotate-0 skew-x-0 skew-y-0 scale-x-100 scale-y-100 rounded-full bg-primary p-1.5 text-xs"></span>
+                Talk to founder<span className="group-hover:animate-bounce ml-2">👋</span>
+            </a>
+
+
+
                   </div>
                   {/* <!-- Add additional content here if needed --> */}
                 </div>
@@ -931,18 +832,11 @@ const HomePage = () => {
               your situation. Pick a slot to talk to our founder. Happy to help
               you out :)
             </p>
-            <a
-              href="https://apply.neetocal.com/meeting-with-anshul-jain"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border-gray-800 bg-transparent shadow-sm hover:bg-accent hover:text-accent-foreground h-9 py-2 relative group md:font-bold px-4 md:px-6 border-2 rounded-xl md:text-md md:h-12"
-              aria-haspopup="dialog"
-              aria-expanded="false"
-            >
-              <span className="absolute animate-pulse bottom-auto left-auto right-0 top-0 z-10 inline-block -translate-y-1/2 translate-x-2/4 rotate-0 skew-x-0 skew-y-0 scale-x-100 scale-y-100 rounded-full bg-primary p-1.5 text-xs"></span>
-              Talk to founder
-              <span className="group-hover:animate-bounce ml-2">👋</span>
+            <a href="#" onClick={toggleModal} className="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border-gray-800 bg-transparent shadow-sm hover:bg-accent hover:text-accent-foreground h-9 py-2 relative group md:font-bold px-4 md:px-6 border-2 rounded-xl md:text-md md:h-12">
+                <span className="absolute animate-pulse bottom-auto left-auto right-0 top-0 z-10 inline-block -translate-y-1/2 translate-x-2/4 rotate-0 skew-x-0 skew-y-0 scale-x-100 scale-y-100 rounded-full bg-primary p-1.5 text-xs"></span>
+                Talk to founder<span className="group-hover:animate-bounce ml-2">👋</span>
             </a>
+
           </div>
         </section>
 
@@ -1007,80 +901,44 @@ const HomePage = () => {
         </section>
 
         <section className="bg-[#f7f8fa] py-16">
-          <div className="max-w-4xl mx-auto px-6 text-center">
-            <h2 className="text-4xl font-bold text-gray-800 mb-8 leading-snug">
-              Why are we doing this?
-            </h2>
-            <p className="text-gray-800 text-lg mb-6">
-              The current US job market is incredibly challenging. Job search
-              has become one of the most stressful phases in our lives,
-              especially for recent graduates or those affected by layoffs. We
-              believe it doesn't have to be this way.
-            </p>
-            <p className="text-gray-800 text-lg mb-6">
-              Proper networking and applying to countless jobs seem like the
-              only paths to employment, but the repetitive process and low
-              success rates can be disheartening. We're here to introduce a
-              smarter approach.
-            </p>
-            <p className="text-gray-800 text-lg mb-8">
-              While we can't overhaul the system, we can revamp how we navigate
-              it. Our platform streamlines the job application process, making
-              your job search more effective and significantly less stressful.
-            </p>
-            <div className="inline-block mb-8">
-              <p className="text-gray-600 italic">— Anshul Jain</p>
-              <p className="text-gray-600">
-                Co-Founder & Clarkson University Grad
-              </p>
-            </div>
-            <div className="mt-10 flex">
-              <button className="inline-flex mr-4 items-center justify-center whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 py-2 md:text-lg md:font-light px-4 md:px-6 md:glow-btn rounded-xl md:h-12 shiny-button border border-gray-800">
-                Explore Platform
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  className="md:ml-1 h-5 w-5 text-gray-400  animate-pulse"
-                >
-                  <path d="m9 18 6-6-6-6"></path>
-                </svg>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  className="-ml-3 h-5 w-5 animate-pulse"
-                >
-                  <path d="m9 18 6-6-6-6"></path>
-                </svg>
-              </button>
-              <a
-                href="https://apply.neetocal.com/meeting-with-anshul-jain"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border-gray-800 bg-transparent shadow-sm hover:bg-accent hover:text-accent-foreground h-9 py-2 relative group md:font-bold px-4 md:px-6 border-2 rounded-xl md:text-md md:h-12"
-                aria-haspopup="dialog"
-                aria-expanded="false"
-              >
+  <div className="max-w-4xl mx-auto px-6 text-center">
+    <h2 className="text-4xl font-bold text-gray-800 mb-8 leading-snug">
+      Why are we doing this?
+    </h2>
+    <p className="text-gray-800 text-lg mb-6">
+      The current US job market is incredibly challenging. Job search has become one of the most stressful phases in our lives, especially for recent graduates or those affected by layoffs. We believe it doesn't have to be this way.
+    </p>
+    <p className="text-gray-800 text-lg mb-6">
+      Proper networking and applying to countless jobs seem like the only paths to employment, but the repetitive process and low success rates can be disheartening. We're here to introduce a smarter approach.
+    </p>
+    <p className="text-gray-800 text-lg mb-8">
+      While we can't overhaul the system, we can revamp how we navigate it. Our platform streamlines the job application process, making your job search more effective and significantly less stressful.
+    </p>
+    <div className="inline-block mb-8">
+      <p className="text-gray-600 italic">— Anshul Jain</p>
+      <p className="text-gray-600">Co-Founder & Clarkson University Grad</p>
+    </div>
+    <div className="mt-10 flex">
+    <button className="inline-flex mr-4 items-center justify-center whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 py-2 md:text-lg md:font-light px-4 md:px-6 md:glow-btn rounded-xl md:h-12 shiny-button border border-gray-800">
+    Explore Platform
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="md:ml-1 h-5 w-5 text-gray-400  animate-pulse">
+        <path d="m9 18 6-6-6-6"></path>
+    </svg>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="-ml-3 h-5 w-5 animate-pulse">
+        <path d="m9 18 6-6-6-6"></path>
+    </svg>
+</button>
+<a href="#" onClick={toggleModal} className="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border-gray-800 bg-transparent shadow-sm hover:bg-accent hover:text-accent-foreground h-9 py-2 relative group md:font-bold px-4 md:px-6 border-2 rounded-xl md:text-md md:h-12">
                 <span className="absolute animate-pulse bottom-auto left-auto right-0 top-0 z-10 inline-block -translate-y-1/2 translate-x-2/4 rotate-0 skew-x-0 skew-y-0 scale-x-100 scale-y-100 rounded-full bg-primary p-1.5 text-xs"></span>
-                Talk to founder
-                <span className="group-hover:animate-bounce ml-2">👋</span>
-              </a>
-            </div>
-          </div>
-        </section>
+                Talk to founder<span className="group-hover:animate-bounce ml-2">👋</span>
+            </a>
+
+        </div>
+  </div>
+</section>
+
+{isOpen && <ContactModal onClose={toggleModal} />}
+
       </main>
       <footer className="bg-[#12083b]">
         <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">

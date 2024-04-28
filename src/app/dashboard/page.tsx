@@ -11,9 +11,9 @@ export default async function Dashboard() {
     const { sessionClaims } = auth();
     const userID = sessionClaims?.userID as string;
     const res = await getStudentById(userID);
-    const jobs = res?.data.jobs;
-    const resume = res?.data.resume;
-    const cover = res?.data.coverLetter;
+    const jobs = res?.data?.jobs;
+    const resume = res?.data?.resume;
+    const cover = res?.data?.coverLetter;
     
     return (
       <main>
