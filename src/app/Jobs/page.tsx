@@ -1,11 +1,15 @@
 import { auth, currentUser } from "@clerk/nextjs";
 import React from "react";
-
 import JobsApplied from "@/components/ui/jobs"
-export default function Dashboard() {
+import { getStudentById } from "@/lib/actions/users/user.actions";
+export default async function Dashboard() {
+    const {sessionClaims} = auth();
+    const userID = sessionClaims?.userID as string;
+    const user = await getStudentById(userID);
+    const jobs = user?.data.jobs;        
     return (
       <main>
-        <JobsApplied /> {/* Correct component usage */}
+        <JobsApplied jobs={jobs} /> {/* Correct component usage */}
       </main>
     );
   }
