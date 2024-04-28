@@ -7,7 +7,9 @@ import { Jobs } from "@/lib/database/models/User/types";
 export async function createStudent(userDetails: CreateStudentProps) {
   try {
     await dbConnect();
+    console.log("Create Student called");
     const createdUser = await User.create(userDetails);
+    console.log("New Student called");
     if (createdUser) {
       return {
         success: true,
