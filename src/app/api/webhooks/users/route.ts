@@ -31,14 +31,18 @@ async function handler(request: Request) {
     }
   
     const eventType: EventType = evt.type;
+    console.log(eventType);
     if (eventType === "user.created"){
       const {id, email_addresses, first_name, last_name } = evt.data;
+      console.log("Inside user created");
+      
       const user = {
         clerkId: id,
         email: email_addresses[0].email_address,
         firstName:first_name,
         lastName:last_name
       };
+      console.log(user);
       const newUser = await createStudent(user);
       if(newUser){
         await clerkClient.users.updateUserMetadata(id, {
