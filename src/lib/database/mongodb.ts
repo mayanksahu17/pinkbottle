@@ -25,6 +25,7 @@ async function dbConnect() {
 
   if (!cached.promise) {
     const opts = {
+      dbName:'jobify',
       bufferCommands: false,
     };
 
