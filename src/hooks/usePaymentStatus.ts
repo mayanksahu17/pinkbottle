@@ -7,7 +7,7 @@ const usePaymentStatus = async () => {
     const id = sessionClaims?.userID as string;
     const user = await getStudentById(id);
     const paymentStatus = user?.data?.payment?.status;
-    return Promise.resolve(paymentStatus);
+    return paymentStatus
 }
 
 export default usePaymentStatus

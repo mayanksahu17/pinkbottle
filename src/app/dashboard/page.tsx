@@ -7,6 +7,8 @@ import React from "react";
 export default async function Dashboard() {
     const paymentStatus = await usePaymentStatus();
     const isPaidUser = paymentStatus === 'Paid' ? true : false
+    console.log("ispaiduser", isPaidUser);
+    
     const user = await currentUser();
     const { sessionClaims } = auth();
     const userID = sessionClaims?.userID as string;
