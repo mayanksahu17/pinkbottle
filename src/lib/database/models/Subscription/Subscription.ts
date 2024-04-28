@@ -1,18 +1,9 @@
 // models/Subscription.ts
 import mongoose from 'mongoose';
-
-interface ISubscription {
-  userId: string;
-  stripeCustomerId: string;
-  stripeSubscriptionId: string;
-  planId: string;
-  planName: string;
-  planPrice: number;
-  startDate?: Date;
-}
+import { ISubscription } from './types';
 
 const subscriptionSchema = new mongoose.Schema<ISubscription>({
-  userId: { type: String, required: true },
+  // userId: { type: String, required: true },
   stripeCustomerId: { type: String, required: true },
   stripeSubscriptionId: { type: String, required: true },
   planId: { type: String, required: true },
