@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "prisma generate && next build",
+    "build": "next build",
     "postinstall": "prisma generate",
     "start": "next start",
     "lint": "next lint"
@@ -38,6 +38,8 @@
     "openai": "^4.38.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-fast-marquee": "^1.6.4",
+    "react-icons": "^5.1.0",
     "readable-stream": "^2.3.8",
     "stripe": "^14.22.0",
     "svix": "^1.21.0",
