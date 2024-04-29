@@ -182,7 +182,7 @@ const DashboardPage = ({ isPaidUser, jobs, firstName , resume, cover}: { isPaidU
         </div>
       </header>
       <div className="flex">
-        <div className="relative z-50 md:hidden">
+        <div className="relative z-5 md:hidden">
           <button
             className="text-gray-600 focus:outline-none absolute top-0 left-0 mt-4 ml-4"
             onClick={toggleAsideMenu}

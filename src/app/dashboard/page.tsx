@@ -6,15 +6,15 @@ import React from "react";
 
 export default async function Dashboard() {
     const paymentStatus = await usePaymentStatus();
+    console.log(paymentStatus);
+    
     const isPaidUser = paymentStatus === 'Paid' ? true : false
     console.log("ispaiduser", isPaidUser);
     
     const user = await currentUser();
     const { sessionClaims } = auth();
     const userID = sessionClaims?.userID as string;
-    console.log(userID);
     const res = await getStudentById(userID);
-    console.log(res);
     const jobs = res?.data?.jobs;
     const resume = res?.data?.resume;
     const cover = res?.data?.coverLetter;
