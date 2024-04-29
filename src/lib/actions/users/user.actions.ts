@@ -1,8 +1,8 @@
 "use server";
 import User from "@/lib/database/models/User/User";
-import dbConnect from "../../database/mongodb";
 import { CreateStudentProps, UpdateJobProps, UpdateStudentProps } from "./user.types";
 import { Jobs } from "@/lib/database/models/User/types";
+import { dbConnect } from "@/lib/database/mongodb";
 
 export async function createStudent(userDetails: CreateStudentProps) {
   try {
@@ -100,7 +100,7 @@ export async function updateStudentJobs(updateDetails: UpdateJobProps) {
 export async function getStudentById(id:string) {
   try {
     await dbConnect();
-    const user = await User.findOne({clerkId: id});
+    const user = await User.findOne({clerkId: id});    
     if (user) {
       return {
         success: true,
