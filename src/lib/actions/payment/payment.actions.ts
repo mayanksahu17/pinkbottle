@@ -1,6 +1,6 @@
 import Payment from "@/lib/database/models/Payment/payment";
-import dbConnect from "@/lib/database/mongodb";
 import { PaymentDetails } from "./payment.types";
+import { dbConnect } from "@/lib/database/mongodb";
 
 export async function createPayment(paymentDetails:PaymentDetails) {
     try {
