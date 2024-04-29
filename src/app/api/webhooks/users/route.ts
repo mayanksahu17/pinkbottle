@@ -70,7 +70,7 @@ async function handler(request: Request) {
     } 
     else if (eventType === "user.deleted") {
       const { id } = evt.data;
-      await deleteStudent(id);
+      // await deleteStudent(id);
       return new NextResponse(JSON.stringify({ message: "User deleted successfully" }), { status: 200 });
     } else {
       console.log(`Received unsupported event type: ${eventType}`);

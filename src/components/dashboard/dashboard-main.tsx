@@ -4,9 +4,11 @@ import { Button } from '../ui/button'
 import Link from 'next/link'
 import { AvatarImage, AvatarFallback, Avatar } from "@/components/ui/avatar";
 import { currentUser, useUser } from '@clerk/nextjs';
+import { CiLock } from 'react-icons/ci';
 
-const DashboardMain = () => {
+const DashboardMain = ({isPaidUser}:{isPaidUser:boolean}) => {
     const { isSignedIn, user } = useUser();
+    console.log(isPaidUser);
     
   return (
     <main
@@ -117,14 +119,15 @@ const DashboardMain = () => {
             <p className="mt-1 text-sm text-black">
               You will be greeted by your dedicated assistant
             </p>
-            <Button className="mt-4 text-black">
+            <Button disabled={!isPaidUser} className="mt-4 text-black">
               <a
                 href="https://apply.neetocal.com/meeting-with-anshul-jain"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 py-2 md:text-lg md:font-light px-4 md:px-6 md:glow-btn rounded-xl md:h-12 shiny-button border border-gray-800"
+                className={`inline-flex ${!isPaidUser&&'bg-white text-neutral-500 border-neutral-400'} items-center justify-center whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 py-2 md:text-lg md:font-light px-4 md:px-6 md:glow-btn rounded-xl md:h-12 shiny-button border border-gray-800`}
               >
                 Pick a splot
+              {!isPaidUser && <CiLock className='ml-2' />}
               </a>
             </Button>
           </div>

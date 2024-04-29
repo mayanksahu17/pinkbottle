@@ -13,13 +13,14 @@ import Resume from "../profile/resume";
 import JobsMain from "../jobs/jobs-main";
 import { Jobs } from "@/lib/database/models/User/types";
 import { User } from "@clerk/nextjs/server";
+import { redirect, useRouter } from "next/navigation";
 
 const DashboardPage = ({ isPaidUser, jobs, firstName , resume, cover}: { isPaidUser: boolean, jobs:Jobs[], firstName:string , resume:string, cover: string}) => {
   const {user} = useUser();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isAsideMenuOpen, setIsAsideMenuOpen] = useState(false);
   const [currentTab, setCurrentTab] = useState<'dashboard'|'jobs'|'call'|'profile'>('dashboard');
-
+  const router = useRouter();
   const toggleMenu = () => {
     setIsMenuOpen((prev) => !prev);
     if (!isMenuOpen) setIsAsideMenuOpen(false);
@@ -229,23 +230,24 @@ const DashboardPage = ({ isPaidUser, jobs, firstName , resume, cover}: { isPaidU
           )}
           <nav className="mt-16 flex flex-col space-y-1">
             {/* Your menu items here */}
-            <div className="flex items-center">
-              <Button
-                disabled={!isPaidUser}
-                className={`justify-start w-full disabled:cursor-not-allowed flex items-center text-sm text-black ${currentTab === 'profile'&&'bg-gray-200'}`}
-                variant="ghost"
-                onClick={()=> setCurrentTab('profile')}
-              >
-                Profile
-              </Button>
-                {!isPaidUser && <CiLock />}
-            </div>
+            
               <Button
                 className={`justify-start text-sm text-black ${currentTab === 'dashboard'&&'bg-gray-200'}`}
                 variant="ghost"
                 onClick={()=> setCurrentTab('dashboard')}
               >
                 Dashboard
+              </Button>
+              <Button
+                className={`justify-start text-sm text-black ${currentTab === 'call'&&'bg-gray-200'}`}
+                variant="ghost"
+                onClick={()=> {
+                  router.push("https://apply.neetocal.com/meeting-with-nikhil-jain")
+                
+                }}
+                
+              >
+                Call with Founders
               </Button>
             <div className="flex items-center">
               <Button
@@ -259,14 +261,17 @@ const DashboardPage = ({ isPaidUser, jobs, firstName , resume, cover}: { isPaidU
               </Button>
               {!isPaidUser && <CiLock />}
             </div>
+            <div className="flex items-center">
               <Button
-                className={`justify-start text-sm text-black ${currentTab === 'call'&&'bg-gray-200'}`}
+                disabled={!isPaidUser}
+                className={`justify-start w-full disabled:cursor-not-allowed flex items-center text-sm text-black ${currentTab === 'profile'&&'bg-gray-200'}`}
                 variant="ghost"
-                onClick={()=> setCurrentTab('call')}
-                
+                onClick={()=> setCurrentTab('profile')}
               >
-                Call with Founders
+                Profile
               </Button>
+                {!isPaidUser && <CiLock />}
+            </div>
             {/* <Button className="justify-start text-sm text-black" variant="ghost">
             Preferences
           </Button>
@@ -275,7 +280,7 @@ const DashboardPage = ({ isPaidUser, jobs, firstName , resume, cover}: { isPaidU
           </Button> */}
           </nav>
         </aside>
-        {currentTab==='dashboard'&&<DashboardMain />}
+        {currentTab==='dashboard'&&<DashboardMain isPaidUser={isPaidUser} />}
         {currentTab==='profile'&&<Resume resume={resume} cover={cover} />}
         {currentTab==='jobs'&&<JobsMain jobs={jobs} firstName={firstName} />}
       </div>

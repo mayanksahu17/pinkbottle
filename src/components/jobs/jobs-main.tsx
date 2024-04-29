@@ -9,12 +9,11 @@ const JobsMain = ({jobs, firstName}:{jobs:Jobs[], firstName:string}) => {
     <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-6 pt-[4rem]">
       <div className="flex items-center">
         <h1 className="font-semibold text-lg md:text-2xl">
-          Hey {firstName}, We are still working on this. Soon you can
-          checkout jobs we applied here!
+          Hey {firstName}, here's a list of the jobs you've applied for🧑‍💻
         </h1>
       </div>
 
-      <div className="flex items-center justify-center p-4">
+      {/* <div className="flex items-center justify-center p-4">
         <div className="relative flex-1 max-w-lg">
           <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
             <svg
@@ -48,7 +47,7 @@ const JobsMain = ({jobs, firstName}:{jobs:Jobs[], firstName:string}) => {
             name="search"
           />
         </div>
-      </div>
+      </div> */}
 
       <div className="overflow-x-auto relative shadow-md sm:rounded-lg">
         <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">

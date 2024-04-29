@@ -8,9 +8,7 @@ export default async function Dashboard() {
     const paymentStatus = await usePaymentStatus();
     console.log(paymentStatus);
     
-    const isPaidUser = paymentStatus === 'Paid' ? true : false
-    console.log("ispaiduser", isPaidUser);
-    
+    const isPaidUser = paymentStatus === 'Paid' ? true : false    
     const user = await currentUser();
     const { sessionClaims } = auth();
     const userID = sessionClaims?.userID as string;
