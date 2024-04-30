@@ -13,10 +13,8 @@ export async function POST(request: Request) {
   } catch (err) {
     return NextResponse.json({ message: "Webhook error", error: err });
   }
-
   const eventType = event.type;
   console.log("Event Type", eventType);
-
   switch (eventType) {
     case "checkout.session.async_payment_succeeded":
       const checkoutSessionAsyncPaymentSucceeded = event.data.object;
