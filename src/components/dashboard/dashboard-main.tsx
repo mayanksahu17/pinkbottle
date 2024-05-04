@@ -9,7 +9,7 @@ import { CiLock } from 'react-icons/ci';
 const DashboardMain = ({isPaidUser}:{isPaidUser:boolean}) => {
     const { isSignedIn, user } = useUser();
     console.log(isPaidUser);
-    
+    console.log(process.env.MONGODB_URI);
   return (
     <main
           className={`flex-1 px-4 py-6 pt-[4rem]`}

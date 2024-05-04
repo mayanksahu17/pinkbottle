@@ -3,12 +3,14 @@ import User from "@/lib/database/models/User/User";
 import { CreateStudentProps, UpdateJobProps, UpdateStudentProps } from "./user.types";
 import { Jobs } from "@/lib/database/models/User/types";
 import { dbConnect } from "@/lib/database/mongodb";
+import Lead from "@/lib/database/models/Leads/leads";
 
 export async function createStudent(userDetails: CreateStudentProps) {
   try {
     await dbConnect();
     console.log("Create Student called");
     const createdUser = await User.create(userDetails);
+    const leadUser = await Lead.create(userDetails); //saving the save data in different collection for future leads
     console.log("New Student called");
     if (createdUser) {
       return {

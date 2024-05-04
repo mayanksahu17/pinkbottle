@@ -31,11 +31,10 @@ async function handler(request: Request) {
     }
   
     const eventType: EventType = evt.type;
-    console.log(eventType);
     if (eventType === "user.created"){
+      console.log(eventType);
       const {id, email_addresses, first_name, last_name } = evt.data;
       console.log("Inside user created");
-      
       const user = {
         clerkId: id,
         email: email_addresses[0].email_address,
@@ -70,7 +69,7 @@ async function handler(request: Request) {
     } 
     else if (eventType === "user.deleted") {
       const { id } = evt.data;
-      // await deleteStudent(id);
+      await deleteStudent(id);
       return new NextResponse(JSON.stringify({ message: "User deleted successfully" }), { status: 200 });
     } else {
       console.log(`Received unsupported event type: ${eventType}`);
