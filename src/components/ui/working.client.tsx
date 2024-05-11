@@ -3,6 +3,7 @@ import React, { SVGProps, useState } from 'react';
 import Link from "next/link";
 import { UserButton, useUser } from "@clerk/nextjs";
 import { Button } from "@/components/ui/button"; // Adjust the path as necessary
+import Marquee from "react-fast-marquee";
 
 const Working = () => {
     const { isSignedIn, user } = useUser();
@@ -216,48 +217,65 @@ const Working = () => {
           </div>
         </div>
       </section>
-        <section className="text-gray-600 body-font bg-[#f7f8fa]">
-          <div className="container px-5 py-24 mx-auto">
-            <h1 className="text-3xl font-medium title-font text-center text-gray-900 mb-12">Testimonials</h1>
-            <div className="flex flex-wrap -m-4">
-              <div className="p-4 md:w-1/2 w-full">
-                <div className="h-full bg-white p-8 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 ease-in-out">
-                  <div className="flex justify-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="block w-10 h-10 text-blue-500 mb-4">
-                      <path d="M6.176 18H8V9.619C5.979 10.057 4.427 11.125 3.344 12.813 2.261 14.501 1.82 16.126 1.82 17.688c0 1.125.207 2.08.621 2.813.414.734 1.098 1.101 2.05 1.101 1.035 0 1.832-.353 2.387-1.062.553-.707.898-1.699 1.034-2.973l1.364.176c-.184 1.619-.68 2.943-1.49 3.973C9.07 23.846 7.863 24.5 6.5 24.5c-1.57 0-2.832-.457-3.787-1.371-.953-.914-1.431-2.098-1.431-3.55 0-1.836.473-3.652 1.42-5.45.947-1.797 2.395-3.176 4.344-4.137V18zm10 0h1.824V9.619c-2.021.438-3.573 1.506-4.656 3.194-.983 1.688-1.424 3.313-1.424 4.875 0 1.125.207 2.08.621 2.813.414.734 1.098 1.101 2.05 1.101 1.035 0 1.832-.353 2.387-1.062.555-.707.898-1.699 1.034-2.973l1.364.176c-.184 1.619-.68 2.943-1.49 3.973-.812 1.028-2.019 1.682-3.382 1.682-1.57 0-2.832-.457-3.787-1.371-.953-.914-1.431-2.098-1.431-3.55 0-1.836.473-3.652 1.42-5.45.947-1.797 2.395-3.176 4.344-4.137V18z" />
-                    </svg>
-                  </div>
-                  <p className="leading-relaxed mb-6 text-gray-600">The process was straightforward and efficient. I found my current job using this platform, and I couldn't be happier!</p>
-                  <div className="flex items-center">
-                    <div className="flex-grow">
-                      <span className="title-font font-medium text-gray-900">Jane Doe</span>
-                      <p className="text-gray-500 text-sm">UI Designer</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="p-4 md:w-1/2 w-full">
-                <div className="h-full bg-white p-8 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 ease-in-out">
-                  <div className="flex justify-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="block w-10 h-10 text-blue-500 mb-4">
-                      <path d="M6.176 18H8V9.619C5.979 10.057 4.427 11.125 3.344 12.813 2.261 14.501 1.82 16.126 1.82 17.688c0 1.125.207 2.08.621 2.813.414.734 1.098 1.101 2.05 1.101 1.035 0 1.832-.353 2.387-1.062.553-.707.898-1.699 1.034-2.973l1.364.176c-.184 1.619-.68 2.943-1.49 3.973C9.07 23.846 7.863 24.5 6.5 24.5c-1.57 0-2.832-.457-3.787-1.371-.953-.914-1.431-2.098-1.431-3.55 0-1.836.473-3.652 1.42-5.45.947-1.797 2.395-3.176 4.344-4.137V18zm10 0h1.824V9.619c-2.021.438-3.573 1.506-4.656 3.194-.983 1.688-1.424 3.313-1.424 4.875 0 1.125.207 2.08.621 2.813.414.734 1.098 1.101 2.05 1.101 1.035 0 1.832-.353 2.387-1.062.555-.707.898-1.699 1.034-2.973l1.364.176c-.184 1.619-.68 2.943-1.49 3.973-.812 1.028-2.019 1.682-3.382 1.682-1.57 0-2.832-.457-3.787-1.371-.953-.914-1.431-2.098-1.431-3.55 0-1.836.473-3.652 1.42-5.45.947-1.797 2.395-3.176 4.344-4.137V18z" />
-                    </svg>
-                  </div>
-                  <p className="leading-relaxed mb-6 text-gray-600">The process was straightforward and efficient. I found my current job using this platform, and I couldn't be happier!</p>
-                  <div className="flex items-center">
-                    <div className="flex-grow">
-                      <span className="title-font font-medium text-gray-900">Jane Doe</span>
-                      <p className="text-gray-500 text-sm">UI Designer</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              
 
-              {/* Additional testimonials would follow the pattern of the first */}
+<section className="text-gray-600 body-font bg-[#f7f8fa]">
+  <div className="container px-5 py-24 mx-auto">
+    <h1 className="text-3xl font-medium title-font text-center text-gray-900 mb-12">Testimonials</h1>
+    <Marquee gradient={false} speed={50} delay={0}>
+      <div className="flex flex-wrap justify-center gap-4 md:gap-8">
+        {/* Array to render testimonials multiple times to avoid large gap */}
+        {Array.from({ length: 2 }, () => (
+          <>
+            {/* Testimonial 1 */}
+            <div className="flex flex-col max-w-sm w-full">
+              <img className="w-32 md:w-40 lg:w-48 mx-auto p-4" src="microsoft.png" alt="Company Logo" />
+              <div className="flex items-center space-x-4 mb-4 justify-center">
+                <img src="/Anshul.jpeg?height=40&width=40" alt="Anshul Jain" className="w-10 h-10 rounded-full" />
+                <div>
+                  <h3 className="text-lg font-semibold">Anshul Jain</h3>
+                  <p className="text-sm text-gray-500">Software Engineer</p>
+                </div>
+              </div>
+              <p className="text-gray-600 px-2">
+                Facing a layoff during a recession with only 60 days left on my H1B visa, I was in a critical situation...
+              </p>
             </div>
-          </div>
-        </section></>
+            {/* Testimonial 2 */}
+            <div className="flex flex-col max-w-sm w-full">
+              <img className="w-32 md:w-40 lg:w-48 mx-auto p-4" src="microsoft.png" alt="Company Logo" />
+              <div className="flex items-center space-x-4 mb-4 justify-center">
+                <img src="/Nikhil.jpeg?height=50&width=50" alt="Nikhil Jain" className="w-10 h-10 rounded-full" />
+                <div>
+                  <h3 className="text-lg font-semibold">Nikhil Jain</h3>
+                  <p className="text-sm text-gray-500">Product Strategy & Growth</p>
+                </div>
+              </div>
+              <p className="text-gray-600 px-2">
+                As I work full time and could not spare much time for applying jobs. Applying each job is such a painful process...
+              </p>
+            </div>
+            {/* Testimonial 3 */}
+            <div className="flex flex-col max-w-sm w-full">
+              <img className="w-32 md:w-40 lg:w-48 mx-auto p-4" src="microsoft.png" alt="Company Logo" />
+              <div className="flex items-center space-x-4 mb-4 justify-center">
+                <img src="/Gaurav.png?height=40&width=40" alt="Gaurav Jain" className="w-10 h-10 rounded-full" />
+                <div>
+                  <h3 className="text-lg font-semibold">Gaurav Jain</h3>
+                  <p className="text-sm text-gray-500">Consultant</p>
+                </div>
+              </div>
+              <p className="text-gray-600 px-2">
+                I moved from India to Canada and recruiting worked very differently from where I was coming...
+              </p>
+            </div>
+          </>
+        ))}
+      </div>
+    </Marquee>
+  </div>
+</section>
+
+</>
     </div><footer className="bg-[#12083b]">
         <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between">
