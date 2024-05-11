@@ -1,3 +1,4 @@
+import { createStudent, deleteStudent, updateStudent } from "@/lib/actions/users/user.actions";
 import { prisma } from "../../../../../lib/db";
 import { clerkClient } from "@clerk/nextjs/server";
 import { IncomingHttpHeaders } from "http";
@@ -30,22 +31,45 @@ async function handler(request: Request) {
     }
   
     const eventType: EventType = evt.type;
-    if (eventType === "user.created" || eventType === "user.updated") {
-      const { id, ...attributes } = evt.data;
-      await prisma.user.upsert({
-        where: { externalId: id as string },
-        create: {
-          externalId: id as string,
-          attributes,
-        },
-        update: { attributes },
-      });
-      return new NextResponse(JSON.stringify({ message: "User processed successfully" }), { status: 200 });
-    } else if (eventType === "user.deleted") {
+    if (eventType === "user.created"){
+      console.log(eventType);
+      const {id, email_addresses, first_name, last_name } = evt.data;
+      console.log("Inside user created");
+      const user = {
+        clerkId: id,
+        email: email_addresses[0].email_address,
+        firstName:first_name,
+        lastName:last_name
+      };
+      console.log(user);
+      const newUser = await createStudent(user);
+      if(newUser){
+        await clerkClient.users.updateUserMetadata(id, {
+          publicMetadata: {
+            userId: newUser.data._id,
+            paymentStatus: newUser.data.payment.status
+          },
+        });
+      }
+      return NextResponse.json({ message: "OK", user: newUser });
+    } 
+    else if(eventType === "user.updated") {
+      const { id, email_addresses, first_name, last_name } = evt.data;
+      const user = {
+        email: email_addresses[0].email_address,
+        firstName:first_name,
+        lastName:last_name
+      };
+      const updateDetailsForDb = {
+        id:id,
+        updateDetails: user
+      }
+      const updatedUser = await updateStudent(updateDetailsForDb);
+      return NextResponse.json({ message: "OK", user: updatedUser });
+    } 
+    else if (eventType === "user.deleted") {
       const { id } = evt.data;
-      await prisma.user.delete({
-        where: { externalId: id as string },
-      });
+      await deleteStudent(id);
       return new NextResponse(JSON.stringify({ message: "User deleted successfully" }), { status: 200 });
     } else {
       console.log(`Received unsupported event type: ${eventType}`);

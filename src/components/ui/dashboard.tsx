@@ -6,21 +6,12 @@ import { UserButton, auth, useUser } from "@clerk/nextjs";
 import { JSX, SVGProps } from "react";
 import React, { useState } from 'react';
 import { AvatarImage, AvatarFallback, Avatar } from "@/components/ui/avatar"
-// Import the ContactModal from its file
-import { ContactModal } from '../../components/contactModal';
-  // Adjust the path according to your file structure
-
 
 
 const DashboardPage = () => {
     const { isSignedIn, user } = useUser();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isAsideMenuOpen, setIsAsideMenuOpen] = useState(false);
-
-    const [isOpen, setIsOpen] = useState(false);
-
-    // Function to toggle modal visibility
-    const toggleModal = () => setIsOpen(!isOpen);
 
   const toggleMenu = () => {
     setIsMenuOpen(prev => !prev);
@@ -162,7 +153,6 @@ const DashboardPage = () => {
       </div>
 
       {/* Aside Menu */}
-      <div className={`app-container ${isOpen ? 'filter blur-sm' : ''}`}>
       <aside className={`fixed inset-y-0 left-0 z-40 w-64 bg-[#f7f7f7] p-4 transform transition-transform duration-300 ease-in-out h-screen ${isAsideMenuOpen ? "translate-x-0" : "-translate-x-full"} md:relative md:translate-x-0 md:block shadow-xl`}>
         {/* Close Icon inside menu for mobile */}
         {isAsideMenuOpen && (
@@ -197,7 +187,6 @@ const DashboardPage = () => {
           </Button> */}
         </nav>
       </aside>
-      </div>
       <main className={`flex-1 px-4 py-6 pt-[4rem] ${isAsideMenuOpen ? 'pt-16' : 'pt-6'}`}>
     <div className="flex items-center space-x-4">
     <div className={`transition-all duration-300 ease-in-out ${isAsideMenuOpen ? 'mt-16' : 'mt-0'}`}>
@@ -221,13 +210,10 @@ const DashboardPage = () => {
         <path d="m9 18 6-6-6-6"></path>
     </svg>
 </button>
-<a href="#" onClick={toggleModal} className="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border-gray-800 bg-transparent shadow-sm hover:bg-accent hover:text-accent-foreground h-9 py-2 relative group md:font-bold px-4 md:px-6 border-2 rounded-xl md:text-md md:h-12">
-                <span className="absolute animate-pulse bottom-auto left-auto right-0 top-0 z-10 inline-block -translate-y-1/2 translate-x-2/4 rotate-0 skew-x-0 skew-y-0 scale-x-100 scale-y-100 rounded-full bg-primary p-1.5 text-xs"></span>
-                Talk to founder<span className="group-hover:animate-bounce ml-2">👋</span>
-            </a>
-
-            {/* Modal component */}
-            {isOpen && <ContactModal onClose={toggleModal} />}
+<a href="https://apply.neetocal.com/meeting-with-anshul-jain" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border-gray-800 bg-transparent shadow-sm hover:bg-accent hover:text-accent-foreground h-9 py-2 relative group md:font-bold px-4 md:px-6 border-2 rounded-xl md:text-md md:h-12" aria-haspopup="dialog" aria-expanded="false">
+  <span className="absolute animate-pulse bottom-auto left-auto right-0 top-0 z-10 inline-block -translate-y-1/2 translate-x-2/4 rotate-0 skew-x-0 skew-y-0 scale-x-100 scale-y-100 rounded-full bg-primary p-1.5 text-xs"></span>
+  Talk to founder<span className="group-hover:animate-bounce ml-2">👋</span>
+</a>
 
                 </div>
                 <div className="mt-6">
