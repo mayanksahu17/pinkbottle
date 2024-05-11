@@ -72,15 +72,15 @@ const HomePage = () => {
       className="min-h-screen text-black"
       style={{ backgroundColor: "#FFFFFF" }}
     >
-      <header className="flex items-center justify-between p-4 border-b border-gray-200">
-        <Link href="/">
-          <img
-            alt="Your Logo"
-            className="cursor-pointer h-8 md:h-10 transform scale-110 ml-4 md:ml-6" // Adjusted with margin-left classes
-            src="/Jobify.png"
-            style={{ transform: "scale(1.9)" }} // Scaling up by 180%
-          />
-        </Link>
+      <header className="flex items-center justify-between p-2 border-b border-gray-200">
+      <Link href="/">
+  <img
+    alt="Your Logo"
+    className="cursor-pointer h-10 md:h-12 transform scale-125 ml-4 md:ml-6" // Increased height and scale
+    src="/Hiredeasy.png"
+    style={{ transform: "scale(2.1)" }} // Scaling up by 210%
+  />
+</Link>
 
         {/* Hamburger Icon for Mobile */}
         <button
