@@ -11,7 +11,7 @@ interface Job {
 }
 
 interface JobsMainProps {
-  jobs: Job[];
+  jobs: (Job | { _id?: string })[]; // Allow for optional _id
   firstName: string;
 }
 
@@ -20,8 +20,18 @@ const JobsMain: React.FC<JobsMainProps> = ({ jobs, firstName }) => {
   const [jobsPerPage] = useState(7); // Number of jobs per page
   const [searchTerm, setSearchTerm] = useState('');
 
+  // Transform jobs to ensure `_id` is always a string
+  const transformedJobs: Job[] = jobs.map(job => ({
+    _id: job._id ?? 'N/A',
+    image: (job as Job).image ?? '',
+    title: (job as Job).title ?? '',
+    position: (job as Job).position ?? '',
+    date: (job as Job).date ?? '',
+    status: (job as Job).status ?? ''
+  }));
+
   // Filter jobs based on the search term
-  const filteredJobs = jobs.filter(job => 
+  const filteredJobs = transformedJobs.filter(job => 
     job.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
     job.status.toLowerCase().includes(searchTerm.toLowerCase())
   );
@@ -62,13 +72,13 @@ const JobsMain: React.FC<JobsMainProps> = ({ jobs, firstName }) => {
         />
       </div>
       <div className="flex flex-col md:flex-row justify-between items-center w-full mb-5">
-      <button onClick={downloadCSV} className="px-6 py-2 bg-green-500 hover:bg-green-600 text-white font-bold rounded-lg shadow transition duration-150 ease-in-out">
-    Export to CSV
-    </button>
-    <div className="text-lg text-gray-800 dark:text-white underline w-full md:w-auto text-center md:text-right">
-        Total Applications: {filteredJobs.length}
-    </div>
-</div>
+        <button onClick={downloadCSV} className="px-6 py-2 bg-green-500 hover:bg-green-600 text-white font-bold rounded-lg shadow transition duration-150 ease-in-out">
+          Export to CSV
+        </button>
+        <div className="text-lg text-gray-800 dark:text-white underline w-full md:w-auto text-center md:text-right">
+          Total Applications: {filteredJobs.length}
+        </div>
+      </div>
 
       <div className="overflow-x-auto relative shadow-md sm:rounded-lg">
         <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
