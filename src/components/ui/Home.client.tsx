@@ -133,9 +133,9 @@ const HomePage = () => {
                 Pricing
               </span>
             </Link>
-            <Link href="/Wall" passHref>
+            <Link href="/career" passHref>
               <span className="text-sm font-medium text-gray-700 hover:text-green-500 cursor-pointer block py-2">
-                Wall of Love
+                Career
               </span>
             </Link>
             <Link href="/" passHref>
@@ -191,9 +191,9 @@ const HomePage = () => {
                 Pricing
               </span>
             </Link>
-            <Link href="/Wall" passHref>
+            <Link href="/career" passHref>
               <span className="text-sm font-medium text-gray-500 hover:text-green-600 cursor-pointer mx-2">
-                Wall of Love
+                Career
               </span>
             </Link>
             <Link href="/" passHref>
@@ -227,12 +227,11 @@ const HomePage = () => {
           </div>
         </div>
       </header>
-      <div className="bg-[#bafff1] py-2 ">
+      <div className="bg-[#bafff1] py-4 shadow-md">
   <div className="max-w-xl mx-auto text-center">
-    <p className="text-sm text-gray-600">
+    <p className="text-base font-medium text-gray-800 animate-bounce">
       Not ready yet?
-      <Link href="/contact" passHref className="text-blue-500 hover:text-blue-700 underline pl-1">Get in touch with us
-      </Link>
+      <a href="/contact" className="text-blue-500 hover:text-blue-700 underline pl-1 transition duration-300 ease-in-out">Get in touch with us</a>
     </p>
   </div>
 </div>
@@ -266,11 +265,10 @@ Let us take the reins of your job application process! Our dedicated team crafts
                     </a>
                 </div>
             </div>
-            <div>
-    <img 
+            <div className="flex justify-center items-center h-auto max-w-full">  
+    <img className="h-auto max-w-full"
         alt="Person using laptop"
-        src="/Clarksonlogo.png"
-        style={{ width: "100%", height: "auto", border: "none", boxShadow: "none" }}
+        src="/Girlwithlaptop.png"
     />
 </div>
 
@@ -655,78 +653,48 @@ Let us take the reins of your job application process! Our dedicated team crafts
 </section>
 
 
-        <section className="bg-[#fffff] py-16">
-          <div className="max-w-6xl mx-auto px-4">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold">Our vetting process</h2>
+       <section className="bg-white py-16">
+    <div className="max-w-6xl mx-auto px-4">
+        <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-gray-800">Our Vetting Process</h2>
+        </div>
+        <div className="flex flex-col md:flex-row gap-8">
+            <div className="flex-1 space-y-8">
+                {/* Pair 1 */}
+                <div className="flex items-center hover:shadow-lg transition-shadow duration-300 ease-in-out rounded-lg p-4">
+                    <div className="flex-none bg-gray-200 overflow-hidden mr-4 rounded-md">
+                        <img src="/vettingone.webp" alt="Description for image 1" className="w-40 h-40 object-contains"/>
+                    </div>
+                    <div>
+                        <h3 className="text-xl font-semibold">34% off pass</h3>
+                        <p>Every candidate goes through a video interview and is tested for interpersonal skills and English fluency.</p>
+                    </div>
+                </div>
+                {/* Pair 2 */}
+                <div className="flex items-center hover:shadow-lg transition-shadow duration-300 ease-in-out rounded-lg p-4">
+                    <div className="flex-none bg-gray-200 overflow-hidden mr-4 rounded-md">
+                        <img src="/vettingtwo.webp" alt="Description for image 2" className="w-40 h-40 object-cover"/>
+                    </div>
+                    <div>
+                        <h3 className="text-xl font-semibold">12% off pass</h3>
+                        <p>Selected candidates are examined on their analytical capabilities by conducting two proctored tests.</p>
+                    </div>
+                </div>
+                {/* Pair 3 */}
+                <div className="flex items-center hover:shadow-lg transition-shadow duration-300 ease-in-out rounded-lg p-4">
+                    <div className="flex-none bg-gray-200 overflow-hidden mr-4 rounded-md">
+                        <img src="/vettingthree.webp" alt="Description for image 3" className="w-40 h-40 object-cover"/>
+                    </div>
+                    <div>
+                        <h3 className="text-xl font-semibold">2% off pass</h3>
+                        <p>On clearing the exam, each of these candidates will be given to complete 25 mock job applications to fill and draft email and LinkedIn responses to particular situations.</p>
+                    </div>
+                </div>
             </div>
-            <div className="flex flex-col md:flex-row gap-8">
-              <div className="flex-1 space-y-8">
-                {/* <!-- Pair 1 --> */}
-                <div className="flex items-center">
-                  <div className="w-100 h-100 bg-gray-200 overflow-hidden mr-4">
-                    <img
-                      src="/vettingone.webp"
-                      alt="Description for image 1"
-                      className=".Sprite w-full h-full"
-                    />
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-semibold">34% off pass</h3>
-                    <p>
-                      Every candidate goes through a video interview and is
-                      tested for interpersonal skills and English fluency.
-                    </p>
-                  </div>
-                </div>
-                {/* <!-- Pair 2 --> */}
-                <div className="flex items-center">
-                  <div className="w-100 h-100 bg-gray-200 overflow-hidden mr-4">
-                    <img
-                      src="/vettingtwo.webp"
-                      alt="Description for image 1"
-                      className=".Sprite w-full h-full"
-                    />
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-semibold">12% off pass</h3>
-                    <p>
-                      Selected candidates are examined on their analytical
-                      capabilities by conducting two proctored tests.
-                    </p>
-                  </div>
-                </div>
-                {/* <!-- Pair 3 --> */}
-                <div className="flex items-center">
-                  <div className="w-100 h-100 bg-gray-200 overflow-hidden mr-4">
-                    <img
-                      src="/vettingthree.webp"
-                      alt="Description for image 1"
-                      className=".Sprite w-full h-full"
-                    />
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-semibold">2% off pass</h3>
-                    <p>
-                      On clearing the exam, each of these candidates will be
-                      given to complete 25 mock job applications to fill and
-                      draft email and LinkedIn responses to particular
-                      situations.
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div className="flex-1">
-                {/* <!-- Right side content --> */}
-                <div className="space-y-8">
-                  <div>
-                    <h3 className="text-xl font-semibold mb-2">
-                      Video Interview
-                    </h3>
-                    <p className="mb-4">
-                      Every candidate goes through a video interview to ensure
-                      they possess the skills and are a cultural fit.
-                    </p>
+            <div className="flex-1 space-y-8">
+                <div>
+                    <h3 className="text-xl font-semibold">Video Interview</h3>
+                    <p className="mb-4">Every candidate goes through a video interview to ensure they possess the skills and are a cultural fit.</p>
                     <button className="inline-flex mr-4 items-center justify-center whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 py-2 md:text-lg md:font-light px-4 md:px-6 md:glow-btn rounded-xl md:h-12 shiny-button border border-gray-800">
     Explore Platform
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="md:ml-1 h-5 w-5 text-gray-400  animate-pulse">
@@ -736,20 +704,15 @@ Let us take the reins of your job application process! Our dedicated team crafts
         <path d="m9 18 6-6-6-6"></path>
     </svg>
 </button>
-<a href="#" onClick={toggleModal} className="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border-gray-800 bg-transparent shadow-sm hover:bg-accent hover:text-accent-foreground h-9 py-2 relative group md:font-bold px-4 md:px-6 border-2 rounded-xl md:text-md md:h-12">
-                <span className="absolute animate-pulse bottom-auto left-auto right-0 top-0 z-10 inline-block -translate-y-1/2 translate-x-2/4 rotate-0 skew-x-0 skew-y-0 scale-x-100 scale-y-100 rounded-full bg-primary p-1.5 text-xs"></span>
-                Talk to founder<span className="group-hover:animate-bounce ml-2">👋</span>
-            </a>
-
-
-
-                  </div>
-                  {/* <!-- Add additional content here if needed --> */}
+                    <a href="#" onClick={toggleModal} className="inline-flex items-center justify-center gap-2 px-6 py-2 text-sm md:text-lg font-bold text-gray-800 bg-transparent border-2 border-gray-800 rounded-xl hover:bg-gray-100 transition-all">
+                        Talk to Founder <span className="animate-bounce ml-2">👋</span>
+                    </a>
                 </div>
-              </div>
             </div>
-          </div>
-        </section>
+        </div>
+    </div>
+</section>
+
 
         <div className="bg-white py-12">
   <h2 className="text-3xl font-bold text-center text-gray-800 mb-3">
@@ -826,59 +789,59 @@ Let us take the reins of your job application process! Our dedicated team crafts
               {/* Increase the base size for better visibility on mobile */}
               
                 <img
-                  className="w-32 md:w-32 lg:w-32 p-4"
-                  src="CalState.jpeg"
-                  alt="Cal State"
+                  className="w-36 md:w-36 lg:w-36 p-4"
+                  src="microsoft.png"
+                  alt="Microsoft"
                 />
                 <img
-                  className="w-32 md:w-32 lg:w-32 p-4"
-                  src="BostonUniversity.gif"
-                  alt="Boston University"
+                  className="w-36 md:w-36 lg:w-36 p-4"
+                  src="Amazon.png"
+                  alt="Amazon"
                 />
                 <img
-                  className="w-32 md:w-32 lg:w-32 p-4"
-                  src="RIT.png"
-                  alt="NYIT"
+                  className="w-36 md:w-36 lg:w-36 p-4"
+                  src="apexanalytix.svg"
+                  alt="Apex Analytix"
                 />
                 <img
-                  className="w-32 md:w-32 lg:w-32 p-4"
-                  src="Clarksonlogo.png"
-                  alt="Clarkson University"
+                  className="w-36 md:w-36 lg:w-36 p-4"
+                  src="wex.svg"
+                  alt="Wex"
                 />
                 <img
-                  className="w-32 md:w-32 lg:w-32 p-4"
-                  src="Bridgeport.png"
-                  alt="Bridgeport University"
+                  className="w-36 md:w-36 lg:w-36 p-4"
+                  src="Databricks.png"
+                  alt="Data Bricks"
                 />
                 <img
-                  className="w-32 md:w-32 lg:w-32 p-4"
-                  src="StevensLogo.png"
-                  alt="Stevens Institute"
+                  className="w-36 md:w-36 lg:w-36 p-4"
+                  src="FIS.png"
+                  alt="FIS"
                 />
                 <img
-                  className="w-32 md:w-32 lg:w-32 p-4"
-                  src="TexasLogo.png"
-                  alt="Texas A&M"
+                  className="w-36 md:w-36 lg:w-36 p-4"
+                  src="MissionPower.jpeg"
+                  alt="MissionPower"
                 />
                 <img
-                  className="w-32 md:w-32 lg:w-32 p-4"
-                  src="DrexelLogo.png"
-                  alt="Drexel University"
+                  className="w-36 md:w-36 lg:w-36 p-4"
+                  src="Nvidia.png"
+                  alt="Nvidia"
                 />
                 <img
-                  className="w-32 md:w-32 lg:w-32 p-4"
-                  src="NortheasternLogo.png"
-                  alt="Northeastern University"
+                  className="w-36 md:w-36 lg:w-36 p-4"
+                  src="SocieteGenerale.png"
+                  alt="SocieteGenerale"
                 />
                 <img
-                  className="w-32 md:w-32 lg:w-32 p-4"
-                  src="KentState.png"
-                  alt="Michigan State"
+                  className="w-36 md:w-36 lg:w-36 p-4"
+                  src="Tinder.png"
+                  alt="Tinder"
                 />
                 <img
-                  className="w-32 md:w-32 lg:w-32 p-4"
-                  src="Pacelogo.png"
-                  alt="Pace University"
+                  className="w-36 md:w-36 lg:w-36 p-4"
+                  src="spglobal.svg"
+                  alt="spglobal"
                 />
             </Marquee>
           </div>

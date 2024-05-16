@@ -12,7 +12,7 @@ const Navbar = () => {
         <img
           alt="Your Logo"
           className="cursor-pointer h-8 md:h-10 transform scale-110 ml-4 md:ml-6" // Adjusted with margin-left classes
-          src="/Jobify.png"
+          src="/Hiredeasy.png"
           style={{ transform: "scale(1.9)" }} // Scaling up by 180%
         />
       </Link>
@@ -30,6 +30,11 @@ const Navbar = () => {
         <Link href="/pricing" passHref>
           <span className="text-sm font-medium text-gray-500 hover:text-green-600 cursor-pointer">
             Pricing
+          </span>
+        </Link>
+        <Link href="/pricing" passHref>
+          <span className="text-sm font-medium text-gray-500 hover:text-green-600 cursor-pointer">
+            Careers
           </span>
         </Link>
         <Link href="/trial" passHref>
