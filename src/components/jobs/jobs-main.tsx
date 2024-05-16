@@ -1,108 +1,130 @@
-"use client"
-import { getStudentById } from "@/lib/actions/users/user.actions";
-import { Jobs } from "@/lib/database/models/User/types";
-import { auth, currentUser } from "@clerk/nextjs";
-import React from "react";
+import React, { useState } from "react";
+import { saveAs } from 'file-saver';
 
-const JobsMain = ({jobs, firstName}:{jobs:Jobs[], firstName:string}) => {
+interface Job {
+  _id: string;
+  image: string;
+  title: string;
+  position: string;
+  date: string;
+  status: string;
+}
+
+interface JobsMainProps {
+  jobs: Job[];
+  firstName: string;
+}
+
+const JobsMain: React.FC<JobsMainProps> = ({ jobs, firstName }) => {
+  const [currentPage, setCurrentPage] = useState(1);
+  const [jobsPerPage] = useState(7); // Number of jobs per page
+  const [searchTerm, setSearchTerm] = useState('');
+
+  // Filter jobs based on the search term
+  const filteredJobs = jobs.filter(job => 
+    job.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    job.status.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const indexOfLastJob = currentPage * jobsPerPage;
+  const indexOfFirstJob = indexOfLastJob - jobsPerPage;
+  const currentJobs = filteredJobs.slice(indexOfFirstJob, indexOfLastJob);
+
+  const pageCount = Math.ceil(filteredJobs.length / jobsPerPage);
+  const pageNumbers = Array.from({ length: pageCount }, (_, i) => i + 1);
+
+  // Helper function to format date
+  const formatDate = (dateString: string) => new Date(dateString).toLocaleDateString();
+
+  const downloadCSV = () => {
+    const header = "ID,Image,Title,Position,Date,Status\n";
+    const rows = filteredJobs.map(job => 
+      `${job._id},${job.image},${job.title},${job.position},${formatDate(job.date)},${job.status}`
+    ).join("\n");
+    
+    const csvContent = "data:text/csv;charset=utf-8," + header + rows;
+    const encodedUri = encodeURI(csvContent);
+    saveAs(encodedUri, "jobs_export.csv");
+  };
+
   return (
-    <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-6 pt-[4rem]">
-      <div className="flex items-center">
-        <h1 className="font-semibold text-lg md:text-2xl">
-          Hey {firstName}, here's a list of the jobs you've applied for🧑‍💻
+    <main className="flex flex-col w-full p-4 md:p-6 pt-16">
+      <div className="flex flex-col items-center w-full mb-4">
+        <h1 className="font-semibold text-lg md:text-2xl text-gray-800 dark:text-white">
+          Hey {firstName}, here's a list of the jobs you've applied for 🧑‍💻
         </h1>
+        <input
+          type="text"
+          placeholder="Search jobs..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="p-2 w-full max-w-md border rounded shadow mt-4"
+        />
       </div>
-
-      {/* <div className="flex items-center justify-center p-4">
-        <div className="relative flex-1 max-w-lg">
-          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-            <svg
-              className="h-5 w-5 text-gray-500"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-              aria-hidden="true"
-            >
-              <path
-                fill-rule="evenodd"
-                d="M10 18a8 8 0 100-16 8 8 0 000 16zm-5-8a5 5 0 1110 0 5 5 0 01-10 0z"
-                clip-rule="evenodd"
-              />
-              <path
-                fill-rule="evenodd"
-                d="M12.293 12.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414-1.414l4-4z"
-                clip-rule="evenodd"
-              />
-              <path
-                fill-rule="evenodd"
-                d="M10 18a8 8 0 100-16 8 8 0 000 16zM10 4a6 6 0 100 12 6 6 0 000-12z"
-                clip-rule="evenodd"
-              />
-            </svg>
-          </div>
-          <input
-            className="block w-full bg-white text-gray-700 border border-gray-300 rounded-md py-2 pl-10 pr-3 shadow-sm focus:outline-none focus:border-blue-500 focus:ring-blue-500 focus:ring-1 sm:text-sm"
-            placeholder="Search job..."
-            type="search"
-            name="search"
-          />
-        </div>
-      </div> */}
+      <div className="flex flex-col md:flex-row justify-between items-center w-full mb-5">
+      <button onClick={downloadCSV} className="px-6 py-2 bg-green-500 hover:bg-green-600 text-white font-bold rounded-lg shadow transition duration-150 ease-in-out">
+    Export to CSV
+    </button>
+    <div className="text-lg text-gray-800 dark:text-white underline w-full md:w-auto text-center md:text-right">
+        Total Applications: {filteredJobs.length}
+    </div>
+</div>
 
       <div className="overflow-x-auto relative shadow-md sm:rounded-lg">
         <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-          <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+          <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-white">
             <tr>
-              <th scope="col" className="py-3 px-6">
-                Image
-              </th>
-              <th scope="col" className="py-3 px-6">
-                Job Title
-              </th>
-              <th scope="col" className="py-3 px-6 hidden md:table-cell">
-                Applied
-              </th>
-              <th scope="col" className="py-3 px-6 hidden md:table-cell">
-                Date
-              </th>
-              <th scope="col" className="py-3 px-6">
-                Status
-              </th>
+              <th scope="col" className="py-3 px-6">Image</th>
+              <th scope="col" className="py-3 px-6">Job Title</th>
+              <th scope="col" className="py-3 px-6">Position</th>
+              <th scope="col" className="py-3 px-6">Date</th>
+              <th scope="col" className="py-3 px-6">Status</th>
             </tr>
           </thead>
           <tbody>
-            {jobs && jobs.length > 0 ? (
-              jobs.map((job:Jobs) => {
-                return (
-                  <tr
-                    key={job._id}
-                    className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-                  >
-                    <td className="py-4 px-6">
-                      <img
-                        alt="Company logo"
-                        className="h-10 w-10 rounded-full"
-                        src="/amazon.jpeg"
-                      />
-                    </td>
-                    <td className="py-4 px-6">{job.title}</td>
-                    <td className="py-4 px-6 hidden md:table-cell">
-                      {job.position}
-                    </td>
-                    <td className="py-4 px-6">03/23/2024</td>
-                    <td className="py-4 px-6">{job.status}</td>
-                  </tr>
-                );
-              })
-            ) : (
-              <div className=" w-full">
-                <p className="text-black p-6 text-lg font-medium">
-                  No Jobs are available
-                </p>
-              </div>
+            {currentJobs.length > 0 ? currentJobs.map(job => (
+              <tr key={job._id}>
+                <td className="py-4 px-6">
+                  <img alt="Company logo" className="h-10 w-10 rounded-full" src={job.image} />
+                </td>
+                <td className="py-4 px-6">{job.title}</td>
+                <td className="py-4 px-6">{job.position}</td>
+                <td className="py-4 px-6">{formatDate(job.date)}</td>
+                <td className="py-4 px-6">{job.status}</td>
+              </tr>
+            )) : (
+              <tr>
+                <td colSpan={5} className="text-center py-4">No Jobs are available</td>
+              </tr>
             )}
           </tbody>
         </table>
+      </div>
+
+      <div className="flex justify-center items-center mt-4">
+        <button
+          disabled={currentPage === 1}
+          onClick={() => setCurrentPage(currentPage - 1)}
+          className={`px-4 py-2 border rounded text-sm ${currentPage === 1 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-blue-500 hover:text-white'}`}
+        >
+          Prev
+        </button>
+        {pageNumbers.map((number: number) => (
+          <button
+            key={number}
+            onClick={() => setCurrentPage(number)}
+            className={`mx-1 px-4 py-2 border rounded text-sm ${number === currentPage ? 'bg-blue-500 text-white' : 'hover:bg-blue-500 hover:text-white'}`}
+          >
+            {number}
+          </button>
+        ))}
+        <button
+          disabled={currentPage === pageCount}
+          onClick={() => setCurrentPage(currentPage + 1)}
+          className={`px-4 py-2 border rounded text-sm ${currentPage === pageCount ? 'opacity-50 cursor-not-allowed' : 'hover:bg-blue-500 hover:text-white'}`}
+        >
+          Next
+        </button>
       </div>
     </main>
   );
