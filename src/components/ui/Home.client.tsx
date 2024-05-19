@@ -8,6 +8,9 @@ import { Swiper, SwiperSlide, useSwiperSlide } from "swiper/react";
 import "swiper/css";
 import Marquee from "react-fast-marquee";
 import { ContactModal } from "../contactModal";
+import Help from '../GetInTouch/Help';
+import Model from '../GetInTouch/Model'
+import Footer from "../footer/footer";
 
 type WindowSize = {
   width: number | undefined;
@@ -67,6 +70,11 @@ const HomePage = () => {
     },
     // Add more testimonials as needed
   ];
+
+  //get in touch
+  const handleClose = () => setShowForm(false);
+  const [showForm, setShowForm] = useState(false);
+
   return (
     <div
       className="min-h-screen text-black"
@@ -133,9 +141,9 @@ const HomePage = () => {
                 Pricing
               </span>
             </Link>
-            <Link href="/Wall" passHref>
+            <Link href="/career" passHref>
               <span className="text-sm font-medium text-gray-700 hover:text-green-500 cursor-pointer block py-2">
-                Wall of Love
+                Career
               </span>
             </Link>
             <Link href="/" passHref>
@@ -191,9 +199,9 @@ const HomePage = () => {
                 Pricing
               </span>
             </Link>
-            <Link href="/Wall" passHref>
+            <Link href="/career" passHref>
               <span className="text-sm font-medium text-gray-500 hover:text-green-600 cursor-pointer mx-2">
-                Wall of Love
+                Career
               </span>
             </Link>
             <Link href="/" passHref>
@@ -227,15 +235,43 @@ const HomePage = () => {
           </div>
         </div>
       </header>
-      <div className="bg-[#bafff1] py-2 ">
-  <div className="max-w-xl mx-auto text-center">
-    <p className="text-sm text-gray-600">
-      Not ready yet?
-      <Link href="/contact" passHref className="text-blue-500 hover:text-blue-700 underline pl-1">Get in touch with us
-      </Link>
-    </p>
-  </div>
-</div>
+      <div className="bg-[#bafff1] py-4 shadow-md">
+      <div className="max-w-xl mx-auto text-center px-4">
+        <p className="text-base font-medium text-gray-800 animate-bounce">
+          Not ready yet?
+          <a 
+            href="#"
+            onClick={() => setShowForm(true)}
+            className="text-blue-600 hover:text-blue-700 underline pl-1 transition duration-300 ease-in-out"
+          >
+            Get in touch with us
+          </a>
+        </p>
+      </div>
+      <Model show={showForm} onClose={handleClose}>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-6">
+          <div className="flex flex-col justify-center items-center p-4">
+            <h2 className="text-xl md:text-2xl font-bold text-gray-800 mt-4 text-center">Schedule a Call With Founders</h2>
+            <button className="flex items-center justify-center gap-2 px-6 py-2 text-sm md:text-lg font-medium text-primary-foreground bg-primary rounded-full hover:bg-primary-dark transition-all shadow-lg border">
+        <span className="rounded-full bg-white p-2"> {/* Increased padding for a bigger circle */}
+            {/* Custom image */}
+            <img src="Nikhil.jpeg" alt="Custom Image" className="h-6 w-6" /> {/* Adjust height and width as needed */}
+        </span>
+        <span>Schedule a call</span> {/* Corrected to use a span for text content */}
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="md:ml-1 h-5 w-5 text-gray-400  animate-pulse">
+            <path d="m9 18 6-6-6-6"></path>
+        </svg>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="-ml-3 h-5 w-5 animate-pulse">
+            <path d="m9 18 6-6-6-6"></path>
+        </svg>
+    </button>
+
+            <p className="mt-4 text-sm md:text-lg text-center text-gray-600">Schedule a personal call with our founders</p>
+          </div>
+          <Help />
+        </div>
+      </Model>
+    </div>
 
       <main>
     <section className="bg-[#faf8f2] py-32">
@@ -266,11 +302,10 @@ Let us take the reins of your job application process! Our dedicated team crafts
                     </a>
                 </div>
             </div>
-            <div>
-    <img 
+            <div className="flex justify-center items-center h-auto max-w-full">  
+    <img className="h-auto max-w-full"
         alt="Person using laptop"
-        src="/Clarksonlogo.png"
-        style={{ width: "100%", height: "auto", border: "none", boxShadow: "none" }}
+        src="/Girlwithlaptop.png"
     />
 </div>
 
@@ -346,7 +381,7 @@ Let us take the reins of your job application process! Our dedicated team crafts
           </div>
         </div>
 
-        <section className="py-16">
+        {/* <section className="py-16">
           <div className="max-w-6xl mx-auto px-4">
             <h2 className="text-3xl font-bold mb-8 text-gray-800 ">
               How it works
@@ -437,7 +472,78 @@ Let us take the reins of your job application process! Our dedicated team crafts
               </div>
             </div>
           </div>
-        </section>
+        </section> */}
+
+<section className="py-16">
+  <div className="max-w-6xl mx-auto px-4">
+    <h2 className="text-4xl font-extrabold mb-8 text-gray-800 text-center">
+      How it works
+    </h2>
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div className="space-y-8">
+        <div className="flex items-start">
+        <div className="flex-shrink-0 h-10 w-10 flex items-center justify-center border-2 border-black text-black-500 rounded-full text-lg font-bold mr-4">
+            1
+          </div>
+          <div>
+            <h3 className="text-xl font-semibold mb-1">Get Started</h3>
+            <p className="text-sm text-gray-600">
+              Sign up and hop on an onboarding call to meet your dedicated Career Assistant. During this call, we will discuss your career goals and preferences to tailor our services to your needs.
+            </p>
+          </div>
+        </div>
+        <div className="flex items-start">
+        <div className="flex-shrink-0 h-10 w-10 flex items-center justify-center border-2 border-black text-black-500 rounded-full text-lg font-bold mr-4">
+            2
+          </div>
+          <div>
+            <h3 className="text-xl font-semibold mb-1">Personalized Job Applications</h3>
+            <p className="text-sm text-gray-600">
+              Your Assistant will manually apply to delegated jobs on your behalf. We utilize advanced algorithms and personalized strategies to ensure your applications stand out to potential employers. We will communicate updates daily on WhatsApp to keep you informed of your application status.
+            </p>
+          </div>
+        </div>
+        <div className="flex items-start">
+        <div className="flex-shrink-0 h-10 w-10 flex items-center justify-center border-2 border-black text-black-500 rounded-full text-lg font-bold mr-4">
+            3
+          </div>
+          <div>
+            <h3 className="text-xl font-semibold mb-1">Get 5X more interviews</h3>
+            <p className="text-sm text-gray-600">
+              You get more interviews thus higher chances of landing in a full-time role. Our data-driven approach significantly increases your chances of getting hired by the best companies. It's just a numbers game, and we help tilt the odds in your favor.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div className="space-y-8">
+        <div className="flex items-start">
+        <div className="flex-shrink-0 h-10 w-10 flex items-center justify-center border-2 border-black text-black-500 rounded-full text-lg font-bold mr-4">
+            4
+          </div>
+          <div>
+            <h3 className="text-xl font-semibold mb-1">Continuous Support and Feedback</h3>
+            <p className="text-sm text-gray-600">
+              We provide continuous support throughout your job search journey. Your Career Assistant will offer feedback on your resume, cover letters, and interview techniques. We also provide tips and resources to help you improve and succeed in your job search.
+            </p>
+          </div>
+        </div>
+        <div className="flex items-start">
+        <div className="flex-shrink-0 h-10 w-10 flex items-center justify-center border-2 border-black text-black-500 rounded-full text-lg font-bold mr-4">
+            5
+          </div>
+          <div>
+            <h3 className="text-xl font-semibold mb-1">Land Your Dream Job</h3>
+            <p className="text-sm text-gray-600">
+              Our ultimate goal is to help you land your dream job. We celebrate your success and continue to provide support as you start your new role. Your success is our success, and we are committed to helping you achieve your career aspirations.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
 
         <section className="bg-white py-10 bg-[#ffffff] mt-35 mb-40">
   <div className="max-w-6xl mx-auto px-4">
@@ -466,30 +572,30 @@ Let us take the reins of your job application process! Our dedicated team crafts
       </div>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mt-10">
     <div className="text-center text-justify">
-        <span className="text-5xl font-bold text-black">93%</span>
+        <span className="text-5xl font-bold text-black">72%</span>
         <p className="text-lg text-gray-700 font-calibri">
-            Landed full-time roles in 3 months
+        Landed Full-Time Roles Within 2 Months
         </p>
         <p className="text-gray-700 font-calibri text-sm">
-            47% of them are from the roles we applied to and remaining 44% are from their personal networking and individual efforts.
+          Our clients achieve remarkable results, with 72% securing full-time positions in just three months. Impressively, 47% of these roles are obtained through our strategic applications, while the remaining 44% come from leveraging personal networks and individual efforts.
         </p>
     </div>
     <div className="text-center text-justify text-sm">
-        <span className="text-5xl font-bold text-black ">40x</span>
+        <span className="text-5xl font-bold text-black ">80x</span>
         <p className="text-lg text-gray-700 font-calibri">
             Less time spent in job search
         </p>
         <p className="text-gray-700 font-calibri">
-            It takes 5 months on average to land in a job according to The U.S. Bureau of Labor Statistics. We cut short it to anywhere between 45 days to 3 months.
+        Our clients achieve remarkable results, with 72% securing full-time positions in just three months. Impressively, 47% of these roles are obtained through our strategic applications, while the remaining 44% come from leveraging personal networks and individual efforts.
         </p>
     </div>
     <div className="text-center text-justify text-sm">
-        <span className="text-5xl font-bold text-black">200x</span>
+        <span className="text-5xl font-bold text-black">600x</span>
         <p className="text-lg text-gray-700 font-calibri">
             Return on Investment.
         </p>
         <p className="text-gray-700 font-calibri">
-            The weeks we saved can mean an extra $20K in your pocket. Plus, Multiple offers often lead to a $30K salary increase.
+        By cutting weeks off the job search, we help clients gain an extra $20K in earnings. Additionally, receiving multiple offers can boost salaries by an average of $30K, leading to a substantial increase in overall compensation.
         </p>
     </div>
 </div>
@@ -655,78 +761,48 @@ Let us take the reins of your job application process! Our dedicated team crafts
 </section>
 
 
-        <section className="bg-[#fffff] py-16">
-          <div className="max-w-6xl mx-auto px-4">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold">Our vetting process</h2>
+       <section className="bg-white py-16">
+    <div className="max-w-6xl mx-auto px-4">
+        <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-gray-800">Our Vetting Process</h2>
+        </div>
+        <div className="flex flex-col md:flex-row gap-8">
+            <div className="flex-1 space-y-8">
+                {/* Pair 1 */}
+                <div className="flex items-center hover:shadow-lg transition-shadow duration-300 ease-in-out rounded-lg p-4">
+                    <div className="flex-none bg-gray-200 overflow-hidden mr-4 rounded-md">
+                        <img src="/vettingone.webp" alt="Description for image 1" className="w-40 h-40 object-contains"/>
+                    </div>
+                    <div>
+                        <h3 className="text-xl font-semibold">34% off pass</h3>
+                        <p>Every candidate goes through a video interview and is tested for interpersonal skills and English fluency.</p>
+                    </div>
+                </div>
+                {/* Pair 2 */}
+                <div className="flex items-center hover:shadow-lg transition-shadow duration-300 ease-in-out rounded-lg p-4">
+                    <div className="flex-none bg-gray-200 overflow-hidden mr-4 rounded-md">
+                        <img src="/vettingtwo.webp" alt="Description for image 2" className="w-40 h-40 object-cover"/>
+                    </div>
+                    <div>
+                        <h3 className="text-xl font-semibold">12% off pass</h3>
+                        <p>Selected candidates are examined on their analytical capabilities by conducting two proctored tests.</p>
+                    </div>
+                </div>
+                {/* Pair 3 */}
+                <div className="flex items-center hover:shadow-lg transition-shadow duration-300 ease-in-out rounded-lg p-4">
+                    <div className="flex-none bg-gray-200 overflow-hidden mr-4 rounded-md">
+                        <img src="/vettingthree.webp" alt="Description for image 3" className="w-40 h-40 object-cover"/>
+                    </div>
+                    <div>
+                        <h3 className="text-xl font-semibold">2% off pass</h3>
+                        <p>On clearing the exam, each of these candidates will be given to complete 25 mock job applications to fill and draft email and LinkedIn responses to particular situations.</p>
+                    </div>
+                </div>
             </div>
-            <div className="flex flex-col md:flex-row gap-8">
-              <div className="flex-1 space-y-8">
-                {/* <!-- Pair 1 --> */}
-                <div className="flex items-center">
-                  <div className="w-100 h-100 bg-gray-200 overflow-hidden mr-4">
-                    <img
-                      src="/vettingone.webp"
-                      alt="Description for image 1"
-                      className=".Sprite w-full h-full"
-                    />
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-semibold">34% off pass</h3>
-                    <p>
-                      Every candidate goes through a video interview and is
-                      tested for interpersonal skills and English fluency.
-                    </p>
-                  </div>
-                </div>
-                {/* <!-- Pair 2 --> */}
-                <div className="flex items-center">
-                  <div className="w-100 h-100 bg-gray-200 overflow-hidden mr-4">
-                    <img
-                      src="/vettingtwo.webp"
-                      alt="Description for image 1"
-                      className=".Sprite w-full h-full"
-                    />
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-semibold">12% off pass</h3>
-                    <p>
-                      Selected candidates are examined on their analytical
-                      capabilities by conducting two proctored tests.
-                    </p>
-                  </div>
-                </div>
-                {/* <!-- Pair 3 --> */}
-                <div className="flex items-center">
-                  <div className="w-100 h-100 bg-gray-200 overflow-hidden mr-4">
-                    <img
-                      src="/vettingthree.webp"
-                      alt="Description for image 1"
-                      className=".Sprite w-full h-full"
-                    />
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-semibold">2% off pass</h3>
-                    <p>
-                      On clearing the exam, each of these candidates will be
-                      given to complete 25 mock job applications to fill and
-                      draft email and LinkedIn responses to particular
-                      situations.
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div className="flex-1">
-                {/* <!-- Right side content --> */}
-                <div className="space-y-8">
-                  <div>
-                    <h3 className="text-xl font-semibold mb-2">
-                      Video Interview
-                    </h3>
-                    <p className="mb-4">
-                      Every candidate goes through a video interview to ensure
-                      they possess the skills and are a cultural fit.
-                    </p>
+            <div className="flex-1 space-y-8">
+                <div>
+                    <h3 className="text-xl font-semibold">Video Interview</h3>
+                    <p className="mb-4">Every candidate goes through a video interview to ensure they possess the skills and are a cultural fit.</p>
                     <button className="inline-flex mr-4 items-center justify-center whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 py-2 md:text-lg md:font-light px-4 md:px-6 md:glow-btn rounded-xl md:h-12 shiny-button border border-gray-800">
     Explore Platform
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="md:ml-1 h-5 w-5 text-gray-400  animate-pulse">
@@ -736,20 +812,15 @@ Let us take the reins of your job application process! Our dedicated team crafts
         <path d="m9 18 6-6-6-6"></path>
     </svg>
 </button>
-<a href="#" onClick={toggleModal} className="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border-gray-800 bg-transparent shadow-sm hover:bg-accent hover:text-accent-foreground h-9 py-2 relative group md:font-bold px-4 md:px-6 border-2 rounded-xl md:text-md md:h-12">
-                <span className="absolute animate-pulse bottom-auto left-auto right-0 top-0 z-10 inline-block -translate-y-1/2 translate-x-2/4 rotate-0 skew-x-0 skew-y-0 scale-x-100 scale-y-100 rounded-full bg-primary p-1.5 text-xs"></span>
-                Talk to founder<span className="group-hover:animate-bounce ml-2">👋</span>
-            </a>
-
-
-
-                  </div>
-                  {/* <!-- Add additional content here if needed --> */}
+                    <a href="#" onClick={toggleModal} className="inline-flex items-center justify-center gap-2 px-6 py-2 text-sm md:text-lg font-bold text-gray-800 bg-transparent border-2 border-gray-800 rounded-xl hover:bg-gray-100 transition-all">
+                        Talk to Founder <span className="animate-bounce ml-2">👋</span>
+                    </a>
                 </div>
-              </div>
             </div>
-          </div>
-        </section>
+        </div>
+    </div>
+</section>
+
 
         <div className="bg-white py-12">
   <h2 className="text-3xl font-bold text-center text-gray-800 mb-3">
@@ -762,7 +833,33 @@ Let us take the reins of your job application process! Our dedicated team crafts
 </div>
   <div className="flex flex-col md:flex-row justify-center gap-8 px-4">
     <div className="max-w-sm w-full">
-      <img className="w-32 md:w-32 lg:w-32 p-4" src="microsoft.png" alt="Company Logo" />
+      <img className="w-32 md:w-32 lg:w-32 p-4" src="google.png" alt="Google" />
+      <div className="flex items-center space-x-4 mb-4">
+        <img src="/Try.jpeg?height=40&width=40" alt="Riya Patel" className="w-10 h-10 rounded-full" />
+        <div>
+          <h3 className="text-lg font-semibold">Riya Patel</h3>
+          <p className="text-sm text-gray-500">Product Manager</p>
+        </div>
+      </div>
+      <p className="text-gray-600">
+      When I lost my job during an economic downturn and had just 60 days left on my H1B visa, I was extremely anxious. I decided to try their premium service and fully committed to the process. Within just 1 month, I received 2 job offers, each offering a significant salary increase over my previous position. Their expertise were remarkable. I am profoundly thankful for their assistance during this challenging period.
+      </p>
+    </div>
+    <div className="max-w-sm w-full">
+      <img className="w-32 md:w-32 lg:w-32 p-4" src="Hsbc.png" alt="HSBC" />
+      <div className="flex items-center space-x-4 mb-4">
+        <img src="/Nikunj_Desai.jpeg?height=50&width=50" alt="Teja Aditya Surabhi" className="w-10 h-10 rounded-full" />
+        <div>
+          <h3 className="text-lg font-semibold">Nikunj Desai</h3>
+          <p className="text-sm text-gray-500">Software Developer</p>
+        </div>
+      </div>
+      <p className="text-gray-600">
+      Working full time left me with little time to apply for jobs. The application process was tedious and could take more than 15 minutes for just one job. After a week of trying on my own, I felt exhausted and demotivated. Then I heard about 'Hirelynow.com,' a service that applies for jobs on your behalf. Their team was incredibly helpful, always available to talk, and followed my job application priorities. They made the process so much easier for me.
+      </p>
+    </div>
+    <div className="max-w-sm w-full">
+      <img className="w-32 md:w-32 lg:w-32 p-4" src="wex.svg" alt="wex" />
       <div className="flex items-center space-x-4 mb-4">
         <img src="/Anshul.jpeg?height=40&width=40" alt="Anshul Jain" className="w-10 h-10 rounded-full" />
         <div>
@@ -771,43 +868,7 @@ Let us take the reins of your job application process! Our dedicated team crafts
         </div>
       </div>
       <p className="text-gray-600">
-      Facing a layoff during a recession with only 60 days left on my H1B visa, I was in a critical situation. I
-        took their premium service and went all in aggressively. 4 weeks down the line, I secured three job offers,
-        with a 75% salary increase compared to my previous position. Their professionalism and efficiency were
-        exceptional. I am grateful for their support during this crucial time. Highly recommend Hirelynow.com and it
-        exceeded all my expectations.
-      </p>
-    </div>
-    <div className="max-w-sm w-full">
-      <img className="w-32 md:w-32 lg:w-32 p-4" src="microsoft.png" alt="Company Logo" />
-      <div className="flex items-center space-x-4 mb-4">
-        <img src="/Nikhil.jpeg?height=50&width=50" alt="Teja Aditya Surabhi" className="w-10 h-10 rounded-full" />
-        <div>
-          <h3 className="text-lg font-semibold">Nikhil Jain</h3>
-          <p className="text-sm text-gray-500">Product Strategy & Growth</p>
-        </div>
-      </div>
-      <p className="text-gray-600">
-      As I work full time and could not spare much time for applying jobs. Applying each job is such a painful
-        process sometimes it takes more than 15 minutes for one application. I got tired and demotivated after a
-        week of applying by myself. I heard of 'Hirelynow.com' where they apply for your jobs online. Team did a great
-        help in applying jobs and always available to talk. They followed my priority in applying jobs as well.
-      </p>
-    </div>
-    <div className="max-w-sm w-full">
-      <img className="w-32 md:w-32 lg:w-32 p-4" src="microsoft.png" alt="Company Logo" />
-      <div className="flex items-center space-x-4 mb-4">
-        <img src="/Gaurav.png?height=40&width=40" alt="Apoorv Singh" className="w-10 h-10 rounded-full" />
-        <div>
-          <h3 className="text-lg font-semibold">Gaurav Jain</h3>
-          <p className="text-sm text-gray-500">Consultant</p>
-        </div>
-      </div>
-      <p className="text-gray-600">
-      I moved from India to Canada and recruiting worked very differently from where I was coming. It took me a
-        while to get a hang of how job search works here and applying to jobs was my biggest pain point. It felt
-        pointless and right then, I found Hirelynow.com that helped me focus on the right things. In fact, I was able
-        to build a small micro-service FIREmails.xyz from the time I saved.
+      I was looking for an internship and applied to over 300 positions on my own, but nothing worked out. Then I found HiredEasy. They updated my resume, wrote cover letters, and applied for jobs for me. Soon, I received two offer letters. Investing in their service was worth it because I got a great internship that covers both my student loan and living expenses.
       </p>
     </div>
   </div>
@@ -826,59 +887,74 @@ Let us take the reins of your job application process! Our dedicated team crafts
               {/* Increase the base size for better visibility on mobile */}
               
                 <img
-                  className="w-32 md:w-32 lg:w-32 p-4"
-                  src="CalState.jpeg"
-                  alt="Cal State"
+                  className="w-36 md:w-36 lg:w-36 p-4"
+                  src="microsoft.png"
+                  alt="Microsoft"
                 />
                 <img
-                  className="w-32 md:w-32 lg:w-32 p-4"
-                  src="BostonUniversity.gif"
-                  alt="Boston University"
+                  className="w-36 md:w-36 lg:w-36 p-4"
+                  src="servicenow.svg"
+                  alt="Servicenow"
                 />
                 <img
-                  className="w-32 md:w-32 lg:w-32 p-4"
-                  src="RIT.png"
-                  alt="NYIT"
+                  className="w-36 md:w-36 lg:w-36 p-4"
+                  src="corelogic.svg"
+                  alt="Corelogic"
                 />
                 <img
-                  className="w-32 md:w-32 lg:w-32 p-4"
-                  src="Clarksonlogo.png"
-                  alt="Clarkson University"
+                  className="w-36 md:w-36 lg:w-36 p-4"
+                  src="clear_street.svg"
+                  alt="Clear Street"
                 />
                 <img
-                  className="w-32 md:w-32 lg:w-32 p-4"
-                  src="Bridgeport.png"
-                  alt="Bridgeport University"
+                  className="w-36 md:w-36 lg:w-36 p-4"
+                  src="Amazon.png"
+                  alt="Amazon"
                 />
                 <img
-                  className="w-32 md:w-32 lg:w-32 p-4"
-                  src="StevensLogo.png"
-                  alt="Stevens Institute"
+                  className="w-36 md:w-36 lg:w-36 p-4"
+                  src="apexanalytix.svg"
+                  alt="Apex Analytix"
                 />
                 <img
-                  className="w-32 md:w-32 lg:w-32 p-4"
-                  src="TexasLogo.png"
-                  alt="Texas A&M"
+                  className="w-36 md:w-36 lg:w-36 p-4"
+                  src="wex.svg"
+                  alt="Wex"
                 />
                 <img
-                  className="w-32 md:w-32 lg:w-32 p-4"
-                  src="DrexelLogo.png"
-                  alt="Drexel University"
+                  className="w-36 md:w-36 lg:w-36 p-4"
+                  src="Databricks.png"
+                  alt="Data Bricks"
                 />
                 <img
-                  className="w-32 md:w-32 lg:w-32 p-4"
-                  src="NortheasternLogo.png"
-                  alt="Northeastern University"
+                  className="w-36 md:w-36 lg:w-36 p-4"
+                  src="FIS.png"
+                  alt="FIS"
                 />
                 <img
-                  className="w-32 md:w-32 lg:w-32 p-4"
-                  src="KentState.png"
-                  alt="Michigan State"
+                  className="w-36 md:w-36 lg:w-36 p-4"
+                  src="MissionPower.jpeg"
+                  alt="MissionPower"
                 />
                 <img
-                  className="w-32 md:w-32 lg:w-32 p-4"
-                  src="Pacelogo.png"
-                  alt="Pace University"
+                  className="w-36 md:w-36 lg:w-36 p-4"
+                  src="Nvidia.png"
+                  alt="Nvidia"
+                />
+                <img
+                  className="w-36 md:w-36 lg:w-36 p-4"
+                  src="SocieteGenerale.png"
+                  alt="SocieteGenerale"
+                />
+                <img
+                  className="w-36 md:w-36 lg:w-36 p-4"
+                  src="Tinder.png"
+                  alt="Tinder"
+                />
+                <img
+                  className="w-36 md:w-36 lg:w-36 p-4"
+                  src="spglobal.svg"
+                  alt="spglobal"
                 />
             </Marquee>
           </div>
@@ -1069,25 +1145,26 @@ Let us take the reins of your job application process! Our dedicated team crafts
       {/* Images and text in row two */}
       <div className="md:w-1/2 flex justify-end">
         <div className="text-center mr-8">
-          <img
-            alt="Investor 1"
-            src="/Mark.jpeg"
-            className="w-64 h-64 md:w-64 md:h-64 rounded-full inline-block"
-            style={{
-              border: "3px solid white",
-              boxShadow: "0 4px 10px rgba(0,0,0,0.1)",
-            }}
-          />
+        <img
+  alt="Investor 1"
+  src="/aman.png"
+  className="w-64 h-64 md:w-64 md:h-64 rounded-full inline-block transition-transform duration-300 ease-in-out transform hover:scale-110"
+  style={{
+    border: "3px solid white",
+    boxShadow: "0 4px 10px rgba(0,0,0,0.1)",
+  }}
+/>
+
           <h3 className="text-lg font-semibold mt-4">
-            Mark Benliyan | Software Engineer
+            Aman Porwal | Founder & CEO (Momskart)
           </h3>
           <div className="flex justify-center space-x-2 mt-2">
-            <a className="text-gray-400 hover:text-gray-500" href="#">
+            <a className="text-gray-400 hover:text-gray-500" target="_blank" href="https://www.linkedin.com/in/iamanporwal/">
               <LinkedinIcon className="h-6 w-6" />
             </a>
-            <a className="text-gray-400 hover:text-gray-500" href="#">
+            {/* <a className="text-gray-400 hover:text-gray-500" href="#">
               <InstagramIcon className="h-6 w-6" />
-            </a>
+            </a> */}
           </div>
         </div>
 
@@ -1105,12 +1182,12 @@ Let us take the reins of your job application process! Our dedicated team crafts
             Rishi Jain | Founder (Digital Scholar)
           </h3>
           <div className="flex justify-center space-x-2 mt-2">
-            <a className="text-gray-400 hover:text-gray-500" href="#">
+            <a className="text-gray-400 hover:text-gray-500" target="_blank" href="https://www.linkedin.com/in/rrishijain/">
               <LinkedinIcon className="h-6 w-6" />
             </a>
-            <a className="text-gray-400 hover:text-gray-500" href="#">
+            {/* <a className="text-gray-400 hover:text-gray-500" target="_blank" href="https://www.linkedin.com/in/rrishijain/">
               <InstagramIcon className="h-6 w-6" />
-            </a>
+            </a> */}
           </div>
         </div>
       </div>
@@ -1164,75 +1241,7 @@ Let us take the reins of your job application process! Our dedicated team crafts
 {isOpen && <ContactModal onClose={toggleModal} />}
 
       </main>
-      <footer className="bg-[#12083b]">
-  <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
-    <div className="flex flex-col lg:flex-row justify-between items-center text-center lg:text-left">
-      <p className="text-sm text-white mb-8 lg:mb-0">
-        Made with <HeartIcon className="text-red-500 inline" /> by Hirely Team
-      </p>
-      <div className="flex flex-col lg:flex-row space-y-8 lg:space-y-0 lg:space-x-12">
-        <div>
-          <h3 className="text-sm font-semibold text-white uppercase tracking-wider">
-            Company
-          </h3>
-          <ul className="mt-4 space-y-4">
-            <li>
-              <a className="text-base text-white hover:text-gray-300" href="#">
-                Pricing
-              </a>
-            </li>
-            <li>
-              <a className="text-base text-white hover:text-gray-300" href="#">
-                Wall of Love
-              </a>
-            </li>
-            <li>
-              <a className="text-base text-white hover:text-gray-300" href="#">
-                Join as an Affiliate
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div>
-          <h3 className="text-sm font-semibold text-white uppercase tracking-wider">
-            Resources
-          </h3>
-          <ul className="mt-4 space-y-4">
-            <li>
-              <a className="text-base text-white hover:text-gray-300" href="#">
-                Blog
-              </a>
-            </li>
-            <li>
-              <a className="text-base text-white hover:text-gray-300" href="#">
-                AI Copilot
-              </a>
-            </li>
-          </ul>
-        </div>
-      </div>
-      <br/>
-      <div>
-  <h3 className="text-base font-bold text-white mb-4">
-    Follow Us On
-  </h3>
-  <div className="flex space-x-4">
-    <a href="#" className="text-white hover:text-blue-500 transition-colors duration-300">
-      <InstagramIcon className="h-8 w-8" />
-    </a>
-    <a href="#" className="text-white hover:text-blue-700 transition-colors duration-300">
-      <LinkedinIcon className="h-8 w-8" />
-    </a>
-    {/* Uncomment to include a Twitter icon */}
-    {/* <a href="#" className="text-white hover:text-blue-400 transition-colors duration-300">
-      <TwitterIcon className="h-8 w-8" />
-    </a> */}
-  </div>
-</div>
-
-    </div>
-  </div>
-</footer>
+      <Footer />
 
     </div>
   );
@@ -1262,26 +1271,6 @@ function InstagramIcon(
     </svg>
   );
 }
-
-function HeartIcon(props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
-    </svg>
-  );
-}
-
 function LinkedinIcon(
   props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>
 ) {
