@@ -86,7 +86,7 @@ const JobsMain: React.FC<JobsMainProps> = ({ jobs, firstName }) => {
             <tr>
               <th scope="col" className="py-3 px-6">Image</th>
               <th scope="col" className="py-3 px-6">Job Title</th>
-              <th scope="col" className="py-3 px-6">Position</th>
+              <th scope="col" className="py-3 px-6">Company</th>
               <th scope="col" className="py-3 px-6">Date</th>
               <th scope="col" className="py-3 px-6">Status</th>
             </tr>
