@@ -38,7 +38,7 @@ const JobsApplied = ({ jobs }: { jobs: JobDetailsProp[] }) => {
           <img
             alt="Your Logo"
             className="cursor-pointer h-8 md:h-10 transform scale-110 ml-4 md:ml-6" // Adjusted with margin-left classes
-            src="/Jobify.png"
+            src="/Hiredeasy.png"
             style={{ transform: "scale(1.9)" }} // Scaling up by 180%
           />
         </Link>
