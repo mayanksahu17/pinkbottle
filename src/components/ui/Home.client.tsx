@@ -45,7 +45,6 @@ const HomePage = () => {
     const { width } = useWindowSize();
     const isMobile = width !== undefined && width < 768;
     const [isOpen, setIsOpen] = useState(false);
-    const toggleModal = () => setIsOpen(!isOpen);
 
   const toggleMenu = () => {
     setIsMenuOpen((prev) => !prev);
@@ -252,6 +251,7 @@ const HomePage = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-6">
           <div className="flex flex-col justify-center items-center p-4">
             <h2 className="text-xl md:text-2xl font-bold text-gray-800 mt-4 text-center">Schedule a Call With Founders</h2>
+            <Link href="https://apply.neetocal.com/meeting-with-nikhil-jain" target="_blank">
             <button className="flex items-center justify-center gap-2 px-6 py-2 text-sm md:text-lg font-medium text-primary-foreground bg-primary rounded-full hover:bg-primary-dark transition-all shadow-lg border">
         <span className="rounded-full bg-white p-2"> {/* Increased padding for a bigger circle */}
             {/* Custom image */}
@@ -265,6 +265,7 @@ const HomePage = () => {
             <path d="m9 18 6-6-6-6"></path>
         </svg>
     </button>
+    </Link>
 
             <p className="mt-4 text-sm md:text-lg text-center text-gray-600">Schedule a personal call with our founders</p>
           </div>
@@ -290,13 +291,15 @@ Let us take the reins of your job application process! Our dedicated team crafts
 </p>
 
                 <div className="flex gap-4 mt-10">
-                    <button className="flex items-center justify-center gap-2 px-6 py-2 text-sm md:text-lg font-medium text-primary-foreground bg-primary rounded-xl hover:bg-primary-dark transition-all shadow-lg">
-                        Explore Platform
+                  <Link href="/dashboard">
+                    <button className="border border-black flex items-center justify-center gap-2 px-6 py-2 text-sm md:text-lg font-medium text-primary-foreground bg-primary rounded-xl hover:bg-primary-dark transition-all shadow-lg">
+                       Get Started for Free
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="h-5 w-5 animate-pulse">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5-5 5m0-5H6"></path>
                         </svg>
                     </button>
-                    <a href="https://apply.neetocal.com/meeting-with-anshul-jain" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 px-6 py-2 text-sm md:text-lg font-bold text-gray-800 bg-transparent border-2 border-gray-800 rounded-xl hover:bg-gray-100 transition-all">
+                    </Link>
+                    <a href="https://apply.neetocal.com/meeting-with-nikhil-jain" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 px-6 py-2 text-sm md:text-lg font-bold text-gray-800 bg-transparent border-2 border-gray-800 rounded-xl hover:bg-gray-100 transition-all">
                         Talk to Founder
                         <span className="animate-bounce">👋</span>
                     </a>
@@ -554,6 +557,7 @@ Let us take the reins of your job application process! Our dedicated team crafts
         </h2>
         <br/>
         <div className="flex items-center justify-center">
+    <Link href="/pricing">  
     <button className="flex items-center justify-center gap-2 px-6 py-2 text-sm md:text-lg font-medium text-primary-foreground bg-primary rounded-full hover:bg-primary-dark transition-all shadow-lg">
         <span className="rounded-full bg-white p-2"> {/* Increased padding for a bigger circle */}
             {/* Custom image */}
@@ -567,6 +571,7 @@ Let us take the reins of your job application process! Our dedicated team crafts
             <path d="m9 18 6-6-6-6"></path>
         </svg>
     </button>
+    </Link>    
 
     </div>
       </div>
@@ -800,22 +805,24 @@ Let us take the reins of your job application process! Our dedicated team crafts
                 </div>
             </div>
             <div className="flex-1 space-y-8">
-                <div>
-                    <h3 className="text-xl font-semibold">Video Interview</h3>
-                    <p className="mb-4">Every candidate goes through a video interview to ensure they possess the skills and are a cultural fit.</p>
-                    <button className="inline-flex mr-4 items-center justify-center whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 py-2 md:text-lg md:font-light px-4 md:px-6 md:glow-btn rounded-xl md:h-12 shiny-button border border-gray-800">
-    Explore Platform
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="md:ml-1 h-5 w-5 text-gray-400  animate-pulse">
-        <path d="m9 18 6-6-6-6"></path>
-    </svg>
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="-ml-3 h-5 w-5 animate-pulse">
-        <path d="m9 18 6-6-6-6"></path>
-    </svg>
-</button>
-                    <a href="#" onClick={toggleModal} className="inline-flex items-center justify-center gap-2 px-6 py-2 text-sm md:text-lg font-bold text-gray-800 bg-transparent border-2 border-gray-800 rounded-xl hover:bg-gray-100 transition-all">
-                        Talk to Founder <span className="animate-bounce ml-2">👋</span>
-                    </a>
-                </div>
+            <div className="p-6">
+    <h3 className="text-xl font-semibold mb-2">Video Interview</h3>
+    <p className="mb-4">Every candidate goes through a video interview to ensure they possess the skills and are a cultural fit.</p>
+    <div className="flex flex-wrap gap-4">
+        <Link href="/dashboard">
+            <button className="border border-black flex items-center justify-center gap-2 px-6 py-2 text-sm md:text-lg font-medium text-primary-foreground bg-primary rounded-xl hover:bg-primary-dark transition-all shadow-lg">
+                Get Started for Free
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="h-5 w-5 animate-pulse">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5-5 5m0-5H6"></path>
+                </svg>
+            </button>
+        </Link>
+        <a href="https://apply.neetocal.com/meeting-with-nikhil-jain" target="_blank" className="inline-flex items-center justify-center gap-2 px-6 py-2 text-sm md:text-lg font-bold text-gray-800 bg-transparent border-2 border-gray-800 rounded-xl hover:bg-gray-100 transition-all">
+            Talk to Founder <span className="animate-bounce ml-2">👋</span>
+        </a>
+    </div>
+</div>
+
             </div>
         </div>
     </div>
@@ -1122,10 +1129,9 @@ Let us take the reins of your job application process! Our dedicated team crafts
 </p>
 
     
-    <a href="#" onClick={toggleModal} className="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border-gray-800 bg-transparent shadow-sm hover:bg-accent hover:text-accent-foreground h-9 py-2 relative group md:font-bold px-4 md:px-6 border-2 rounded-xl md:text-md md:h-12">
-      <span className="absolute animate-pulse bottom-auto left-auto right-0 top-0 z-10 inline-block -translate-y-1/2 translate-x-2/4 rotate-0 skew-x-0 skew-y-0 scale-x-100 scale-y-100 rounded-full bg-primary p-1.5 text-xs"></span>
-      Talk to founder<span className="group-hover:animate-bounce ml-2">👋</span>
-    </a>
+<a href="https://apply.neetocal.com/meeting-with-nikhil-jain" target="_blank" className="inline-flex items-center justify-center gap-2 px-6 py-2 text-sm md:text-lg font-bold text-gray-800 bg-transparent border-2 border-gray-800 rounded-xl hover:bg-gray-100 transition-all">
+                        Talk to Founder <span className="animate-bounce ml-2">👋</span>
+                    </a>
   </div>
 </section>
 
@@ -1218,27 +1224,21 @@ Let us take the reins of your job application process! Our dedicated team crafts
       <p className="text-gray-600 italic">— Nikhil Jain</p>
       <p className="text-gray-600">Co-Founder & IIM Kolkata</p>
     </div>
-    <div className="mt-10 flex justify-center">
-      <button className="inline-flex mr-4 items-center justify-center whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 py-2 md:text-lg md:font-light px-4 md:px-6 md:glow-btn rounded-xl md:h-12 shiny-button border border-gray-800">
-        Explore Platform
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="md:ml-1 h-5 w-5 text-gray-400 animate-pulse">
-          <path d="m9 18 6-6-6-6"></path>
-        </svg>
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="-ml-3 h-5 w-5 animate-pulse">
-          <path d="m9 18 6-6-6-6"></path>
-        </svg>
-      </button>
-      <a href="#" onClick={toggleModal} className="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border-gray-800 bg-transparent shadow-sm hover:bg-accent hover:text-accent-foreground h-9 py-2 relative group md:font-bold px-4 md:px-6 border-2 rounded-xl md:text-md md:h-12">
-        <span className="absolute animate-pulse bottom-auto left-auto right-0 top-0 z-10 inline-block -translate-y-1/2 translate-x-2/4 rotate-0 skew-x-0 skew-y-0 scale-x-100 scale-y-100 rounded-full bg-primary p-1.5 text-xs"></span>
-        Talk to founder<span className="group-hover:animate-bounce ml-2">👋</span>
-      </a>
+    <div className="mt-10 flex justify-center gap-4">
+    <Link href="/dashboard">
+                    <button className="border border-black flex items-center justify-center gap-2 px-6 py-2 text-sm md:text-lg font-medium text-primary-foreground bg-primary rounded-xl hover:bg-primary-dark transition-all shadow-lg">
+                       Get Started for Free
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="h-5 w-5 animate-pulse">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5-5 5m0-5H6"></path>
+                        </svg>
+                    </button>
+                    </Link>
+                    <a href="https://apply.neetocal.com/meeting-with-nikhil-jain" target="_blank" className="inline-flex items-center justify-center gap-2 px-6 py-2 text-sm md:text-lg font-bold text-gray-800 bg-transparent border-2 border-gray-800 rounded-xl hover:bg-gray-100 transition-all">
+                        Talk to Founder <span className="animate-bounce ml-2">👋</span>
+                    </a>
     </div>
   </div>
 </section>
-
-
-
-{isOpen && <ContactModal onClose={toggleModal} />}
 
       </main>
       <Footer />
