@@ -5,12 +5,15 @@ import { UserButton, auth, useUser } from "@clerk/nextjs";
 import Link from "next/link";
 import styles from "../Button.module.css";
 import { Swiper, SwiperSlide, useSwiperSlide } from "swiper/react";
-import "swiper/css";
+import "swiper/swiper-bundle.css";
 import Marquee from "react-fast-marquee";
 import { ContactModal } from "../contactModal";
 import Help from '../GetInTouch/Help';
 import Model from '../GetInTouch/Model'
 import Footer from "../footer/footer";
+import SwiperCore from 'swiper';
+
+// Configure Swiper to use modules
 
 type WindowSize = {
   width: number | undefined;
@@ -616,151 +619,189 @@ Let us take the reins of your job application process! Our dedicated team crafts
     <p className="mb-10 text-gray-500" style={{ fontFamily: 'Roboto, sans-serif' }}>We assemble top-tier talent to support you during the pivotal moments of your journey as your trusted aides.</p>
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12">
       {/* Repeat this card for each person */}
-      <div className="bg-white rounded-xl overflow-hidden shadow-xl hover:shadow-2xl transition-shadow duration-500 ease-in-out w-full sm:w-72 mx-auto border border-gray-800">
+      <div className="bg-white rounded-xl overflow-hidden shadow-xl hover:shadow-2xl transition-shadow duration-500 ease-in-out w-full sm:w-72 mx-auto border border-gray-200">
   <div className="p-6 text-center">
-    <div className="w-32 h-32 mx-auto mb-6 bg-gradient-to-r from-green-400 to-blue-600 rounded-full overflow-hidden border-4 border-white">
+    <div className="w-24 h-24 mx-auto mb-4 rounded-full overflow-hidden border-4 border-white">
       <img
-        alt="Mark Benliyan"
+        alt="Deepesh Jain"
         className="w-full h-full object-cover object-center"
-        src="/Kuldeep.jpeg" // Replace with the path to the person's image
+        src="/Depeesh.png" // Replace with the path to the person's image
       />
     </div>
-    <h3 className="text-xl font-semibold text-gray-800">
-      Kuldeep Jain
+    <h3 className="text-lg font-semibold text-gray-800">
+      Deepesh Jain
     </h3>
-    <p className="text-gray-500 mt-4 text-sm" style={{ fontFamily: 'Montserrat, sans-serif' }}>
-    One of my client landed a dream job their success call made my day!
-</p>
-
-  </div>
-</div>
-
-      {/* ... other cards ... */}
-      <div className="bg-white rounded-xl overflow-hidden shadow-xl hover:shadow-2xl transition-shadow duration-500 ease-in-out w-full sm:w-72 mx-auto border border-gray-800">
-  <div className="p-6 text-center">
-    <div className="w-32 h-32 mx-auto mb-6 bg-gradient-to-r from-green-400 to-blue-600 rounded-full overflow-hidden border-4 border-white">
-      <img
-        alt="Aakansha Prajapathi"
-        className="w-full h-full object-cover object-center"
-        src="/Aakansha.jpg" // Replace with the path to the person's image
-      />
+    <div className="flex items-center justify-center mb-4">
+      <span className="text-yellow-500 text-lg">★</span>
+      <span className="text-lg font-semibold text-gray-800 ml-1">5.0 rating</span>
+      <span className="text-gray-500 ml-2">(17 reviews)</span>
     </div>
-    <h3 className="text-xl font-semibold text-gray-800">
-      Aakansha Prajapathi
-    </h3>
-    <p className="text-gray-500 mt-4 text-sm" style={{ fontFamily: 'Montserrat, sans-serif' }}>
-    The joy of assisting clients in their pursuit of a full-time career is unparalleled
+    <p className="text-gray-500 mt-2 text-sm italic" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+      "One of my client landed a dream job their success call made my day!"
     </p>
   </div>
 </div>
 
-<div className="bg-white rounded-xl overflow-hidden shadow-xl hover:shadow-2xl transition-shadow duration-500 ease-in-out w-full sm:w-72 mx-auto border border-gray-800">
+<div className="bg-white rounded-xl overflow-hidden shadow-xl hover:shadow-2xl transition-shadow duration-500 ease-in-out w-full sm:w-72 mx-auto border border-gray-200">
   <div className="p-6 text-center">
-    <div className="w-32 h-32 mx-auto mb-6 bg-gradient-to-r from-green-400 to-blue-600 rounded-full overflow-hidden border-4 border-white">
+    <div className="w-24 h-24 mx-auto mb-4 rounded-full overflow-hidden border-4 border-white">
       <img
-        alt="Anil Yadav"
+        alt="Aakansha Prajapathi"
+        className="w-full h-full object-cover object-center"
+        src="/Anjali.png" // Replace with the path to the person's image
+      />
+    </div>
+    <h3 className="text-lg font-semibold text-gray-800">
+      Anjali Singh
+    </h3>
+    <div className="flex items-center justify-center mb-4">
+      <span className="text-yellow-500 text-lg">★</span>
+      <span className="text-lg font-semibold text-gray-800 ml-1">4.8 rating</span>
+      <span className="text-gray-500 ml-2">(12 reviews)</span>
+    </div>
+    <p className="text-gray-500 mt-2 text-sm italic" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+      "The joy of assisting clients in their pursuit of a full-time career is unparalleled!"
+    </p>
+  </div>
+</div>
+
+<div className="bg-white rounded-xl overflow-hidden shadow-xl hover:shadow-2xl transition-shadow duration-500 ease-in-out w-full sm:w-72 mx-auto border border-gray-200">
+  <div className="p-6 text-center">
+    <div className="w-24 h-24 mx-auto mb-4 rounded-full overflow-hidden border-4 border-white">
+      <img
+        alt="Arjun Gupta"
         className="w-full h-full object-cover object-center"
         src="/Anil.jpg" // Replace with the path to the person's image
       />
     </div>
-    <h3 className="text-xl font-semibold text-gray-800">
-      Anil Yadav
+    <h3 className="text-lg font-semibold text-gray-800">
+      Yash Jaiswal
     </h3>
-    <p className="text-gray-500 mt-4 text-sm" style={{ fontFamily: 'Montserrat, sans-serif' }}>
-    After submitting 500+ applications, my client finally got that much-awaited offer letter and that was one of the happy moment for me!
+    <div className="flex items-center justify-center mb-4">
+      <span className="text-yellow-500 text-lg">★</span>
+      <span className="text-lg font-semibold text-gray-800 ml-1">4.3 rating</span>
+      <span className="text-gray-500 ml-2">(31 reviews)</span>
+    </div>
+    <p className="text-gray-500 mt-2 text-sm italic" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+      "After submitting 500+ applications, my client finally got that much-awaited offer letter and that was one of the happy moment for me!"
     </p>
   </div>
 </div>
 
-<div className="bg-white rounded-xl overflow-hidden shadow-xl hover:shadow-2xl transition-shadow duration-500 ease-in-out w-full sm:w-72 mx-auto border border-gray-800">
+<div className="bg-white rounded-xl overflow-hidden shadow-xl hover:shadow-2xl transition-shadow duration-500 ease-in-out w-full sm:w-72 mx-auto border border-gray-200">
   <div className="p-6 text-center">
-    <div className="w-32 h-32 mx-auto mb-6 bg-gradient-to-r from-green-400 to-blue-600 rounded-full overflow-hidden border-4 border-white">
+    <div className="w-24 h-24 mx-auto mb-4 rounded-full overflow-hidden border-4 border-white">
       <img
-        alt="Shanu Kumari"
+        alt="Priya Gupta"
         className="w-full h-full object-cover object-center"
-        src="/Prachi.jpg" // Replace with the path to the person's image
+        src="/Radhika.png" // Replace with the path to the person's image
       />
     </div>
-    <h3 className="text-xl font-semibold text-gray-800">
-       Shanu Kumari
+    <h3 className="text-lg font-semibold text-gray-800">
+      Radhika Gupta
     </h3>
-    <p className="text-gray-500 mt-4 text-sm" style={{ fontFamily: 'Montserrat, sans-serif' }}>
-    It made my day when a client thanked me for helping her land a great job.
+    <div className="flex items-center justify-center mb-4">
+      <span className="text-yellow-500 text-lg">★</span>
+      <span className="text-lg font-semibold text-gray-800 ml-1">5.0 rating</span>
+      <span className="text-gray-500 ml-2">(12 reviews)</span>
+    </div>
+    <p className="text-gray-500 mt-2 text-sm italic" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+      "It made my day when a client thanked me for helping her land a great job."
     </p>
   </div>
 </div>
-<div className="bg-white rounded-xl overflow-hidden shadow-xl hover:shadow-2xl transition-shadow duration-500 ease-in-out w-full sm:w-72 mx-auto border border-gray-800 hidden sm:block">
+
+<div className="hidden sm:block bg-white rounded-xl overflow-hidden shadow-xl hover:shadow-2xl transition-shadow duration-500 ease-in-out w-full sm:w-72 mx-auto border border-gray-200">
   <div className="p-6 text-center">
-    <div className="w-32 h-32 mx-auto mb-6 bg-gradient-to-r from-green-400 to-blue-600 rounded-full overflow-hidden border-4 border-white">
+    <div className="w-24 h-24 mx-auto mb-4 rounded-full overflow-hidden border-4 border-white">
       <img
-        alt="Aakasha Jain"
+        alt="Chirag Thakur"
         className="w-full h-full object-cover object-center"
         src="/Chirag.png" // Replace with the path to the person's image
       />
     </div>
-    <h3 className="text-xl font-semibold text-gray-800">
-      Chirag
+    <h3 className="text-lg font-semibold text-gray-800">
+      Chirag Thakur
     </h3>
-    <p className="text-gray-500 mt-4 text-sm" style={{ fontFamily: 'Montserrat, sans-serif' }}>
-      My best moment was when a client called me to tell that she landed in a fulltime. I was the second one she called to.
+    <div className="flex items-center justify-center mb-4">
+      <span className="text-yellow-500 text-lg">★</span>
+      <span className="text-lg font-semibold text-gray-800 ml-1">4.7 rating</span>
+      <span className="text-gray-500 ml-2">(22 reviews)</span>
+    </div>
+    <p className="text-gray-500 mt-2 text-sm italic" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+      "My best moment was when a client called me to tell that she landed in a fulltime. I was the second one she called to."
     </p>
   </div>
 </div>
 
-<div className="bg-white rounded-xl overflow-hidden shadow-xl hover:shadow-2xl transition-shadow duration-500 ease-in-out w-full sm:w-72 mx-auto border border-gray-800 hidden sm:block">
+<div className="hidden sm:block bg-white rounded-xl overflow-hidden shadow-xl hover:shadow-2xl transition-shadow duration-500 ease-in-out w-full sm:w-72 mx-auto border border-gray-200">
   <div className="p-6 text-center">
-    <div className="w-32 h-32 mx-auto mb-6 bg-gradient-to-r from-green-400 to-blue-600 rounded-full overflow-hidden border-4 border-white">
+    <div className="w-24 h-24 mx-auto mb-4 rounded-full overflow-hidden border-4 border-white">
       <img
-        alt="Siddharth Gupta"
+        alt="Siddharth Jain"
         className="w-full h-full object-cover object-center"
         src="/Siddharth.png" // Replace with the path to the person's image
       />
     </div>
-    <h3 className="text-xl font-semibold text-gray-800">
-      Siddharth Gupta
+    <h3 className="text-lg font-semibold text-gray-800">
+      Siddharth Jain
     </h3>
-    <p className="text-gray-500 mt-4 text-sm" style={{ fontFamily: 'Montserrat, sans-serif' }}>
-      I helped a client who had only 45 days before her OPT expires, I helped her and she got a job in FAANG in less than 30 days
+    <div className="flex items-center justify-center mb-4">
+      <span className="text-yellow-500 text-lg">★</span>
+      <span className="text-lg font-semibold text-gray-800 ml-1">4.6 rating</span>
+      <span className="text-gray-500 ml-2">(38 reviews)</span>
+    </div>
+    <p className="text-gray-500 mt-2 text-sm italic" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+      "I helped a client who had only 45 days before her OPT expires, I helped her and she got a job in FAANG in less than 30 days"
     </p>
   </div>
 </div>
 
-<div className="bg-white rounded-xl overflow-hidden shadow-xl hover:shadow-2xl transition-shadow duration-500 ease-in-out w-full sm:w-72 mx-auto border border-gray-800 hidden sm:block">
+<div className="hidden sm:block bg-white rounded-xl overflow-hidden shadow-xl hover:shadow-2xl transition-shadow duration-500 ease-in-out w-full sm:w-72 mx-auto border border-gray-200">
   <div className="p-6 text-center">
-    <div className="w-32 h-32 mx-auto mb-6 bg-gradient-to-r from-green-400 to-blue-600 rounded-full overflow-hidden border-4 border-white">
+    <div className="w-24 h-24 mx-auto mb-4 rounded-full overflow-hidden border-4 border-white">
       <img
-        alt="Mark Benliyan"
+        alt="Arjun Gupta"
         className="w-full h-full object-cover object-center"
-        src="/Rajat.jpg" // Replace with the path to the person's image
+        src="/Kuldeep.jpeg" // Replace with the path to the person's image
       />
     </div>
-    <h3 className="text-xl font-semibold text-gray-800">
-      Rajat Gome
+    <h3 className="text-lg font-semibold text-gray-800">
+      Kuldeep Vyas
     </h3>
-    <p className="text-gray-500 mt-4 text-sm" style={{ fontFamily: 'Montserrat, sans-serif' }}>
-    Seeing a client secure their ideal job after our mock interviews was a proud moment.
+    <div className="flex items-center justify-center mb-4">
+      <span className="text-yellow-500 text-lg">★</span>
+      <span className="text-lg font-semibold text-gray-800 ml-1">4.9 rating</span>
+      <span className="text-gray-500 ml-2">(17 reviews)</span>
+    </div>
+    <p className="text-gray-500 mt-2 text-sm italic" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+      "Seeing a client secure their ideal job after our mock interviews was a proud moment."
     </p>
   </div>
 </div>
 
-<div className="bg-white rounded-xl overflow-hidden shadow-xl hover:shadow-2xl transition-shadow duration-500 ease-in-out w-full sm:w-72 mx-auto border border-gray-800 hidden sm:block">
+<div className="hidden sm:block bg-white rounded-xl overflow-hidden shadow-xl hover:shadow-2xl transition-shadow duration-500 ease-in-out w-full sm:w-72 mx-auto border border-gray-200">
   <div className="p-6 text-center">
-    <div className="w-32 h-32 mx-auto mb-6 bg-gradient-to-r from-green-400 to-blue-600 rounded-full overflow-hidden border-4 border-white">
+    <div className="w-24 h-24 mx-auto mb-4 rounded-full overflow-hidden border-4 border-white">
       <img
-        alt="Mark Benliyan"
+        alt="Tanvi Jha"
         className="w-full h-full object-cover object-center"
-        src="/Shagun.jpg" // Replace with the path to the person's image
+        src="/Tanvi.png" // Replace with the path to the person's image
       />
     </div>
-    <h3 className="text-xl font-semibold text-gray-800">
-      Shagun Agrawal
+    <h3 className="text-lg font-semibold text-gray-800">
+      Tanvi Jha
     </h3>
-    <p className="text-gray-500 mt-4 text-sm" style={{ fontFamily: 'Montserrat, sans-serif' }}>
-    After numerous mock interviews, client aced the real one and got the job—thrilling news!
+    <div className="flex items-center justify-center mb-4">
+      <span className="text-yellow-500 text-lg">★</span>
+      <span className="text-lg font-semibold text-gray-800 ml-1">4.8 rating</span>
+      <span className="text-gray-500 ml-2">(23 reviews)</span>
+    </div>
+    <p className="text-gray-500 mt-2 text-sm italic" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+      "After numerous mock interviews, client aced the real one and got the job—thrilling news!"
     </p>
   </div>
 </div>
-
     </div>
   </div>
 </section>
@@ -829,57 +870,58 @@ Let us take the reins of your job application process! Our dedicated team crafts
 </section>
 
 
-        <div className="bg-white py-12">
+<div className="bg-white py-12">
   <h2 className="text-3xl font-bold text-center text-gray-800 mb-3">
     Our clients <span className="text-red-500">❤️</span> us
   </h2>
   <div className="text-center mb-10">
     <a href="/Wall" className="text-blue-600 hover:text-blue-800 transition duration-300 ease-in-out">
-        see more ⇗
+      see more ⇗
     </a>
-</div>
+  </div>
   <div className="flex flex-col md:flex-row justify-center gap-8 px-4">
-    <div className="max-w-sm w-full">
-      <img className="w-32 md:w-32 lg:w-32 p-4" src="google.png" alt="Google" />
-      <div className="flex items-center space-x-4 mb-4">
+    <div className="max-w-sm w-full mx-auto text-center">
+      <img className="w-32 md:w-32 lg:w-32 p-4 mx-auto" src="google.png" alt="Google" />
+      <div className="flex items-center space-x-4 mb-4 justify-center">
         <img src="/Try.jpeg?height=40&width=40" alt="Riya Patel" className="w-10 h-10 rounded-full" />
-        <div>
+        <div className="text-center">
           <h3 className="text-lg font-semibold">Riya Patel</h3>
           <p className="text-sm text-gray-500">Product Manager</p>
         </div>
       </div>
       <p className="text-gray-600">
-      When I lost my job during an economic downturn and had just 60 days left on my H1B visa, I was extremely anxious. I decided to try their premium service and fully committed to the process. Within just 1 month, I received 2 job offers, each offering a significant salary increase over my previous position. Their expertise were remarkable. I am profoundly thankful for their assistance during this challenging period.
+        When I lost my job during an economic downturn and had just 60 days left on my H1B visa, I was extremely anxious. I decided to try their premium service and fully committed to the process. Within just 1 month, I received 2 job offers, each offering a significant salary increase over my previous position. Their expertise were remarkable. I am profoundly thankful for their assistance during this challenging period.
       </p>
     </div>
-    <div className="max-w-sm w-full">
-      <img className="w-32 md:w-32 lg:w-32 p-4" src="Hsbc.png" alt="HSBC" />
-      <div className="flex items-center space-x-4 mb-4">
-        <img src="/Nikunj_Desai.jpeg?height=50&width=50" alt="Teja Aditya Surabhi" className="w-10 h-10 rounded-full" />
-        <div>
+    <div className="max-w-sm w-full mx-auto text-center">
+      <img className="w-32 md:w-32 lg:w-32 p-4 mx-auto" src="Hsbc.png" alt="HSBC" />
+      <div className="flex items-center space-x-4 mb-4 justify-center">
+        <img src="/Nikunj_Desai.jpeg?height=50&width=50" alt="Nikunj Desai" className="w-10 h-10 rounded-full" />
+        <div className="text-center">
           <h3 className="text-lg font-semibold">Nikunj Desai</h3>
           <p className="text-sm text-gray-500">Software Developer</p>
         </div>
       </div>
       <p className="text-gray-600">
-      Working full time left me with little time to apply for jobs. The application process was tedious and could take more than 15 minutes for just one job. After a week of trying on my own, I felt exhausted and demotivated. Then I heard about 'Hirelynow.com,' a service that applies for jobs on your behalf. Their team was incredibly helpful, always available to talk, and followed my job application priorities. They made the process so much easier for me.
+        Working full time left me with little time to apply for jobs. The application process was tedious and could take more than 15 minutes for just one job. After a week of trying on my own, I felt exhausted and demotivated. Then I heard about 'Hirelynow.com,' a service that applies for jobs on your behalf. Their team was incredibly helpful, always available to talk, and followed my job application priorities. They made the process so much easier for me.
       </p>
     </div>
-    <div className="max-w-sm w-full">
-      <img className="w-32 md:w-32 lg:w-32 p-4" src="wex.svg" alt="wex" />
-      <div className="flex items-center space-x-4 mb-4">
+    <div className="max-w-sm w-full mx-auto text-center">
+      <img className="w-32 md:w-32 lg:w-32 p-4 mx-auto" src="wex.svg" alt="wex" />
+      <div className="flex items-center space-x-4 mb-4 justify-center">
         <img src="/Anshul.jpeg?height=40&width=40" alt="Anshul Jain" className="w-10 h-10 rounded-full" />
-        <div>
+        <div className="text-center">
           <h3 className="text-lg font-semibold">Anshul Jain</h3>
           <p className="text-sm text-gray-500">Software Engineer</p>
         </div>
       </div>
       <p className="text-gray-600">
-      I was looking for an internship and applied to over 300 positions on my own, but nothing worked out. Then I found HiredEasy. They updated my resume, wrote cover letters, and applied for jobs for me. Soon, I received two offer letters. Investing in their service was worth it because I got a great internship that covers both my student loan and living expenses.
+        I was looking for an internship and applied to over 300 positions on my own, but nothing worked out. Then I found HiredEasy. They updated my resume, wrote cover letters, and applied for jobs for me. Soon, I received two offer letters. Investing in their service was worth it because I got a great internship that covers both my student loan and living expenses.
       </p>
     </div>
   </div>
 </div>
+
 
 <section className="w-full py-12 md:py-24 lg:py-32 bg-[#faf8f2]">
       <div className="container grid items-center justify-center gap-4 px-4 text-center md:px-6 lg:gap-10">
@@ -969,60 +1011,64 @@ Let us take the reins of your job application process! Our dedicated team crafts
     </section>
 
     <section className="bg-white py-16">
-  <div className="max-w-6xl mx-auto px-4">
-    <h2 className="text-3xl font-bold mb-8 text-center">
-      We Bring Real Impact 🫶
-    </h2>
-    {isMobile ? (
-      <Swiper
-        spaceBetween={50}
-        slidesPerView={1}
-        onSlideChange={() => console.log("slide change")}
-        onSwiper={(swiper) => console.log(swiper)}
-      >
-        {testimonials.map((testimonial, index) => (
-          <SwiperSlide key={index}>
-            <div className="text-center mb-4">
-              <figure className="relative inline-block" style={{ width: "100%" }}>
-                <img
-                  src={testimonial.imgSrc}
-                  alt={`Testimonial ${index + 1}`}
-                  className="rounded-lg shadow-lg mx-auto"
-                  style={{
-                    width: "100%",
-                    height: "auto",
-                    objectFit: "cover",
-                  }}
-                />
-              </figure>
+    <div className="max-w-6xl mx-auto px-4">
+      <h2 className="text-3xl font-bold mb-8 text-center">
+        We Bring Real Impact 🫶
+      </h2>
+      {isMobile ? (
+        <Swiper
+          spaceBetween={30}
+          slidesPerView={1}
+          pagination={{ clickable: true }}
+          navigation={true}
+          onSlideChange={() => console.log("slide change")}
+          onSwiper={(swiper) => console.log(swiper)}
+        >
+          {testimonials.map((testimonial, index) => (
+            <SwiperSlide key={index}>
+              <div className="text-center mb-4">
+                <figure className="relative inline-block w-full max-w-xs mx-auto">
+                  <img
+                    src={testimonial.imgSrc}
+                    alt={`Testimonial ${index + 1}`}
+                    className="rounded-lg shadow-lg"
+                    style={{
+                      width: "100%",
+                      height: "auto",
+                      objectFit: "cover",
+                    }}
+                  />
+                </figure>
+              </div>
+            </SwiperSlide>
+          ))}
+          <div className="swiper-button-next"></div>
+          <div className="swiper-button-prev"></div>
+        </Swiper>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-5">
+          {testimonials.map((testimonial, index) => (
+            <div className="group" key={index}>
+              <div className="text-center mb-4">
+                <figure className="relative inline-block w-full">
+                  <img
+                    src={testimonial.imgSrc}
+                    alt={`Testimonial ${index + 1}`}
+                    className="rounded-lg shadow-lg transition-transform duration-300 hover:scale-105 mx-auto"
+                    style={{
+                      width: "100%",
+                      height: "auto",
+                      objectFit: "cover",
+                    }}
+                  />
+                </figure>
+              </div>
             </div>
-          </SwiperSlide>
-        ))}
-      </Swiper>
-    ) : (
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-5">
-        {testimonials.map((testimonial, index) => (
-          <div className="group" key={index}>
-            <div className="text-center mb-4">
-              <figure className="relative inline-block" style={{ width: "100%" }}>  {/* Increased figure width to 100% */}
-                <img
-                  src={testimonial.imgSrc}
-                  alt={`Testimonial ${index + 1}`}
-                  className="rounded-lg shadow-lg transition-transform duration-300 hover:scale-105 mx-auto"
-                  style={{
-                    width: "100%",  /* Increased image width to 100% */
-                    height: "auto",
-                    objectFit: "cover",
-                  }}
-                />
-              </figure>
-            </div>
-          </div>
-        ))}
-      </div>
-    )}
-  </div>
-</section>
+          ))}
+        </div>
+      )}
+    </div>
+  </section>
 
         <section className="py-16 bg-white">
           <div className="max-w-4xl mx-auto px-1">
@@ -1144,23 +1190,22 @@ Let us take the reins of your job application process! Our dedicated team crafts
         <h2 className="text-5xl font-bold mb-5 text-gray-800" style={{ fontFamily: 'Poppins, sans-serif' }}>
           Many kickass investors believe in our mission.
         </h2>
-        <p className="text-center md:text-left mb-3 text-gray-500 text-1xl"  style={{ fontFamily: 'Poppins, sans-serif' }}>
+        <p className="text-center md:text-left mb-3 text-gray-500 text-xl" style={{ fontFamily: 'Poppins, sans-serif' }}>
           All of them are top of their game in Careers and Immigration. Here are a couple of them.
         </p>
       </div>
       {/* Images and text in row two */}
-      <div className="md:w-1/2 flex justify-end">
-        <div className="text-center mr-8">
-        <img
-  alt="Investor 1"
-  src="/aman.png"
-  className="w-64 h-64 md:w-64 md:h-64 rounded-full inline-block transition-transform duration-300 ease-in-out transform hover:scale-110"
-  style={{
-    border: "3px solid white",
-    boxShadow: "0 4px 10px rgba(0,0,0,0.1)",
-  }}
-/>
-
+      <div className="md:w-1/2 flex flex-col md:flex-row justify-end items-center space-y-8 md:space-y-0 md:space-x-8">
+        <div className="text-center">
+          <img
+            alt="Investor 1"
+            src="/aman.png"
+            className="w-64 h-64 md:w-64 md:h-64 rounded-full inline-block transition-transform duration-300 ease-in-out transform hover:scale-110"
+            style={{
+              border: "3px solid white",
+              boxShadow: "0 4px 10px rgba(0,0,0,0.1)",
+            }}
+          />
           <h3 className="text-lg font-semibold mt-4">
             Aman Porwal | Founder & CEO (Momskart)
           </h3>
@@ -1178,7 +1223,7 @@ Let us take the reins of your job application process! Our dedicated team crafts
           <img
             alt="Investor 2"
             src="/Rishi.jpeg"
-            className="w-64 h-64 md:w-64 md:h-64 rounded-full inline-block"
+            className="w-64 h-64 md:w-64 md:h-64 rounded-full inline-block transition-transform duration-300 ease-in-out transform hover:scale-110"
             style={{
               border: "3px solid white",
               boxShadow: "0 4px 10px rgba(0,0,0,0.1)",

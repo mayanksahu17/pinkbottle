@@ -16,12 +16,12 @@ const PricingUser = () => {
   const plans = [
     {
       name: "Basic",
-      price: "100",
+      price: "199",
       priceId: "price_1OvVxzACYURR6mEKx9GlQtlz",
-      originalPrice: "100", // Original price before discount
+      originalPrice: "300", // Original price before discount
       savings: "100",
       features: [
-        { name: "150 Job applications", enabled: true },
+        { name: "250 Job applications", enabled: true },
         { name: "1 Assistant", enabled: true },
         { name: "Resume Review", enabled: false },
         { name: "Custom Cover Letters", enabled: false },
@@ -34,9 +34,9 @@ const PricingUser = () => {
     },
     {
       name: "Standard",
-      price: "150",
+      price: "250",
       priceId: "price_1OvW7aACYURR6mEK77mASTOQ",
-      originalPrice: "250", // Original price before discount
+      originalPrice: "400", // Original price before discount
       savings: "150",
       features: [
         { name: "350 Job applications", enabled: true },
@@ -52,10 +52,10 @@ const PricingUser = () => {
     },
     {
       name: "Best Value",
-      price: "250",
+      price: "350",
       priceId: "price_1OvW9pACYURR6mEKHxSdqfWd",
-      originalPrice: "400", // Original price before discount
-      savings: "200", // Amount saved
+      originalPrice: "500", // Original price before discount
+      savings: "150", // Amount saved
       features: [
         { name: "800 Job applications", enabled: true },
         { name: "2 Assistant", enabled: true },
@@ -69,12 +69,12 @@ const PricingUser = () => {
     },
     {
       name: "Ultimate Bundle",
-      price: "300",
+      price: "500",
       priceId: "price_1OvWB8ACYURR6mEKgumVgbnF",
-      originalPrice: "600", // Original price before discount
-      savings: "350",
+      originalPrice: "700", // Original price before discount
+      savings: "200",
       features: [
-        { name: "1000 Job applications", enabled: true },
+        { name: "1200 Job applications", enabled: true },
         { name: "3 Assistant", enabled: true },
         { name: "Resume Review", enabled: true },
         { name: "Custom Cover Letters", enabled: true },
@@ -204,7 +204,7 @@ const PricingUser = () => {
             <div className="flex flex-col items-center space-y-4 p-4 text-center rounded-lg shadow-lg bg-white">
               <MusicIcon className="h-12 w-12 text-black-100" />
               <p className="text-sm font-medium text-gray-900">
-                Taylor Swift Concert will cost you $1200
+                 Concerts will cost you $500
               </p>
             </div>
             <div className="flex flex-col items-center space-y-4 p-4 text-center rounded-lg shadow-lg bg-white">
