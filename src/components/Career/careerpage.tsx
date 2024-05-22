@@ -1,11 +1,12 @@
 "use client";
 import { useState, ChangeEvent, FormEvent } from "react";
 import Navbar from "../navbar/navbar";
-import Footer from "../footer/footer"
+import Footer from "../footer/footer";
 
 export function CareerPage() {
   const [isModalOpen, setModalOpen] = useState(false);
   const [currentJob, setCurrentJob] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false); // New state for tracking submission
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -57,52 +58,60 @@ export function CareerPage() {
     });
   };
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setIsSubmitting(true); // Set submitting state to true
+
     const scriptURL =
       "https://script.google.com/macros/s/AKfycbxWkP5Uvmg_CCqolbTOTc7jtxOklv-RetlaxJIf8L2TvnbN4iuSznjc_-c4H1OypwM/exec";
     const data = new URLSearchParams(formData as any);
 
-    fetch(scriptURL, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-      body: data.toString(),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        console.log("Success!", response);
-        alert("Application submitted successfully!");
-        setModalOpen(false);
-        resetForm();
-      })
-      .catch((error) => {
-        console.error("Error!", error);
-        alert("There was an error submitting your application.");
+    try {
+      const response = await fetch(scriptURL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: data.toString(),
       });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      console.log("Success!", response);
+      alert("Application submitted successfully!");
+      setModalOpen(false);
+      resetForm();
+    } catch (error) {
+      console.error("Error!", error);
+      alert("There was an error submitting your application.");
+    } finally {
+      setIsSubmitting(false); // Reset submitting state
+    }
   };
 
   const jobPositions = [
     {
-      "title": "Software Engineer",
-      "description": "We are seeking a skilled Software Engineer to join our dynamic team. You will be responsible for developing, testing, and maintaining cutting-edge web applications. You will collaborate with cross-functional teams to drive our innovative product roadmap forward. Ideal candidates will have a strong background in web technologies and a passion for creating high-quality software solutions.",
-      "experience": "2-5 years",
-      "location": "Remote"
+      title: "Software Engineer",
+      description:
+        "We are seeking a skilled Software Engineer to join our dynamic team. You will be responsible for developing, testing, and maintaining cutting-edge web applications. You will collaborate with cross-functional teams to drive our innovative product roadmap forward. Ideal candidates will have a strong background in web technologies and a passion for creating high-quality software solutions.",
+      experience: "2-5 years",
+      location: "Remote, USA",
     },
     {
-      "title": "Data Analyst Intern",
-      "description": "We are looking for a motivated Data Analyst Intern to join our product team. As a Data Analyst Intern, you will drive product initiatives with a user-centered approach, collaborating closely with engineering and design teams to deliver exceptional user experiences. This role provides a unique opportunity to gain hands-on experience in data analysis and product development.",
-      "experience": "Internship",
-      "location": "USA"
+      title: "Data Analyst Intern",
+      description:
+        "We are looking for a motivated Data Analyst Intern to join our product team. As a Data Analyst Intern, you will drive product initiatives with a user-centered approach, collaborating closely with engineering and design teams to deliver exceptional user experiences. This role provides a unique opportunity to gain hands-on experience in data analysis and product development.",
+      experience: "Internship",
+      location: "USA",
     },
     {
-      "title": "Machine Learning Intern",
-      "description": "We are excited to offer an internship opportunity for a talented Machine Learning Intern. In this role, you will work on designing intuitive and delightful user interfaces, shaping the way users interact with our products from the ground up. You will be involved in various aspects of machine learning projects, from data preprocessing to model deployment. This is a great opportunity to apply your machine learning skills in a real-world setting.",
-      "experience": "Internship",
-      "location": "Remote"
+      title: "Machine Learning Intern",
+      description:
+        "We are excited to offer an internship opportunity for a talented Machine Learning Intern. In this role, you will work on designing intuitive and delightful user interfaces, shaping the way users interact with our products from the ground up. You will be involved in various aspects of machine learning projects, from data preprocessing to model deployment. This is a great opportunity to apply your machine learning skills in a real-world setting.",
+      experience: "Internship",
+      location: "Remote, USA",
     },
     // More positions can be added here
   ];
@@ -283,9 +292,27 @@ export function CareerPage() {
                   </div>
                   <button
                     type="submit"
+                    disabled={isSubmitting} // Disable button when submitting
                     className="w-full px-5 py-4 bg-green-600 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 text-xl font-semibold"
                   >
-                    Submit Application
+                    {isSubmitting ? (
+                      <svg
+                        className="animate-spin h-5 w-5 mr-3 text-white inline"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M12 6v6l4 2"
+                        />
+                      </svg>
+                    ) : (
+                      "Submit Application"
+                    )}
                   </button>
                 </form>
               </div>

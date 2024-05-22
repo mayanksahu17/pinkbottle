@@ -37,6 +37,7 @@ const DashboardMain = ({isPaidUser}:{isPaidUser:boolean}) => {
             </div>
           </div>
           <div className="mt-6 flex space-x-4">
+            <Link href="/">
             <button className="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 py-2 md:text-lg md:font-light px-4 md:px-6 md:glow-btn rounded-xl md:h-12 shiny-button border border-gray-800">
               Explore Platform
               <svg
@@ -68,8 +69,9 @@ const DashboardMain = ({isPaidUser}:{isPaidUser:boolean}) => {
                 <path d="m9 18 6-6-6-6"></path>
               </svg>
             </button>
+            </Link>
             <a
-              href="https://apply.neetocal.com/meeting-with-anshul-jain"
+              href="https://apply.neetocal.com/meeting-with-nikhil-jain"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border-gray-800 bg-transparent shadow-sm hover:bg-accent hover:text-accent-foreground h-9 py-2 relative group md:font-bold px-4 md:px-6 border-2 rounded-xl md:text-md md:h-12"
@@ -121,7 +123,7 @@ const DashboardMain = ({isPaidUser}:{isPaidUser:boolean}) => {
             </p>
             <Button disabled={!isPaidUser} className="mt-4 text-black">
               <a
-                href="https://apply.neetocal.com/meeting-with-anshul-jain"
+                href="https://apply.neetocal.com/meeting-with-nikhil-jain"
                 target="_blank"
                 rel="noopener noreferrer"
                 className={`inline-flex ${!isPaidUser&&'bg-white text-neutral-500 border-neutral-400'} items-center justify-center whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 py-2 md:text-lg md:font-light px-4 md:px-6 md:glow-btn rounded-xl md:h-12 shiny-button border border-gray-800`}
