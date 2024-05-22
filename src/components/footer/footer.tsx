@@ -13,22 +13,22 @@ const footer = () => {
         </p>
         <div className="flex flex-col lg:flex-row space-y-8 lg:space-y-0 lg:space-x-12">
           <div>
-            <h3 className="text-sm font-semibold text-white uppercase tracking-wider">
+            <h4 className="text-xl font-semibold text-white uppercase tracking-wider">
               Company
-            </h3>
+            </h4>
             <ul className="mt-4 space-y-4">
               <li>
-                <a className="text-base text-white hover:text-gray-300" href="#">
+                <a className="text-sm text-base text-white hover:text-gray-300" href="/pricing">
                   Pricing
                 </a>
               </li>
               <li>
-                <a className="text-base text-white hover:text-gray-300" href="#">
+                <a className="text-sm text-base text-white hover:text-gray-300" href="/Wall">
                   Wall of Love
                 </a>
               </li>
               <li>
-                <a className="text-base text-white hover:text-gray-300" href="#">
+                <a className="text-sm text-base text-white hover:text-gray-300" href="#">
                   Join as an Affiliate
                 </a>
               </li>
@@ -40,15 +40,15 @@ const footer = () => {
             </h3>
             <ul className="mt-4 space-y-4">
               <li>
-                <a className="text-base text-white hover:text-gray-300" href="#">
-                  Blog
+                <a className="text-sm text-base text-white hover:text-gray-300" href="/career">
+                  Career
                 </a>
               </li>
-              <li>
+              {/* <li>
                 <a className="text-base text-white hover:text-gray-300" href="#">
                   AI Copilot
                 </a>
-              </li>
+              </li> */}
             </ul>
           </div>
         </div>
@@ -58,7 +58,7 @@ const footer = () => {
       Follow Us On
     </h3>
     <div className="flex space-x-4">
-      <a href="#" className="text-white hover:text-blue-500 transition-colors duration-300">
+      <a href="https://www.instagram.com/hiredeasy/" target="_blank" className="text-white hover:text-blue-500 transition-colors duration-300">
         <InstagramIcon className="h-8 w-8" />
       </a>
       <a href="#" className="text-white hover:text-blue-700 transition-colors duration-300">

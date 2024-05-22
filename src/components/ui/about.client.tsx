@@ -37,10 +37,12 @@ const Aboutus = () => {
             />
             <h2 className="font-bold text-2xl mb-2">Nikhil Jain</h2>
             <p className="text-gray-700 mb-4">
-              Co-Founder | Product | <LinkedinIcon className="inline ml-1" />
+              Co-Founder | Product | <a href="https://www.linkedin.com/in/wnikhil/" target="_blank" rel="noopener noreferrer">
+  <LinkedinIcon className="inline ml-1" />
+</a>
             </p>
             <p className="text-gray-600 mb-4">
-            I love crafting user-centric tech solutions and streamlining market delivery brings me joy. IIM Kolkata Alumni and experience at S&P Global, my journey is about enhancing user experiences.
+            I co-founded a startup that helps students and professionals by applying for jobs on their behalf, crafting resumes, and updating cover letters. As an IIM Kolkata alumnus with experience at S&P Global, I'm dedicated to enhancing user experiences and simplifying the job application process.
             </p>
             <div className="flex space-x-2">
               <img
@@ -70,23 +72,24 @@ const Aboutus = () => {
               alt="Gaurav Jain"
               className="mb-4 rounded-full"
               height="200"
-              src="/Gauravnew.png"
+              src="/Anuj.png"
               style={{
                 aspectRatio: "200/200",
                 objectFit: "cover",
               }}
               width="200"
             />
-            <h2 className="font-bold text-2xl mb-2">Gaurav Agrawal</h2>
+            <h2 className="font-bold text-2xl mb-2">Anuj Jain</h2>
             <p className="text-gray-700 mb-4">
-              Co-Founder | Tech | <LinkedinIcon className="inline ml-1" />
+              Co-Founder | Tech | <a href="https://www.linkedin.com/in/anujjain809/" target="_blank" rel="noopener noreferrer">
+  <LinkedinIcon className="inline ml-1" />
+</a>
             </p>
             <p className="text-gray-600 mb-4">
-              I am ex IITian and Microsoft SDE. From building Pulsejet engines to coding full-stack Apps, I love tinkering and building stuff. Launched a
-              couple of startups and failed better each time, now trying to be the best tech wingman.
+            I'm SDE at Salesforce. From building Pulsejet engines to coding full-stack apps, I love tinkering and creating. After launching a couple of startups and learning from each experience, I'm now focused on being the best tech wingman, helping others succeed.
             </p>
             <div className="flex space-x-2">
-              <img
+              {/* <img
                 alt="IIT logo"
                 height="70"
                 src="/IIT.png"
@@ -95,17 +98,18 @@ const Aboutus = () => {
                   objectFit: "contain",
                 }}
                 width="210"
-              />
-              <img
-                alt="Microsoft"
-                height="150"
-                src="/microsoft.png"
-                style={{
-                  aspectRatio: "120/40",
-                  objectFit: "contain",
-                }}
-                width="140"
-              />
+              /> */}
+             <img
+  alt="Salesforce"
+  height="300" // increased height
+  src="/salesforce.png"
+  style={{
+    aspectRatio: "120/40",
+    objectFit: "contain",
+  }}
+  width="280" // increased width
+/>
+
             </div>
           </div>
         </section>
