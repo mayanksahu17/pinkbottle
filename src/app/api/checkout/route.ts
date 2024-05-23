@@ -26,6 +26,7 @@ export async function POST(req: NextRequest) {
           clerkId: metadata.userId
         },
         customer_email:"example@gmail.com",
+        allow_promotion_codes: true,
         success_url: `${new URL(req.url).origin}/dashboard?success=true`,
         cancel_url: `${new URL(req.url).origin}/pricing?canceled=true`,
       });

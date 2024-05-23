@@ -17,7 +17,7 @@ const PricingUser = () => {
     {
       name: "Basic",
       price: "199",
-      priceId: "price_1OvVxzACYURR6mEKx9GlQtlz",
+      priceId: "price_1PJR4wACYURR6mEK5da3Kp4H",
       originalPrice: "300", // Original price before discount
       savings: "100",
       features: [
@@ -30,12 +30,12 @@ const PricingUser = () => {
         { name: "Mock Interviews", enabled: false },
         // Add the rest of the features here
       ],
-      link: "https://buy.stripe.com/test_6oEeXQboMc8X8tG6oo",
+      link: "https://buy.stripe.com/test_6oE6rk8cA1ujdO07sz",
     },
     {
       name: "Standard",
       price: "250",
-      priceId: "price_1OvW7aACYURR6mEK77mASTOQ",
+      priceId: "price_1PJR4BACYURR6mEKuJOVMN2h",
       originalPrice: "400", // Original price before discount
       savings: "150",
       features: [
@@ -48,12 +48,12 @@ const PricingUser = () => {
         { name: "Mock Interviews", enabled: false },
         // Add the rest of the features here
       ],
-      link: "https://buy.stripe.com/test_6oEeXQboMc8X8tG6oo",
+      link: "https://buy.stripe.com/test_8wM7vogJ62ynh0c7sy",
     },
     {
       name: "Best Value",
       price: "350",
-      priceId: "price_1OvW9pACYURR6mEKHxSdqfWd",
+      priceId: "price_1PJR0yACYURR6mEKGfNb2i7y",
       originalPrice: "500", // Original price before discount
       savings: "150", // Amount saved
       features: [
@@ -65,12 +65,12 @@ const PricingUser = () => {
         { name: "LinkedIn Makeover", enabled: true },
         { name: "2 Mock Interviews", enabled: true },
       ],
-      link: "#",
+      link: "https://buy.stripe.com/test_00g7voeAYb4TeS4fZ3",
     },
     {
       name: "Ultimate Bundle",
       price: "500",
-      priceId: "price_1OvWB8ACYURR6mEKgumVgbnF",
+      priceId: "price_1PJQxKACYURR6mEKI4UKv8lw",
       originalPrice: "700", // Original price before discount
       savings: "200",
       features: [
@@ -83,7 +83,7 @@ const PricingUser = () => {
         { name: "5 Mock Interviews", enabled: true },
         // Add the rest of the features here
       ],
-      link: "https://buy.stripe.com/test_6oEeXQboMc8X8tG6oo",
+      link: "https://buy.stripe.com/test_aEUg1UboMgpd4dq9AE",
     },
 
     // Add other plans similarly
