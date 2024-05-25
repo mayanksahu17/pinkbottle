@@ -4,7 +4,7 @@ import { ClerkProvider } from "@clerk/nextjs";
 
 
 export const metadata: Metadata = {
-  title: "Jobify",
+  title: "HiredEasy",
   description: "Simplying Job Application",
 };
 
