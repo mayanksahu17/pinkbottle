@@ -100,7 +100,7 @@ export function CareerPage() {
     setIsSubmitting(true);
 
     const scriptURL =
-      "https://script.google.com/macros/s/AKfycbyuAItSlrTG5asaoGXiQQ0L3uGTPF1Xufkk1er6DgkGbth_KNuspWMC0l9Y14dwSkbi/exec";
+      "https://script.google.com/macros/s/AKfycbxcTN4rUUGJ72lCyZG0idBFyfiar8Z8BYYY5CPbTNSqigfDE1GCt7cgLxj7iUCPHkzL/exec";
     const data = new URLSearchParams(formData as any);
 
     try {
@@ -131,10 +131,12 @@ export function CareerPage() {
   const openModal = (jobTitle: string) => {
     setCurrentJob(jobTitle);
     setModalOpen(true);
+    document.body.classList.add("overflow-hidden");
   };
 
   const closeModal = () => {
     setModalOpen(false);
+    document.body.classList.remove("overflow-hidden");
     resetForm();
   };
 

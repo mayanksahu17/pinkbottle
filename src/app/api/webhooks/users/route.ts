@@ -5,77 +5,123 @@ import { IncomingHttpHeaders } from "http";
 import { headers } from "next/headers";
 import { NextResponse } from "next/server";
 import { Webhook, WebhookRequiredHeaders } from "svix";
+import { dbConnect } from "@/lib/database/mongodb";
+import User from "@/lib/database/models/User/User";
 
 const webhookSecret = process.env.WEBHOOK_SECRET || "";
 
 async function handler(request: Request) {
   console.log('Webhooks users route reached', request.method, request.url);
-    const payload = await request.json();
-    const headersList = new Headers(request.headers);
-    const heads = {
-      "svix-id": headersList.get("svix-id"),
-      "svix-timestamp": headersList.get("svix-timestamp"),
-      "svix-signature": headersList.get("svix-signature"),
-    };
-    const wh = new Webhook(webhookSecret);
-    let evt: Event | null = null;
+
+  try {
+    await dbConnect();
+  } catch (error) {
+    console.error("Failed to connect to the database:", error);
+    return new NextResponse(JSON.stringify({ error: "Database not connected" }), { status: 500 });
+  }
+
+  // Fetch the raw body as text to ensure accurate signature verification
+  const bodyText = await request.text();
+  console.log('Raw request body:', bodyText);
   
-    try {
-      evt = wh.verify(
-        JSON.stringify(payload),
-        heads as IncomingHttpHeaders & WebhookRequiredHeaders
-      ) as Event;
-    } catch (err) {
-      console.error((err as Error).message);
+  // Extract headers directly
+  const svix_id = request.headers.get("svix-id") ?? "";
+  const svix_timestamp = request.headers.get("svix-timestamp") ?? "";
+  const svix_signature = request.headers.get("svix-signature") ?? "";
+  console.log('Webhook headers:', { svix_id, svix_timestamp, svix_signature });
+  
+  const wh = new Webhook(webhookSecret);
+  let evt: Event;
+  
+  try {
+      // Verify the webhook signature
+      const verifiedPayload = wh.verify(bodyText, {
+          "svix-id": svix_id,
+          "svix-timestamp": svix_timestamp,
+          "svix-signature": svix_signature,
+      });
+      console.log('Type of verifiedPayload:', typeof verifiedPayload);  // Check the type of verifiedPayload
+      console.log('Verified payload:', verifiedPayload);  // Log the actual payload
+  
+      // Check if verifiedPayload is a string and parse it, otherwise assign directly if it's already an object
+      if (typeof verifiedPayload === 'string') {
+          evt = JSON.parse(verifiedPayload) as Event;
+      } else {
+          evt = verifiedPayload as Event;  // Assuming verifiedPayload is already an Event object
+      }
+  } catch (err) {
+      console.error('Error verifying webhook:', err);
       return new NextResponse(JSON.stringify({ error: "Webhook verification failed" }), { status: 400 });
-    }
+  }
   
     const eventType: EventType = evt.type;
-    if (eventType === "user.created"){
+    if (eventType === "user.created") {
       console.log(eventType);
-      const {id, email_addresses, first_name, last_name } = evt.data;
+      const { id, email_addresses, first_name, last_name } = evt.data;
       console.log("Inside user created");
+  
       const user = {
         clerkId: id,
         email: email_addresses[0].email_address,
-        firstName:first_name,
-        lastName:last_name
+        firstName: first_name,
+        lastName: last_name
       };
+  
       console.log(user);
-      const newUser = await createStudent(user);
-      if(newUser){
+  
+      try {
+        const existingUser = await User.findOne({ email: user.email });
+  
+        if (existingUser) {
+          console.log("User already exists in Users collection.");
+          return new NextResponse(JSON.stringify({ message: "User already exists", user: existingUser }), { status: 200 });
+        }
+  
+        const newUser = await User.create(user);
+  
+        if (!newUser) {
+          console.error("Failed to create user in MongoDB, newUser is undefined.");
+          return new NextResponse(JSON.stringify({ error: "Failed to create user in MongoDB" }), { status: 500 });
+        }
+  
         await clerkClient.users.updateUserMetadata(id, {
           publicMetadata: {
-            userId: newUser.data._id,
-            paymentStatus: newUser.data.payment.status
+            userId: newUser._id,
+            paymentStatus: "unknown"
           },
         });
+  
+        return NextResponse.json({ message: "User created successfully", user: newUser });
+      } catch (err) {
+        if (err instanceof Error) {
+          console.error("Error creating user:", err.message);
+        } else {
+          console.error("Unknown error creating user:", err);
+        }
+        return new NextResponse(JSON.stringify({ error: "Something went wrong creating the user in MongoDB" }), { status: 500 });
       }
-      return NextResponse.json({ message: "OK", user: newUser });
-    } 
-    else if(eventType === "user.updated") {
-      const { id, email_addresses, first_name, last_name } = evt.data;
-      const user = {
-        email: email_addresses[0].email_address,
-        firstName:first_name,
-        lastName:last_name
-      };
-      const updateDetailsForDb = {
-        id:id,
-        updateDetails: user
-      }
-      const updatedUser = await updateStudent(updateDetailsForDb);
-      return NextResponse.json({ message: "OK", user: updatedUser });
-    } 
-    else if (eventType === "user.deleted") {
-      const { id } = evt.data;
-      await deleteStudent(id);
-      return new NextResponse(JSON.stringify({ message: "User deleted successfully" }), { status: 200 });
+    } else if (eventType === "user.updated") {
+        const { id, email_addresses, first_name, last_name } = evt.data;
+        const user = {
+            email: email_addresses[0].email_address,
+            firstName: first_name,
+            lastName: last_name
+        };
+        const updateDetailsForDb = {
+            id: id,
+            updateDetails: user
+        }
+        const updatedUser = await updateStudent(updateDetailsForDb);
+        return NextResponse.json({ message: "OK", user: updatedUser });
+    } else if (eventType === "user.deleted") {
+        const { id } = evt.data;
+        await deleteStudent(id);
+        return new NextResponse(JSON.stringify({ message: "User deleted successfully" }), { status: 200 });
     } else {
-      console.log(`Received unsupported event type: ${eventType}`);
-      return new NextResponse(JSON.stringify({ warning: "Event type not supported" }), { status: 200 });
+        console.log(`Received unsupported event type: ${eventType}`);
+        return new NextResponse(JSON.stringify({ warning: "Event type not supported" }), { status: 200 });
     }
-  }
+}
 
 type EventType = "user.created" | "user.updated" | "user.deleted" | "*";
 
