@@ -100,7 +100,7 @@ export function CareerPage() {
     setIsSubmitting(true);
 
     const scriptURL =
-      "https://script.google.com/macros/s/AKfycbxcTN4rUUGJ72lCyZG0idBFyfiar8Z8BYYY5CPbTNSqigfDE1GCt7cgLxj7iUCPHkzL/exec";
+      "https://script.google.com/macros/s/AKfycbwgIcE5YtLW46u_NUuo_veD68o7hKZHYGflDCNPfCUKQRRqELArRcPSjGN7ObvUQPdD/exec";
     const data = new URLSearchParams(formData as any);
 
     try {
