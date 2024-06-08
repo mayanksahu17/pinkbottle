@@ -53,31 +53,31 @@ async function handler(request: Request) {
     console.log(eventType);
     const { id, email_addresses, first_name, last_name } = evt.data;
     console.log("Inside user created");
-
+  
     const user = {
       clerkId: id,
       email: email_addresses[0].email_address,
       firstName: first_name,
       lastName: last_name
     };
-
+  
     console.log(user);
-
+  
     try {
       const existingUser = await User.findOne({ email: user.email });
-
+  
       if (existingUser) {
         console.log("User already exists in Users collection.");
         return new NextResponse(JSON.stringify({ message: "User already exists", user: existingUser }), { status: 200 });
       }
-
+  
       const newUser = await User.create(user);
-
+  
       if (!newUser) {
         console.error("Failed to create user in MongoDB, newUser is undefined.");
         return new NextResponse(JSON.stringify({ error: "Failed to create user in MongoDB" }), { status: 500 });
       }
-
+  
       // Create a new lead entry in the Leads collection
       const newLead = {
         email: user.email,
@@ -85,23 +85,32 @@ async function handler(request: Request) {
         lastName: user.lastName,
         clerkId: newUser._id
       };
-
-      const createdLead = await Lead.create(newLead);
-
-      if (!createdLead) {
-        console.error("Failed to create lead in MongoDB, createdLead is undefined.");
-        return new NextResponse(JSON.stringify({ error: "Failed to create lead in MongoDB" }), { status: 500 });
+  
+      try {
+        const createdLead = await Lead.create(newLead);
+  
+        if (!createdLead) {
+          console.error("Failed to create lead in MongoDB, createdLead is undefined.");
+          return new NextResponse(JSON.stringify({ error: "Failed to create lead in MongoDB" }), { status: 500 });
+        }
+      } catch (error: unknown) {
+        if (error instanceof Error && 'code' in error && (error as any).code === 11000) { // Duplicate key error
+          console.warn("Duplicate lead entry, skipping creation in Leads collection.");
+        } else {
+          console.error("Error creating lead in MongoDB:", error);
+          return new NextResponse(JSON.stringify({ error: "Failed to create lead in MongoDB" }), { status: 500 });
+        }
       }
-
+  
       await clerkClient.users.updateUserMetadata(id, {
         publicMetadata: {
           userId: newUser._id,
           paymentStatus: "unknown"
         },
       });
-
-      return NextResponse.json({ message: "User and lead created successfully", user: newUser, lead: createdLead });
-    } catch (err) {
+  
+      return NextResponse.json({ message: "User and lead created successfully", user: newUser });
+    } catch (err: unknown) {
       if (err instanceof Error) {
         console.error("Error creating user:", err.message);
       } else {
@@ -109,7 +118,8 @@ async function handler(request: Request) {
       }
       return new NextResponse(JSON.stringify({ error: "Something went wrong creating the user in MongoDB" }), { status: 500 });
     }
-  } else if (eventType === "user.updated") {
+  }
+   else if (eventType === "user.updated") {
     const { id, email_addresses, first_name, last_name } = evt.data;
     const user = {
       email: email_addresses[0].email_address,
