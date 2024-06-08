@@ -10,8 +10,19 @@ export async function createStudent(userDetails: CreateStudentProps) {
     await dbConnect();
     console.log("Create Student called");
     const createdUser = await User.create(userDetails);
-    const leadUser = await Lead.create(userDetails); //saving the save data in different collection for future leads
-    console.log("New Student called");
+
+    // Create the same data in the Leads collection
+    try {
+      const leadUser = await Lead.create(userDetails); 
+      console.log("New Student and Lead created");
+    } catch (error: any) {
+      if (error.code === 11000) {
+        console.warn("Duplicate lead entry, skipping creation in Leads collection.");
+      } else {
+        throw error;
+      }
+    }
+
     if (createdUser) {
       return {
         success: true,
@@ -24,7 +35,7 @@ export async function createStudent(userDetails: CreateStudentProps) {
       };
     }
   } catch (error: any) {
-    console.log("Something went wrong creating the user in mongodb");
+    console.log("Something went wrong creating the user in mongodb", error);
     return {
       success: false,
       error: error.message,
@@ -35,7 +46,7 @@ export async function createStudent(userDetails: CreateStudentProps) {
 export async function updateStudent(updateDate: UpdateStudentProps) {
   try {
     await dbConnect();
-    const updatedUser = await User.findOneAndUpdate({clerkId: updateDate.id},updateDate.updateDetails,{new:true}); //the userId is the clerk Id of the user
+    const updatedUser = await User.findOneAndUpdate({clerkId: updateDate.id}, updateDate.updateDetails, {new: true}); // the userId is the clerk Id of the user
     console.log(updatedUser);
     
     if (updatedUser) {
@@ -57,12 +68,11 @@ export async function updateStudent(updateDate: UpdateStudentProps) {
     };
   }
 }
-// to update a job for a student you must have - userId, jobId, and the jobUpdateDetails
-// call this function to update a job for a student
+
 export async function updateStudentJobs(updateDetails: UpdateJobProps) {
   try {
     await dbConnect();
-    const user = await User.findOne({ clerkId: updateDetails.userId }); //the userId is the clerk Id of the user
+    const user = await User.findOne({ clerkId: updateDetails.userId }); // the userId is the clerk Id of the user
     if (user) {
       const jobIndex = user.jobs.findIndex((job: Jobs) => job._id === updateDetails.jobId);
       if (jobIndex === -1) {
@@ -71,8 +81,8 @@ export async function updateStudentJobs(updateDetails: UpdateJobProps) {
           error: "Job not found",
         };
       }
-      user.job[jobIndex] = { ...user.job[jobIndex], ...updateDetails.jobUpdateDetails };
-      user.save((err: Error, updatedJob:Jobs) => {
+      user.jobs[jobIndex] = { ...user.jobs[jobIndex], ...updateDetails.jobUpdateDetails };
+      user.save((err: Error, updatedJob: Jobs) => {
         if (err) {
           return {
             success: false,
@@ -91,7 +101,7 @@ export async function updateStudentJobs(updateDetails: UpdateJobProps) {
       };
     }
   } catch (error: any) {
-    console.log("Something went wrong uploading the resume");
+    console.log("Something went wrong updating the job");
     return {
       success: false,
       error: error.message,
@@ -99,7 +109,7 @@ export async function updateStudentJobs(updateDetails: UpdateJobProps) {
   }
 }
 
-export async function getStudentById(id:string) {
+export async function getStudentById(id: string) {
   try {
     await dbConnect();
     const user = await User.findOne({clerkId: id});    
@@ -123,10 +133,10 @@ export async function getStudentById(id:string) {
   }
 }
 
-export async function deleteStudent(id:string){
+export async function deleteStudent(id: string) {
   try {
     await dbConnect();
-    const deletedUser = await User.findOneAndDelete({clerkId:id})
+    const deletedUser = await User.findOneAndDelete({clerkId: id})
     if (deletedUser) {
       return {
         success: true,
