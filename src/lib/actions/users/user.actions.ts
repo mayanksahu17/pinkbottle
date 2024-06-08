@@ -13,13 +13,15 @@ export async function createStudent(userDetails: CreateStudentProps) {
 
     // Create the same data in the Leads collection
     try {
-      const leadUser = await Lead.create(userDetails); 
+      const leadUser = await Lead.create(userDetails);
       console.log("New Student and Lead created");
     } catch (error: any) {
       if (error.code === 11000) {
         console.warn("Duplicate lead entry, skipping creation in Leads collection.");
       } else {
         console.error("Error creating lead entry:", error);
+        // If there is an error other than duplicate key, rethrow it
+        throw new Error("Error creating lead entry");
       }
     }
 
