@@ -19,7 +19,7 @@ export async function createStudent(userDetails: CreateStudentProps) {
       if (error.code === 11000) {
         console.warn("Duplicate lead entry, skipping creation in Leads collection.");
       } else {
-        throw error;
+        console.error("Error creating lead entry:", error);
       }
     }
 
