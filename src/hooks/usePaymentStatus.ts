@@ -4,7 +4,8 @@ import { auth } from '@clerk/nextjs';
 
 const usePaymentStatus = async () => {
     const { sessionClaims } = auth();
-    const id = sessionClaims?.userID as string;
+    // const id = sessionClaims?.userID as string;
+    const id = (sessionClaims?.userID || sessionClaims?.sub) as string;
     console.log("I am session claim", sessionClaims);
     const user = await getStudentById(id);
     const paymentStatus = user?.data?.payment?.status;
