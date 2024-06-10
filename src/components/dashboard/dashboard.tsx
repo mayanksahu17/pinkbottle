@@ -137,7 +137,7 @@ const DashboardPage = ({ isPaidUser, jobs, firstName , resume, cover}: { isPaidU
         </aside>
         {currentTab==='dashboard'&&<DashboardMain isPaidUser={isPaidUser} />}
         {currentTab==='profile'&&<Resume resume={resume} cover={cover} />}
-        {currentTab==='jobs'&&<JobsMain jobs={jobs} firstName={firstName} />}
+        {currentTab==='jobs'&&<JobsMain jobs={jobs || []} firstName={firstName} />}
       </div>
     </div>
   );
