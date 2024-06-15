@@ -18,9 +18,9 @@ const Aboutus = () => {
             We have been in your shoes and understand the challenges of job hunting. Our mission is to help job seekers
             find their dream jobs.
           </p>
-          <button className="text-base border-2 rounded-lg px-8 py-3 font-semibold border-gray-800 text-gray-800 bg-white hover:bg-gray-100 transition duration-500 ease-in-out transform hover:-translate-y-1 hover:shadow-xl ml-4">
+          <a href="https://apply.neetocal.com/meeting-with-nikhil-jain" target="_blank" rel="noopener noreferrer" className="text-base border-2 rounded-lg px-8 py-3 font-semibold border-gray-800 text-gray-800 bg-white hover:bg-gray-100 transition duration-500 ease-in-out transform hover:-translate-y-1 hover:shadow-xl ml-4">
   Talk to founder 👋
-</button>
+</a>
         </section>
         <section className="grid grid-cols-1 md:grid-cols-2 gap-12">
           <div className="flex flex-col items-center text-center">
