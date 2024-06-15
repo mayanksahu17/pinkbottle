@@ -10,7 +10,7 @@ import usePaymentStatus from "@/hooks/usePaymentStatus";
 const Profile = async () => {
   const paymentStatus = await usePaymentStatus();
   const {sessionClaims} = auth();
-  const userId = sessionClaims?.userID as string;
+  const userId = (sessionClaims?.userID || sessionClaims?.sub) as string;
   const user = await getStudentById(userId);
   const {data} = user;
   

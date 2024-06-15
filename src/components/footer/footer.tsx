@@ -9,7 +9,7 @@ const footer = () => {
     <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
       <div className="flex flex-col lg:flex-row justify-between items-center text-center lg:text-left">
         <p className="text-sm text-white mb-8 lg:mb-0">
-          Made with <HeartIcon className="text-red-500 inline" /> by Hirely Team
+          Made with <HeartIcon className="text-red-500 inline" /> by HiredEasy Team
         </p>
         <div className="flex flex-col lg:flex-row space-y-8 lg:space-y-0 lg:space-x-12">
           <div>

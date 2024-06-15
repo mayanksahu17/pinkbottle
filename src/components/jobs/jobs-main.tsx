@@ -15,7 +15,9 @@ interface JobsMainProps {
   firstName: string;
 }
 
-const JobsMain: React.FC<JobsMainProps> = ({ jobs, firstName }) => {
+const JobsMain: React.FC<JobsMainProps> = ({ jobs = [], firstName }) => {
+
+  console.log("Job was called here");
   const [currentPage, setCurrentPage] = useState(1);
   const [jobsPerPage] = useState(7); // Number of jobs per page
   const [searchTerm, setSearchTerm] = useState('');

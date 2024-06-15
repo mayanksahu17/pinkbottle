@@ -10,7 +10,8 @@ export default async function Dashboard() {
     const isPaidUser = paymentStatus === 'Paid' ? true : false    
     const user = await currentUser();
     const { sessionClaims } = auth();
-    const userID = sessionClaims?.userID as string;
+    const userID = (sessionClaims?.userID || sessionClaims?.sub) as string;
+    console.log("called from dashboardPage", sessionClaims);
     const res = await getStudentById(userID);
     const jobs = res?.data?.jobs;
     const resume = res?.data?.resume;

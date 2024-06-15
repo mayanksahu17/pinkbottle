@@ -1,18 +1,12 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import styles from "../Button.module.css";
-import Link from "next/link";
 import { UserButton, auth, useUser } from "@clerk/nextjs";
-import { JSX, SVGProps } from "react";
 import React, { useState } from "react";
-import usePaymentStatus from "@/hooks/usePaymentStatus";
 import { CiLock } from "react-icons/ci";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import DashboardMain from "./dashboard-main";
 import Resume from "../profile/resume";
 import JobsMain from "../jobs/jobs-main";
 import { Jobs } from "@/lib/database/models/User/types";
-import { User } from "@clerk/nextjs/server";
 import { redirect, useRouter } from "next/navigation";
 import Navbar from "../navbar/navbar";
 
@@ -137,7 +131,7 @@ const DashboardPage = ({ isPaidUser, jobs, firstName , resume, cover}: { isPaidU
         </aside>
         {currentTab==='dashboard'&&<DashboardMain isPaidUser={isPaidUser} />}
         {currentTab==='profile'&&<Resume resume={resume} cover={cover} />}
-        {currentTab==='jobs'&&<JobsMain jobs={jobs} firstName={firstName} />}
+        {currentTab==='jobs'&&<JobsMain jobs={jobs || []} firstName={firstName} />}
       </div>
     </div>
   );
