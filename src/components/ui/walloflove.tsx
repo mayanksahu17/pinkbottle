@@ -102,7 +102,7 @@ const Walloflove = () => {
       <p className="text-gray-600">
         As I work full time and could not spare much time for applying jobs. Applying each job is such a painful
         process sometimes it takes more than 15 minutes for one application. I got tired and demotivated after a
-        week of applying by myself. I heard of 'Hirelynow.com' where they apply for your jobs online. Team did a great
+        week of applying by myself. I heard of 'HiredEasy.com' where they apply for your jobs online. Team did a great
         help in applying jobs and always available to talk. They followed my priority in applying jobs as well.
       </p>
     </div>
@@ -142,7 +142,7 @@ const Walloflove = () => {
         </div>
       </div>
       <p className="text-gray-600">
-      When I moved from India to Canada, I quickly realized that the job market operated very differently. Navigating the job search process was confusing, and applying to positions felt overwhelming. Just when I was about to give up, I discovered Hirelynow.com. They guided me through the entire process and helped me target the right opportunities. With their support, I secured a great job. thanks to the time they saved me.
+      When I moved from India to Canada, I quickly realized that the job market operated very differently. Navigating the job search process was confusing, and applying to positions felt overwhelming. Just when I was about to give up, I discovered HiredEasy. They guided me through the entire process and helped me target the right opportunities. With their support, I secured a great job. thanks to the time they saved me.
       </p>
     </div>
     <div className="max-w-sm w-full md:w-1/3">

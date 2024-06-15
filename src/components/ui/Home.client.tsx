@@ -903,7 +903,7 @@ Let us take the reins of your job application process! Our dedicated team crafts
         </div>
       </div>
       <p className="text-gray-600">
-        Working full time left me with little time to apply for jobs. The application process was tedious and could take more than 15 minutes for just one job. After a week of trying on my own, I felt exhausted and demotivated. Then I heard about 'Hirelynow.com,' a service that applies for jobs on your behalf. Their team was incredibly helpful, always available to talk, and followed my job application priorities. They made the process so much easier for me.
+        Working full time left me with little time to apply for jobs. The application process was tedious and could take more than 15 minutes for just one job. After a week of trying on my own, I felt exhausted and demotivated. Then I heard about 'HiredEasy.com,' a service that applies for jobs on your behalf. Their team was incredibly helpful, always available to talk, and followed my job application priorities. They made the process so much easier for me.
       </p>
     </div>
     <div className="max-w-sm w-full mx-auto text-center">
