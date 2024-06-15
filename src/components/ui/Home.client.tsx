@@ -494,7 +494,7 @@ Let us take the reins of your job application process! Our dedicated team crafts
           <div>
             <h3 className="text-xl font-semibold mb-1">Get Started</h3>
             <p className="text-sm text-gray-600">
-              Sign up and hop on an onboarding call to meet your dedicated Career Assistant. During this call, we will discuss your career goals and preferences to tailor our services to your needs.
+              Sign up and hop on an onboarding call to meet your dedicated HiredEasy Assistant. During this call, we will discuss your career goals and preferences to tailor our services to your needs.
             </p>
           </div>
         </div>
@@ -529,7 +529,7 @@ Let us take the reins of your job application process! Our dedicated team crafts
           <div>
             <h3 className="text-xl font-semibold mb-1">Continuous Support and Feedback</h3>
             <p className="text-sm text-gray-600">
-              We provide continuous support throughout your job search journey. Your Career Assistant will offer feedback on your resume, cover letters, and interview techniques. We also provide tips and resources to help you improve and succeed in your job search.
+              We provide continuous support throughout your job search journey. Your HiredEasy Assistant will offer feedback on your resume, cover letters, and interview techniques. We also provide tips and resources to help you improve and succeed in your job search.
             </p>
           </div>
         </div>
@@ -748,7 +748,7 @@ Let us take the reins of your job application process! Our dedicated team crafts
     </h3>
     <div className="flex items-center justify-center mb-4">
       <span className="text-yellow-500 text-lg">★</span>
-      <span className="text-lg font-semibold text-gray-800 ml-1">4.6 rating</span>
+      <span className="text-lg font-semibold text-gray-800 ml-1">4.7 rating</span>
       <span className="text-gray-500 ml-2">(38 reviews)</span>
     </div>
     <p className="text-gray-500 mt-2 text-sm italic" style={{ fontFamily: 'Montserrat, sans-serif' }}>
@@ -810,7 +810,7 @@ Let us take the reins of your job application process! Our dedicated team crafts
        <section className="bg-white py-16">
     <div className="max-w-6xl mx-auto px-4">
         <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-800">Our Vetting Process</h2>
+            <h2 className="text-3xl font-bold text-gray-800">Our Screening Process</h2>
         </div>
         <div className="flex flex-col md:flex-row gap-8">
             <div className="flex-1 space-y-8">
@@ -1084,7 +1084,7 @@ Let us take the reins of your job application process! Our dedicated team crafts
                   </span>
                 </summary>
                 <p className="mt-4 leading-relaxed text-sm text-gray-500">
-                93% of our users landed fulltime roles in 3 months. 47% of them are from the roles we applied to and remaining 44% are from their personal networking and individual efforts. According to U.S. Bureau of Labor Statistics found that the average period of unemployment in 2023 is five months. We cut short it to anywhere between 45 days to 3 months.
+                84% of our users landed fulltime roles in 3 months. 47% of them are from the roles we applied to and remaining 44% are from their personal networking and individual efforts. According to U.S. Bureau of Labor Statistics found that the average period of unemployment in 2023 is five months. We cut short it to anywhere between 45 days to 3 months.
                 </p>
               </details>
               <details className="group py-4">
@@ -1113,15 +1113,38 @@ Let us take the reins of your job application process! Our dedicated team crafts
               </details>
               <details className="group py-4">
                 <summary className="text-lg font-medium cursor-pointer flex justify-between items-center">
-                Why should I shortlist the jobs? Why not the Career Assistants do that?
+                Why should I shortlist the jobs? Why not the HiredEasy Assistants do that?
                   <span className="ml-2 text-gray-400 group-open:text-black group-open:rotate-180 transition-transform duration-300">
                     {"\u2935"}
                   </span>
                 </summary>
-                <p className="mt-4 leading-relaxed text-sm text-gray-500">
-                  Our service helps you get more interviews and job offers
-                  without the hassle of applying to jobs manually.
-                </p>
+                <div className="mt-4 leading-relaxed text-gray-500 text-sm">
+    <p>
+      Having assisted over 200 job seekers in landing full-time positions, we've identified several compelling reasons for you to take an active role in shortlisting jobs:
+    </p>
+    <p className="mt-2">
+      <strong>Personal Expertise:</strong> No one understands the nuances of the jobs and roles you’re aiming for better than you. Your insights and preferences are invaluable in identifying the best opportunities.
+    </p>
+    <p className="mt-2">
+      <strong>Improved Outcomes:</strong> Our experience shows that final outcomes are significantly better when you stay engaged and involved in the process. Rather than us randomly applying to hundreds of positions, your input ensures we target the most suitable roles.
+    </p>
+    <p className="mt-2">
+      <strong>Avoiding Bias:</strong> For instance, on Day 10 of our collaboration, you might notice we’ve shortlisted roles on platforms like Greenhouse and Lever but seemingly neglected Workday and iCIMS. By staying involved, you can prevent any perceived biases and ensure a balanced approach.
+    </p>
+    <p className="mt-2">
+      <strong>Geographic Limitations:</strong> LinkedIn often restricts the visibility of US job listings from Indian profiles, making your participation crucial in finding the best matches.
+    </p>
+    <p className="mt-2">
+      <strong>Unique Requirements:</strong> Each client has distinct needs. For example, one client wanted SDE roles with a focus on JavaScript. We initially shortlisted Node.js roles, but the client specifically preferred React.js. Another client desired Product Manager positions based on location, industry, and posting date but was dissatisfied because some roles required more experience than they had.
+    </p>
+    <p className="mt-2">
+      Given the diverse and specific nature of our clients’ needs, it’s clear that keeping you in the driver’s seat for job shortlisting is beneficial. That said, we also accommodate clients who prefer to delegate completely. Some clients share their LinkedIn credentials and set up job alerts, asking us to apply for all jobs that come through those alerts.
+    </p>
+    <p className="mt-2">
+      In these instances, we are more than happy to handle the shortlisting. Otherwise, we recommend you take the lead.
+    </p>
+</div>
+
               </details>
               <details className="group py-4">
                 <summary className="text-lg font-medium cursor-pointer flex justify-between items-center">
@@ -1130,11 +1153,43 @@ Let us take the reins of your job application process! Our dedicated team crafts
                     {"\u2935"}
                   </span>
                 </summary>
-                <p className="mt-4 leading-relaxed text-sm text-gray-500">
-                  We have a high success rate due to our vetting process and the
-                  quality of candidates we accept into our program.
-                </p>
+                <div className="mt-4 leading-relaxed text-gray-500 text-sm">
+    <p>
+      Typically, applications are submitted within 24 hours. It is uncommon for the process to take longer than 48 hours. If an application is not submitted within this timeframe, an escalation ticket is automatically generated.
+    </p>
+</div>
               </details>
+
+              <details className="group py-4">
+                <summary className="text-lg font-medium cursor-pointer flex justify-between items-center">
+                How do I track my applications?
+                  <span className="ml-2 text-gray-400 group-open:text-black group-open:rotate-180 transition-transform duration-300">
+                    {"\u2935"}
+                  </span>
+                </summary>
+                <div className="mt-4 leading-relaxed text-gray-500 text-sm">
+    <p>
+    You can visit the dashboard to monitor all your submitted applications and also have the option to import a CSV file.
+    </p>
+</div>
+
+              </details>
+
+              <details className="group py-4">
+                <summary className="text-lg font-medium cursor-pointer flex justify-between items-center">
+                How are you creating personalized Resumes?
+                  <span className="ml-2 text-gray-400 group-open:text-black group-open:rotate-180 transition-transform duration-300">
+                    {"\u2935"}
+                  </span>
+                </summary>
+                <div className="mt-4 leading-relaxed text-gray-500 text-sm">
+    <p>
+    We follow a code and build policy for resumes, as research shows that coded resumes are more likely to pass through ATS and have higher chances of being shortlisted. We utilize AI tools to review resumes and offer unlimited revisions.
+    </p>
+</div>
+
+              </details>
+
               <details className="group py-4">
                 <summary className="text-lg font-medium cursor-pointer flex justify-between items-center">
                 How are you creating personalized Cover Letters?
@@ -1142,11 +1197,71 @@ Let us take the reins of your job application process! Our dedicated team crafts
                     {"\u2935"}
                   </span>
                 </summary>
-                <p className="mt-4 leading-relaxed text-sm text-gray-500">
-                  We have a high success rate due to our vetting process and the
-                  quality of candidates we accept into our program.
-                </p>
+                <div className="mt-4 leading-relaxed text-gray-500 text-sm">
+                <p>
+      We utilize AI to create customized cover letters by inputting the specific job description, roles, responsibilities, and your resume. This ensures the cover letter is highly personalized and targeted for the role. The quality of these generated cover letters has been remarkably high. You can try it out for free once you log in to our platform.
+    </p>
+    </div>
               </details>
+
+              <details className="group py-4">
+                <summary className="text-lg font-medium cursor-pointer flex justify-between items-center">
+                Who will review my Linkedin?
+                  <span className="ml-2 text-gray-400 group-open:text-black group-open:rotate-180 transition-transform duration-300">
+                    {"\u2935"}
+                  </span>
+                </summary>
+                <div className="mt-4 leading-relaxed text-gray-500 text-sm">
+                <p>
+                Your LinkedIn profile will be reviewed by working professionals currently employed at major tech companies in the USA. They will provide direct feedback, and we can also arrange a call if needed.
+    </p>
+    </div>
+              </details>
+
+              <details className="group py-4">
+                <summary className="text-lg font-medium cursor-pointer flex justify-between items-center">
+                Who are the assistants?
+                  <span className="ml-2 text-gray-400 group-open:text-black group-open:rotate-180 transition-transform duration-300">
+                    {"\u2935"}
+                  </span>
+                </summary>
+                <div className="mt-4 leading-relaxed text-gray-500 text-sm">
+    <p>
+    Our assistants are college students and working professionals from top universities and small companies in India, working part-time. They are specifically trained to fill US job applications on behalf of clients. We select only the top 2% of applicants who wish to join us, and they undergo rigorous training and testing across multiple parameters and situations.
+    </p>
+</div>
+
+              </details>
+
+              <details className="group py-4">
+                <summary className="text-lg font-medium cursor-pointer flex justify-between items-center">
+                What if I am not happy with my assistant?
+                  <span className="ml-2 text-gray-400 group-open:text-black group-open:rotate-180 transition-transform duration-300">
+                    {"\u2935"}
+                  </span>
+                </summary>
+                <div className="mt-4 leading-relaxed text-gray-500 text-sm">
+    <p>
+    You can request a new assistant at any time. We will assign a new assistant for you, allowing you to continue delegating tasks seamlessly.
+    </p>
+</div>
+
+              </details>
+              <details className="group py-4">
+                <summary className="text-lg font-medium cursor-pointer flex justify-between items-center">
+                How long will my assistant take to apply for the shortlisted job?
+                  <span className="ml-2 text-gray-400 group-open:text-black group-open:rotate-180 transition-transform duration-300">
+                    {"\u2935"}
+                  </span>
+                </summary>
+                <div className="mt-4 leading-relaxed text-gray-500 text-sm">
+    <p>
+      Typically, applications are submitted within 24 hours. It is uncommon for the process to take longer than 48 hours. If an application is not submitted within this timeframe, an escalation ticket is automatically generated.
+    </p>
+</div>
+
+              </details>
+             
               <details className="group py-4">
                 <summary className="text-lg font-medium cursor-pointer flex justify-between items-center">
                 Pricing looks expensive?
@@ -1155,8 +1270,7 @@ Let us take the reins of your job application process! Our dedicated team crafts
                   </span>
                 </summary>
                 <p className="mt-4 leading-relaxed text-sm text-gray-500">
-                  We have a high success rate due to our vetting process and the
-                  quality of candidates we accept into our program.
+                We maintain a high success rate thanks to our rigorous screening process and the exceptional quality of candidates we accept into our program.
                 </p>
               </details>
               {/* Repeat the structure above for additional questions */}
