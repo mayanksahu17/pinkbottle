@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import { saveAs } from 'file-saver';
 
 interface Job {
@@ -19,23 +19,24 @@ const JobsMain: React.FC<JobsMainProps> = ({ jobs = [], firstName }) => {
 
   console.log("Job was called here");
   const [currentPage, setCurrentPage] = useState(1);
-  const [jobsPerPage] = useState(7); // Number of jobs per page
+  const [jobsPerPage, setJobsPerPage] = useState(7); // Number of jobs per page
   const [searchTerm, setSearchTerm] = useState('');
 
   // Transform jobs to ensure `_id` is always a string
-  const transformedJobs: Job[] = jobs.map(job => ({
+  const transformedJobs: Job[] = useMemo(() => jobs.map(job => ({
     _id: job._id ?? 'N/A',
     image: (job as Job).image ?? '',
     title: (job as Job).title ?? '',
     position: (job as Job).position ?? '',
     date: (job as Job).date ?? '',
     status: (job as Job).status ?? ''
-  }));
+  })).sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()), [jobs]);
 
   // Filter jobs based on the search term
   const filteredJobs = transformedJobs.filter(job => 
     job.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    job.status.toLowerCase().includes(searchTerm.toLowerCase())
+    job.position.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    job.date.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const indexOfLastJob = currentPage * jobsPerPage;
@@ -43,15 +44,14 @@ const JobsMain: React.FC<JobsMainProps> = ({ jobs = [], firstName }) => {
   const currentJobs = filteredJobs.slice(indexOfFirstJob, indexOfLastJob);
 
   const pageCount = Math.ceil(filteredJobs.length / jobsPerPage);
-  const pageNumbers = Array.from({ length: pageCount }, (_, i) => i + 1);
 
   // Helper function to format date
   const formatDate = (dateString: string) => new Date(dateString).toLocaleDateString();
 
   const downloadCSV = () => {
-    const header = "ID,Image,Title,Position,Date,Status\n";
+    const header = "Job Title,Company,Date\n";
     const rows = filteredJobs.map(job => 
-      `${job._id},${job.image},${job.title},${job.position},${formatDate(job.date)},${job.status}`
+      `${job.title},${job.position},${formatDate(job.date)}`
     ).join("\n");
     
     const csvContent = "data:text/csv;charset=utf-8," + header + rows;
@@ -74,7 +74,11 @@ const JobsMain: React.FC<JobsMainProps> = ({ jobs = [], firstName }) => {
         />
       </div>
       <div className="flex flex-col md:flex-row justify-between items-center w-full mb-5">
-        <button onClick={downloadCSV} className="px-6 py-2 bg-green-500 hover:bg-green-600 text-white font-bold rounded-lg shadow transition duration-150 ease-in-out">
+        <button 
+          onClick={downloadCSV} 
+          className={`px-6 py-2 ${filteredJobs.length === 0 ? 'bg-gray-400 cursor-not-allowed' : 'bg-green-500 hover:bg-green-600'} text-white font-bold rounded-lg shadow transition duration-150 ease-in-out`}
+          disabled={filteredJobs.length === 0}
+        >
           Export to CSV
         </button>
         <div className="text-lg text-gray-800 dark:text-white underline w-full md:w-auto text-center md:text-right">
@@ -113,30 +117,42 @@ const JobsMain: React.FC<JobsMainProps> = ({ jobs = [], firstName }) => {
         </table>
       </div>
 
-      <div className="flex justify-center items-center mt-4">
-        <button
-          disabled={currentPage === 1}
-          onClick={() => setCurrentPage(currentPage - 1)}
-          className={`px-4 py-2 border rounded text-sm ${currentPage === 1 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-blue-500 hover:text-white'}`}
-        >
-          Prev
-        </button>
-        {pageNumbers.map((number: number) => (
-          <button
-            key={number}
-            onClick={() => setCurrentPage(number)}
-            className={`mx-1 px-4 py-2 border rounded text-sm ${number === currentPage ? 'bg-blue-500 text-white' : 'hover:bg-blue-500 hover:text-white'}`}
+      <div className="flex justify-between items-center mt-4">
+        <div className="flex items-center">
+          <span className="mr-2">Rows per page:</span>
+          <select 
+            value={jobsPerPage} 
+            onChange={(e) => {
+              setJobsPerPage(Number(e.target.value));
+              setCurrentPage(1); // Reset to first page on change
+            }}
+            className="p-2 border rounded"
           >
-            {number}
+            <option value={5}>5</option>
+            <option value={7}>7</option>
+            <option value={10}>10</option>
+            <option value={15}>15</option>
+          </select>
+        </div>
+        <div className="flex items-center">
+          <button
+            disabled={currentPage === 1}
+            onClick={() => setCurrentPage(currentPage - 1)}
+            className={`px-4 py-2 border rounded text-sm ${currentPage === 1 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-blue-500 hover:text-white'}`}
+          >
+            Prev
           </button>
-        ))}
-        <button
-          disabled={currentPage === pageCount}
-          onClick={() => setCurrentPage(currentPage + 1)}
-          className={`px-4 py-2 border rounded text-sm ${currentPage === pageCount ? 'opacity-50 cursor-not-allowed' : 'hover:bg-blue-500 hover:text-white'}`}
-        >
-          Next
-        </button>
+          <div className="mx-2 px-4 py-2 border rounded text-sm bg-blue-500 text-white">
+            {currentPage}
+          </div>
+          <button
+            disabled={currentPage === pageCount}
+            onClick={() => setCurrentPage(currentPage + 1)}
+            className={`px-4 py-2 border rounded text-sm ${currentPage === pageCount ? 'opacity-50 cursor-not-allowed' : 'hover:bg-blue-500 hover:text-white'}`}
+          >
+            Next
+          </button>
+        </div>
       </div>
     </main>
   );

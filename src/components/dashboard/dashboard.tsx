@@ -4,6 +4,7 @@ import { UserButton, auth, useUser } from "@clerk/nextjs";
 import React, { useState } from "react";
 import { CiLock } from "react-icons/ci";
 import DashboardMain from "./dashboard-main";
+import Warmup from "../Interview/warmup";
 import Resume from "../profile/resume";
 import JobsMain from "../jobs/jobs-main";
 import { Jobs } from "@/lib/database/models/User/types";
@@ -14,7 +15,7 @@ const DashboardPage = ({ isPaidUser, jobs, firstName , resume, cover}: { isPaidU
   const {user} = useUser();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isAsideMenuOpen, setIsAsideMenuOpen] = useState(false);
-  const [currentTab, setCurrentTab] = useState<'dashboard'|'jobs'|'call'|'profile'>('dashboard');
+  const [currentTab, setCurrentTab] = useState<'dashboard'|'jobs'|'call'|'profile'|'interview'>('dashboard');
   const router = useRouter();
   const toggleMenu = () => {
     setIsMenuOpen((prev) => !prev);
@@ -98,6 +99,13 @@ const DashboardPage = ({ isPaidUser, jobs, firstName , resume, cover}: { isPaidU
               >
                 Call with Founders
               </Button>
+              <Button
+                className={`justify-start text-sm text-black ${currentTab === 'call'&&'bg-gray-200'}`}
+                variant="ghost"
+                onClick={()=> {
+                  setCurrentTab('interview')}}>
+                Interview Warmup
+              </Button>
             <div className="flex items-center">
               <Button
                 disabled={!isPaidUser}
@@ -132,6 +140,7 @@ const DashboardPage = ({ isPaidUser, jobs, firstName , resume, cover}: { isPaidU
         {currentTab==='dashboard'&&<DashboardMain isPaidUser={isPaidUser} />}
         {currentTab==='profile'&&<Resume resume={resume} cover={cover} />}
         {currentTab==='jobs'&&<JobsMain jobs={jobs || []} firstName={firstName} />}
+        {currentTab === 'interview' && <Warmup />}
       </div>
     </div>
   );
