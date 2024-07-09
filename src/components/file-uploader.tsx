@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
-import { useCallback, Dispatch, SetStateAction } from "react";
-import { useDropzone } from "@uploadthing/react/hooks";
-import { generateClientDropzoneAccept } from "uploadthing/client";
+import { useCallback, Dispatch, SetStateAction } from 'react';
+import { useDropzone } from '@uploadthing/react/hooks';
+import { generateClientDropzoneAccept } from 'uploadthing/client';
 
-import { Button } from "@/components/ui/button";
-import { convertFileToUrl } from "@/lib/utils";
+import { Button } from '@/components/ui/button';
+import { convertFileToUrl } from '@/lib/utils';
 
 type FileUploaderProps = {
   loading: boolean;
@@ -15,9 +15,9 @@ type FileUploaderProps = {
   setFiles: Dispatch<SetStateAction<File[]>>;
   files: any[];
   error: boolean;
-  setError : Dispatch<SetStateAction<boolean>>;
+  setError: Dispatch<SetStateAction<boolean>>;
   name: string;
-  id: string
+  id: string;
 };
 
 export function FileUploader({
@@ -30,11 +30,11 @@ export function FileUploader({
   files,
   setError,
   name,
-  id
+  id,
 }: FileUploaderProps) {
-  const onDrop = useCallback((acceptedFiles: File[]) => {    
-    if(acceptedFiles.length == 0) {
-      onFileChange("assets/icons/warning.png");
+  const onDrop = useCallback((acceptedFiles: File[]) => {
+    if (acceptedFiles.length == 0) {
+      onFileChange('assets/icons/warning.png');
       setFiles([]);
       setError(true);
       return;
@@ -47,9 +47,9 @@ export function FileUploader({
 
   const { getRootProps, getInputProps } = useDropzone({
     onDrop,
-    accept: generateClientDropzoneAccept(["pdf","msword"]),
+    accept: generateClientDropzoneAccept(['pdf', 'msword']),
     maxFiles: 1,
-    maxSize: 2097152 
+    maxSize: 2097152,
   });
 
   return (
@@ -63,8 +63,8 @@ export function FileUploader({
           <div className="flex h-full w-full flex-1 justify-center ">
             <img
               src={
-                files && files.length > 0 && files[0].type === "application/pdf"
-                  ? "assets/icons/pdf.svg"
+                files && files.length > 0 && files[0].type === 'application/pdf'
+                  ? 'assets/icons/pdf.svg'
                   : imageUrl
               }
               alt="image"
@@ -94,8 +94,20 @@ export function FileUploader({
       </div>
       <div className="flex flex-col gap-2 items-center text-black">
         {imageUrl && files && <p className="">{files[0]?.path}</p>}
-        {error && <p className="text-red-600 text-xs">Please select a valid format. Make sure the file is below 2MB</p>}
-        {imageUrl && files && <Button disabled={loading} onClick={()=>handleFileUpload(id)} className="text-white bg-[#16A34A] hover:bg-[#318b52]">{"Upload"}</Button>}
+        {error && (
+          <p className="text-red-600 text-xs">
+            Please select a valid format. Make sure the file is below 2MB
+          </p>
+        )}
+        {imageUrl && files && (
+          <Button
+            disabled={loading}
+            onClick={() => handleFileUpload(id)}
+            className="text-white bg-[#16A34A] hover:bg-[#318b52]"
+          >
+            {'Upload'}
+          </Button>
+        )}
       </div>
     </div>
   );

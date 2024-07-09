@@ -1,7 +1,7 @@
-"use client";
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+'use client';
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import {
   TableHead,
   TableRow,
@@ -9,10 +9,10 @@ import {
   TableCell,
   TableBody,
   Table,
-} from "@/components/ui/table";
-import { UserButton, auth, currentUser, useUser } from "@clerk/nextjs";
-import { JSX, SVGProps, useState } from "react";
-import { JobDetailsProp } from "@/lib/actions/users/user.types";
+} from '@/components/ui/table';
+import { UserButton, auth, currentUser, useUser } from '@clerk/nextjs';
+import { JSX, SVGProps, useState } from 'react';
+import { JobDetailsProp } from '@/lib/actions/users/user.types';
 
 const JobsApplied = ({ jobs }: { jobs: JobDetailsProp[] }) => {
   const { isSignedIn, user } = useUser();
@@ -31,7 +31,7 @@ const JobsApplied = ({ jobs }: { jobs: JobDetailsProp[] }) => {
   return (
     <div
       className="min-h-screen text-black"
-      style={{ backgroundColor: "#FAF6F6" }}
+      style={{ backgroundColor: '#FAF6F6' }}
     >
       <header className="flex items-center justify-between p-4 border-b border-gray-200">
         <Link href="/">
@@ -39,7 +39,7 @@ const JobsApplied = ({ jobs }: { jobs: JobDetailsProp[] }) => {
             alt="Your Logo"
             className="cursor-pointer h-8 md:h-10 transform scale-110 ml-4 md:ml-6" // Adjusted with margin-left classes
             src="/Hiredeasy.png"
-            style={{ transform: "scale(1.9)" }} // Scaling up by 180%
+            style={{ transform: 'scale(1.9)' }} // Scaling up by 180%
           />
         </Link>
 
@@ -77,7 +77,7 @@ const JobsApplied = ({ jobs }: { jobs: JobDetailsProp[] }) => {
         {/* Mobile Menu Items */}
         <div
           className={`fixed inset-x-0 top-16 z-10 bg-white p-4 transform transition-transform duration-300 ease-in-out ${
-            isMenuOpen ? "block" : "hidden"
+            isMenuOpen ? 'block' : 'hidden'
           } md:hidden`}
         >
           <nav className="flex flex-col space-y-2 bg-white p-4">
@@ -203,7 +203,7 @@ const JobsApplied = ({ jobs }: { jobs: JobDetailsProp[] }) => {
         {/* Aside Menu */}
         <aside
           className={`fixed inset-y-0 left-0 z-40 w-64 bg-[#f7f7f7] p-4 transform transition-transform duration-300 ease-in-out h-screen ${
-            isAsideMenuOpen ? "translate-x-0" : "-translate-x-full"
+            isAsideMenuOpen ? 'translate-x-0' : '-translate-x-full'
           } md:relative md:translate-x-0 md:block shadow-xl`}
         >
           {/* Close Icon inside menu for mobile */}
@@ -328,12 +328,14 @@ const JobsApplied = ({ jobs }: { jobs: JobDetailsProp[] }) => {
                   </th>
                 </tr>
               </thead>
-              <tbody >
-                {jobs &&
-                  jobs.length > 0 ?
+              <tbody>
+                {jobs && jobs.length > 0 ? (
                   jobs.map((job) => {
                     return (
-                      <tr key={job._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                      <tr
+                        key={job._id}
+                        className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+                      >
                         <td className="py-4 px-6">
                           <img
                             alt="Company logo"
@@ -349,10 +351,14 @@ const JobsApplied = ({ jobs }: { jobs: JobDetailsProp[] }) => {
                         <td className="py-4 px-6">{job.status}</td>
                       </tr>
                     );
-                  }):<div className=" w-full">
-                    <p className="text-black p-6 text-lg font-medium">No Jobs are available</p>
+                  })
+                ) : (
+                  <div className=" w-full">
+                    <p className="text-black p-6 text-lg font-medium">
+                      No Jobs are available
+                    </p>
                   </div>
-                }
+                )}
               </tbody>
             </table>
           </div>

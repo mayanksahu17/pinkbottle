@@ -9,23 +9,25 @@ export async function POST(req: NextRequest) {
     try {
       const body = await req.json();
       const { priceId } = body;
-      const { metadata } = body;      
+      const { metadata } = body;
       console.log(metadata);
       const session = await stripe.checkout.sessions.create({
         payment_method_types: ['card'],
-        line_items: [{
-          price: priceId,
-          quantity: 1,
-        }],
+        line_items: [
+          {
+            price: priceId,
+            quantity: 1,
+          },
+        ],
         mode: 'payment',
-        metadata:{
+        metadata: {
           planName: metadata.name,
           planPrice: metadata.price,
           originalPrice: metadata.originalPrice,
           priceId: metadata.priceId,
-          clerkId: metadata.userId
+          clerkId: metadata.userId,
         },
-        customer_email:"example@gmail.com",
+        customer_email: 'example@gmail.com',
         allow_promotion_codes: true,
         success_url: `${new URL(req.url).origin}/dashboard?success=true`,
         cancel_url: `${new URL(req.url).origin}/pricing?canceled=true`,
@@ -38,14 +40,17 @@ export async function POST(req: NextRequest) {
         },
       });
     } catch (err: any) {
-      return new Response(JSON.stringify({ statusCode: 500, message: err.message }), {
-        status: 500,
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
+      return new Response(
+        JSON.stringify({ statusCode: 500, message: err.message }),
+        {
+          status: 500,
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      );
     }
   } else {
-    return new Response(null, { status: 405, headers: { 'Allow': 'POST' } });
+    return new Response(null, { status: 405, headers: { Allow: 'POST' } });
   }
 }

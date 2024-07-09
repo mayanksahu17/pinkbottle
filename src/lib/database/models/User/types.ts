@@ -1,4 +1,4 @@
-import { ISubscription } from "../Subscription/types";
+import { ISubscription } from '../Subscription/types';
 
 export type Jobs = {
   _id?: string;
@@ -6,19 +6,19 @@ export type Jobs = {
   title: string;
   position: string;
   date: Date;
-  status: string
-}
+  status: string;
+};
 
 export interface IUser {
-    clerkId: string;
-    firstName: string;
-    lastName: string;
-    email: string;
-    payment: {
-      status: "Paid" | "Unpaid";
-      subscription: ISubscription;
-    };
-    jobs: Jobs[];
-    resume: string;
-    coverLetter: string
-  }
+  clerkId: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  payment: {
+    status: 'Paid' | 'Unpaid';
+    subscription: ISubscription;
+  };
+  jobs: Jobs[];
+  resume: string;
+  coverLetter: string;
+}

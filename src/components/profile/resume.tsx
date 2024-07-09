@@ -1,48 +1,52 @@
-"use client";
-import React, { useState } from "react";
-import Link from "next/link";
-import { useAuth, useUser } from "@clerk/nextjs";
-import { useUploadThing } from "@/lib/uploadthing";
-import { updateStudent } from "@/lib/actions/users/user.actions";
-import { FileUploader } from "../file-uploader";
+'use client';
+import React, { useState } from 'react';
+import Link from 'next/link';
+import { useAuth, useUser } from '@clerk/nextjs';
+import { useUploadThing } from '@/lib/uploadthing';
+import { updateStudent } from '@/lib/actions/users/user.actions';
+import { FileUploader } from '../file-uploader';
 
-const Resume = ({resume, cover}:{resume?:string, cover?:string}) => {  
+const Resume = ({ resume, cover }: { resume?: string; cover?: string }) => {
   const { isSignedIn, user } = useUser();
   const [filesResume, setFilesResume] = useState<File[]>([]);
   const [filesCover, setFilesCover] = useState<File[]>([]);
-  const [imageUrlResume, setImageUrlResume] = useState("");
-  const [imageUrlCover, setImageUrlCover] = useState("");
+  const [imageUrlResume, setImageUrlResume] = useState('');
+  const [imageUrlCover, setImageUrlCover] = useState('');
   const [loading, setLoading] = useState<boolean>(false);
-  const { startUpload } = useUploadThing("mediaPost");
+  const { startUpload } = useUploadThing('mediaPost');
   const [errorResume, setErrorResume] = useState<boolean>(false);
   const [errorCover, setErrorCover] = useState<boolean>(false);
   const { userId } = useAuth();
-  const [uploadedResume, setUploadedResume] = useState<string>(!resume ? "/dashboard": resume);
-  const [uploadedCover, setUploadedCover] = useState<string>(!cover ? "/dashboard": cover);
-  // Handle file upload    
+  const [uploadedResume, setUploadedResume] = useState<string>(
+    !resume ? '/dashboard' : resume
+  );
+  const [uploadedCover, setUploadedCover] = useState<string>(
+    !cover ? '/dashboard' : cover
+  );
+  // Handle file upload
   console.log(cover);
-  
-  const handleFileUpload = async (id:'coverLetter'|'resume') => {
+
+  const handleFileUpload = async (id: 'coverLetter' | 'resume') => {
     setLoading(true);
     let uploadedFile;
-    if(id==='coverLetter'){
+    if (id === 'coverLetter') {
       if (filesCover.length > 0) {
         const uploadedFiles = await startUpload(filesCover);
         if (!uploadedFiles) {
-          console.log("Error while uploading coverletter");
-          alert("Error while uploading coverletter");
+          console.log('Error while uploading coverletter');
+          alert('Error while uploading coverletter');
           setLoading(false);
           return;
         }
         uploadedFile = uploadedFiles[0].url;
       }
     }
-    if(id === 'resume'){
+    if (id === 'resume') {
       if (filesResume.length > 0) {
         const uploadedFiles = await startUpload(filesResume);
         if (!uploadedFiles) {
-          console.log("Error while uploading resume");
-          alert("Error while uploading resume");
+          console.log('Error while uploading resume');
+          alert('Error while uploading resume');
           setLoading(false);
           return;
         }
@@ -51,23 +55,28 @@ const Resume = ({resume, cover}:{resume?:string, cover?:string}) => {
     }
     if (uploadedFile) {
       try {
-        const res = await updateStudent({id:userId!, updateDetails: {[id]: uploadedFile}})
+        const res = await updateStudent({
+          id: userId!,
+          updateDetails: { [id]: uploadedFile },
+        });
         console.log(res);
         if (res.success) {
-          id ==='resume'? setUploadedResume(uploadedFile) : setUploadedCover(uploadedFile);
+          id === 'resume'
+            ? setUploadedResume(uploadedFile)
+            : setUploadedCover(uploadedFile);
           alert(`${id} uploaded`);
           setLoading(false);
         }
-      } catch (error:any) {
+      } catch (error: any) {
         console.log(error);
-        if(id==='resume') setErrorResume(true);
-        if(id==='coverLetter') setErrorCover(true);
+        if (id === 'resume') setErrorResume(true);
+        if (id === 'coverLetter') setErrorCover(true);
         setLoading(false);
       }
     }
     setLoading(false);
   };
-  
+
   return (
     <main className="flex-1 ml-8">
       <div className="flex justify-center items-start pt-16 min-h-screen ">
@@ -75,7 +84,7 @@ const Resume = ({resume, cover}:{resume?:string, cover?:string}) => {
           <div className="flex justify-between items-center mb-4">
             <div>
               <div className="text-xl font-bold text-gray-900">
-                {user ? user.firstName : "Guest"}
+                {user ? user.firstName : 'Guest'}
               </div>
               <div className="text-gray-500">Resume</div>
             </div>
@@ -98,7 +107,7 @@ const Resume = ({resume, cover}:{resume?:string, cover?:string}) => {
             <button className="flex-1 text-sm bg-gray-200 text-gray-700 py-2 px-4 rounded-md">
               Keywords
             </button>
-            <Link className="flex-1" href={uploadedResume} >
+            <Link className="flex-1" href={uploadedResume}>
               <button
                 disabled={loading}
                 className="disabled:bg-[#55c47d] w-full text-sm bg-green-600 text-white disabled:cursor-not-allowed py-2 px-4 rounded-md"
@@ -106,7 +115,7 @@ const Resume = ({resume, cover}:{resume?:string, cover?:string}) => {
                 Open Resume
               </button>
             </Link>
-            <Link className="flex-1" href={uploadedCover} >
+            <Link className="flex-1" href={uploadedCover}>
               <button
                 disabled={loading}
                 className="disabled:bg-[#55c47d] w-full text-sm bg-green-600 text-white disabled:cursor-not-allowed py-2 px-4 rounded-md"
@@ -126,7 +135,7 @@ const Resume = ({resume, cover}:{resume?:string, cover?:string}) => {
               onFileChange={setImageUrlResume}
               setFiles={setFilesResume}
               setError={setErrorResume}
-              name={"Upload Resume"}
+              name={'Upload Resume'}
               id="resume"
             />
             <FileUploader

@@ -1,130 +1,137 @@
-"use client";
-import { UserButton, auth, useAuth, useUser } from "@clerk/nextjs";
-import { JSX, SVGProps } from "react";
-import React, { useState } from "react";
-import { Stripe, loadStripe } from "@stripe/stripe-js";
-import Navbar from "../navbar/navbar";
-import Footer from "../footer/footer"
+'use client';
+import { UserButton, auth, useAuth, useUser } from '@clerk/nextjs';
+import { JSX, SVGProps } from 'react';
+import React, { useState } from 'react';
+import { Stripe, loadStripe } from '@stripe/stripe-js';
+import Navbar from '../navbar/navbar';
+import Footer from '../footer/footer';
 
 const stripePromise = loadStripe(
-  process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || ""
+  process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || ''
 );
 
 const PricingUser = () => {
-  const {userId} = useAuth();
-  
+  const { userId } = useAuth();
+
   const plans = [
     {
-      name: "Basic",
-      price: "199",
-      priceId: "price_1PJR4wACYURR6mEK5da3Kp4H",
-      originalPrice: "300", // Original price before discount
-      savings: "100",
+      name: 'Basic',
+      price: '199',
+      priceId: 'price_1PJR4wACYURR6mEK5da3Kp4H',
+      originalPrice: '300', // Original price before discount
+      savings: '100',
       features: [
-        { name: "250 Job applications", enabled: true },
-        { name: "1 Assistant", enabled: true },
-        { name: "Resume Review", enabled: false },
-        { name: "Custom Cover Letters", enabled: false },
-        { name: "Custom Resumes", enabled: false },
-        { name: "LinkedIn Makeover", enabled: false },
-        { name: "Mock Interviews", enabled: false },
+        { name: '250 Job applications', enabled: true },
+        { name: '1 Assistant', enabled: true },
+        { name: 'Cold Emails', enabled: false },
+        { name: 'Resume Review', enabled: false },
+        { name: 'Custom Cover Letters', enabled: false },
+        { name: 'Custom Resumes', enabled: false },
+        { name: 'LinkedIn Makeover', enabled: false },
+        { name: 'Mock Interviews', enabled: false },
         // Add the rest of the features here
       ],
-      link: "https://buy.stripe.com/test_6oE6rk8cA1ujdO07sz",
+      link: 'https://buy.stripe.com/test_6oE6rk8cA1ujdO07sz',
     },
     {
-      name: "Standard",
-      price: "250",
-      priceId: "price_1PJR4BACYURR6mEKuJOVMN2h",
-      originalPrice: "400", // Original price before discount
-      savings: "150",
+      name: 'Standard',
+      price: '250',
+      priceId: 'price_1PJR4BACYURR6mEKuJOVMN2h',
+      originalPrice: '400', // Original price before discount
+      savings: '150',
       features: [
-        { name: "350 Job applications", enabled: true },
-        { name: "1 Assistant", enabled: true },
-        { name: "Resume Review", enabled: true },
-        { name: "Custom Cover Letters", enabled: false },
-        { name: "Custom Resumes", enabled: false },
-        { name: "LinkedIn Makeover", enabled: false },
-        { name: "Mock Interviews", enabled: false },
+        { name: '350 Job applications', enabled: true },
+        { name: '1 Assistant', enabled: true },
+        { name: '50 Cold Emails', enabled: true },
+        { name: 'Resume Review', enabled: true },
+        { name: 'Custom Cover Letters', enabled: false },
+        { name: 'Custom Resumes', enabled: false },
+        { name: 'LinkedIn Makeover', enabled: false },
+        { name: 'Mock Interviews', enabled: false },
         // Add the rest of the features here
       ],
-      link: "https://buy.stripe.com/test_8wM7vogJ62ynh0c7sy",
+      link: 'https://buy.stripe.com/test_8wM7vogJ62ynh0c7sy',
     },
     {
-      name: "Best Value",
-      price: "350",
-      priceId: "price_1PJR0yACYURR6mEKGfNb2i7y",
-      originalPrice: "500", // Original price before discount
-      savings: "150", // Amount saved
+      name: 'Best Value',
+      price: '350',
+      priceId: 'price_1PJR0yACYURR6mEKGfNb2i7y',
+      originalPrice: '500', // Original price before discount
+      savings: '150', // Amount saved
       features: [
-        { name: "800 Job applications", enabled: true },
-        { name: "2 Assistant", enabled: true },
-        { name: "Resume Review", enabled: true },
-        { name: "Custom Cover Letters", enabled: true },
-        { name: "Custom Resumes", enabled: true },
-        { name: "LinkedIn Makeover", enabled: true },
-        { name: "2 Mock Interviews", enabled: true },
+        { name: '800 Job applications', enabled: true },
+        { name: '2 Assistant', enabled: true },
+        { name: '200 Cold Emails', enabled: true },
+        { name: 'Resume Review', enabled: true },
+        { name: 'Custom Cover Letters', enabled: true },
+        { name: 'Custom Resumes', enabled: true },
+        { name: 'LinkedIn Makeover', enabled: true },
+        { name: '2 Mock Interviews', enabled: true },
       ],
-      link: "https://buy.stripe.com/test_00g7voeAYb4TeS4fZ3",
+      link: 'https://buy.stripe.com/test_00g7voeAYb4TeS4fZ3',
     },
     {
-      name: "Ultimate Bundle",
-      price: "500",
-      priceId: "price_1PJQxKACYURR6mEKI4UKv8lw",
-      originalPrice: "700", // Original price before discount
-      savings: "200",
+      name: 'Ultimate Bundle',
+      price: '500',
+      priceId: 'price_1PJQxKACYURR6mEKI4UKv8lw',
+      originalPrice: '700', // Original price before discount
+      savings: '200',
       features: [
-        { name: "1200 Job applications", enabled: true },
-        { name: "3 Assistant", enabled: true },
-        { name: "Resume Review", enabled: true },
-        { name: "Custom Cover Letters", enabled: true },
-        { name: "Custom Resumes", enabled: true },
-        { name: "LinkedIn Makeover", enabled: true },
-        { name: "5 Mock Interviews", enabled: true },
+        { name: '1200 Job applications', enabled: true },
+        { name: '3 Assistant', enabled: true },
+        { name: '500 Cold Emails', enabled: true },
+        { name: 'Resume Review', enabled: true },
+        { name: 'Custom Cover Letters', enabled: true },
+        { name: 'Custom Resumes', enabled: true },
+        { name: 'LinkedIn Makeover', enabled: true },
+        { name: '5 Mock Interviews', enabled: true },
         // Add the rest of the features here
       ],
-      link: "https://buy.stripe.com/test_aEUg1UboMgpd4dq9AE",
+      link: 'https://buy.stripe.com/test_aEUg1UboMgpd4dq9AE',
     },
 
     // Add other plans similarly
   ];
 
-  const handleStripeCheckout = async ({id, checkOutDetails}:any) => {
-    if(!id){
-      alert("Please login to continue buying!")
+  const handleStripeCheckout = async ({ id, checkOutDetails }: any) => {
+    if (!id) {
+      alert('Please login to continue buying!');
     }
     const stripe = await stripePromise;
     if (!stripe) {
-      console.error("Stripe.js has not loaded properly.");
+      console.error('Stripe.js has not loaded properly.');
       return;
     }
-    const response = await fetch("/api/checkout", {
-      method: "POST",
+    const response = await fetch('/api/checkout', {
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ priceId: checkOutDetails.priceId, metadata: {...checkOutDetails, userId: id}}),
+      body: JSON.stringify({
+        priceId: checkOutDetails.priceId,
+        metadata: { ...checkOutDetails, userId: id },
+      }),
     });
     console.log(response);
-    
+
     if (response.ok) {
       const session = await response.json();
       const result = await stripe.redirectToCheckout({
-        sessionId: session.id
+        sessionId: session.id,
       });
 
       if (result.error) {
         console.error(result.error.message);
       }
     } else {
-      console.error("Failed to create checkout session");
+      console.error('Failed to create checkout session');
     }
   };
 
   return (
     <div
       className="min-h-screen text-black"
-      style={{ backgroundColor: "#FAF6F6" }}
+      style={{ backgroundColor: '#FAF6F6' }}
     >
       <Navbar />
 
@@ -179,7 +186,9 @@ const PricingUser = () => {
 
               <button
                 key={plan.priceId}
-                onClick={() => handleStripeCheckout({id:userId, checkOutDetails:plan})}
+                onClick={() =>
+                  handleStripeCheckout({ id: userId, checkOutDetails: plan })
+                }
                 className="mt-6 inline-block w-full text-center text-black font-bold py-3 px-6 rounded-lg border border-transparent hover:border-gray-300 bg-[#dedede] shadow-sm transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-md"
               >
                 Get Started
@@ -204,7 +213,7 @@ const PricingUser = () => {
             <div className="flex flex-col items-center space-y-4 p-4 text-center rounded-lg shadow-lg bg-white">
               <MusicIcon className="h-12 w-12 text-black-100" />
               <p className="text-sm font-medium text-gray-900">
-                 Concerts will cost you $500
+                Concerts will cost you $500
               </p>
             </div>
             <div className="flex flex-col items-center space-y-4 p-4 text-center rounded-lg shadow-lg bg-white">
@@ -242,11 +251,11 @@ const PricingUser = () => {
               {/* Individual roadmap items */}
               {[
                 "You're paying us $0.75/hour",
-                "Increase in interviews 5x",
-                "Advantage in interviews 3x",
-                "Full-time Pay Range $50 - $150/hour",
-                "You can make $12-20/hour on part-time",
-                "Time saved for Interview Prep 80 hours/10 Days",
+                'Increase in interviews 5x',
+                'Advantage in interviews 3x',
+                'Full-time Pay Range $50 - $150/hour',
+                'You can make $12-20/hour on part-time',
+                'Time saved for Interview Prep 80 hours/10 Days',
               ].map((item, index) => (
                 <div key={index} className="flex flex-col items-center">
                   <div className="px-6 py-4 bg-white rounded-lg shadow text-center w-72">
@@ -254,7 +263,7 @@ const PricingUser = () => {
                       {item}
                     </p>
                   </div>
-                  {index < 5 && <div className="w-1 h-6 bg-gray-300"></div>}{" "}
+                  {index < 5 && <div className="w-1 h-6 bg-gray-300"></div>}{' '}
                   {/* Small connectors */}
                 </div>
               ))}
@@ -263,7 +272,7 @@ const PricingUser = () => {
         </div>
       </section>
 
-     <Footer />
+      <Footer />
     </div>
   );
 };
@@ -360,4 +369,3 @@ function GraduationCapIcon(
     </svg>
   );
 }
-

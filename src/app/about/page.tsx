@@ -1,10 +1,10 @@
-import React from "react";
+import React from 'react';
 
-import AboutUs from "@/components/ui/about.client"
+import AboutUs from '@/components/ui/about.client';
 export default function AboutPage() {
-    return (
-      <main>
-        <AboutUs /> {/* Correct component usage */}
-      </main>
-    );
-  }
+  return (
+    <main>
+      <AboutUs /> {/* Correct component usage */}
+    </main>
+  );
+}
