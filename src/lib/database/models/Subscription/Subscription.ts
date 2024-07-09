@@ -9,8 +9,11 @@ const subscriptionSchema = new mongoose.Schema<ISubscription>({
   planId: { type: String, required: true },
   planName: { type: String, required: true },
   planPrice: { type: Number, required: true },
-  startDate: { type: Date, default: Date.now }
+  startDate: { type: Date, default: Date.now },
 });
 
-const Subscription = mongoose.model<ISubscription>('Subscription', subscriptionSchema);
+const Subscription = mongoose.model<ISubscription>(
+  'Subscription',
+  subscriptionSchema
+);
 export default Subscription;

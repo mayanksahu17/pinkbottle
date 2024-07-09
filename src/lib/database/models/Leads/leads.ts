@@ -14,13 +14,13 @@ const leadSchema = new mongoose.Schema<IUser>({
   },
   email: {
     type: String,
-    unique: true
+    unique: true,
   },
   payment: {
     status: {
       type: String,
-      enum : ["Paid", "Unpaid"],
-      default: "Unpaid"
+      enum: ['Paid', 'Unpaid'],
+      default: 'Unpaid',
     },
   },
   jobs: [
@@ -29,16 +29,17 @@ const leadSchema = new mongoose.Schema<IUser>({
       title: String,
       position: String,
       date: Date,
-      status: String
-    }
+      status: String,
+    },
   ],
-  resume:{
+  resume: {
     type: String,
   },
-  coverLetter:{
-    type: String
-  }
+  coverLetter: {
+    type: String,
+  },
 });
 
-const Lead = mongoose.models?.Lead || mongoose.model<IUser>('Lead', leadSchema, 'leads');
+const Lead =
+  mongoose.models?.Lead || mongoose.model<IUser>('Lead', leadSchema, 'leads');
 export default Lead;

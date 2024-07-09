@@ -1,10 +1,10 @@
-import Image from "next/image";
+import Image from 'next/image';
 
-import PricingUser from "@/components/ui/pricingc.client"
+import PricingUser from '@/components/ui/pricingc.client';
 export default function PricingPage() {
-    return (
-      <main>
-        <PricingUser /> {/* Correct component usage */}
-      </main>
-    );
-  }
+  return (
+    <main>
+      <PricingUser /> {/* Correct component usage */}
+    </main>
+  );
+}

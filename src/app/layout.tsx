@@ -1,11 +1,10 @@
-import type { Metadata } from "next";
-import "./globals.css";
-import { ClerkProvider } from "@clerk/nextjs";
-
+import type { Metadata } from 'next';
+import './globals.css';
+import { ClerkProvider } from '@clerk/nextjs';
 
 export const metadata: Metadata = {
-  title: "HiredEasy",
-  description: "Simplying Job Application",
+  title: 'HiredEasy',
+  description: 'Simplying Job Application',
 };
 
 export default function RootLayout({
@@ -16,7 +15,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <ClerkProvider>{children}</ClerkProvider></body>
+        <ClerkProvider>{children}</ClerkProvider>
+      </body>
     </html>
   );
 }

@@ -15,8 +15,8 @@ export async function GET(req: NextRequest, res: NextResponse) {
     try {
       const user = await users.getUser(userId);
       await users.updateUser(userId, {
-      publicMetadata: { isPaid: true }
-    });
+        publicMetadata: { isPaid: true },
+      });
       return NextResponse.redirect(new URL('/dashboard', req.url));
     } catch (error) {
       console.error('Failed to update user metadata:', error);
