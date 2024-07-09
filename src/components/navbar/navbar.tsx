@@ -1,7 +1,7 @@
-"use client";
-import { UserButton, useUser } from "@clerk/nextjs";
-import Link from "next/link";
-import React, { useState } from "react";
+'use client';
+import { UserButton, useUser } from '@clerk/nextjs';
+import Link from 'next/link';
+import React, { useState } from 'react';
 
 const Navbar = () => {
   const { isSignedIn, user } = useUser();
@@ -20,7 +20,7 @@ const Navbar = () => {
             alt="Your Logo"
             className="cursor-pointer h-10 md:h-12 transform scale-125 ml-4 md:ml-6"
             src="/Hiredeasy.png"
-            style={{ transform: "scale(2.1)" }}
+            style={{ transform: 'scale(2.1)' }}
           />
         </Link>
 
@@ -56,7 +56,7 @@ const Navbar = () => {
         {/* Mobile Menu Items */}
         <div
           className={`fixed inset-x-0 top-16 z-10 bg-white p-4 transform transition-transform duration-300 ease-in-out ${
-            isMenuOpen ? "block" : "hidden"
+            isMenuOpen ? 'block' : 'hidden'
           } md:hidden`}
         >
           <nav className="flex flex-col space-y-2 bg-white p-4">

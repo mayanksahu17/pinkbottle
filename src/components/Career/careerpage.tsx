@@ -1,63 +1,65 @@
-"use client";
-import { useState, ChangeEvent, FormEvent, useEffect } from "react";
-import Navbar from "../navbar/navbar";
-import Footer from "../footer/footer";
+'use client';
+import { useState, ChangeEvent, FormEvent, useEffect } from 'react';
+import Navbar from '../navbar/navbar';
+import Footer from '../footer/footer';
 
 export function CareerPage() {
   const [isModalOpen, setModalOpen] = useState(false);
-  const [currentJob, setCurrentJob] = useState("");
+  const [currentJob, setCurrentJob] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    address: "",
-    university: "",
-    location: "",
-    workAuthorization: "",
-    experience: "",
-    resume: "",
-    resumeName: "",
-    resumeMimeType: "",
-    coverLetter: "",
-    coverLetterName: "",
-    coverLetterMimeType: "",
+    name: '',
+    email: '',
+    address: '',
+    university: '',
+    location: '',
+    workAuthorization: '',
+    experience: '',
+    resume: '',
+    resumeName: '',
+    resumeMimeType: '',
+    coverLetter: '',
+    coverLetterName: '',
+    coverLetterMimeType: '',
   });
-  const [copyMessage, setCopyMessage] = useState("");
+  const [copyMessage, setCopyMessage] = useState('');
 
   const jobPositions = [
     {
-      title: "Software Engineer",
+      title: 'Software Engineer',
       description:
-        "We are seeking a skilled Software Engineer to join our dynamic team. You will be responsible for developing, testing, and maintaining cutting-edge web applications. You will collaborate with cross-functional teams to drive our innovative product roadmap forward. Ideal candidates will have a strong background in web technologies and a passion for creating high-quality software solutions.",
-      experience: "2-5 years",
-      location: "Remote, USA",
+        'We are seeking a skilled Software Engineer to join our dynamic team. You will be responsible for developing, testing, and maintaining cutting-edge web applications. You will collaborate with cross-functional teams to drive our innovative product roadmap forward. Ideal candidates will have a strong background in web technologies and a passion for creating high-quality software solutions.',
+      experience: '2-5 years',
+      location: 'Remote, USA',
     },
     {
-      title: "Data Analyst Intern",
+      title: 'Data Analyst Intern',
       description:
-        "We are looking for a motivated Data Analyst Intern to join our product team. As a Data Analyst Intern, you will drive product initiatives with a user-centered approach, collaborating closely with engineering and design teams to deliver exceptional user experiences. This role provides a unique opportunity to gain hands-on experience in data analysis and product development.",
-      experience: "Internship",
-      location: "USA",
+        'We are looking for a motivated Data Analyst Intern to join our product team. As a Data Analyst Intern, you will drive product initiatives with a user-centered approach, collaborating closely with engineering and design teams to deliver exceptional user experiences. This role provides a unique opportunity to gain hands-on experience in data analysis and product development.',
+      experience: 'Internship',
+      location: 'USA',
     },
     {
-      title: "Machine Learning Intern",
+      title: 'Machine Learning Intern',
       description:
-        "We are excited to offer an internship opportunity for a talented Machine Learning Intern. In this role, you will work on designing intuitive and delightful user interfaces, shaping the way users interact with our products from the ground up. You will be involved in various aspects of machine learning projects, from data preprocessing to model deployment. This is a great opportunity to apply your machine learning skills in a real-world setting.",
-      experience: "Internship",
-      location: "Remote, USA",
+        'We are excited to offer an internship opportunity for a talented Machine Learning Intern. In this role, you will work on designing intuitive and delightful user interfaces, shaping the way users interact with our products from the ground up. You will be involved in various aspects of machine learning projects, from data preprocessing to model deployment. This is a great opportunity to apply your machine learning skills in a real-world setting.',
+      experience: 'Internship',
+      location: 'Remote, USA',
     },
     // More positions can be added here
   ];
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
-    const jobTitle = urlParams.get("job");
+    const jobTitle = urlParams.get('job');
     if (jobTitle) {
       openModal(jobTitle);
     }
   }, []);
 
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleInputChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
@@ -71,12 +73,12 @@ export function CareerPage() {
     const reader = new FileReader();
 
     reader.onloadend = () => {
-      if (reader.result && typeof reader.result === "string") {
+      if (reader.result && typeof reader.result === 'string') {
         setFormData({
           ...formData,
-          [name]: reader.result.split(",")[1],
-          [`${name}Name`]: file?.name || "",
-          [`${name}MimeType`]: file?.type || "",
+          [name]: reader.result.split(',')[1],
+          [`${name}Name`]: file?.name || '',
+          [`${name}MimeType`]: file?.type || '',
         });
       }
     };
@@ -89,9 +91,9 @@ export function CareerPage() {
   const removeFile = (fileType: string) => {
     setFormData({
       ...formData,
-      [fileType]: "",
-      [`${fileType}Name`]: "",
-      [`${fileType}MimeType`]: "",
+      [fileType]: '',
+      [`${fileType}Name`]: '',
+      [`${fileType}MimeType`]: '',
     });
   };
 
@@ -100,14 +102,14 @@ export function CareerPage() {
     setIsSubmitting(true);
 
     const scriptURL =
-      "https://script.google.com/macros/s/AKfycbwgIcE5YtLW46u_NUuo_veD68o7hKZHYGflDCNPfCUKQRRqELArRcPSjGN7ObvUQPdD/exec";
+      'https://script.google.com/macros/s/AKfycbwgIcE5YtLW46u_NUuo_veD68o7hKZHYGflDCNPfCUKQRRqELArRcPSjGN7ObvUQPdD/exec';
     const data = new URLSearchParams(formData as any);
 
     try {
       const response = await fetch(scriptURL, {
-        method: "POST",
+        method: 'POST',
         headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
+          'Content-Type': 'application/x-www-form-urlencoded',
         },
         body: data.toString(),
       });
@@ -116,13 +118,13 @@ export function CareerPage() {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
-      console.log("Success!", response);
-      alert("Application submitted successfully!");
+      console.log('Success!', response);
+      alert('Application submitted successfully!');
       setModalOpen(false);
       resetForm();
     } catch (error) {
-      console.error("Error!", error);
-      alert("There was an error submitting your application.");
+      console.error('Error!', error);
+      alert('There was an error submitting your application.');
     } finally {
       setIsSubmitting(false);
     }
@@ -131,49 +133,49 @@ export function CareerPage() {
   const openModal = (jobTitle: string) => {
     setCurrentJob(jobTitle);
     setModalOpen(true);
-    document.body.classList.add("overflow-hidden");
+    document.body.classList.add('overflow-hidden');
   };
 
   const closeModal = () => {
     setModalOpen(false);
-    document.body.classList.remove("overflow-hidden");
+    document.body.classList.remove('overflow-hidden');
     resetForm();
   };
 
   const resetForm = () => {
     setFormData({
-      name: "",
-      email: "",
-      address: "",
-      university: "",
-      location: "",
-      workAuthorization: "",
-      experience: "",
-      resume: "",
-      resumeName: "",
-      resumeMimeType: "",
-      coverLetter: "",
-      coverLetterName: "",
-      coverLetterMimeType: "",
+      name: '',
+      email: '',
+      address: '',
+      university: '',
+      location: '',
+      workAuthorization: '',
+      experience: '',
+      resume: '',
+      resumeName: '',
+      resumeMimeType: '',
+      coverLetter: '',
+      coverLetterName: '',
+      coverLetterMimeType: '',
     });
   };
 
   const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text).then(
       () => {
-        setCopyMessage("Link copied to clipboard!");
+        setCopyMessage('Link copied to clipboard!');
         setTimeout(() => {
-          setCopyMessage("");
+          setCopyMessage('');
         }, 2000);
       },
       (err) => {
-        console.error("Could not copy text: ", err);
+        console.error('Could not copy text: ', err);
       }
     );
   };
 
   const handleShareJob = (jobTitle: string) => {
-    const randomLink = `${window.location.origin}/career?job=${jobTitle.replace(/\s+/g, "-")}&redirect=${Math.random()
+    const randomLink = `${window.location.origin}/career?job=${jobTitle.replace(/\s+/g, '-')}&redirect=${Math.random()
       .toString(36)
       .substring(7)}`;
     copyToClipboard(randomLink);
@@ -243,7 +245,7 @@ export function CareerPage() {
         </div>
         {isModalOpen && (
           <div
-          className="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center h-screen w-screen overflow-y-auto"
+            className="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center h-screen w-screen overflow-y-auto"
             id="my-modal"
           >
             <div className="relative bg-white rounded-lg shadow-lg w-full max-w-3xl p-8 mx-auto overflow-y-auto max-h-full">
@@ -276,7 +278,7 @@ export function CareerPage() {
                       name="name"
                       placeholder="Name"
                       required
-                      className="w-full p-4 border rounded"
+                      className="w-full p-4 border rounded focus:ring-2 focus:ring-green-600"
                       onChange={handleInputChange}
                     />
                     <input
@@ -284,7 +286,7 @@ export function CareerPage() {
                       name="email"
                       placeholder="Email"
                       required
-                      className="w-full p-4 border rounded"
+                      className="w-full p-4 border rounded focus:ring-2 focus:ring-green-600"
                       onChange={handleInputChange}
                     />
                   </div>
@@ -293,26 +295,29 @@ export function CareerPage() {
                     name="address"
                     placeholder="Address"
                     required
-                    className="w-full p-4 border rounded"
+                    className="w-full p-4 border rounded focus:ring-2 focus:ring-green-600"
                     onChange={handleInputChange}
                   />
                   <input
                     type="text"
                     name="university"
                     placeholder="University Name"
-                    className="w-full p-4 border rounded"
+                    className="w-full p-4 border rounded focus:ring-2 focus:ring-green-600"
                     onChange={handleInputChange}
                   />
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div className="w-full p-4 border rounded">
-                      <label htmlFor="location" className="block text-gray-700">
+                    <div className="w-full p-4 border rounded focus:ring-2 focus:ring-green-600">
+                      <label
+                        htmlFor="location"
+                        className="block text-gray-700 mb-2"
+                      >
                         Location
                       </label>
                       <select
                         name="location"
                         id="location"
                         required
-                        className="w-full mt-2 p-2 border rounded"
+                        className="w-full mt-2 p-2 border rounded focus:ring-2 focus:ring-green-600"
                         onChange={handleInputChange}
                       >
                         <option value="">Select Location</option>
@@ -324,103 +329,102 @@ export function CareerPage() {
                         {/* Add more USA locations as needed */}
                       </select>
                     </div>
-                    <div className="w-full p-4 border rounded">
-  <label className="block text-gray-700">
-    Are you authorized to work in the USA?
-  </label>
-  <div className="mt-2">
-    <label className="inline-flex items-center">
-      <input
-        type="radio"
-        name="workAuthorization"
-        value="Yes"
-        className="form-radio"
-        onChange={handleInputChange}
-      />
-      <span className="ml-2">Yes</span>
-    </label>
-    <label className="inline-flex items-center ml-6">
-      <input
-        type="radio"
-        name="workAuthorization"
-        value="No"
-        className="form-radio"
-        onChange={handleInputChange}
-      />
-      <span className="ml-2">No</span>
-    </label>
-  </div>
-</div>
-<div className="w-full p-4 border rounded">
-  <label className="block text-gray-700">
-    Do you need visa sponsorship?
-  </label>
-  <div className="mt-2">
-    <label className="inline-flex items-center">
-      <input
-        type="radio"
-        name="visaSponsorship"
-        value="Yes"
-        className="form-radio"
-        onChange={handleInputChange}
-      />
-      <span className="ml-2">Yes</span>
-    </label>
-    <label className="inline-flex items-center ml-6">
-      <input
-        type="radio"
-        name="visaSponsorship"
-        value="No"
-        className="form-radio"
-        onChange={handleInputChange}
-      />
-      <span className="ml-2">No</span>
-    </label>
-  </div>
-</div>
-<div className="w-full p-4 border rounded">
-  <label className="block text-gray-700">
-    Do you have relevant experience for this role?
-  </label>
-  <div className="mt-2">
-    <label className="inline-flex items-center">
-      <input
-        type="radio"
-        name="relevantExperience"
-        value="Yes"
-        className="form-radio"
-        onChange={handleInputChange}
-      />
-      <span className="ml-2">Yes</span>
-    </label>
-    <label className="inline-flex items-center ml-6">
-      <input
-        type="radio"
-        name="relevantExperience"
-        value="No"
-        className="form-radio"
-        onChange={handleInputChange}
-      />
-      <span className="ml-2">No</span>
-    </label>
-  </div>
-</div>
-
+                    <div className="w-full p-4 border rounded focus:ring-2 focus:ring-green-600">
+                      <label className="block text-gray-700 mb-2">
+                        Are you authorized to work in the USA?
+                      </label>
+                      <div className="mt-2">
+                        <label className="inline-flex items-center">
+                          <input
+                            type="radio"
+                            name="workAuthorization"
+                            value="Yes"
+                            className="form-radio"
+                            onChange={handleInputChange}
+                          />
+                          <span className="ml-2">Yes</span>
+                        </label>
+                        <label className="inline-flex items-center ml-6">
+                          <input
+                            type="radio"
+                            name="workAuthorization"
+                            value="No"
+                            className="form-radio"
+                            onChange={handleInputChange}
+                          />
+                          <span className="ml-2">No</span>
+                        </label>
+                      </div>
+                    </div>
+                    <div className="w-full p-4 border rounded focus:ring-2 focus:ring-green-600">
+                      <label className="block text-gray-700 mb-2">
+                        Do you need visa sponsorship?
+                      </label>
+                      <div className="mt-2">
+                        <label className="inline-flex items-center">
+                          <input
+                            type="radio"
+                            name="visaSponsorship"
+                            value="Yes"
+                            className="form-radio"
+                            onChange={handleInputChange}
+                          />
+                          <span className="ml-2">Yes</span>
+                        </label>
+                        <label className="inline-flex items-center ml-6">
+                          <input
+                            type="radio"
+                            name="visaSponsorship"
+                            value="No"
+                            className="form-radio"
+                            onChange={handleInputChange}
+                          />
+                          <span className="ml-2">No</span>
+                        </label>
+                      </div>
+                    </div>
+                    <div className="w-full p-4 border rounded focus:ring-2 focus:ring-green-600">
+                      <label className="block text-gray-700 mb-2">
+                        Do you have relevant experience for this role?
+                      </label>
+                      <div className="mt-2">
+                        <label className="inline-flex items-center">
+                          <input
+                            type="radio"
+                            name="relevantExperience"
+                            value="Yes"
+                            className="form-radio"
+                            onChange={handleInputChange}
+                          />
+                          <span className="ml-2">Yes</span>
+                        </label>
+                        <label className="inline-flex items-center ml-6">
+                          <input
+                            type="radio"
+                            name="relevantExperience"
+                            value="No"
+                            className="form-radio"
+                            onChange={handleInputChange}
+                          />
+                          <span className="ml-2">No</span>
+                        </label>
+                      </div>
+                    </div>
                   </div>
                   <input
                     type="text"
                     name="experience"
                     placeholder="Years of Experience"
                     required
-                    className="w-full p-4 border rounded"
+                    className="w-full p-4 border rounded focus:ring-2 focus:ring-green-600"
                     onChange={handleInputChange}
                   />
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="file-upload-wrapper relative">
-                      <label className="block w-full px-5 py-3 bg-green-600 text-white rounded cursor-pointer text-center">
+                      <label className="block w-full px-5 py-3 bg-green-600 text-white rounded cursor-pointer text-center focus:ring-2 focus:ring-green-600">
                         {formData.resumeName
                           ? `Uploaded: ${formData.resumeName}`
-                          : "Upload Resume"}
+                          : 'Upload Resume'}
                         <input
                           type="file"
                           name="resume"
@@ -432,7 +436,7 @@ export function CareerPage() {
                       {formData.resumeName && (
                         <button
                           type="button"
-                          onClick={() => removeFile("resume")}
+                          onClick={() => removeFile('resume')}
                           className="absolute top-0 right-0 mt-2 mr-2 text-white bg-red-500 rounded-full h-6 w-6 flex items-center justify-center"
                         >
                           &times;
@@ -440,10 +444,10 @@ export function CareerPage() {
                       )}
                     </div>
                     <div className="file-upload-wrapper relative">
-                      <label className="block w-full px-5 py-3 bg-green-600 text-white rounded cursor-pointer text-center">
+                      <label className="block w-full px-5 py-3 bg-green-600 text-white rounded cursor-pointer text-center focus:ring-2 focus:ring-green-600">
                         {formData.coverLetterName
                           ? `Uploaded: ${formData.coverLetterName}`
-                          : "Upload Cover Letter"}
+                          : 'Upload Cover Letter'}
                         <input
                           type="file"
                           name="coverLetter"
@@ -454,7 +458,7 @@ export function CareerPage() {
                       {formData.coverLetterName && (
                         <button
                           type="button"
-                          onClick={() => removeFile("coverLetter")}
+                          onClick={() => removeFile('coverLetter')}
                           className="absolute top-0 right-0 mt-2 mr-2 text-white bg-red-500 rounded-full h-6 w-6 flex items-center justify-center"
                         >
                           &times;
@@ -483,7 +487,7 @@ export function CareerPage() {
                         />
                       </svg>
                     ) : (
-                      "Submit Application"
+                      'Submit Application'
                     )}
                   </button>
                 </form>

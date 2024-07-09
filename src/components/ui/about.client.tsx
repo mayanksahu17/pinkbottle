@@ -1,26 +1,35 @@
-"use client"
+'use client';
 import React, { SVGProps, useState } from 'react';
-import Link from "next/link";
-import { UserButton, useUser } from "@clerk/nextjs";
-import { Button } from "@/components/ui/button"; // Adjust the path as necessary
+import Link from 'next/link';
+import { UserButton, useUser } from '@clerk/nextjs';
+import { Button } from '@/components/ui/button'; // Adjust the path as necessary
 import Navbar from '../navbar/navbar';
-import Footer from "../footer/footer"
+import Footer from '../footer/footer';
 
 const Aboutus = () => {
-    return (
-        <div className="min-h-screen text-black" style={{ backgroundColor: '#FAF6F6' }}>
-       
+  return (
+    <div
+      className="min-h-screen text-black"
+      style={{ backgroundColor: '#FAF6F6' }}
+    >
       <Navbar />
       <main className="max-w-6xl mx-auto px-6 py-12">
         <section className="text-center mb-12">
-          <h1 className="text-4xl font-bold mb-4">We understand you better than anyone</h1>
+          <h1 className="text-4xl font-bold mb-4">
+            We understand you better than anyone
+          </h1>
           <p className="text-lg text-gray-600 mb-6">
-            We have been in your shoes and understand the challenges of job hunting. Our mission is to help job seekers
-            find their dream jobs.
+            We have been in your shoes and understand the challenges of job
+            hunting. Our mission is to help job seekers find their dream jobs.
           </p>
-          <a href="https://apply.neetocal.com/meeting-with-nikhil-jain" target="_blank" rel="noopener noreferrer" className="text-base border-2 rounded-lg px-8 py-3 font-semibold border-gray-800 text-gray-800 bg-white hover:bg-gray-100 transition duration-500 ease-in-out transform hover:-translate-y-1 hover:shadow-xl ml-4">
-  Talk to founder 👋
-</a>
+          <a
+            href="https://apply.neetocal.com/meeting-with-nikhil-jain"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-base border-2 rounded-lg px-8 py-3 font-semibold border-gray-800 text-gray-800 bg-white hover:bg-gray-100 transition duration-500 ease-in-out transform hover:-translate-y-1 hover:shadow-xl ml-4"
+          >
+            Talk to founder 👋
+          </a>
         </section>
         <section className="grid grid-cols-1 md:grid-cols-2 gap-12">
           <div className="flex flex-col items-center text-center">
@@ -30,19 +39,28 @@ const Aboutus = () => {
               height="200"
               src="/Nikhil.jpeg"
               style={{
-                aspectRatio: "200/200",
-                objectFit: "cover",
+                aspectRatio: '200/200',
+                objectFit: 'cover',
               }}
               width="200"
             />
             <h2 className="font-bold text-2xl mb-2">Nikhil Jain</h2>
             <p className="text-gray-700 mb-4">
-              Co-Founder | Product | <a href="https://www.linkedin.com/in/wnikhil/" target="_blank" rel="noopener noreferrer">
-  <LinkedinIcon className="inline ml-1" />
-</a>
+              Co-Founder | Product |{' '}
+              <a
+                href="https://www.linkedin.com/in/wnikhil/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <LinkedinIcon className="inline ml-1" />
+              </a>
             </p>
             <p className="text-gray-600 mb-4">
-            I co-founded a startup that helps students and professionals by applying for jobs on their behalf, crafting resumes, and updating cover letters. As an IIM Kolkata alumnus with experience at S&P Global, I'm dedicated to enhancing user experiences and simplifying the job application process.
+              I co-founded a startup that helps students and professionals by
+              applying for jobs on their behalf, crafting resumes, and updating
+              cover letters. As an IIM Kolkata alumnus with experience at S&P
+              Global, I'm dedicated to enhancing user experiences and
+              simplifying the job application process.
             </p>
             <div className="flex space-x-2">
               <img
@@ -50,8 +68,8 @@ const Aboutus = () => {
                 height="70"
                 src="/IIM.png"
                 style={{
-                  aspectRatio: "120/40",
-                  objectFit: "contain",
+                  aspectRatio: '120/40',
+                  objectFit: 'contain',
                 }}
                 width="210"
               />
@@ -60,8 +78,8 @@ const Aboutus = () => {
                 height="150"
                 src="/spglobal.svg"
                 style={{
-                  aspectRatio: "120/40",
-                  objectFit: "contain",
+                  aspectRatio: '120/40',
+                  objectFit: 'contain',
                 }}
                 width="140"
               />
@@ -74,19 +92,27 @@ const Aboutus = () => {
               height="200"
               src="/Anuj.png"
               style={{
-                aspectRatio: "200/200",
-                objectFit: "cover",
+                aspectRatio: '200/200',
+                objectFit: 'cover',
               }}
               width="200"
             />
             <h2 className="font-bold text-2xl mb-2">Anuj Jain</h2>
             <p className="text-gray-700 mb-4">
-              Co-Founder | Tech | <a href="https://www.linkedin.com/in/anujjain809/" target="_blank" rel="noopener noreferrer">
-  <LinkedinIcon className="inline ml-1" />
-</a>
+              Co-Founder | Tech |{' '}
+              <a
+                href="https://www.linkedin.com/in/anujjain809/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <LinkedinIcon className="inline ml-1" />
+              </a>
             </p>
             <p className="text-gray-600 mb-4">
-            I'm SDE at Salesforce. From building Pulsejet engines to coding full-stack apps, I love tinkering and creating. After launching a couple of startups and learning from each experience, I'm now focused on being the best tech wingman, helping others succeed.
+              I'm SDE at Salesforce. From building Pulsejet engines to coding
+              full-stack apps, I love tinkering and creating. After launching a
+              couple of startups and learning from each experience, I'm now
+              focused on being the best tech wingman, helping others succeed.
             </p>
             <div className="flex space-x-2">
               {/* <img
@@ -99,23 +125,21 @@ const Aboutus = () => {
                 }}
                 width="210"
               /> */}
-             <img
-  alt="Salesforce"
-  height="300" // increased height
-  src="/salesforce.png"
-  style={{
-    aspectRatio: "120/40",
-    objectFit: "contain",
-  }}
-  width="280" // increased width
-/>
-
+              <img
+                alt="Salesforce"
+                height="300" // increased height
+                src="/salesforce.png"
+                style={{
+                  aspectRatio: '120/40',
+                  objectFit: 'contain',
+                }}
+                width="280" // increased width
+              />
             </div>
           </div>
         </section>
       </main>
       <Footer />
-
     </div>
   );
 };

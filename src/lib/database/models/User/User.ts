@@ -15,13 +15,13 @@ const userSchema = new mongoose.Schema<IUser>({
   },
   email: {
     type: String,
-    unique: true
+    unique: true,
   },
   payment: {
     status: {
       type: String,
-      enum : ["Paid", "Unpaid"],
-      default: "Unpaid"
+      enum: ['Paid', 'Unpaid'],
+      default: 'Unpaid',
     },
     // subscription: {
     //   type: mongoose.Types.ObjectId,
@@ -34,16 +34,17 @@ const userSchema = new mongoose.Schema<IUser>({
       title: String,
       position: String,
       date: Date,
-      status: String
-    }
+      status: String,
+    },
   ],
-  resume:{
+  resume: {
     type: String,
   },
-  coverLetter:{
-    type: String
-  }
+  coverLetter: {
+    type: String,
+  },
 });
 
-const User = mongoose.models?.User || mongoose.model<IUser>('User', userSchema, 'users');
+const User =
+  mongoose.models?.User || mongoose.model<IUser>('User', userSchema, 'users');
 export default User;

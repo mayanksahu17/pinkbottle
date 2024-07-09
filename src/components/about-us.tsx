@@ -1,60 +1,75 @@
-import { Button } from "@/components/ui/button"
-import { UserButton, auth } from "@clerk/nextjs"
-import Link from "next/link"
-import { JSX, SVGProps } from "react"
+import { Button } from '@/components/ui/button';
+import { UserButton, auth } from '@clerk/nextjs';
+import Link from 'next/link';
+import { JSX, SVGProps } from 'react';
 
 export function AboutUs() {
-  const { userId } = auth()
+  const { userId } = auth();
   return (
     <div className="bg-white">
       <header className="flex items-center justify-between p-4 border-b border-gray-200">
-
-<img
-  alt="Scale.jobs Logo"
-  className="h-10"
-  src="/Clarksonlogo.png"
-  style={{ aspectRatio: "120/40", objectFit: "cover" }}
-/>
-<nav className="flex gap-4 items-center">
-  <a className="text-sm font-medium text-gray-500 hover:text-green-600" href="/about">
-    About Us
-  </a>
-  <a className="text-sm font-medium text-gray-500 hover:text-green-600" href="#">
-    How it works
-  </a>
-  <a className="text-sm font-medium text-gray-500 hover:text-green-600" href="/pricing">
-    Pricing
-  </a>
-  <a href="/trial" className="text-sm bg-green-600 text-white py-2 px-4 rounded-full hover:bg-green-700">
-    Try the Copilot Free
-  </a>
-</nav>
-<div>
-  {userId ? (
-    <div className="flex gap-4 items-center">
-      <Link href="/dashboard">Dashboard</Link>
-      <UserButton afterSignOutUrl="/" />
-    </div>
-  ) : (
-    <div className="space-x-4">
-      <a href='/sign-in' className="text-sm">
-        Login
-      </a>
-      <a href='/sign-up' className="text-sm">Sign Up</a>
-    </div>
-  )}
-</div>
-</header>
+        <img
+          alt="Scale.jobs Logo"
+          className="h-10"
+          src="/Clarksonlogo.png"
+          style={{ aspectRatio: '120/40', objectFit: 'cover' }}
+        />
+        <nav className="flex gap-4 items-center">
+          <a
+            className="text-sm font-medium text-gray-500 hover:text-green-600"
+            href="/about"
+          >
+            About Us
+          </a>
+          <a
+            className="text-sm font-medium text-gray-500 hover:text-green-600"
+            href="#"
+          >
+            How it works
+          </a>
+          <a
+            className="text-sm font-medium text-gray-500 hover:text-green-600"
+            href="/pricing"
+          >
+            Pricing
+          </a>
+          <a
+            href="/trial"
+            className="text-sm bg-green-600 text-white py-2 px-4 rounded-full hover:bg-green-700"
+          >
+            Try the Copilot Free
+          </a>
+        </nav>
+        <div>
+          {userId ? (
+            <div className="flex gap-4 items-center">
+              <Link href="/dashboard">Dashboard</Link>
+              <UserButton afterSignOutUrl="/" />
+            </div>
+          ) : (
+            <div className="space-x-4">
+              <a href="/sign-in" className="text-sm">
+                Login
+              </a>
+              <a href="/sign-up" className="text-sm">
+                Sign Up
+              </a>
+            </div>
+          )}
+        </div>
+      </header>
       <main className="max-w-6xl mx-auto px-6 py-12">
         <section className="text-center mb-12">
-          <h1 className="text-4xl font-bold mb-4">We understand you better than anyone</h1>
+          <h1 className="text-4xl font-bold mb-4">
+            We understand you better than anyone
+          </h1>
           <p className="text-lg text-gray-600 mb-6">
-            We have been in your shoes and understand the challenges of job hunting. Our mission is to help job seekers
-            find their dream jobs.
+            We have been in your shoes and understand the challenges of job
+            hunting. Our mission is to help job seekers find their dream jobs.
           </p>
           <button className="text-base border-2 rounded-lg px-8 py-3 font-semibold border-gray-800 text-gray-800 bg-white hover:bg-gray-100 transition duration-500 ease-in-out transform hover:-translate-y-1 hover:shadow-xl ml-4">
-  Talk to founder 👋
-</button>
+            Talk to founder 👋
+          </button>
         </section>
         <section className="grid grid-cols-1 md:grid-cols-2 gap-12">
           <div className="flex flex-col items-center text-center">
@@ -64,8 +79,8 @@ export function AboutUs() {
               height="200"
               src="/placeholder.svg"
               style={{
-                aspectRatio: "200/200",
-                objectFit: "cover",
+                aspectRatio: '200/200',
+                objectFit: 'cover',
               }}
               width="200"
             />
@@ -74,9 +89,10 @@ export function AboutUs() {
               Co-Founder | Tech | <LinkedinIcon className="inline ml-1" />
             </p>
             <p className="text-gray-600 mb-4">
-              I love building tech products and services keeping users at the center and shipping them to market. I
-              derive pleasure from hustle and building tech products that minimizes human efforts. Clarkson University and
-              Ex-PhonePe Employee
+              I love building tech products and services keeping users at the
+              center and shipping them to market. I derive pleasure from hustle
+              and building tech products that minimizes human efforts. Clarkson
+              University and Ex-PhonePe Employee
             </p>
             <div className="flex space-x-2">
               <img
@@ -84,8 +100,8 @@ export function AboutUs() {
                 height="40"
                 src="/Clarksonlogo.png"
                 style={{
-                  aspectRatio: "120/40",
-                  objectFit: "cover",
+                  aspectRatio: '120/40',
+                  objectFit: 'cover',
                 }}
                 width="120"
               />
@@ -94,8 +110,8 @@ export function AboutUs() {
                 height="150"
                 src="/svvv.jpeg"
                 style={{
-                  aspectRatio: "120/40",
-                  objectFit: "contain",
+                  aspectRatio: '120/40',
+                  objectFit: 'contain',
                 }}
                 width="140"
               />
@@ -108,8 +124,8 @@ export function AboutUs() {
               height="200"
               src="/placeholder.svg"
               style={{
-                aspectRatio: "200/200",
-                objectFit: "cover",
+                aspectRatio: '200/200',
+                objectFit: 'cover',
               }}
               width="200"
             />
@@ -118,8 +134,9 @@ export function AboutUs() {
               Co-Founder | Tech <LinkedinIcon className="inline ml-1" />
             </p>
             <p className="text-gray-600 mb-4">
-              From building Pulsejet engines to coding full-stack Apps, I love tinkering and building stuff. Launched a
-              couple of startups and failed better each time, now trying to be the best tech wingman.
+              From building Pulsejet engines to coding full-stack Apps, I love
+              tinkering and building stuff. Launched a couple of startups and
+              failed better each time, now trying to be the best tech wingman.
             </p>
             <div className="flex space-x-2">
               <img
@@ -127,8 +144,8 @@ export function AboutUs() {
                 height="40"
                 src="/placeholder.svg"
                 style={{
-                  aspectRatio: "120/40",
-                  objectFit: "cover",
+                  aspectRatio: '120/40',
+                  objectFit: 'cover',
                 }}
                 width="120"
               />
@@ -137,8 +154,8 @@ export function AboutUs() {
                 height="40"
                 src="/placeholder.svg"
                 style={{
-                  aspectRatio: "120/40",
-                  objectFit: "cover",
+                  aspectRatio: '120/40',
+                  objectFit: 'cover',
                 }}
                 width="120"
               />
@@ -155,8 +172,8 @@ export function AboutUs() {
               height="40"
               src="/placeholder.svg"
               style={{
-                aspectRatio: "40/40",
-                objectFit: "cover",
+                aspectRatio: '40/40',
+                objectFit: 'cover',
               }}
               width="40"
             />
@@ -210,11 +227,12 @@ export function AboutUs() {
         </div>
       </footer>
     </div>
-  )
+  );
 }
 
-
-function HeartHandshakeIcon(props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) {
+function HeartHandshakeIcon(
+  props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>
+) {
   return (
     <svg
       {...props}
@@ -233,11 +251,12 @@ function HeartHandshakeIcon(props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElem
       <path d="m18 15-2-2" />
       <path d="m15 18-2-2" />
     </svg>
-  )
+  );
 }
 
-
-function LinkedinIcon(props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) {
+function LinkedinIcon(
+  props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>
+) {
   return (
     <svg
       {...props}
@@ -255,11 +274,12 @@ function LinkedinIcon(props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) 
       <rect width="4" height="12" x="2" y="9" />
       <circle cx="4" cy="4" r="2" />
     </svg>
-  )
+  );
 }
 
-
-function InstagramIcon(props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) {
+function InstagramIcon(
+  props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>
+) {
   return (
     <svg
       {...props}
@@ -277,5 +297,5 @@ function InstagramIcon(props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>)
       <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
       <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
     </svg>
-  )
+  );
 }

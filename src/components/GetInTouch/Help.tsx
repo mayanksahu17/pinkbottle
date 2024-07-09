@@ -10,7 +10,9 @@ const Help = () => {
 
   const [submitted, setSubmitted] = useState(false);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
@@ -41,13 +43,19 @@ const Help = () => {
     <div className="bg-white p-8 rounded-lg shadow-lg max-w-2xl mx-auto mt-10 animate-fadeIn w-full">
       {submitted ? (
         <p className="text-green-500 text-center text-lg font-medium">
-          Thank you! Someone from our team will reach out to you in the next 24 hours.
+          Thank you! Someone from our team will reach out to you in the next 24
+          hours.
         </p>
       ) : (
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="grid gap-6">
             <div className="relative">
-              <label htmlFor="name" className="block text-sm font-medium text-gray-700">Name</label>
+              <label
+                htmlFor="name"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Name
+              </label>
               <input
                 type="text"
                 id="name"
@@ -59,7 +67,12 @@ const Help = () => {
               />
             </div>
             <div className="relative">
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Email
+              </label>
               <input
                 type="email"
                 id="email"
@@ -71,7 +84,12 @@ const Help = () => {
               />
             </div>
             <div className="relative">
-              <label htmlFor="mobile" className="block text-sm font-medium text-gray-700">Mobile Number</label>
+              <label
+                htmlFor="mobile"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Mobile Number
+              </label>
               <input
                 type="text"
                 id="mobile"
@@ -83,7 +101,12 @@ const Help = () => {
               />
             </div>
             <div className="relative">
-              <label htmlFor="message" className="block text-sm font-medium text-gray-700">Message</label>
+              <label
+                htmlFor="message"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Message
+              </label>
               <textarea
                 id="message"
                 name="entry.1690397815"

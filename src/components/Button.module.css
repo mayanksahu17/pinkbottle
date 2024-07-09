@@ -12,32 +12,32 @@
 }
 
 .getStartedButtonother {
-    background-color: #ffffff; /* white background */
-    color: #292222; /* dark text */
-    font-size: 16px;
-    padding: 8px 35px;
-    border: 2px solid #000000; /* black border */
-    border-radius: 4px;
-    cursor: pointer;
-    outline: none;
-    transition: background-color 0.3s ease;
-    margin-top: 32px; /* This pushes the button down from the elements above it */
-  }
+  background-color: #ffffff; /* white background */
+  color: #292222; /* dark text */
+  font-size: 16px;
+  padding: 8px 35px;
+  border: 2px solid #000000; /* black border */
+  border-radius: 4px;
+  cursor: pointer;
+  outline: none;
+  transition: background-color 0.3s ease;
+  margin-top: 32px; /* This pushes the button down from the elements above it */
+}
 .getStartedButton:hover {
   background-color: #333; /* dark grey background on hover */
 }
 
 .getStartedButtonother:hover {
-    background-color: #feeaea; /* dark grey background on hover */
-  }
+  background-color: #feeaea; /* dark grey background on hover */
+}
 
 .Sprite {
-    display: block;  /*optional*/
-    width: 100%;     /*optional*/
-    max-width: 100%;
-    height: auto;
-    border: 0;    
-  }
+  display: block; /*optional*/
+  width: 100%; /*optional*/
+  max-width: 100%;
+  height: auto;
+  border: 0;
+}
 
 /* scroller */
 @keyframes scroll-left {

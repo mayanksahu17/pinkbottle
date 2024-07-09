@@ -1,5 +1,5 @@
-import { AvatarImage, AvatarFallback, Avatar } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
+import { AvatarImage, AvatarFallback, Avatar } from '@/components/ui/avatar';
+import { Button } from '@/components/ui/button';
 import {
   CardTitle,
   CardDescription,
@@ -7,10 +7,10 @@ import {
   CardContent,
   CardFooter,
   Card,
-} from "@/components/ui/card";
-import { Tabs } from "@/components/ui/tabs";
-import { UserButton, auth, currentUser } from "@clerk/nextjs";
-import Link from "next/link";
+} from '@/components/ui/card';
+import { Tabs } from '@/components/ui/tabs';
+import { UserButton, auth, currentUser } from '@clerk/nextjs';
+import Link from 'next/link';
 
 export async function Profile() {
   const { userId } = auth();
@@ -24,7 +24,7 @@ export async function Profile() {
             alt="Scale.jobs Logo"
             className="h-10 cursor-pointer"
             src="/Clarksonlogo.png"
-            style={{ aspectRatio: "120/40", objectFit: "cover" }}
+            style={{ aspectRatio: '120/40', objectFit: 'cover' }}
           />
         </Link>
         <nav className="flex gap-4 items-center">
