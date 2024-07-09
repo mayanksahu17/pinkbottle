@@ -71,9 +71,13 @@ const Walloflove = () => {
       <Navbar />
       <main>
         <div className="bg-white py-12">
-          <h2 className="text-3xl font-bold text-center text-gray-800 mb-10">
+          <h2 className="text-3xl font-bold text-center text-gray-800">
             Our clients <span className="text-red-500">❤️</span> us
           </h2>
+          <p className="text-center mt-8 text-gray-600 text-sm mb-10">
+          We've worked with several thousand fellows and counting. Read their stories
+          </p>
+          <br />
           <div className="flex flex-wrap justify-center gap-8 px-4">
             <div className="max-w-sm w-full md:w-1/3">
               <img

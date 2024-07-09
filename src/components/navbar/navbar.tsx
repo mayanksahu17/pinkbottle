@@ -65,9 +65,14 @@ const Navbar = () => {
                 About Us
               </span>
             </Link>
-            <Link href="/works" passHref>
+            {/* <Link href="/works" passHref>
               <span className="text-sm font-medium text-gray-700 hover:text-green-500 cursor-pointer block py-2">
                 How it works
+              </span>
+            </Link> */}
+                          <Link href="/Wall" passHref>
+              <span className="text-sm font-medium text-gray-500 hover:text-green-600 cursor-pointer mx-2">
+                Wall of Love
               </span>
             </Link>
             <Link href="/pricing" passHref>
@@ -122,9 +127,14 @@ const Navbar = () => {
                 About Us
               </span>
             </Link>
-            <Link href="/works" passHref>
+            {/* <Link href="/works" passHref>
               <span className="text-sm font-medium text-gray-500 hover:text-green-600 cursor-pointer mx-2">
                 How it works
+              </span>
+            </Link> */}
+              <Link href="/Wall" passHref>
+              <span className="text-sm font-medium text-gray-500 hover:text-green-600 cursor-pointer mx-2">
+                Wall of Love
               </span>
             </Link>
             <Link href="/pricing" passHref>

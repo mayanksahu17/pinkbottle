@@ -12,6 +12,7 @@ import Help from '../GetInTouch/Help';
 import Model from '../GetInTouch/Model';
 import Footer from '../footer/footer';
 import SwiperCore from 'swiper';
+import Navbar from '../navbar/navbar';
 
 // Configure Swiper to use modules
 
@@ -82,171 +83,17 @@ const HomePage = () => {
       className="min-h-screen text-black"
       style={{ backgroundColor: '#FFFFFF' }}
     >
-      <header className="flex items-center justify-between p-2 border-b border-gray-200">
-        <Link href="/">
-          <img
-            alt="Your Logo"
-            className="cursor-pointer h-10 md:h-12 transform scale-125 ml-4 md:ml-6" // Increased height and scale
-            src="/Hiredeasy.png"
-            style={{ transform: 'scale(2.1)' }} // Scaling up by 210%
-          />
-        </Link>
-
-        {/* Hamburger Icon for Mobile */}
-        <button
-          className="md:hidden text-gray-600 focus:outline-none"
-          onClick={toggleMenu}
-        >
-          <svg
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            className="w-6 h-6"
-          >
-            {isMenuOpen ? (
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M6 18L18 6M6 6l12 12"
-              />
-            ) : (
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M4 6h16M4 12h16m-7 6h7"
-              />
-            )}
-          </svg>
-        </button>
-
-        {/* Mobile Menu Items */}
-        <div
-          className={`fixed inset-x-0 top-16 z-10 bg-white p-4 transform transition-transform duration-300 ease-in-out ${
-            isMenuOpen ? 'block' : 'hidden'
-          } md:hidden`}
-        >
-          <nav className="flex flex-col space-y-2 bg-white p-4">
-            <Link href="/about" passHref>
-              <span className="text-sm font-medium text-gray-700 hover:text-green-500 cursor-pointer block py-2">
-                About Us
-              </span>
-            </Link>
-            <Link href="/works" passHref>
-              <span className="text-sm font-medium text-gray-700 hover:text-green-500 cursor-pointer block py-2">
-                How it works
-              </span>
-            </Link>
-            <Link href="/pricing" passHref>
-              <span className="text-sm font-medium text-gray-700 hover:text-green-500 cursor-pointer block py-2">
-                Pricing
-              </span>
-            </Link>
-            <Link href="/career" passHref>
-              <span className="text-sm font-medium text-gray-700 hover:text-green-500 cursor-pointer block py-2">
-                Career
-              </span>
-            </Link>
-            <Link href="/" passHref>
-              <span className="text-sm font-medium text-gray-700 hover:text-green-500 cursor-pointer block py-2">
-                Try the Copilot Free
-              </span>
-            </Link>
-            {user ? (
-              <div className="flex flex-col space-y-2">
-                <Link href="/dashboard" passHref>
-                  <span className="text-sm font-medium text-gray-700 hover:text-green-500 cursor-pointer block py-2">
-                    Dashboard
-                  </span>
-                </Link>
-                {/* Assumed 'UserButton' is a styled component you have */}
-                <div className="pt-2">
-                  <UserButton afterSignOutUrl="/" />
-                </div>
-              </div>
-            ) : (
-              <div className="flex flex-col space-y-2">
-                <Link href="/sign-in" passHref>
-                  <span className="text-sm font-medium text-gray-700 hover:text-green-500 cursor-pointer block py-2">
-                    Login
-                  </span>
-                </Link>
-                <Link href="/sign-up" passHref>
-                  <span className="text-sm font-medium text-gray-700 hover:text-green-500 cursor-pointer block py-2">
-                    Sign Up
-                  </span>
-                </Link>
-              </div>
-            )}
-          </nav>
-        </div>
-
-        {/* Desktop Menu and Auth Links */}
-        <div className="hidden md:flex md:items-center md:justify-between md:flex-grow">
-          {/* Desktop Menu Links */}
-          <nav className="hidden md:flex md:items-center md:justify-center md:flex-grow">
-            <Link href="/about" passHref>
-              <span className="text-sm font-medium text-gray-500 hover:text-green-600 cursor-pointer mx-2">
-                About Us
-              </span>
-            </Link>
-            <Link href="/works" passHref>
-              <span className="text-sm font-medium text-gray-500 hover:text-green-600 cursor-pointer mx-2">
-                How it works
-              </span>
-            </Link>
-            <Link href="/pricing" passHref>
-              <span className="text-sm font-medium text-gray-500 hover:text-green-600 cursor-pointer mx-2">
-                Pricing
-              </span>
-            </Link>
-            <Link href="/career" passHref>
-              <span className="text-sm font-medium text-gray-500 hover:text-green-600 cursor-pointer mx-2">
-                Career
-              </span>
-            </Link>
-            <Link href="/" passHref>
-              <span className="text-sm bg-green-600 text-white py-2 px-4 rounded-full hover:bg-green-700 cursor-pointer mx-2">
-                Try the Copilot Free
-              </span>
-            </Link>
-          </nav>
-          {/* Desktop Auth Links */}
-          {/* ... */}
-          <div>
-            {user ? (
-              <div className="flex gap-4 items-center">
-                <Link href="/dashboard" passHref>
-                  <span className="text-sm font-medium text-gray-700 bg-white border border-gray-300 hover:border-green-500 rounded-md py-2 px-4 cursor-pointer shadow-sm hover:shadow transition-all duration-150 ease-in-out transform hover:-translate-y-0.5">
-                    Dashboard
-                  </span>
-                </Link>
-                <UserButton afterSignOutUrl="/" />
-              </div>
-            ) : (
-              <div className="space-x-4">
-                <Link href="/sign-in" passHref>
-                  <span className="text-sm cursor-pointer">Login</span>
-                </Link>
-                <Link href="/sign-up" passHref>
-                  <span className="text-sm cursor-pointer">Sign Up</span>
-                </Link>
-              </div>
-            )}
-          </div>
-        </div>
-      </header>
+  <Navbar />
       <div className="bg-[#bafff1] py-2 shadow-md">
         <div className="max-w-xl mx-auto text-center px-4">
           <p className="text-base font-medium text-gray-800 animate-bounce">
-            Not ready yet?
+            Ready to get a Job
             <a
               href="#"
               onClick={() => setShowForm(true)}
               className="text-blue-600 hover:text-blue-700 underline pl-1 transition duration-300 ease-in-out"
             >
-              Get in touch with us
+              Talk to Us!
             </a>
           </p>
         </div>
@@ -384,17 +231,13 @@ const HomePage = () => {
                   rel="noopener noreferrer"
                   className="flex items-center justify-center gap-2 px-6 py-2 text-sm md:text-lg font-bold text-gray-800 bg-transparent border-2 border-gray-800 rounded-xl hover:bg-gray-100 transition-all"
                 >
-                  Talk to Founder
+                  Schedule a call
                   <span className="animate-bounce">👋</span>
                 </a>
               </div>
             </div>
             <div className="relative mt-8 md:mt-0">
-              <img
-                src="/Banner.png"
-                alt="Person"
-                className="rounded-lg"
-              />
+              <img src="/Banner.png" alt="Person" className="rounded-lg" />
               <div className="absolute top-64 left-0 flex items-center p-4 bg-white rounded-lg shadow-lg">
                 <UsersIcon className="w-6 h-6 text-[#5f4bb6]" />
                 <div className="ml-4">
@@ -418,374 +261,441 @@ const HomePage = () => {
         </section>
       </main>
 
-      <section className="bg-[#faf8f2]">
-        <div className="max-w-sm md:max-w-6xl mx-auto py-6 my-8 sm:my-0 md:pt-16">
-          <div className="text-center">
-            <h2 className="font-logo text-lg md:text-3xl mb-16">
-              Trusted by folks from
-            </h2>
-          </div>
-          <div className="flex justify-center md:justify-start overflow-x-auto">
-            <Marquee autoFill={true} pauseOnHover>
-              {/* Increase the base size for better visibility on mobile */}
-
-              <img
-                className="w-32 md:w-32 lg:w-32 p-4"
-                src="CalState.jpeg"
-                alt="Cal State"
-              />
-              <img
-                className="w-32 md:w-32 lg:w-32 p-4"
-                src="BostonUniversity.gif"
-                alt="Boston University"
-              />
-              <img
-                className="w-32 md:w-32 lg:w-32 p-4"
-                src="RIT.png"
-                alt="NYIT"
-              />
-              <img
-                className="w-32 md:w-32 lg:w-32 p-4"
-                src="Clarksonlogo.png"
-                alt="Clarkson University"
-              />
-              <img
-                className="w-32 md:w-32 lg:w-32 p-4"
-                src="Bridgeport.png"
-                alt="Bridgeport University"
-              />
-              <img
-                className="w-32 md:w-32 lg:w-32 p-4"
-                src="StevensLogo.png"
-                alt="Stevens Institute"
-              />
-              <img
-                className="w-32 md:w-32 lg:w-32 p-4"
-                src="TexasLogo.png"
-                alt="Texas A&M"
-              />
-              <img
-                className="w-32 md:w-32 lg:w-32 p-4"
-                src="DrexelLogo.png"
-                alt="Drexel University"
-              />
-              <img
-                className="w-32 md:w-32 lg:w-32 p-4"
-                src="NortheasternLogo.png"
-                alt="Northeastern University"
-              />
-              <img
-                className="w-32 md:w-32 lg:w-32 p-4"
-                src="KentState.png"
-                alt="Michigan State"
-              />
-              <img
-                className="w-32 md:w-32 lg:w-32 p-4"
-                src="Pacelogo.png"
-                alt="Pace University"
-              />
-            </Marquee>
-          </div>
+      <div className="bg-gray-100 py-8">
+  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-16">
+    <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-6 items-center">
+      <div className="col-span-2 md:col-span-1 text-center mb-4 md:mb-0">
+        <p className="text-gray-600 text-sm">Backed by:</p>
+        <div className="flex justify-center items-center h-16 mt-2">
+          <img
+            src="/UF.png"
+            alt="University of Florida"
+            className="h-full w-auto object-contain"
+          />
         </div>
-      </section>
-      {/* <section className="py-16">
-          <div className="max-w-6xl mx-auto px-4">
-            <h2 className="text-3xl font-bold mb-8 text-gray-800 ">
-              How it works
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-12 gap-8">
-              <div className="md:col-span-7 lg:col-span-8 pr-30">
-                <div
-                  style={{
-                    position: "relative",
-                    paddingBottom: "62.57242178447277%",
-                    height: 0,
-                  }}
-                >
-                  <iframe
-                    src="https://www.loom.com/embed/fc7716dd8976465f8ec74778994b498e?sid=1c5f25c4-ae83-45db-b037-caa4f0533ea3"
-                    frameBorder="0"
-                    allowFullScreen
-                    style={{
-                      position: "absolute",
-                      top: 0,
-                      left: 0,
-                      width: "100%",
-                      height: "100%",
-                    }}
-                  ></iframe>
-                </div>
-              </div>
-              <div className="md:col-span-5 lg:col-span-4">
-                <div className="mb-4">
-                  <div className="flex items-center mb-2">
-                    <div className="rounded-full h-8 w-8 flex items-center justify-center border-2 border-green-500 text-green-500 mr-2">
-                      1
-                    </div>
-                    <h3 className="text-lg font-semibold">Get Started</h3>
-                  </div>
-                  <p className="text-sm">
-                    Sign up and hop on an onboarding call to meet your dedicated
-                    Career Assistant.
-                  </p>
-                </div>
-                <br />
-                <div className="mb-4">
-                  <div className="flex items-center mb-2">
-                    <div className="rounded-full h-8 w-8 flex items-center justify-center border-2 border-green-500 text-green-500 mr-2">
-                      2
-                    </div>
-                    <h3 className="text-lg font-semibold">
-                      Your Assistant will apply to jobs
-                    </h3>
-                  </div>
-                  <p className="text-sm">
-                    Your Assistant will manually apply to delegated jobs on your
-                    behalf and will communicate updates daily on WhatsApp.
-                  </p>
-                </div>
-                <br />
-                <div className="mb-4">
-                  <div className="flex items-center mb-2">
-                    <div className="rounded-full h-8 w-8 flex items-center justify-center border-2 border-green-500 text-green-500 mr-2">
-                      3
-                    </div>
-                    <h3 className="text-lg font-semibold">
-                      Get 5X more interviews
-                    </h3>
-                  </div>
-                  <p className="text-sm">
-                    You get more interviews thus higher chances of landing in a
-                    full time role. It is just a numbers game.
-                  </p>
-                </div>
-                <div className="mt-6 flex items-center">
-                <button className="inline-flex mr-4 items-center justify-center whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 py-2 md:text-lg md:font-light px-4 md:px-6 md:glow-btn rounded-xl md:h-12 shiny-button border border-gray-800">
-    Explore Platform
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="md:ml-1 h-5 w-5 text-gray-400  animate-pulse">
-        <path d="m9 18 6-6-6-6"></path>
-    </svg>
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="-ml-3 h-5 w-5 animate-pulse">
-        <path d="m9 18 6-6-6-6"></path>
-    </svg>
-</button>
-<a href="#" onClick={toggleModal} className="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border-gray-800 bg-transparent shadow-sm hover:bg-accent hover:text-accent-foreground h-9 py-2 relative group md:font-bold px-4 md:px-6 border-2 rounded-xl md:text-md md:h-12">
-                <span className="absolute animate-pulse bottom-auto left-auto right-0 top-0 z-10 inline-block -translate-y-1/2 translate-x-2/4 rotate-0 skew-x-0 skew-y-0 scale-x-100 scale-y-100 rounded-full bg-primary p-1.5 text-xs"></span>
-                Talk to founder<span className="group-hover:animate-bounce ml-2">👋</span>
-            </a>
-             
+      </div>
+      <div className="col-span-2 md:col-span-1 text-center mb-4 md:mb-0 whitespace-nowrap">
+        <p className="text-gray-800 text-base font-semibold whitespace-nowrap">
+          University of Florida
+        </p>
+        <p className="text-gray-600 text-sm mt-1 whitespace-nowrap">
+          Center for Entrepreneurship
+        </p>
+      </div>
+      <div className="hidden md:block col-span-1 lg:col-span-1 border-r border-gray-300 h-10"></div>
+      <div className="col-span-2 md:col-span-1 text-center mb-4 md:mb-0">
+        <p className="text-gray-600 text-sm">As seen in:</p>
+      </div>
+      <div className="col-span-1 lg:col-span-1 text-center mb-4 md:mb-0">
+        <div className="flex justify-center items-center h-10 mt-2">
+          <img
+            src="Yourstory.png"
+            alt="YourStory"
+            className="h-full w-auto object-contain"
+          />
+        </div>
+      </div>
+      <div className="col-span-1 lg:col-span-1 text-center mb-4 md:mb-0">
+        <div className="flex justify-center items-center h-10 mt-2">
+          <img
+            src="FinancialExpress.png"
+            alt="Financial Express"
+            className="h-full w-auto object-contain"
+          />
+        </div>
+      </div>
+      <div className="col-span-1 lg:col-span-1 text-center mb-4 md:mb-0">
+        <div className="flex justify-center items-center h-10 mt-2">
+          <img
+            src="Forbes.png"
+            alt="Forbes"
+            className="h-full w-auto object-contain"
+          />
+        </div>
+      </div>
+      <div className="col-span-1 lg:col-span-1 text-center mb-4 md:mb-0">
+        <div className="flex justify-center items-center h-10 mt-2">
+          <img
+            src="DNA.png"
+            alt="DNA"
+            className="h-full w-auto object-contain"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
-                </div>
-              </div>
-            </div>
+
+
+<section className="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-r">
+<div className="container px-4 md:px-6 text-center">
+  <div className="space-y-4">
+    <h1 className="text-3xl font-bold tracking-tighter text-primary-foreground sm:text-4xl md:text-6xl lg:text-7xl">
+      91% Increase in Calls with HiredEasy
+    </h1>
+    <p className="max-w-[700px] mx-auto text-primary-foreground text-sm sm:text-base md:text-lg lg:text-xl">
+      Our clients start receiving calls within the first month of having our assistants apply. Remarkably, 70% secure a job within one month of joining HiredEasy.
+    </p>
+  </div>
+</div>
+
+  <section className="bg-white py-10 bg-[#ffffff] mt-10">
+    <div className="max-w-6xl mx-auto px-4">
+      <div className="md:grid-cols-2">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mt-10">
+          <div className="text-center text-justify">
+            <span className="text-5xl font-bold text-black">1300+</span>
+            <p className="text-lg text-gray-700 font-calibri">Landed Full-Time Roles</p>
+            <p className="text-gray-700 font-calibri text-sm">
+              Our clients achieve remarkable results, with 72% securing full-time positions in USA. Impressively, 47% of these roles are obtained through our strategic applications, while the remaining 44% come from leveraging personal networks and individual efforts.
+            </p>
           </div>
-        </section> */}
-
-      <section className="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-r">
-        <div className="container px-4 md:px-6 text-center">
-          <div className="space-y-4">
-            <h1 className="text-1xl font-bold tracking-tighter text-primary-foreground sm:text-6xl md:text-7xl">
-              91% Increase in Calls with HiredEasy
-            </h1>
-            <p className="max-w-[700px] mx-auto text-primary-foreground md:text-xl">
-              Our clients start receiving calls within the first month of having
-              our assistants apply. Remarkably, 70% secure a job within one
-              month of joining HiredEasy.
+          <div className="text-center text-justify text-sm">
+            <span className="text-5xl font-bold text-black">80x</span>
+            <p className="text-lg text-gray-700 font-calibri">Less time spent in job search</p>
+            <p className="text-gray-700 font-calibri">
+              Our clients achieve remarkable results, with 72% securing full-time positions in just three months. Impressively, 47% of these roles are obtained through our strategic applications, while the remaining 44% come from leveraging personal networks and individual efforts.
+            </p>
+          </div>
+          <div className="text-center text-justify text-sm">
+            <span className="text-5xl font-bold text-black">600x</span>
+            <p className="text-lg text-gray-700 font-calibri">Return on Investment.</p>
+            <p className="text-gray-700 font-calibri">
+              By cutting weeks off the job search, we help clients gain an extra $20K in earnings. Additionally, receiving multiple offers can boost salaries by an average of $30K, leading to a substantial increase in overall compensation.
             </p>
           </div>
         </div>
-      </section>
-      <section className="bg-white py-10 bg-[#ffffff] mt-25 mb-40">
-        <div className="max-w-6xl mx-auto px-4">
-          <div className="md:grid-cols-2">
-            <div>
-              <h2 className="text-3xl font-bold text-gray-800 text-center">
-                Our results speak for
-                <br /> themselves.
-              </h2>
-              <br />
-              <div className="flex items-center justify-center">
-                <Link href="/pricing">
-                  <button className="flex items-center justify-center gap-2 px-6 py-2 text-sm md:text-lg font-medium text-primary-foreground bg-primary rounded-full hover:bg-primary-dark transition-all shadow-lg">
-                    <span className="rounded-full bg-white p-2">
-                      {' '}
-                      {/* Increased padding for a bigger circle */}
-                      {/* Custom image */}
-                      <img
-                        src="Nikhil.jpeg"
-                        alt="Custom Image"
-                        className="h-6 w-6"
-                      />{' '}
-                      {/* Adjust height and width as needed */}
-                    </span>
-                    <span>Join the Club</span>{' '}
-                    {/* Corrected to use a span for text content */}
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      className="md:ml-1 h-5 w-5 text-gray-400  animate-pulse"
-                    >
-                      <path d="m9 18 6-6-6-6"></path>
-                    </svg>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      className="-ml-3 h-5 w-5 animate-pulse"
-                    >
-                      <path d="m9 18 6-6-6-6"></path>
-                    </svg>
-                  </button>
-                </Link>
-              </div>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mt-10">
-              <div className="text-center text-justify">
-                <span className="text-5xl font-bold text-black">1300+</span>
-                <p className="text-lg text-gray-700 font-calibri">
-                  Landed Full-Time Roles
-                </p>
-                <p className="text-gray-700 font-calibri text-sm">
-                  Our clients achieve remarkable results, with 72% securing
-                  full-time positions in USA. Impressively, 47% of
-                  these roles are obtained through our strategic applications,
-                  while the remaining 44% come from leveraging personal networks
-                  and individual efforts.
-                </p>
-              </div>
-              <div className="text-center text-justify text-sm">
-                <span className="text-5xl font-bold text-black ">80x</span>
-                <p className="text-lg text-gray-700 font-calibri">
-                  Less time spent in job search
-                </p>
-                <p className="text-gray-700 font-calibri">
-                  Our clients achieve remarkable results, with 72% securing
-                  full-time positions in just three months. Impressively, 47% of
-                  these roles are obtained through our strategic applications,
-                  while the remaining 44% come from leveraging personal networks
-                  and individual efforts.
-                </p>
-              </div>
-              <div className="text-center text-justify text-sm">
-                <span className="text-5xl font-bold text-black">600x</span>
-                <p className="text-lg text-gray-700 font-calibri">
-                  Return on Investment.
-                </p>
-                <p className="text-gray-700 font-calibri">
-                  By cutting weeks off the job search, we help clients gain an
-                  extra $20K in earnings. Additionally, receiving multiple
-                  offers can boost salaries by an average of $30K, leading to a
-                  substantial increase in overall compensation.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      </div>
+    </div>
+    <div className="mt-10">
+      <h2 className="text-3xl font-bold text-gray-800 text-center">
+        Our results speak for
+        <br /> themselves.
+      </h2>
+      <div className="flex items-center justify-center mt-4">
+        <Link href="/pricing">
+          <button className="flex items-center justify-center gap-2 px-6 py-2 text-sm md:text-lg font-medium text-primary-foreground bg-primary rounded-full hover:bg-primary-dark transition-all shadow-lg">
+            <span className="rounded-full bg-white p-2">
+              <img src="Nikhil.jpeg" alt="Custom Image" className="h-6 w-6" />
+            </span>
+            <span>Join the Club</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="md:ml-1 h-5 w-5 text-gray-400 animate-pulse"
+            >
+              <path d="m9 18 6-6-6-6"></path>
+            </svg>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="-ml-3 h-5 w-5 animate-pulse"
+            >
+              <path d="m9 18 6-6-6-6"></path>
+            </svg>
+          </button>
+        </Link>
+      </div>
+    </div>
+  </section>
+</section>
 
-      <section className="w-full py-12 md:py-24 lg:py-32 bg-[#faf8f2]">
-        <div className="container grid items-center justify-center gap-4 px-4 text-center md:px-6 lg:gap-10">
-          <div className="space-y-3">
-            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
-              Our clients now works for
-            </h2>
-            <p className="mx-auto max-w-[700px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
-              The talented individuals behind our success.
-            </p>
-          </div>
-          <div className="flex justify-center md:justify-start overflow-x-auto">
-            <Marquee autoFill={true}>
-              {/* Increase the base size for better visibility on mobile */}
 
+      <div className="bg-white py-24">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-3xl font-extrabold text-gray-900">
+            We Produly say, Our clients now works at{' '}
+          </h2>
+          <p className="mt-4 text-lg text-gray-600">
+            We stand by our commitments and ensure that our actions align with our promises.
+          </p>
+          <div className="mt-10 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-8 items-center">
+            <div className="flex justify-center items-center h-16 w-full">
               <img
-                className="w-36 md:w-36 lg:w-36 p-4"
-                src="microsoft.png"
-                alt="Microsoft"
+                src="Blackrock.svg"
+                alt="Blackrock"
+                className="h-full object-contain"
               />
+            </div>
+            <div className="flex justify-center items-center h-12 w-full">
               <img
-                className="w-36 md:w-36 lg:w-36 p-4"
-                src="servicenow.svg"
-                alt="Servicenow"
+                src="google.png"
+                alt="Google"
+                className="h-full object-contain"
               />
+            </div>
+            <div className="flex justify-center items-center h-20 w-full">
               <img
-                className="w-36 md:w-36 lg:w-36 p-4"
-                src="corelogic.svg"
-                alt="Corelogic"
-              />
-              <img
-                className="w-36 md:w-36 lg:w-36 p-4"
-                src="clear_street.svg"
-                alt="Clear Street"
-              />
-              <img
-                className="w-36 md:w-36 lg:w-36 p-4"
-                src="Amazon.png"
-                alt="Amazon"
-              />
-              <img
-                className="w-36 md:w-36 lg:w-36 p-4"
-                src="apexanalytix.svg"
-                alt="Apex Analytix"
-              />
-              <img
-                className="w-36 md:w-36 lg:w-36 p-4"
-                src="wex.svg"
-                alt="Wex"
-              />
-              <img
-                className="w-36 md:w-36 lg:w-36 p-4"
-                src="Databricks.png"
-                alt="Data Bricks"
-              />
-              <img
-                className="w-36 md:w-36 lg:w-36 p-4"
-                src="FIS.png"
-                alt="FIS"
-              />
-              <img
-                className="w-36 md:w-36 lg:w-36 p-4"
-                src="MissionPower.jpeg"
-                alt="MissionPower"
-              />
-              <img
-                className="w-36 md:w-36 lg:w-36 p-4"
-                src="Nvidia.png"
-                alt="Nvidia"
-              />
-              <img
-                className="w-36 md:w-36 lg:w-36 p-4"
-                src="SocieteGenerale.png"
-                alt="SocieteGenerale"
-              />
-              <img
-                className="w-36 md:w-36 lg:w-36 p-4"
                 src="Tinder.png"
                 alt="Tinder"
+                className="h-full object-contain"
               />
+            </div>
+            <div className="flex justify-center items-center h-20 w-full">
               <img
-                className="w-36 md:w-36 lg:w-36 p-4"
-                src="spglobal.svg"
-                alt="spglobal"
+                src="Amazon.png"
+                alt="Amazon"
+                className="h-full object-contain"
               />
-            </Marquee>
+            </div>
+            <div className="flex justify-center items-center h-24 w-full">
+              <img
+                src="JPMorgan.png"
+                alt="JP Morgan & Chase"
+                className="h-full object-contain"
+              />
+            </div>
+            <div className="flex justify-center items-center h-16 w-full">
+              <img
+                src="servicenow.svg"
+                alt="servicenow"
+                className="h-full object-contain"
+              />
+            </div>
+            <div className="flex justify-center items-center h-12 w-full">
+              <img
+                src="DEShaw.svg"
+                alt="DE Shaw & Co"
+                className="h-full object-contain"
+              />
+            </div>
+            <div className="flex justify-center items-center h-20 w-full">
+              <img
+                src="cocacola.svg"
+                alt="Coca Cola"
+                className="h-full object-contain"
+              />
+            </div>
+            <div className="flex justify-center items-center h-16 w-full">
+              <img
+                src="Nvidia.png"
+                alt="Nvidia"
+                className="h-full object-contain"
+              />
+            </div>
+            <div className="flex justify-center items-center h-24 w-full">
+              <img
+                src="SocieteGenerale.png"
+                alt="Societe Generale"
+                className="h-full object-contain"
+              />
+            </div>
+            <div className="flex justify-center items-center h-16 w-full">
+              <img
+                src="airbnb.png"
+                alt="Airbnb"
+                className="h-full object-contain"
+              />
+            </div>
+            <div className="flex justify-center items-center h-16 w-full">
+              <img src="EY.svg" alt="EY" className="h-full object-contain" />
+            </div>
+            <div className="flex justify-center items-center h-16 w-full">
+              <img
+                src="apexanalytix.svg"
+                alt="Apex Analytix"
+                className="h-full object-contain"
+              />
+            </div>
+            <div className="flex justify-center items-center h-24 w-full">
+              <img
+                src="Pinterest.svg"
+                alt="Pinterest"
+                className="h-full object-contain"
+              />
+            </div>
+            <div className="flex justify-center items-center h-16 w-full">
+              <img
+                src="salesforce.png"
+                alt="Salesforce"
+                className="h-full object-contain"
+              />
+            </div>
+            <div className="flex justify-center items-center h-12 w-full">
+              <img
+                src="microsoft.png"
+                alt="Amazon"
+                className="h-full object-contain"
+              />
+            </div>
+            <div className="flex justify-center items-center h-10 w-full">
+              <img src="wex.svg" alt="wex" className="h-full object-contain" />
+            </div>
+            <div className="flex justify-center items-center h-10 w-full">
+              <img
+                src="twitch.png"
+                alt="Twitch"
+                className="h-full object-contain"
+              />
+            </div>
+            <div className="flex justify-center items-center h-16 w-full">
+              <img
+                src="uber.png"
+                alt="Uber"
+                className="h-full object-contain"
+              />
+            </div>
+            <div className="flex justify-center items-center h-16 w-full">
+              <img
+                src="doordash.svg"
+                alt="DoorDash"
+                className="h-full object-contain"
+              />
+            </div>
+            <div className="flex justify-center items-center h-16 w-full">
+              <img src="FIS.png" alt="FIS" className="h-full object-contain" />
+            </div>
+            <div className="flex justify-center items-center h-20 w-full">
+              <img
+                src="Walmart.png"
+                alt="Walmart"
+                className="h-full object-contain"
+              />
+            </div>
+            <div className="flex justify-center items-center h-8 w-full">
+              <img
+                src="spglobal.svg"
+                alt="S&P Global"
+                className="h-full object-contain"
+              />
+            </div>
+            <div className="flex justify-center items-center h-14 w-full">
+              <img
+                src="clear_street.svg"
+                alt="Clear Street"
+                className="h-full object-contain"
+              />
+            </div>
           </div>
+          <p className="mt-8 text-gray-600 text-sm">
+          We've worked with several thousand fellows and counting. Read their stories {' '}
+            <a href="Wall" className="text-blue-600">
+              here
+            </a>
+            .
+          </p>
         </div>
-      </section>
+      </div>
 
-      <section className="bg-gray-100 py-20 bg-[#faf8f2]">
+      <section className="bg-[#faf8f2] py-32 my-8 sm:my-0 md:pt-16">
+  <div className="max-w-sm md:max-w-6xl mx-auto">
+    <div className="text-center mb-16">
+      <h2 className="text-3xl font-extrabold text-gray-900">
+        Trusted by 60+ Universities Students and 1300+ got a Job
+      </h2>
+      <p className="mt-8 text-gray-600 text-sm">
+          We've worked with several thousand fellows and counting. Read their stories {' '}
+            <a href="Wall" className="text-blue-600">
+              here
+            </a>
+            .
+          </p>
+    </div>
+    <div className="flex justify-center md:justify-start overflow-x-auto">
+      <Marquee autoFill={true}>
+        {/* Increase the base size for better visibility on mobile */}
+        <img
+          className="w-36 md:w-36 lg:w-36 p-4"
+          src="CalState.jpeg"
+          alt="Cal State"
+        />
+        <img
+          className="w-40 md:w-48 lg:w-56 p-4"
+          src="UF.png"
+          alt="University of Florida"
+        />
+        <img
+          className="w-36 md:w-36 lg:w-36 p-4"
+          src="BostonUniversity.gif"
+          alt="Boston University"
+        />
+        <img
+          className="w-40 md:w-48 lg:w-56 p-4"
+          src="USSA.png"
+          alt="University of South Alabama"
+        />
+        <img
+          className="w-52 md:w-56 lg:w-62 p-4"
+          src="RIT.png"
+          alt="NYIT"
+        />
+        <img
+          className="w-40 md:w-48 lg:w-56 p-4"
+          src="ASU.png"
+          alt="Arizon State University"
+        />
+        <img
+          className="w-40 md:w-48 lg:w-56 p-4"
+          src="Bridgeport.png"
+          alt="Bridgeport University"
+        />
+        <img
+          className="w-40 md:w-48 lg:w-56 p-4"
+          src="Clarksonlogo.png"
+          alt="Clarkson University"
+        />
+        <img
+          className="w-40 md:w-48 lg:w-56 p-4"
+          src="Auburn.png"
+          alt="Auburn University"
+        />
+        <img
+          className="w-36 md:w-36 lg:w-36 p-4"
+          src="StevensLogo.png"
+          alt="Stevens Institute"
+        />
+        <img
+          className="w-40 md:w-48 lg:w-56 p-4"
+          src="TexasLogo.png"
+          alt="Texas A&M"
+        />
+        <img
+          className="w-40 md:w-48 lg:w-56 p-4"
+          src="DrexelLogo.png"
+          alt="Drexel University"
+        />
+        <img
+          className="w-40 md:w-48 lg:w-56 p-4"
+          src="OSU.png"
+          alt="Orlando State University"
+        />
+        <img
+          className="w-40 md:w-48 lg:w-56 p-4"
+          src="NortheasternLogo.png"
+          alt="Northeastern University"
+        />
+        <img
+          className="w-40 md:w-48 lg:w-56 p-4"
+          src="KentState.png"
+          alt="Michigan State"
+        />
+        <img
+          className="w-40 md:w-48 lg:w-56 p-4"
+          src="Pacelogo.png"
+          alt="Pace University"
+        />
+      </Marquee>
+    </div>
+  </div>
+</section>
+
+
+      <section className="bg-white py-32 bg-[#faf8f2]">
         <div className="max-w-7xl mx-auto px-6 ">
           <h2
             className="text-4xl font-bold text-gray-800 mb-2"
@@ -1039,7 +949,7 @@ const HomePage = () => {
         </div>
       </section>
 
-      <section className="bg-white py-16">
+    {/*  <section className="bg-white py-16">
         <div className="max-w-6xl mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-800">
@@ -1048,7 +958,6 @@ const HomePage = () => {
           </div>
           <div className="flex flex-col md:flex-row gap-8">
             <div className="flex-1 space-y-8">
-              {/* Pair 1 */}
               <div className="flex items-center hover:shadow-lg transition-shadow duration-300 ease-in-out rounded-lg p-4">
                 <div className="flex-none bg-gray-200 overflow-hidden mr-4 rounded-md">
                   <img
@@ -1065,7 +974,6 @@ const HomePage = () => {
                   </p>
                 </div>
               </div>
-              {/* Pair 2 */}
               <div className="flex items-center hover:shadow-lg transition-shadow duration-300 ease-in-out rounded-lg p-4">
                 <div className="flex-none bg-gray-200 overflow-hidden mr-4 rounded-md">
                   <img
@@ -1082,7 +990,6 @@ const HomePage = () => {
                   </p>
                 </div>
               </div>
-              {/* Pair 3 */}
               <div className="flex items-center hover:shadow-lg transition-shadow duration-300 ease-in-out rounded-lg p-4">
                 <div className="flex-none bg-gray-200 overflow-hidden mr-4 rounded-md">
                   <img
@@ -1141,7 +1048,99 @@ const HomePage = () => {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
+          {/* <section className="py-16">
+          <div className="max-w-6xl mx-auto px-4">
+            <h2 className="text-3xl font-bold mb-8 text-gray-800 ">
+              How it works
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-8">
+              <div className="md:col-span-7 lg:col-span-8 pr-30">
+                <div
+                  style={{
+                    position: "relative",
+                    paddingBottom: "62.57242178447277%",
+                    height: 0,
+                  }}
+                >
+                  <iframe
+                    src="https://www.loom.com/embed/fc7716dd8976465f8ec74778994b498e?sid=1c5f25c4-ae83-45db-b037-caa4f0533ea3"
+                    frameBorder="0"
+                    allowFullScreen
+                    style={{
+                      position: "absolute",
+                      top: 0,
+                      left: 0,
+                      width: "100%",
+                      height: "100%",
+                    }}
+                  ></iframe>
+                </div>
+              </div>
+              <div className="md:col-span-5 lg:col-span-4">
+                <div className="mb-4">
+                  <div className="flex items-center mb-2">
+                    <div className="rounded-full h-8 w-8 flex items-center justify-center border-2 border-green-500 text-green-500 mr-2">
+                      1
+                    </div>
+                    <h3 className="text-lg font-semibold">Get Started</h3>
+                  </div>
+                  <p className="text-sm">
+                    Sign up and hop on an onboarding call to meet your dedicated
+                    Career Assistant.
+                  </p>
+                </div>
+                <br />
+                <div className="mb-4">
+                  <div className="flex items-center mb-2">
+                    <div className="rounded-full h-8 w-8 flex items-center justify-center border-2 border-green-500 text-green-500 mr-2">
+                      2
+                    </div>
+                    <h3 className="text-lg font-semibold">
+                      Your Assistant will apply to jobs
+                    </h3>
+                  </div>
+                  <p className="text-sm">
+                    Your Assistant will manually apply to delegated jobs on your
+                    behalf and will communicate updates daily on WhatsApp.
+                  </p>
+                </div>
+                <br />
+                <div className="mb-4">
+                  <div className="flex items-center mb-2">
+                    <div className="rounded-full h-8 w-8 flex items-center justify-center border-2 border-green-500 text-green-500 mr-2">
+                      3
+                    </div>
+                    <h3 className="text-lg font-semibold">
+                      Get 5X more interviews
+                    </h3>
+                  </div>
+                  <p className="text-sm">
+                    You get more interviews thus higher chances of landing in a
+                    full time role. It is just a numbers game.
+                  </p>
+                </div>
+                <div className="mt-6 flex items-center">
+                <button className="inline-flex mr-4 items-center justify-center whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 py-2 md:text-lg md:font-light px-4 md:px-6 md:glow-btn rounded-xl md:h-12 shiny-button border border-gray-800">
+    Explore Platform
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="md:ml-1 h-5 w-5 text-gray-400  animate-pulse">
+        <path d="m9 18 6-6-6-6"></path>
+    </svg>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="-ml-3 h-5 w-5 animate-pulse">
+        <path d="m9 18 6-6-6-6"></path>
+    </svg>
+</button>
+<a href="#" className="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border-gray-800 bg-transparent shadow-sm hover:bg-accent hover:text-accent-foreground h-9 py-2 relative group md:font-bold px-4 md:px-6 border-2 rounded-xl md:text-md md:h-12">
+                <span className="absolute animate-pulse bottom-auto left-auto right-0 top-0 z-10 inline-block -translate-y-1/2 translate-x-2/4 rotate-0 skew-x-0 skew-y-0 scale-x-100 scale-y-100 rounded-full bg-primary p-1.5 text-xs"></span>
+                Talk to founder<span className="group-hover:animate-bounce ml-2">👋</span>
+            </a>
+             
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </section> */}
 
       <div className="bg-white py-12">
         <h2 className="text-3xl font-bold text-center text-gray-800 mb-3">
@@ -1240,7 +1239,7 @@ const HomePage = () => {
         </div>
       </div>
 
-      <section className="bg-white py-16">
+      {/* <section className="bg-white py-16">
         <div className="max-w-6xl mx-auto px-4">
           <h2 className="text-3xl font-bold mb-8 text-center">
             We Bring Real Impact 🫶
@@ -1298,7 +1297,7 @@ const HomePage = () => {
             </div>
           )}
         </div>
-      </section>
+      </section> */}
 
       <section className="py-16 bg-white">
         <div className="max-w-4xl mx-auto px-1">
@@ -1314,7 +1313,7 @@ const HomePage = () => {
                 </span>
               </summary>
               <p className="mt-4 leading-relaxed text-sm text-gray-500">
-                84% of our users landed fulltime roles in 3 months. 47% of them
+                70% of our users landed fulltime roles in 1 months. 47% of them
                 are from the roles we applied to and remaining 44% are from
                 their personal networking and individual efforts. According to
                 U.S. Bureau of Labor Statistics found that the average period of
@@ -1332,8 +1331,8 @@ const HomePage = () => {
               </summary>
               <div className="mt-4 leading-relaxed text-gray-500 text-sm">
                 <p>
-                  You will exactly get the same number of recruiter calls had
-                  you applied by yourself. Let us get this straight, we are NOT
+                You will get 91% more calls than the recruiter calls you received when you applied by yourself.
+                  Let us get this straight, we are NOT
                   doing any 'magic' here. All we are doing is taking away the
                   meaningless grunt work from you and giving it to someone else
                   so that you prioritize your mental effort for networking,
@@ -1365,7 +1364,7 @@ const HomePage = () => {
             </details>
             <details className="group py-4">
               <summary className="text-lg font-medium cursor-pointer flex justify-between items-center">
-                Why should I shortlist the jobs? Why not the HiredEasy
+                Why should I also shortlist the jobs when I am paying? Why not the HiredEasy
                 Assistants do that?
                 <span className="ml-2 text-gray-400 group-open:text-black group-open:rotate-180 transition-transform duration-300">
                   {'\u2935'}
@@ -1373,7 +1372,7 @@ const HomePage = () => {
               </summary>
               <div className="mt-4 leading-relaxed text-gray-500 text-sm">
                 <p>
-                  Having assisted over 200 job seekers in landing full-time
+                  Having assisted over 1300+ job seekers in landing full-time
                   positions, we've identified several compelling reasons for you
                   to take an active role in shortlisting jobs:
                 </p>
@@ -1600,7 +1599,7 @@ const HomePage = () => {
             target="_blank"
             className="inline-flex items-center justify-center gap-2 px-6 py-2 text-sm md:text-lg font-bold text-gray-800 bg-transparent border-2 border-gray-800 rounded-xl hover:bg-gray-100 transition-all"
           >
-            Talk to Founder <span className="animate-bounce ml-2">👋</span>
+            Schedule a call <span className="animate-bounce ml-2">👋</span>
           </a>
         </div>
       </section>
@@ -1772,7 +1771,7 @@ const HomePage = () => {
               target="_blank"
               className="inline-flex items-center justify-center gap-2 px-6 py-2 text-sm md:text-lg font-bold text-gray-800 bg-transparent border-2 border-gray-800 rounded-xl hover:bg-gray-100 transition-all"
             >
-              Talk to Founder <span className="animate-bounce ml-2">👋</span>
+              Schedule a call <span className="animate-bounce ml-2">👋</span>
             </a>
           </div>
         </div>
