@@ -1630,7 +1630,7 @@ const HomePage = () => {
               <div className="text-center">
                 <img
                   alt="Investor 1"
-                  src="/aman.png"
+                  src="/Mudambi.jpeg"
                   className="w-64 h-64 md:w-64 md:h-64 rounded-full inline-block transition-transform duration-300 ease-in-out transform hover:scale-110"
                   style={{
                     border: '3px solid white',
@@ -1638,13 +1638,13 @@ const HomePage = () => {
                   }}
                 />
                 <h3 className="text-lg font-semibold mt-4">
-                  Aman Porwal | Founder & CEO (Momskart)
+                  Mudambi Srinivas | SDE II AWS 
                 </h3>
                 <div className="flex justify-center space-x-2 mt-2">
                   <a
                     className="text-gray-400 hover:text-gray-500"
                     target="_blank"
-                    href="https://www.linkedin.com/in/iamanporwal/"
+                    href="https://www.linkedin.com/in/mssrinivasbhargav/"
                   >
                     <LinkedinIcon className="h-6 w-6" />
                   </a>
@@ -1657,7 +1657,7 @@ const HomePage = () => {
               <div className="text-center">
                 <img
                   alt="Investor 2"
-                  src="/Rishi.jpeg"
+                  src="/Tithy.jpeg"
                   className="w-64 h-64 md:w-64 md:h-64 rounded-full inline-block transition-transform duration-300 ease-in-out transform hover:scale-110"
                   style={{
                     border: '3px solid white',
@@ -1665,13 +1665,13 @@ const HomePage = () => {
                   }}
                 />
                 <h3 className="text-lg font-semibold mt-4">
-                  Rishi Jain | Founder (Digital Scholar)
+                  Tithy Sahu | Software Engineer Google
                 </h3>
                 <div className="flex justify-center space-x-2 mt-2">
                   <a
                     className="text-gray-400 hover:text-gray-500"
                     target="_blank"
-                    href="https://www.linkedin.com/in/rrishijain/"
+                    href="https://www.linkedin.com/in/tithys30/"
                   >
                     <LinkedinIcon className="h-6 w-6" />
                   </a>
