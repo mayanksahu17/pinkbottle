@@ -1,5 +1,4 @@
 import { users } from '@clerk/clerk-sdk-node';
-import { clerkClient } from '@clerk/nextjs';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(req: NextRequest, res: NextResponse) {
