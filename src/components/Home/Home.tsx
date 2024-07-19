@@ -9,6 +9,7 @@ import Model from '../GetInTouch/Model';
 import Footer from '../footer/footer';
 import Navbar from '../navbar/navbar';
 import Head from 'next/head';
+import LandingPage from './LandingPage';
 
 const structuredData = {
   "@context": "https://schema.org",
@@ -666,6 +667,8 @@ const HomePage = () => {
           </div>
         </div>
 
+        <LandingPage />
+
         <section className="bg-[#faf8f2] py-32 my-8 sm:my-0 md:pt-16">
           <div className="max-w-sm md:max-w-6xl mx-auto">
             <div className="text-center mb-16">
@@ -931,7 +934,7 @@ const HomePage = () => {
                     />
                   </div>
                   <h3 className="text-lg font-semibold text-gray-800">
-                    Siddharth Jain
+                    Nannu agrawal
                   </h3>
                   <div className="flex items-center justify-center mb-4">
                     <span className="text-yellow-500 text-lg">★</span>
