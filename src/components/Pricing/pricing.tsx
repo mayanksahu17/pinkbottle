@@ -5,6 +5,69 @@ import React, { useState } from 'react';
 import { Stripe, loadStripe } from '@stripe/stripe-js';
 import Navbar from '../navbar/navbar';
 import Footer from '../footer/footer';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'HiredEasy - Pricing Plans | Affordable Job Application Services',
+  description: 'Discover HiredEasy’s affordable pricing plans designed to simplify your job application process and help you land your dream job.',
+  keywords: 'HiredEasy, pricing, job application services, affordable job applications, career services, job seekers, pricing plans',
+  robots: 'index, follow',
+  viewport: 'width=device-width, initial-scale=1.0',
+  authors: [{ name: 'HiredEasy' }],
+  openGraph: {
+    type: 'website',
+    url: 'https://hiredeasy.com/pricing',
+    title: 'HiredEasy - Pricing Plans | Affordable Job Application Services',
+    description: 'Discover HiredEasy’s affordable pricing plans designed to simplify your job application process and help you land your dream job.',
+    images: [
+      {
+        url: 'https://hiredeasy.com/Hiredeasy.png',
+        width: 800,
+        height: 600,
+        alt: 'HiredEasy Logo'
+      }
+    ]
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'HiredEasy - Pricing Plans | Affordable Job Application Services',
+    description: 'Discover HiredEasy’s affordable pricing plans designed to simplify your job application process and help you land your dream job.',
+    images: [
+      {
+        url: 'https://hiredeasy.com/Hiredeasy.png',
+        alt: 'HiredEasy Logo'
+      }
+    ]
+  }
+};
+
+
+const breadcrumbData = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://hiredeasy.com"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Pricing",
+      "item": "https://hiredeasy.com/pricing"
+    }
+  ]
+};
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "HiredEasy Pricing",
+  "url": "https://hiredeasy.com/pricing",
+  "description": "Check out our pricing plans for simplifying your job application process."
+};
 
 const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || ''
@@ -134,7 +197,10 @@ const PricingUser = () => {
       style={{ backgroundColor: '#FAF6F6' }}
     >
       <Navbar />
-
+      <head>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbData) }} />
+      </head>
       <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
         <h2 className="text-3xl font-extrabold text-center mb-10">
           Pricing Plans

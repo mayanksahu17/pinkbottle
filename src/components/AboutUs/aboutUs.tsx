@@ -1,10 +1,69 @@
 'use client';
-import React, { SVGProps, useState } from 'react';
-import Link from 'next/link';
-import { UserButton, useUser } from '@clerk/nextjs';
-import { Button } from '@/components/ui/button'; // Adjust the path as necessary
+import React, { SVGProps } from 'react';
 import Navbar from '../navbar/navbar';
 import Footer from '../footer/footer';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'HiredEasy - About Us | Simplifying Job Applications',
+  description: 'Learn more about HiredEasy and our mission to simplify job applications, and meet our founders dedicated to helping job seekers find their dream jobs.',
+  keywords: 'HiredEasy, About HiredEasy, job applications, career services, job seekers, Nikhil Jain, Anuj Jain',
+  robots: 'index, follow',
+  viewport: 'width=device-width, initial-scale=1.0',
+  authors: [{ name: 'HiredEasy' }],
+  openGraph: {
+    type: 'website',
+    url: 'https://hiredeasy.com/about',
+    title: 'HiredEasy - About Us | Simplifying Job Applications',
+    description: 'Learn more about HiredEasy and our mission to simplify job applications, and meet our founders dedicated to helping job seekers find their dream jobs.',
+    images: [
+      {
+        url: 'https://hiredeasy.com/Hiredeasy.png',
+        width: 800,
+        height: 600,
+        alt: 'HiredEasy Logo'
+      }
+    ]
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'HiredEasy - About Us | Simplifying Job Applications',
+    description: 'Learn more about HiredEasy and our mission to simplify job applications, and meet our founders dedicated to helping job seekers find their dream jobs.',
+    images: [
+      {
+        url: 'https://hiredeasy.com/Hiredeasy.png',
+        alt: 'HiredEasy Logo'
+      }
+    ]
+  }
+};
+
+const breadcrumbData = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://hiredeasy.com"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "About Us",
+      "item": "https://hiredeasy.com/about"
+    }
+  ]
+};
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "HiredEasy About Us",
+  "url": "https://hiredeasy.com/about",
+  "description": "Learn more about HiredEasy and our mission to simplify job applications."
+};
 
 const Aboutus = () => {
   return (
@@ -13,6 +72,10 @@ const Aboutus = () => {
       style={{ backgroundColor: '#FAF6F6' }}
     >
       <Navbar />
+      <head>
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbData) }} />
+      </head>
       <main className="max-w-6xl mx-auto px-6 py-12">
         <section className="text-center mb-12">
           <h1 className="text-4xl font-bold mb-4">
@@ -43,6 +106,7 @@ const Aboutus = () => {
                 objectFit: 'cover',
               }}
               width="200"
+              loading="lazy"
             />
             <h2 className="font-bold text-2xl mb-2">Nikhil Jain</h2>
             <p className="text-gray-700 mb-4">
@@ -72,6 +136,7 @@ const Aboutus = () => {
                   objectFit: 'contain',
                 }}
                 width="210"
+                loading="lazy"
               />
               <img
                 alt="S&P Global"
@@ -82,12 +147,13 @@ const Aboutus = () => {
                   objectFit: 'contain',
                 }}
                 width="140"
+                loading="lazy"
               />
             </div>
           </div>
           <div className="flex flex-col items-center text-center">
             <img
-              alt="Gaurav Jain"
+              alt="Anuj Jain"
               className="mb-4 rounded-full"
               height="200"
               src="/Anuj.png"
@@ -96,6 +162,7 @@ const Aboutus = () => {
                 objectFit: 'cover',
               }}
               width="200"
+              loading="lazy"
             />
             <h2 className="font-bold text-2xl mb-2">Anuj Jain</h2>
             <p className="text-gray-700 mb-4">
@@ -115,25 +182,16 @@ const Aboutus = () => {
               focused on being the best tech wingman, helping others succeed.
             </p>
             <div className="flex space-x-2">
-              {/* <img
-                alt="IIT logo"
-                height="70"
-                src="/IIT.png"
-                style={{
-                  aspectRatio: "120/40",
-                  objectFit: "contain",
-                }}
-                width="210"
-              /> */}
               <img
                 alt="Salesforce"
-                height="300" // increased height
+                height="300"
                 src="/salesforce.png"
                 style={{
                   aspectRatio: '120/40',
                   objectFit: 'contain',
                 }}
-                width="280" // increased width
+                width="280"
+                loading="lazy"
               />
             </div>
           </div>

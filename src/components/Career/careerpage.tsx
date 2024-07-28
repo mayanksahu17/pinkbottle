@@ -2,6 +2,21 @@
 import { useState, ChangeEvent, FormEvent, useEffect } from 'react';
 import Navbar from '../navbar/navbar';
 import Footer from '../footer/footer';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'HiredEasy - Career Opportunities | Join Our Team',
+  description: 'Explore exciting career opportunities at HiredEasy and join our mission to simplify the job application process for job seekers worldwide.',
+};
+
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "HiredEasy Career",
+  "url": "https://hiredeasy.com/career",
+  "description": "Explore career opportunities with HiredEasy."
+};
 
 export function CareerPage() {
   const [isModalOpen, setModalOpen] = useState(false);
@@ -183,7 +198,28 @@ export function CareerPage() {
 
   return (
     <>
+    <head>
+  <title>Join Our Team - Career Opportunities at HiredEasy</title>
+  <meta name="description" content="Explore exciting career opportunities at HiredEasy. Join our mission to simplify job applications. Apply now for roles in software engineering, data analysis, and more." />
+  <meta name="keywords" content="career opportunities, job openings, software engineer, data analyst, machine learning intern, HiredEasy careers" />
+  <meta name="author" content="HiredEasy" />
+  <meta property="og:title" content="Join Our Team - Career Opportunities at HiredEasy" />
+  <meta property="og:description" content="Explore exciting career opportunities at HiredEasy. Join our mission to simplify job applications. Apply now for roles in software engineering, data analysis, and more." />
+  <meta property="og:image" content="https://hiredeasy.com/logo.png" />
+  <meta property="og:url" content="https://hiredeasy.com/career" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Join Our Team - Career Opportunities at HiredEasy" />
+  <meta name="twitter:description" content="Explore exciting career opportunities at HiredEasy. Join our mission to simplify job applications. Apply now for roles in software engineering, data analysis, and more." />
+  <meta name="twitter:image" content="https://hiredeasy.com/Hiredeasy.png" />
+  <link rel="canonical" href="https://hiredeasy.com/career" />
+  <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />
+</head>
+
       <Navbar />
+      <head>
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />
+      </head>
       <header className="bg-teal-700 text-white py-10">
         <div className="container mx-auto px-6 text-center">
           <h1 className="text-4xl font-bold mb-2">Join Our Team</h1>
