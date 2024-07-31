@@ -12,6 +12,7 @@ const myMiddleware = authMiddleware({
     '/api/uploadthing',
     '/Wall',
     '/career',
+    '/onboarding',
     '/sitemap.xml',
     '/robots.txt',
   ],

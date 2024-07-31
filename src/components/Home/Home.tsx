@@ -306,9 +306,9 @@ const HomePage = () => {
                 </p>
 
                 <div className="flex gap-4 mt-10">
-                  <Link href="/dashboard">
+                  <Link href="/onboarding">
                     <button className="border border-black flex items-center justify-center gap-2 px-6 py-2 text-sm md:text-lg font-medium text-primary-foreground bg-primary rounded-xl hover:bg-primary-dark transition-all shadow-lg">
-                      Get Started for Free
+                        Schedule 3 days free trial
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
@@ -338,7 +338,7 @@ const HomePage = () => {
               </div>
               <div className="relative mt-8 md:mt-0">
               <img src="/Banner.png" alt="Person" className="rounded-lg" loading="lazy" />
-                <div className="absolute top-64 left-0 flex items-center p-4 bg-white rounded-lg shadow-lg">
+                <div className="absolute top-52 left-0 flex items-center p-4 bg-white rounded-lg shadow-lg">
                   <UsersIcon className="w-6 h-6 text-[#5f4bb6]" />
                   <div className="ml-4">
                     <p className="text-xl font-bold text-[#f59e0b]">$83,307</p>
@@ -394,7 +394,7 @@ const HomePage = () => {
                 </div>
               </div>
               <div className="col-span-1 lg:col-span-1 text-center mb-4 md:mb-0">
-                <div className="flex justify-center items-center h-10 mt-2">
+                <div className="flex justify-center items-center h-32 mt-2">
                   <img
                     src="FinancialExpress.png"
                     alt="Financial Express"
@@ -402,7 +402,7 @@ const HomePage = () => {
                 </div>
               </div>
               <div className="col-span-1 lg:col-span-1 text-center mb-4 md:mb-0">
-                <div className="flex justify-center items-center h-10 mt-2">
+                <div className="flex justify-center items-center h-6 mt-2">
                   <img
                     src="Forbes.png"
                     alt="Forbes"
@@ -463,18 +463,18 @@ const HomePage = () => {
                 </div>
               </div>
             </div>
-            <div className="mt-10">
+            <div className="mt-20">
               <h2 className="text-3xl font-bold text-gray-800 text-center">
                 Our results speak for
                 <br /> themselves.
               </h2>
               <div className="flex items-center justify-center mt-4">
-                <Link href="/pricing">
+                <Link href="/onboarding">
                   <button className="flex items-center justify-center gap-2 px-6 py-2 text-sm md:text-lg font-medium text-primary-foreground bg-primary rounded-full hover:bg-primary-dark transition-all shadow-lg">
                     <span className="rounded-full bg-white p-2">
                       <img src="Nikhil.jpeg" alt="Custom Image" className="h-6 w-6" loading="lazy" />
                     </span>
-                    <span>Join the Club</span>
+                    <span>Start your Free Trial</span>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="24"
@@ -516,7 +516,7 @@ const HomePage = () => {
             <h2 className="text-3xl font-extrabold text-gray-900">
               We Produly say, Our clients now works at{' '}
             </h2>
-            <p className="mt-4 text-lg text-gray-600">
+            <p className=" text-lg text-gray-600">
               We stand by our commitments and ensure that our actions align with our promises.
             </p>
             <div className="mt-10 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-8 items-center">
@@ -671,7 +671,7 @@ const HomePage = () => {
           <div className="max-w-sm md:max-w-6xl mx-auto">
             <div className="text-center mb-16">
               <h2 className="text-3xl font-extrabold text-gray-900">
-                Trusted by 60+ Universities Students and 1300+ got a Job
+                Trusted by 25+ Universities Students and 1300+ got a Job
               </h2>
               <p className="mt-8 text-gray-600 text-sm">
                 We've worked with several thousand fellows and counting. Read their stories {' '}
@@ -1115,9 +1115,6 @@ const HomePage = () => {
               <details className="group py-4">
                 <summary className="text-lg font-medium cursor-pointer flex justify-between items-center">
                   What is the success rate?
-                  <span className="ml-2 text-gray-400 group-open:text-black group-open:rotate-180 transition-transform duration-300">
-                    {'\u2935'}
-                  </span>
                 </summary>
                 <p className="mt-4 leading-relaxed text-sm text-gray-500">
                   70% of our users landed fulltime roles in 1 months. 47% of them
@@ -1131,10 +1128,6 @@ const HomePage = () => {
               <details className="group py-4">
                 <summary className="text-lg font-medium cursor-pointer flex justify-between items-center py-2">
                   How many recruiter calls will I get?
-                  <span className="ml-2 text-gray-400 group-open:text-black group-open:rotate-180 transition-transform duration-300">
-                    {'\u2935'}{' '}
-                    {/* This is a placeholder for your chevron or arrow icon */}
-                  </span>
                 </summary>
                 <div className="mt-4 leading-relaxed text-gray-500 text-sm">
                   <p>
@@ -1173,9 +1166,6 @@ const HomePage = () => {
                 <summary className="text-lg font-medium cursor-pointer flex justify-between items-center">
                   Why should I also shortlist the jobs when I am paying? Why not the HiredEasy
                   Assistants do that?
-                  <span className="ml-2 text-gray-400 group-open:text-black group-open:rotate-180 transition-transform duration-300">
-                    {'\u2935'}
-                  </span>
                 </summary>
                 <div className="mt-4 leading-relaxed text-gray-500 text-sm">
                   <p>
@@ -1236,9 +1226,6 @@ const HomePage = () => {
                 <summary className="text-lg font-medium cursor-pointer flex justify-between items-center">
                   How long will my assistant take to apply for the shortlisted
                   job?
-                  <span className="ml-2 text-gray-400 group-open:text-black group-open:rotate-180 transition-transform duration-300">
-                    {'\u2935'}
-                  </span>
                 </summary>
                 <div className="mt-4 leading-relaxed text-gray-500 text-sm">
                   <p>
@@ -1253,9 +1240,6 @@ const HomePage = () => {
               <details className="group py-4">
                 <summary className="text-lg font-medium cursor-pointer flex justify-between items-center">
                   How do I track my applications?
-                  <span className="ml-2 text-gray-400 group-open:text-black group-open:rotate-180 transition-transform duration-300">
-                    {'\u2935'}
-                  </span>
                 </summary>
                 <div className="mt-4 leading-relaxed text-gray-500 text-sm">
                   <p>
@@ -1268,9 +1252,6 @@ const HomePage = () => {
               <details className="group py-4">
                 <summary className="text-lg font-medium cursor-pointer flex justify-between items-center">
                   How are you creating personalized Resumes?
-                  <span className="ml-2 text-gray-400 group-open:text-black group-open:rotate-180 transition-transform duration-300">
-                    {'\u2935'}
-                  </span>
                 </summary>
                 <div className="mt-4 leading-relaxed text-gray-500 text-sm">
                   <p>
@@ -1285,9 +1266,6 @@ const HomePage = () => {
               <details className="group py-4">
                 <summary className="text-lg font-medium cursor-pointer flex justify-between items-center">
                   How are you creating personalized Cover Letters?
-                  <span className="ml-2 text-gray-400 group-open:text-black group-open:rotate-180 transition-transform duration-300">
-                    {'\u2935'}
-                  </span>
                 </summary>
                 <div className="mt-4 leading-relaxed text-gray-500 text-sm">
                   <p>
@@ -1304,9 +1282,6 @@ const HomePage = () => {
               <details className="group py-4">
                 <summary className="text-lg font-medium cursor-pointer flex justify-between items-center">
                   Who will review my Linkedin?
-                  <span className="ml-2 text-gray-400 group-open:text-black group-open:rotate-180 transition-transform duration-300">
-                    {'\u2935'}
-                  </span>
                 </summary>
                 <div className="mt-4 leading-relaxed text-gray-500 text-sm">
                   <p>
@@ -1321,9 +1296,6 @@ const HomePage = () => {
               <details className="group py-4">
                 <summary className="text-lg font-medium cursor-pointer flex justify-between items-center">
                   Who are the assistants?
-                  <span className="ml-2 text-gray-400 group-open:text-black group-open:rotate-180 transition-transform duration-300">
-                    {'\u2935'}
-                  </span>
                 </summary>
                 <div className="mt-4 leading-relaxed text-gray-500 text-sm">
                   <p>
@@ -1341,9 +1313,6 @@ const HomePage = () => {
               <details className="group py-4">
                 <summary className="text-lg font-medium cursor-pointer flex justify-between items-center">
                   What if I am not happy with my assistant?
-                  <span className="ml-2 text-gray-400 group-open:text-black group-open:rotate-180 transition-transform duration-300">
-                    {'\u2935'}
-                  </span>
                 </summary>
                 <div className="mt-4 leading-relaxed text-gray-500 text-sm">
                   <p>
@@ -1357,9 +1326,6 @@ const HomePage = () => {
                 <summary className="text-lg font-medium cursor-pointer flex justify-between items-center">
                   How long will my assistant take to apply for the shortlisted
                   job?
-                  <span className="ml-2 text-gray-400 group-open:text-black group-open:rotate-180 transition-transform duration-300">
-                    {'\u2935'}
-                  </span>
                 </summary>
                 <div className="mt-4 leading-relaxed text-gray-500 text-sm">
                   <p>
@@ -1374,9 +1340,6 @@ const HomePage = () => {
               <details className="group py-4">
                 <summary className="text-lg font-medium cursor-pointer flex justify-between items-center">
                   Pricing looks expensive?
-                  <span className="ml-2 text-gray-400 group-open:text-black group-open:rotate-180 transition-transform duration-300">
-                    {'\u2935'}
-                  </span>
                 </summary>
                 <p className="mt-4 leading-relaxed text-sm text-gray-500">
                   We maintain a high success rate thanks to our rigorous screening
@@ -1388,7 +1351,7 @@ const HomePage = () => {
             </div>
           </div>
         </section>
-        <section className="bg-white py-8">
+        <section className="bg-white py-8 mb-32">
           <div className="max-w-6xl mx-auto px-4 text-center">
             <h2 className="text-3xl font-bold mb-4">
               <span style={{ color: 'black' }}>Have more?</span>{' '}
@@ -1552,9 +1515,9 @@ const HomePage = () => {
               <p className="text-gray-600">Co-Founder & IIM Kolkata</p>
             </div>
             <div className="mt-10 flex justify-center gap-4">
-              <Link href="/dashboard">
+              <Link href="/onboarding">
                 <button className="border border-black flex items-center justify-center gap-2 px-6 py-2 text-sm md:text-lg font-medium text-primary-foreground bg-primary rounded-xl hover:bg-primary-dark transition-all shadow-lg">
-                  Get Started for Free
+                  Schedule 3 days free trial
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
