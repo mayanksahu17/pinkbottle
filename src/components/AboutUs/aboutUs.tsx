@@ -111,13 +111,13 @@ const Aboutus = () => {
             <h2 className="font-bold text-2xl mb-2">Nikhil Jain</h2>
             <p className="text-gray-700 mb-4">
               Co-Founder | Product |{' '}
-              <a
+              {/* <a
                 href="https://www.linkedin.com/in/wnikhil/"
                 target="_blank"
                 rel="noopener noreferrer"
               >
                 <LinkedinIcon className="inline ml-1" />
-              </a>
+              </a> */}
             </p>
             <p className="text-gray-600 mb-4">
               I co-founded a startup that helps students and professionals by
@@ -167,13 +167,13 @@ const Aboutus = () => {
             <h2 className="font-bold text-2xl mb-2">Anuj Jain</h2>
             <p className="text-gray-700 mb-4">
               Co-Founder | Tech |{' '}
-              <a
+              {/* <a
                 href="https://www.linkedin.com/in/anujjain809/"
                 target="_blank"
                 rel="noopener noreferrer"
               >
                 <LinkedinIcon className="inline ml-1" />
-              </a>
+              </a> */}
             </p>
             <p className="text-gray-600 mb-4">
               I'm SDE at Salesforce. From building Pulsejet engines to coding

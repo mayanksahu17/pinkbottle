@@ -308,7 +308,7 @@ const HomePage = () => {
                 <div className="flex gap-4 mt-10">
                   <Link href="/dashboard">
                     <button className="border border-black flex items-center justify-center gap-2 px-6 py-2 text-sm md:text-lg font-medium text-primary-foreground bg-primary rounded-xl hover:bg-primary-dark transition-all shadow-lg">
-                      Get Started for Free
+                      Schedule 3 Days Trial
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
@@ -338,7 +338,7 @@ const HomePage = () => {
               </div>
               <div className="relative mt-8 md:mt-0">
               <img src="/Banner.png" alt="Person" className="rounded-lg" loading="lazy" />
-                <div className="absolute top-64 left-0 flex items-center p-4 bg-white rounded-lg shadow-lg">
+                <div className="absolute top-52 left-0 flex items-center p-4 bg-white rounded-lg shadow-lg">
                   <UsersIcon className="w-6 h-6 text-[#5f4bb6]" />
                   <div className="ml-4">
                     <p className="text-xl font-bold text-[#f59e0b]">$83,307</p>
@@ -394,7 +394,7 @@ const HomePage = () => {
                 </div>
               </div>
               <div className="col-span-1 lg:col-span-1 text-center mb-4 md:mb-0">
-                <div className="flex justify-center items-center h-10 mt-2">
+                <div className="flex justify-center items-center h-12 mt-2">
                   <img
                     src="FinancialExpress.png"
                     alt="Financial Express"
@@ -402,7 +402,7 @@ const HomePage = () => {
                 </div>
               </div>
               <div className="col-span-1 lg:col-span-1 text-center mb-4 md:mb-0">
-                <div className="flex justify-center items-center h-10 mt-2">
+                <div className="flex justify-center items-center h-6 mt-2">
                   <img
                     src="Forbes.png"
                     alt="Forbes"
@@ -671,7 +671,7 @@ const HomePage = () => {
           <div className="max-w-sm md:max-w-6xl mx-auto">
             <div className="text-center mb-16">
               <h2 className="text-3xl font-extrabold text-gray-900">
-                Trusted by 60+ Universities Students and 1300+ got a Job
+                Trusted by 25+ Universities Students and 1300+ got a Job
               </h2>
               <p className="mt-8 text-gray-600 text-sm">
                 We've worked with several thousand fellows and counting. Read their stories {' '}
@@ -1017,16 +1017,16 @@ const HomePage = () => {
 
         <div className="bg-white py-12">
           <h2 className="text-3xl font-bold text-center text-gray-800 mb-3">
-            Our clients <span className="text-red-500">❤️</span> us
+            Our clients <span className="text-red-500 mb-20">❤️</span> us
           </h2>
-          <div className="text-center mb-10">
+          {/* <div className="text-center mb-10">
             <a
               href="/Wall"
               className="text-blue-600 hover:text-blue-800 transition duration-300 ease-in-out"
             >
               see more ⇗
             </a>
-          </div>
+          </div> */}
           <div className="flex flex-col md:flex-row justify-center gap-8 px-4">
             <div className="max-w-sm w-full mx-auto text-center">
               <img
@@ -1115,9 +1115,7 @@ const HomePage = () => {
               <details className="group py-4">
                 <summary className="text-lg font-medium cursor-pointer flex justify-between items-center">
                   What is the success rate?
-                  <span className="ml-2 text-gray-400 group-open:text-black group-open:rotate-180 transition-transform duration-300">
-                    {'\u2935'}
-                  </span>
+
                 </summary>
                 <p className="mt-4 leading-relaxed text-sm text-gray-500">
                   70% of our users landed fulltime roles in 1 months. 47% of them
@@ -1131,10 +1129,7 @@ const HomePage = () => {
               <details className="group py-4">
                 <summary className="text-lg font-medium cursor-pointer flex justify-between items-center py-2">
                   How many recruiter calls will I get?
-                  <span className="ml-2 text-gray-400 group-open:text-black group-open:rotate-180 transition-transform duration-300">
-                    {'\u2935'}{' '}
-                    {/* This is a placeholder for your chevron or arrow icon */}
-                  </span>
+
                 </summary>
                 <div className="mt-4 leading-relaxed text-gray-500 text-sm">
                   <p>
@@ -1173,9 +1168,6 @@ const HomePage = () => {
                 <summary className="text-lg font-medium cursor-pointer flex justify-between items-center">
                   Why should I also shortlist the jobs when I am paying? Why not the HiredEasy
                   Assistants do that?
-                  <span className="ml-2 text-gray-400 group-open:text-black group-open:rotate-180 transition-transform duration-300">
-                    {'\u2935'}
-                  </span>
                 </summary>
                 <div className="mt-4 leading-relaxed text-gray-500 text-sm">
                   <p>
@@ -1236,9 +1228,6 @@ const HomePage = () => {
                 <summary className="text-lg font-medium cursor-pointer flex justify-between items-center">
                   How long will my assistant take to apply for the shortlisted
                   job?
-                  <span className="ml-2 text-gray-400 group-open:text-black group-open:rotate-180 transition-transform duration-300">
-                    {'\u2935'}
-                  </span>
                 </summary>
                 <div className="mt-4 leading-relaxed text-gray-500 text-sm">
                   <p>
@@ -1253,9 +1242,6 @@ const HomePage = () => {
               <details className="group py-4">
                 <summary className="text-lg font-medium cursor-pointer flex justify-between items-center">
                   How do I track my applications?
-                  <span className="ml-2 text-gray-400 group-open:text-black group-open:rotate-180 transition-transform duration-300">
-                    {'\u2935'}
-                  </span>
                 </summary>
                 <div className="mt-4 leading-relaxed text-gray-500 text-sm">
                   <p>
@@ -1268,9 +1254,6 @@ const HomePage = () => {
               <details className="group py-4">
                 <summary className="text-lg font-medium cursor-pointer flex justify-between items-center">
                   How are you creating personalized Resumes?
-                  <span className="ml-2 text-gray-400 group-open:text-black group-open:rotate-180 transition-transform duration-300">
-                    {'\u2935'}
-                  </span>
                 </summary>
                 <div className="mt-4 leading-relaxed text-gray-500 text-sm">
                   <p>
@@ -1285,9 +1268,6 @@ const HomePage = () => {
               <details className="group py-4">
                 <summary className="text-lg font-medium cursor-pointer flex justify-between items-center">
                   How are you creating personalized Cover Letters?
-                  <span className="ml-2 text-gray-400 group-open:text-black group-open:rotate-180 transition-transform duration-300">
-                    {'\u2935'}
-                  </span>
                 </summary>
                 <div className="mt-4 leading-relaxed text-gray-500 text-sm">
                   <p>
@@ -1304,9 +1284,6 @@ const HomePage = () => {
               <details className="group py-4">
                 <summary className="text-lg font-medium cursor-pointer flex justify-between items-center">
                   Who will review my Linkedin?
-                  <span className="ml-2 text-gray-400 group-open:text-black group-open:rotate-180 transition-transform duration-300">
-                    {'\u2935'}
-                  </span>
                 </summary>
                 <div className="mt-4 leading-relaxed text-gray-500 text-sm">
                   <p>
@@ -1321,9 +1298,6 @@ const HomePage = () => {
               <details className="group py-4">
                 <summary className="text-lg font-medium cursor-pointer flex justify-between items-center">
                   Who are the assistants?
-                  <span className="ml-2 text-gray-400 group-open:text-black group-open:rotate-180 transition-transform duration-300">
-                    {'\u2935'}
-                  </span>
                 </summary>
                 <div className="mt-4 leading-relaxed text-gray-500 text-sm">
                   <p>
@@ -1341,9 +1315,6 @@ const HomePage = () => {
               <details className="group py-4">
                 <summary className="text-lg font-medium cursor-pointer flex justify-between items-center">
                   What if I am not happy with my assistant?
-                  <span className="ml-2 text-gray-400 group-open:text-black group-open:rotate-180 transition-transform duration-300">
-                    {'\u2935'}
-                  </span>
                 </summary>
                 <div className="mt-4 leading-relaxed text-gray-500 text-sm">
                   <p>
@@ -1357,9 +1328,6 @@ const HomePage = () => {
                 <summary className="text-lg font-medium cursor-pointer flex justify-between items-center">
                   How long will my assistant take to apply for the shortlisted
                   job?
-                  <span className="ml-2 text-gray-400 group-open:text-black group-open:rotate-180 transition-transform duration-300">
-                    {'\u2935'}
-                  </span>
                 </summary>
                 <div className="mt-4 leading-relaxed text-gray-500 text-sm">
                   <p>
@@ -1374,9 +1342,6 @@ const HomePage = () => {
               <details className="group py-4">
                 <summary className="text-lg font-medium cursor-pointer flex justify-between items-center">
                   Pricing looks expensive?
-                  <span className="ml-2 text-gray-400 group-open:text-black group-open:rotate-180 transition-transform duration-300">
-                    {'\u2935'}
-                  </span>
                 </summary>
                 <p className="mt-4 leading-relaxed text-sm text-gray-500">
                   We maintain a high success rate thanks to our rigorous screening
@@ -1411,84 +1376,7 @@ const HomePage = () => {
           </div>
         </section>
 
-        <section className="py-16 bg-[#faf8f2]">
-          <div className="max-w-6xl mx-auto px-4">
-            <div className="flex flex-col md:flex-row justify-between items-center mb-12">
-              {/* Content in row one */}
-              <div className="md:w-1/2 mb-6 md:mb-0">
-                {' '}
-                {/* Added margin-bottom for spacing */}
-                <h2
-                  className="text-5xl font-bold mb-5 text-gray-800"
-                  style={{ fontFamily: 'Poppins, sans-serif' }}
-                >
-                  Many kickass investors believe in our mission.
-                </h2>
-                <p
-                  className="text-center md:text-left mb-3 text-gray-500 text-xl"
-                  style={{ fontFamily: 'Poppins, sans-serif' }}
-                >
-                  All of them are top of their game in Careers and Immigration.
-                  Here are a couple of them.
-                </p>
-              </div>
-              {/* Images and text in row two */}
-              <div className="md:w-1/2 flex flex-col md:flex-row justify-end items-center space-y-8 md:space-y-0 md:space-x-8">
-                <div className="text-center">
-                  <img
-                    alt="Investor 1"
-                    src="/Mudambi.jpeg"
-                    className="w-64 h-64 md:w-64 md:h-64 rounded-full inline-block transition-transform duration-300 ease-in-out transform hover:scale-110"
-                    style={{
-                      border: '3px solid white',
-                      boxShadow: '0 4px 10px rgba(0,0,0,0.1)',
-                    }} loading="lazy" />
-                  <h3 className="text-lg font-semibold mt-4">
-                    Mudambi Srinivas | SDE II AWS
-                  </h3>
-                  <div className="flex justify-center space-x-2 mt-2">
-                    <a
-                      className="text-gray-400 hover:text-gray-500"
-                      target="_blank"
-                      href="https://www.linkedin.com/in/mssrinivasbhargav/"
-                    >
-                      <LinkedinIcon className="h-6 w-6" />
-                    </a>
-                    {/* <a className="text-gray-400 hover:text-gray-500" href="#">
-<InstagramIcon className="h-6 w-6" />
-</a> */}
-                  </div>
-                </div>
-
-                <div className="text-center">
-                  <img
-                    alt="Investor 2"
-                    src="/Tithy.jpeg"
-                    className="w-64 h-64 md:w-64 md:h-64 rounded-full inline-block transition-transform duration-300 ease-in-out transform hover:scale-110"
-                    style={{
-                      border: '3px solid white',
-                      boxShadow: '0 4px 10px rgba(0,0,0,0.1)',
-                    }} loading="lazy" />
-                  <h3 className="text-lg font-semibold mt-4">
-                    Tithy Sahu | Software Engineer Google
-                  </h3>
-                  <div className="flex justify-center space-x-2 mt-2">
-                    <a
-                      className="text-gray-400 hover:text-gray-500"
-                      target="_blank"
-                      href="https://www.linkedin.com/in/tithys30/"
-                    >
-                      <LinkedinIcon className="h-6 w-6" />
-                    </a>
-                    {/* <a className="text-gray-400 hover:text-gray-500" target="_blank" href="https://www.linkedin.com/in/rrishijain/">
-<InstagramIcon className="h-6 w-6" />
-</a> */}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
+        
 
         <section className="bg-[#ffffff] py-16">
           <div className="max-w-4xl mx-auto px-6 text-justify">
@@ -1572,12 +1460,15 @@ const HomePage = () => {
                 </button>
               </Link>
               <a
-                href="https://apply.neetocal.com/meeting-with-nikhil-jain"
-                target="_blank"
-                className="inline-flex items-center justify-center gap-2 px-6 py-2 text-sm md:text-lg font-bold text-gray-800 bg-transparent border-2 border-gray-800 rounded-xl hover:bg-gray-100 transition-all"
-              >
-                Schedule a call <span className="animate-bounce ml-2">👋</span>
-              </a>
+  href="https://apply.neetocal.com/meeting-with-nikhil-jain"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="flex items-center justify-center gap-2 px-4 py-2 text-xs sm:text-sm md:text-lg font-bold text-gray-800 bg-transparent border-2 border-gray-800 rounded-xl hover:bg-gray-100 transition-all sm:px-6 sm:py-2 md:px-8 md:py-3 lg:px-10 lg:py-4"
+>
+  Schedule a call
+  <span className="animate-bounce">👋</span>
+</a>
+
             </div>
           </div>
         </section>
