@@ -197,14 +197,25 @@ const Aboutus = () => {
             </p>
             <div className="flex space-x-2">
               <img
-                alt="Salesforce"
-                height="300"
-                src="/salesforce.png"
+                alt="DAVV logo"
+                height="70"
+                src="/davv.png"
                 style={{
                   aspectRatio: '120/40',
                   objectFit: 'contain',
                 }}
-                width="280"
+                width="210"
+                loading="lazy"
+              />
+              <img
+                alt="Mindtek"
+                height="150"
+                src="/mindtek.jpg"
+                style={{
+                  aspectRatio: '120/40',
+                  objectFit: 'contain',
+                }}
+                width="140"
                 loading="lazy"
               />
             </div>
