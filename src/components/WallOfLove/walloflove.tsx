@@ -213,7 +213,7 @@ const Walloflove = () => {
             Our clients <span className="text-red-500">❤️</span> us
           </h2>
           <p className="text-center mt-8 text-gray-600 text-sm mb-10">
-          We've worked with several thousand fellows and counting. Read some of their stories
+          We've worked with thousand fellows and counting. Read some of their stories
           </p>
           <br />
 
@@ -282,18 +282,12 @@ const Walloflove = () => {
                 <LinkedinIcon className="inline ml-1" />
               </a></h3>
                   <p className="text-sm text-gray-500">
-                    Backend Software Engineer, USA
+                    Backend Software Engineer Intern, USA
                   </p>
                 </div>
               </div>
               <p className="text-gray-600">
-                As I work full time and could not spare much time for applying
-                jobs. Applying each job is such a painful process sometimes it
-                takes more than 15 minutes for one application. I got tired and
-                demotivated after a week of applying by myself. I heard of
-                'HiredEasy.com' where they apply for your jobs online. Team did
-                a great help in applying jobs and always available to talk. They
-                followed my priority in applying jobs as well.
+              I had a tough time finding an internship this summer and was really worried as the end of summer got closer. Despite my efforts, I just couldn't secure anything. Then I found HireEasy, and they helped me out a lot. Within 10 days of working with them, I got an internship. I'm so grateful for their support. Thank you, HireEasy, for turning things around for me.
               </p>
             </div>
             <div className="max-w-sm w-full md:w-1/3">
@@ -443,7 +437,7 @@ Hiredeasy helped me in filtering and applying applications using referrals and c
                   loading="lazy"
                 />
                 <div>
-                  <h3 className="text-lg font-semibold">Gaurav Jain</h3>
+                  <h3 className="text-lg font-semibold">Gaurav Gupta</h3>
                   <p className="text-sm text-gray-500">Consultant, Canada</p>
                 </div>
               </div>

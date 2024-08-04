@@ -68,7 +68,7 @@ const FrontMain = () => {
             </Link>
 
             <div className="flex items-center justify-center w-full md:w-auto">
-              <Link href="/onboarding">
+              <Link href="/https://apply.neetocal.com/meeting-with-nikhil-jain">
                 <button className="relative flex items-center justify-center gap-2 px-4 py-1.5 text-sm md:text-base font-medium text-primary-foreground bg-white rounded-full hover:bg-gray-100 transition-all shadow-md border border-gray-300 w-full md:w-auto">
                   <span className="rounded-full bg-white p-1.5">
                     <img
