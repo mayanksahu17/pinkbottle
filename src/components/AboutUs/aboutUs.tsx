@@ -6,8 +6,10 @@ import { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'HiredEasy - About Us | Simplifying Job Applications',
-  description: 'Learn more about HiredEasy and our mission to simplify job applications, and meet our founders dedicated to helping job seekers find their dream jobs.',
-  keywords: 'HiredEasy, About HiredEasy, job applications, career services, job seekers, Nikhil Jain, Anuj Jain',
+  description:
+    'Learn more about HiredEasy and our mission to simplify job applications, and meet our founders dedicated to helping job seekers find their dream jobs.',
+  keywords:
+    'HiredEasy, About HiredEasy, job applications, career services, job seekers, Nikhil Jain, Anuj Jain',
   robots: 'index, follow',
   viewport: 'width=device-width, initial-scale=1.0',
   authors: [{ name: 'HiredEasy' }],
@@ -15,54 +17,57 @@ export const metadata: Metadata = {
     type: 'website',
     url: 'https://hiredeasy.com/about',
     title: 'HiredEasy - About Us | Simplifying Job Applications',
-    description: 'Learn more about HiredEasy and our mission to simplify job applications, and meet our founders dedicated to helping job seekers find their dream jobs.',
+    description:
+      'Learn more about HiredEasy and our mission to simplify job applications, and meet our founders dedicated to helping job seekers find their dream jobs.',
     images: [
       {
         url: 'https://hiredeasy.com/Hiredeasy.png',
         width: 800,
         height: 600,
-        alt: 'HiredEasy Logo'
-      }
-    ]
+        alt: 'HiredEasy Logo',
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'HiredEasy - About Us | Simplifying Job Applications',
-    description: 'Learn more about HiredEasy and our mission to simplify job applications, and meet our founders dedicated to helping job seekers find their dream jobs.',
+    description:
+      'Learn more about HiredEasy and our mission to simplify job applications, and meet our founders dedicated to helping job seekers find their dream jobs.',
     images: [
       {
         url: 'https://hiredeasy.com/Hiredeasy.png',
-        alt: 'HiredEasy Logo'
-      }
-    ]
-  }
+        alt: 'HiredEasy Logo',
+      },
+    ],
+  },
 };
 
 const breadcrumbData = {
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  "itemListElement": [
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
     {
-      "@type": "ListItem",
-      "position": 1,
-      "name": "Home",
-      "item": "https://hiredeasy.com"
+      '@type': 'ListItem',
+      position: 1,
+      name: 'Home',
+      item: 'https://hiredeasy.com',
     },
     {
-      "@type": "ListItem",
-      "position": 2,
-      "name": "About Us",
-      "item": "https://hiredeasy.com/about"
-    }
-  ]
+      '@type': 'ListItem',
+      position: 2,
+      name: 'About Us',
+      item: 'https://hiredeasy.com/about',
+    },
+  ],
 };
 
 const structuredData = {
-  "@context": "https://schema.org",
-  "@type": "WebPage",
-  "name": "HiredEasy About Us",
-  "url": "https://hiredeasy.com/about",
-  "description": "Learn more about HiredEasy and our mission to simplify job applications."
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: 'HiredEasy About Us',
+  url: 'https://hiredeasy.com/about',
+  description:
+    'Learn more about HiredEasy and our mission to simplify job applications.',
 };
 
 const Aboutus = () => {
@@ -73,8 +78,14 @@ const Aboutus = () => {
     >
       <Navbar />
       <head>
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbData) }} />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbData) }}
+        />
       </head>
       <main className="max-w-6xl mx-auto px-6 py-12">
         <section className="text-center mb-12">
@@ -98,16 +109,17 @@ const Aboutus = () => {
           <div className="flex flex-col items-center text-center">
             <img
               alt="Nikhil Jain"
-              className="mb-4 rounded-full"
+              className="mb-4 rounded-xl shadow-lg "
               height="200"
               src="/Nikhil.jpeg"
               style={{
-                aspectRatio: '200/200',
+                aspectRatio: '1/1',
                 objectFit: 'cover',
               }}
               width="200"
               loading="lazy"
             />
+
             <h2 className="font-bold text-2xl mb-2">Nikhil Jain</h2>
             <p className="text-gray-700 mb-4">
               Co-Founder | Product |{' '}
@@ -153,33 +165,35 @@ const Aboutus = () => {
           </div>
           <div className="flex flex-col items-center text-center">
             <img
-              alt="Anuj Jain"
-              className="mb-4 rounded-full"
+              alt="Kshitij Salecha"
+              className="mb-4 rounded-xl shadow-lg"
               height="200"
-              src="/Anuj.png"
+              src="/Kshitj.png"
               style={{
-                aspectRatio: '200/200',
+                aspectRatio: '1/1',
                 objectFit: 'cover',
               }}
               width="200"
               loading="lazy"
             />
-            <h2 className="font-bold text-2xl mb-2">Anuj Jain</h2>
+
+            <h2 className="font-bold text-2xl mb-2">Kshitij Salecha</h2>
             <p className="text-gray-700 mb-4">
-              Co-Founder | Tech |{' '}
-              {/* <a
-                href="https://www.linkedin.com/in/anujjain809/"
+              Co-Founder | Operations |{' '}
+              <a
+                href="https://www.linkedin.com/in/kshitij-salecha-14237b1b1/"
                 target="_blank"
                 rel="noopener noreferrer"
               >
                 <LinkedinIcon className="inline ml-1" />
-              </a> */}
+              </a>
             </p>
             <p className="text-gray-600 mb-4">
-              I'm SDE at Salesforce. From building Pulsejet engines to coding
-              full-stack apps, I love tinkering and creating. After launching a
-              couple of startups and learning from each experience, I'm now
-              focused on being the best tech wingman, helping others succeed.
+              I have recruiting experience of 3+ years. I know how hiring works
+              as I have hired more than 2000+ candidates for multiple companies.
+              My goal is to leverage my experience to create efficient and
+              effective hiring strategies that benefit both employers and job
+              seekers.
             </p>
             <div className="flex space-x-2">
               <img

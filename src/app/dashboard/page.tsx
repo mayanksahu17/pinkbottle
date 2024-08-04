@@ -1,6 +1,6 @@
-import DashboardPage from '@/components/dashboard/dashboard';
-import usePaymentStatus from '@/hooks/usePaymentStatus';
-import { getStudentById } from '@/lib/actions/users/user.actions';
+import DashboardPage from '../../components/dashboard/dashboard';
+import usePaymentStatus from '../../hooks/usePaymentStatus';
+import { getStudentById } from '../../lib/actions/users/user.actions';
 import { auth, currentUser } from '@clerk/nextjs';
 import React from 'react';
 

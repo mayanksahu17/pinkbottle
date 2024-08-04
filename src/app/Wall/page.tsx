@@ -1,10 +1,10 @@
 import Image from 'next/image';
 
-import PricingUser from '../../components/Pricing/pricing';
+import Walloflove from '@/components/WallOfLove/walloflove';
 export default function PricingPage() {
   return (
     <main>
-      <PricingUser /> {/* Correct component usage */}
+      <Walloflove /> {/* Correct component usage */}
     </main>
   );
 }

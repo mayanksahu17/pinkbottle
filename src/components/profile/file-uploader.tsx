@@ -9,13 +9,9 @@ import { convertFileToUrl } from '@/lib/utils';
 
 type FileUploaderProps = {
   loading: boolean;
-  handleFileUpload: (e: any) => Promise<void>;
-  onFileChange: Dispatch<SetStateAction<string>>;
   imageUrl: string;
-  setFiles: Dispatch<SetStateAction<File[]>>;
   files: any[];
   error: boolean;
-  setError: Dispatch<SetStateAction<boolean>>;
   name: string;
   id: string;
 };
@@ -23,26 +19,14 @@ type FileUploaderProps = {
 export function FileUploader({
   loading,
   error,
-  handleFileUpload,
   imageUrl,
-  onFileChange,
-  setFiles,
   files,
-  setError,
   name,
   id,
 }: FileUploaderProps) {
   const onDrop = useCallback((acceptedFiles: File[]) => {
-    if (acceptedFiles.length == 0) {
-      onFileChange('assets/icons/warning.png');
-      setFiles([]);
-      setError(true);
-      return;
-    }
-    setError(false);
-    setFiles(acceptedFiles);
-    const imgUrl = convertFileToUrl(acceptedFiles[0]);
-    onFileChange(imgUrl);
+    // Call the parent component's handler for file change
+    parentHandleFileChange(id, acceptedFiles); // This function should be defined and passed from the parent component
   }, []);
 
   const { getRootProps, getInputProps } = useDropzone({
@@ -101,8 +85,7 @@ export function FileUploader({
         )}
         {imageUrl && files && (
           <Button
-            disabled={loading}
-            onClick={() => handleFileUpload(id)}
+            type="button"
             className="text-white bg-[#16A34A] hover:bg-[#318b52]"
           >
             {'Upload'}
@@ -111,4 +94,8 @@ export function FileUploader({
       </div>
     </div>
   );
+}
+
+function parentHandleFileChange(id: string, acceptedFiles: File[]) {
+  throw new Error('Function not implemented.');
 }
