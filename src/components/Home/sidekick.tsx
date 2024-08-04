@@ -18,14 +18,14 @@ const Sidekick = () => {
         </p>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12">
           {[
-            { name: 'Deepesh Gupta', school: 'Sophomore at IIT Bombay', rating: '4.8', reviews: '43', applications: '2560', paragraph: 'Helping clients achieve their goals is my passion!', image: 'Depeesh.png' },
-            { name: 'Anjali Singh', school: 'Senior at IIT Delhi', rating: '4.7', reviews: '37', applications: '3150', paragraph: 'Every successful placement brings immense joy!', image: 'Anjali.png' },
-            { name: 'Yash Jaiswal', school: 'Junior at IIT Madras', rating: '4.9', reviews: '52', applications: '2890', paragraph: 'Seeing clients thrive in their careers is the best reward.', image: 'Anil.jpg' },
-            { name: 'Radhika Gupta', school: 'Sophomore at IIT Kanpur', rating: '4.6', reviews: '29', applications: '2340', paragraph: 'Connecting talent with opportunities makes my day.', image: 'Radhika.png' },
-            { name: 'Chirag Thakur', school: 'Senior at IIT Kharagpur', rating: '4.8', reviews: '44', applications: '1980', paragraph: 'Guiding clients to their dream jobs is my mission.', image: 'Chirag.png' },
-            { name: 'Aradhy Agrawal', school: 'Junior at IIT Guwahati', rating: '4.7', reviews: '39', applications: '2760', paragraph: 'Helping people succeed professionally is what I strive for.', image: 'Siddharth.png' },
-            { name: 'Kuldeep Vyas', school: 'Sophomore at IIT Roorkee', rating: '4.9', reviews: '50', applications: '3250', paragraph: 'Each success story inspires me to do more.', image: 'Kuldeep.jpeg' },
-            { name: 'Shagun J', school: 'Senior at IIT Bombay', rating: '4.8', reviews: '48', applications: '3050', paragraph: 'Ensuring client satisfaction is my top priority.', image: 'Shagun.jpg' }
+            { name: 'Deepesh Gupta', school: 'Sophomore at Jawaharlal Nehru University', rating: '4.8', reviews: '43', applications: '5560', paragraph: 'Helping clients achieve their goals is my passion!', image: 'Depeesh.png' },
+            { name: 'Anjali Singh', school: 'Senior at KIIT', rating: '4.7', reviews: '37', applications: '3150', paragraph: 'Every successful placement brings immense joy!', image: 'Anjali.png' },
+            { name: 'Yash Jaiswal', school: 'Junior at IIT Indore', rating: '4.9', reviews: '52', applications: '4890', paragraph: 'Seeing clients thrive in their careers is the best reward.', image: 'Anil.jpg' },
+            { name: 'Radhika Gupta', school: 'Freshman at IIT Indore', rating: '4.6', reviews: '29', applications: '2340', paragraph: 'Connecting talent with opportunities makes my day.', image: 'Radhika.png' },
+            { name: 'Chirag Thakur', school: 'Senior at SVVV', rating: '4.8', reviews: '44', applications: '1980', paragraph: 'Guiding clients to their dream jobs is my mission.', image: 'Chirag.png' },
+            { name: 'Aradhy Agrawal', school: 'Senior at IIT SVVV', rating: '4.7', reviews: '39', applications: '5760', paragraph: 'Helping people succeed professionally is what I strive for.', image: 'Siddharth.png' },
+            { name: 'Kuldeep Vyas', school: 'Senior at KIIT', rating: '4.9', reviews: '50', applications: '4250', paragraph: 'Each success story inspires me to do more.', image: 'Kuldeep.jpeg' },
+            { name: 'Shagun J', school: 'Sophomore at Vellore Institute of Technology', rating: '4.8', reviews: '48', applications: '3050', paragraph: 'Ensuring client satisfaction is my top priority.', image: 'Shagun.jpg' }
           ].map((assistant, index) => (
             <div key={index} className={`bg-white rounded-xl overflow-hidden shadow-xl hover:shadow-2xl transition-all transform hover:scale-105 hover:translate-y-[-10px] duration-500 ease-in-out w-full sm:w-72 mx-auto border border-green-500 flex flex-col justify-between h-96 ${index >= 4 ? 'hidden sm:block' : ''}`}>
               <div className="p-4 text-center flex-grow">
