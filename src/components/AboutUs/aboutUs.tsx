@@ -96,18 +96,19 @@ const Aboutus = () => {
         </section>
         <section className="grid grid-cols-1 md:grid-cols-2 gap-12">
           <div className="flex flex-col items-center text-center">
-            <img
-              alt="Nikhil Jain"
-              className="mb-4 rounded-full"
-              height="200"
-              src="/Nikhil.jpeg"
-              style={{
-                aspectRatio: '200/200',
-                objectFit: 'cover',
-              }}
-              width="200"
-              loading="lazy"
-            />
+          <img
+            alt="Nikhil Jain"
+            className="mb-4 rounded-xl shadow-lg "
+            height="200"
+            src="/Nikhil.jpeg"
+            style={{
+              aspectRatio: '1/1',
+              objectFit: 'cover',
+            }}
+            width="200"
+            loading="lazy"
+          />
+
             <h2 className="font-bold text-2xl mb-2">Nikhil Jain</h2>
             <p className="text-gray-700 mb-4">
               Co-Founder | Product |{' '}
@@ -152,23 +153,24 @@ const Aboutus = () => {
             </div>
           </div>
           <div className="flex flex-col items-center text-center">
-            <img
-              alt="Anuj Jain"
-              className="mb-4 rounded-full"
-              height="200"
-              src="/Anuj.png"
-              style={{
-                aspectRatio: '200/200',
-                objectFit: 'cover',
-              }}
-              width="200"
-              loading="lazy"
-            />
-            <h2 className="font-bold text-2xl mb-2">Anuj Jain</h2>
+          <img
+  alt="Kshitij Salecha"
+  className="mb-4 rounded-xl shadow-lg"
+  height="200"
+  src="/Kshitj.png"
+  style={{
+    aspectRatio: '1/1',
+    objectFit: 'cover',
+  }}
+  width="200"
+  loading="lazy"
+/>
+
+            <h2 className="font-bold text-2xl mb-2">Kshitij Salecha</h2>
             <p className="text-gray-700 mb-4">
-              Co-Founder | Tech |{' '}
+              Co-Founder | Operations |{' '}
               <a
-                href="https://www.linkedin.com/in/anujjain809/"
+                href="https://www.linkedin.com/in/kshitij-salecha-14237b1b1/"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -176,10 +178,8 @@ const Aboutus = () => {
               </a>
             </p>
             <p className="text-gray-600 mb-4">
-              I'm SDE at Salesforce. From building Pulsejet engines to coding
-              full-stack apps, I love tinkering and creating. After launching a
-              couple of startups and learning from each experience, I'm now
-              focused on being the best tech wingman, helping others succeed.
+            I have recruiting experience of 3+ years. I know how hiring works as I have hired more than 2000+ candidates for multiple companies. 
+             My goal is to leverage my experience to create efficient and effective hiring strategies that benefit both employers and job seekers.
             </p>
             <div className="flex space-x-2">
               <img

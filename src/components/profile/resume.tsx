@@ -2,9 +2,10 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { useAuth, useUser } from '@clerk/nextjs';
-import { useUploadThing } from '@/lib/uploadthing';
-import { updateStudent } from '@/lib/actions/users/user.actions';
-import { FileUploader } from '../file-uploader';
+import { useUploadThing } from '../../lib/uploadthing';
+import { updateStudent } from '../../lib/actions/users/user.actions';
+import { FileUploader } from './file-uploader';
+import { convertFileToUrl } from '@/lib/utils';
 
 const Resume = ({ resume, cover }: { resume?: string; cover?: string }) => {
   const { isSignedIn, user } = useUser();
@@ -76,7 +77,19 @@ const Resume = ({ resume, cover }: { resume?: string; cover?: string }) => {
     }
     setLoading(false);
   };
-
+  
+  const handleFileChange = (id: 'coverLetter' | 'resume', files: File[]) => {
+    if (id === 'resume') {
+      setFilesResume(files);
+      const imgUrl = convertFileToUrl(files[0]);
+      setImageUrlResume(imgUrl);
+    } else {
+      setFilesCover(files);
+      const imgUrl = convertFileToUrl(files[0]);
+      setImageUrlCover(imgUrl);
+    }
+  };
+  
   return (
     <main className="flex-1 ml-8">
       <div className="flex justify-center items-start pt-16 min-h-screen ">
@@ -129,24 +142,16 @@ const Resume = ({ resume, cover }: { resume?: string; cover?: string }) => {
             <FileUploader
               error={errorResume}
               loading={loading}
-              handleFileUpload={handleFileUpload}
               files={filesResume}
               imageUrl={imageUrlResume}
-              onFileChange={setImageUrlResume}
-              setFiles={setFilesResume}
-              setError={setErrorResume}
               name={'Upload Resume'}
               id="resume"
             />
             <FileUploader
               error={errorCover}
               loading={loading}
-              handleFileUpload={handleFileUpload}
               files={filesCover}
               imageUrl={imageUrlCover}
-              onFileChange={setImageUrlCover}
-              setFiles={setFilesCover}
-              setError={setErrorCover}
               name="Upload Cover letter"
               id="coverLetter"
             />

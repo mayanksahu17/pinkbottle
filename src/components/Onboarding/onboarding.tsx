@@ -10,7 +10,21 @@ import Navbar from '../navbar/navbar';
 export function Onboarding() {
 
   const [currentStep, setCurrentStep] = useState(1);
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<{
+    firstname: string;
+    lastname: string;
+    email: string;
+    phone: string;
+    education: string;
+    major: string;
+    graduationyear: string;
+    currentrole: string;
+    currentcompany: string;
+    yearsofexperience: string;
+    resume: string | null;
+    resumename: string;
+    resumemimetype: string;
+  }>({
     firstname: "",
     lastname: "",
     email: "",
@@ -22,8 +36,10 @@ export function Onboarding() {
     currentcompany: "",
     yearsofexperience: "",
     resume: null,
-    resumename: ""
+    resumename: "",
+    resumemimetype: ""
   });
+  
 
   const handleChange = (e: { target: { id: any; value: any } }) => {
     const { id, value } = e.target;
@@ -39,18 +55,14 @@ export function Onboarding() {
       const file = files[0];
       const reader = new FileReader();
       reader.onloadend = () => {
-        console.log('FileReader Result Type:', typeof reader.result);  // Check the type of reader.result
         if (typeof reader.result === 'string') {
           const base64String = reader.result.split(',')[1];
-          setFormData(prevState => {
-            const newState = {
-              ...prevState,
-              [id]: base64String,  // Storing the Base64 string
-              resumename: file.name
-            };
-            console.log('New FormData after file read:', newState);  // Log new state
-            return newState;
-          });
+          setFormData(prevState => ({
+            ...prevState,
+            resume: base64String, // Ensure the value is a string
+            resumename: file.name, // Ensure the value is a string
+            resumemimetype: file.type  // Ensure the value is a string
+          }));
         } else {
           console.error('FileReader result is not a string');
         }
@@ -58,17 +70,14 @@ export function Onboarding() {
       reader.readAsDataURL(file);
     }
   };
-    
+  
   const handleSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    const url = 'https://script.google.com/macros/s/AKfycbwpFIT9xSffmstRR-Q3ju7al_xifk3q1sBuCJg4IPLbXKW6clcuVJmZH7pMI5lTNbCQbA/exec';
+    const url = 'https://script.google.com/macros/s/AKfycbxtT3VXqDIcF2BhflAh4l7l6DJfRaUevq6AT7Fk-humRKrhuWum0gQX97ZiLUxTEt7qIQ/exec';
     const formDataToSend = new FormData();
   
-    console.log('Final formData before submission:', formData);
-  
     Object.entries(formData).forEach(([key, value]) => {
-      console.log(`Appending to FormData: ${key}:`, value);
-      formDataToSend.append(key, value);
+      formDataToSend.append(key, value as string);
     });
   
     fetch(url, {
@@ -79,40 +88,38 @@ export function Onboarding() {
     .then(result => console.log("Server response:", result))
     .catch(error => console.error('Error:', error));
   };
-  
-  
-
+ 
   return (
     <>
       <Navbar />
       <div className="min-h-screen w-full lg:grid lg:grid-cols-[300px_1fr] bg-gray-100">
-        <div className="flex flex-col border-r bg-white shadow-md p-4">
+        <div className="flex flex-col border-r bg-white shadow-md p-6">
           <div className="mb-6 flex items-center justify-between">
-            <h2 className="text-lg font-semibold text-gray-800">Onboarding Form</h2>
+            <h2 className="text-lg font-semibold text-gray-800" style={{ fontFamily: 'Calibri, sans-serif' }}>Onboarding Form</h2>
           </div>
           <div className="flex-1 space-y-4 overflow-auto">
             <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <h3 className={`text-base font-medium ${currentStep === 1 ? "text-primary" : "text-gray-600"}`}>Personal Information</h3>
-                <span className={`rounded-full px-2 py-1 text-xs font-medium ${currentStep === 1 ? "bg-primary text-white" : "bg-gray-200 text-gray-600"}`}>Step 1</span>
+                <h3 className={`text-base font-medium ${currentStep === 1 ? "text-green-600" : "text-gray-600"}`} style={{ fontFamily: 'Calibri, sans-serif' }}>Personal Information</h3>
+                <span className={`rounded-full px-2 py-1 text-xs font-medium ${currentStep === 1 ? "bg-green-600 text-white" : "bg-gray-200 text-gray-600"}`}>Step 1</span>
               </div>
             </div>
             <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <h3 className={`text-base font-medium ${currentStep === 2 ? "text-primary" : "text-gray-600"}`}>Education</h3>
-                <span className={`rounded-full px-2 py-1 text-xs font-medium ${currentStep === 2 ? "bg-primary text-white" : "bg-gray-200 text-gray-600"}`}>Step 2</span>
+                <h3 className={`text-base font-medium ${currentStep === 2 ? "text-green-600" : "text-gray-600"}`} style={{ fontFamily: 'Calibri, sans-serif' }}>Education</h3>
+                <span className={`rounded-full px-2 py-1 text-xs font-medium ${currentStep === 2 ? "bg-green-600 text-white" : "bg-gray-200 text-gray-600"}`}>Step 2</span>
               </div>
             </div>
             <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <h3 className={`text-base font-medium ${currentStep === 3 ? "text-primary" : "text-gray-600"}`}>Work Experience</h3>
-                <span className={`rounded-full px-2 py-1 text-xs font-medium ${currentStep === 3 ? "bg-primary text-white" : "bg-gray-200 text-gray-600"}`}>Step 3</span>
+                <h3 className={`text-base font-medium ${currentStep === 3 ? "text-green-600" : "text-gray-600"}`} style={{ fontFamily: 'Calibri, sans-serif' }}>Work Experience</h3>
+                <span className={`rounded-full px-2 py-1 text-xs font-medium ${currentStep === 3 ? "bg-green-600 text-white" : "bg-gray-200 text-gray-600"}`}>Step 3</span>
               </div>
             </div>
             <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <h3 className={`text-base font-medium ${currentStep === 4 ? "text-primary" : "text-gray-600"}`}>Resume</h3>
-                <span className={`rounded-full px-2 py-1 text-xs font-medium ${currentStep === 4 ? "bg-primary text-white" : "bg-gray-200 text-gray-600"}`}>Step 4</span>
+                <h3 className={`text-base font-medium ${currentStep === 4 ? "text-green-600" : "text-gray-600"}`} style={{ fontFamily: 'Calibri, sans-serif' }}>Resume</h3>
+                <span className={`rounded-full px-2 py-1 text-xs font-medium ${currentStep === 4 ? "bg-green-600 text-white" : "bg-gray-200 text-gray-600"}`}>Step 4</span>
               </div>
             </div>
           </div>
@@ -124,7 +131,7 @@ export function Onboarding() {
                 <div className="space-y-6">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                     <div className="space-y-2">
-                      <Label htmlFor="firstname" className="text-gray-700">First Name</Label>
+                      <Label htmlFor="firstname" className="text-gray-700" style={{ fontFamily: 'Calibri, sans-serif' }}>First Name</Label>
                       <Input id="firstname"
                         placeholder="John"
                         className="border border-gray-300 rounded-lg"
@@ -132,7 +139,7 @@ export function Onboarding() {
                         onChange={handleChange} />
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="lastname" className="text-gray-700">Last Name</Label>
+                      <Label htmlFor="lastname" className="text-gray-700" style={{ fontFamily: 'Calibri, sans-serif' }}>Last Name</Label>
                       <Input id="lastname"
                         placeholder="Doe"
                         className="border border-gray-300 rounded-lg"
@@ -141,7 +148,7 @@ export function Onboarding() {
                     </div>
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="email" className="text-gray-700">Email</Label>
+                    <Label htmlFor="email" className="text-gray-700" style={{ fontFamily: 'Calibri, sans-serif' }}>Email</Label>
                     <Input id="email"
                       type="email"
                       placeholder="john@example.com"
@@ -150,7 +157,7 @@ export function Onboarding() {
                       onChange={handleChange} />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="phone" className="text-gray-700">Phone</Label>
+                    <Label htmlFor="phone" className="text-gray-700" style={{ fontFamily: 'Calibri, sans-serif' }}>Phone</Label>
                     <Input id="phone"
                       type="tel"
                       placeholder="+1 (555) 555-5555"
@@ -163,7 +170,7 @@ export function Onboarding() {
               {currentStep === 2 && (
                 <div className="space-y-6">
                   <div className="space-y-2">
-                    <Label htmlFor="education" className="text-gray-700">Education</Label>
+                    <Label htmlFor="education" className="text-gray-700" style={{ fontFamily: 'Calibri, sans-serif' }}>Education</Label>
                     <Select value={formData.education} onValueChange={(value) => setFormData(prevState => ({ ...prevState, education: value }))}>
                       <SelectTrigger
                         id="education"
@@ -187,7 +194,7 @@ export function Onboarding() {
                     </Select>
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="major" className="text-gray-700">Major</Label>
+                    <Label htmlFor="major" className="text-gray-700" style={{ fontFamily: 'Calibri, sans-serif' }}>Major</Label>
                     <Input id="major"
                       placeholder="Computer Science"
                       className="border border-gray-300 rounded-lg"
@@ -195,7 +202,7 @@ export function Onboarding() {
                       onChange={handleChange} />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="graduationYear" className="text-gray-700">Graduation Year</Label>
+                    <Label htmlFor="graduationYear" className="text-gray-700" style={{ fontFamily: 'Calibri, sans-serif' }}>Graduation Year</Label>
                     <Input id="graduationyear"
                       type="number"
                       placeholder="2023"
@@ -208,7 +215,7 @@ export function Onboarding() {
               {currentStep === 3 && (
                 <div className="space-y-6">
                   <div className="space-y-2">
-                    <Label htmlFor="currentrole" className="text-gray-700">Current Role</Label>
+                    <Label htmlFor="currentrole" className="text-gray-700" style={{ fontFamily: 'Calibri, sans-serif' }}>Current Role</Label>
                     <Input id="currentrole"
                       placeholder="Software Engineer"
                       className="border border-gray-300 rounded-lg"
@@ -216,7 +223,7 @@ export function Onboarding() {
                       onChange={handleChange} />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="currentcompany" className="text-gray-700">Current Company</Label>
+                    <Label htmlFor="currentcompany" className="text-gray-700" style={{ fontFamily: 'Calibri, sans-serif' }}>Current Company</Label>
                     <Input id="currentcompany"
                       placeholder="Acme Inc"
                       className="border border-gray-300 rounded-lg"
@@ -224,7 +231,7 @@ export function Onboarding() {
                       onChange={handleChange} />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="yearsofexperience" className="text-gray-700">Years of Experience</Label>
+                    <Label htmlFor="yearsofexperience" className="text-gray-700" style={{ fontFamily: 'Calibri, sans-serif' }}>Years of Experience</Label>
                     <Input
                       id="yearsofexperience"
                       type="number"
@@ -239,7 +246,7 @@ export function Onboarding() {
               {currentStep === 4 && (
                 <div className="space-y-6">
                   <div className="space-y-2">
-                    <Label htmlFor="resume" className="text-gray-700 font-semibold">
+                    <Label htmlFor="resume" className="text-gray-700 font-semibold" style={{ fontFamily: 'Calibri, sans-serif' }}>
                       Upload Resume
                     </Label>
                     <div className="relative border border-gray-300 rounded-lg p-4 flex items-center justify-center hover:border-blue-500 transition-colors duration-200">

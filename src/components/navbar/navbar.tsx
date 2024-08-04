@@ -70,8 +70,8 @@ const Navbar = () => {
                 How it works
               </span>
             </Link> */}
-                          <Link href="/Wall" passHref>
-              <span className="text-sm font-medium text-gray-500 hover:text-green-600 cursor-pointer mx-2">
+            <Link href="/Wall" passHref>
+              <span className="text-sm font-medium text-gray-700 hover:text-green-500 cursor-pointer block py-2">
                 Wall of Love
               </span>
             </Link>
@@ -132,7 +132,7 @@ const Navbar = () => {
                 How it works
               </span>
             </Link> */}
-              <Link href="/Wall" passHref>
+            <Link href="/Wall" passHref>
               <span className="text-sm font-medium text-gray-500 hover:text-green-600 cursor-pointer mx-2">
                 Wall of Love
               </span>
@@ -147,9 +147,12 @@ const Navbar = () => {
                 Career
               </span>
             </Link>
-            <Link href="/" passHref>
-              <span className="text-sm bg-green-600 text-white py-2 px-4 rounded-full hover:bg-green-700 cursor-pointer mx-2">
+            <Link href="#" passHref>
+              <span className="text-sm bg-green-600 text-white py-2 px-4 rounded-full hover:bg-green-700 cursor-not-allowed relative group mx-2">
                 Try the Copilot Free
+                <span className="absolute left-1/2 transform -translate-x-1/2 top-full mt-2 w-max bg-gray-800 text-white text-xs rounded-md px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
+                  Coming Soon.
+                </span>
               </span>
             </Link>
           </nav>

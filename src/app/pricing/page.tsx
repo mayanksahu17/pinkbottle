@@ -1,6 +1,6 @@
 import Image from 'next/image';
 
-import PricingUser from '@/components/Pricing/pricing';
+import PricingUser from '../../components/Pricing/pricing';
 export default function PricingPage() {
   return (
     <main>

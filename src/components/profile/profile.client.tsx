@@ -1,11 +1,11 @@
 import Link from 'next/link';
-import { Button } from '@/components/ui/button';
+import { Button } from '../../components/ui/button';
 import Navbar from '../navbar/navbar';
 import Resume from './resume';
 import ProfileSidebar from './sidebar';
-import { getStudentById } from '@/lib/actions/users/user.actions';
+import { getStudentById } from '../../lib/actions/users/user.actions';
 import { auth } from '@clerk/nextjs';
-import usePaymentStatus from '@/hooks/usePaymentStatus';
+import usePaymentStatus from '../../hooks/usePaymentStatus';
 
 const Profile = async () => {
   const paymentStatus = await usePaymentStatus();
