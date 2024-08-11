@@ -1,15 +1,19 @@
 "use client"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Label } from "./label"
 import { Input } from "./input"
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "./select"
 import { Button } from "../ui/button"
 import React from "react"
 import Navbar from '../navbar/navbar';
+import Banner from './FullPageImage';
+import Modal from './Call'; // Import the modal component
 
 export function Onboarding() {
 
+  const [isFormValid, setIsFormValid] = useState(false);
   const [currentStep, setCurrentStep] = useState(1);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [formData, setFormData] = useState<{
     firstname: string;
     lastname: string;
@@ -39,7 +43,6 @@ export function Onboarding() {
     resumename: "",
     resumemimetype: ""
   });
-  
 
   const handleChange = (e: { target: { id: any; value: any } }) => {
     const { id, value } = e.target;
@@ -70,29 +73,52 @@ export function Onboarding() {
       reader.readAsDataURL(file);
     }
   };
-  
+
   const handleSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
     const url = 'https://script.google.com/macros/s/AKfycbxtT3VXqDIcF2BhflAh4l7l6DJfRaUevq6AT7Fk-humRKrhuWum0gQX97ZiLUxTEt7qIQ/exec';
     const formDataToSend = new FormData();
-  
+
     Object.entries(formData).forEach(([key, value]) => {
       formDataToSend.append(key, value as string);
     });
-  
+
+    // Show the modal immediately after clicking submit
+    setIsModalOpen(true);
+
+    // Continue the submission in the background
     fetch(url, {
       method: 'POST',
       body: formDataToSend
     })
     .then(response => response.text())
-    .then(result => console.log("Server response:", result))
+    .then(result => {
+      console.log("Server response:", result);
+    })
     .catch(error => console.error('Error:', error));
   };
- 
+
+  const handleFinalSubmit = (e: { preventDefault: () => void }) => {
+    e.preventDefault();
+    if (isFormValid) {
+      handleSubmit(e); // Submit form data
+    }
+  };
+
+  const handleScheduleCall = () => {
+    // Redirect to the scheduling link
+    window.location.href = "https://apply.neetocal.com/meeting-with-nikhil-jain";
+  };
+
+  useEffect(() => {
+    const isValid = Object.values(formData).every(value => value !== "" && value !== null);
+    setIsFormValid(isValid);
+  }, [formData]);
+
   return (
     <>
       <Navbar />
-      <div className="min-h-screen w-full lg:grid lg:grid-cols-[300px_1fr] bg-gray-100">
+      <div style={{ filter: isModalOpen ? "blur(5px)" : "none" }} className="min-h-screen w-full lg:grid lg:grid-cols-[300px_1fr] bg-gray-100">
         <div className="flex flex-col border-r bg-white shadow-md p-6">
           <div className="mb-6 flex items-center justify-between">
             <h2 className="text-lg font-semibold text-gray-800" style={{ fontFamily: 'Calibri, sans-serif' }}>Onboarding Form</h2>
@@ -100,32 +126,32 @@ export function Onboarding() {
           <div className="flex-1 space-y-4 overflow-auto">
             <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <h3 className={`text-base font-medium ${currentStep === 1 ? "text-green-600" : "text-gray-600"}`} style={{ fontFamily: 'Calibri, sans-serif' }}>Personal Information</h3>
-                <span className={`rounded-full px-2 py-1 text-xs font-medium ${currentStep === 1 ? "bg-green-600 text-white" : "bg-gray-200 text-gray-600"}`}>Step 1</span>
+                <h3 className={`text-base font-medium ${currentStep === 1 ? "text-blue-600" : "text-gray-600"}`} style={{ fontFamily: 'Calibri, sans-serif' }}>Personal Information</h3>
+                <span className={`rounded-full px-2 py-1 text-xs font-medium ${currentStep === 1 ? "bg-blue-600 text-white" : "bg-gray-200 text-gray-600"}`}>Step 1</span>
               </div>
             </div>
             <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <h3 className={`text-base font-medium ${currentStep === 2 ? "text-green-600" : "text-gray-600"}`} style={{ fontFamily: 'Calibri, sans-serif' }}>Education</h3>
-                <span className={`rounded-full px-2 py-1 text-xs font-medium ${currentStep === 2 ? "bg-green-600 text-white" : "bg-gray-200 text-gray-600"}`}>Step 2</span>
+                <h3 className={`text-base font-medium ${currentStep === 2 ? "text-blue-600" : "text-gray-600"}`} style={{ fontFamily: 'Calibri, sans-serif' }}>Education</h3>
+                <span className={`rounded-full px-2 py-1 text-xs font-medium ${currentStep === 2 ? "bg-blue-600 text-white" : "bg-gray-200 text-gray-600"}`}>Step 2</span>
               </div>
             </div>
             <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <h3 className={`text-base font-medium ${currentStep === 3 ? "text-green-600" : "text-gray-600"}`} style={{ fontFamily: 'Calibri, sans-serif' }}>Work Experience</h3>
-                <span className={`rounded-full px-2 py-1 text-xs font-medium ${currentStep === 3 ? "bg-green-600 text-white" : "bg-gray-200 text-gray-600"}`}>Step 3</span>
+                <h3 className={`text-base font-medium ${currentStep === 3 ? "text-blue-600" : "text-gray-600"}`} style={{ fontFamily: 'Calibri, sans-serif' }}>Work Experience</h3>
+                <span className={`rounded-full px-2 py-1 text-xs font-medium ${currentStep === 3 ? "bg-blue-600 text-white" : "bg-gray-200 text-gray-600"}`}>Step 3</span>
               </div>
             </div>
             <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <h3 className={`text-base font-medium ${currentStep === 4 ? "text-green-600" : "text-gray-600"}`} style={{ fontFamily: 'Calibri, sans-serif' }}>Resume</h3>
-                <span className={`rounded-full px-2 py-1 text-xs font-medium ${currentStep === 4 ? "bg-green-600 text-white" : "bg-gray-200 text-gray-600"}`}>Step 4</span>
+                <h3 className={`text-base font-medium ${currentStep === 4 ? "text-blue-600" : "text-gray-600"}`} style={{ fontFamily: 'Calibri, sans-serif' }}>Resume</h3>
+                <span className={`rounded-full px-2 py-1 text-xs font-medium ${currentStep === 4 ? "bg-blue-600 text-white" : "bg-gray-200 text-gray-600"}`}>Step 4</span>
               </div>
             </div>
           </div>
         </div>
         <div className="flex flex-col p-6">
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleFinalSubmit}>
             <main className="flex-1 space-y-6 bg-white shadow-md rounded-lg p-6">
               {currentStep === 1 && (
                 <div className="space-y-6">
@@ -133,10 +159,11 @@ export function Onboarding() {
                     <div className="space-y-2">
                       <Label htmlFor="firstname" className="text-gray-700" style={{ fontFamily: 'Calibri, sans-serif' }}>First Name</Label>
                       <Input id="firstname"
-                        placeholder="John"
+                        placeholder="Alex"
                         className="border border-gray-300 rounded-lg"
                         value={formData.firstname}
-                        onChange={handleChange} />
+                        onChange={handleChange}
+                        required />
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="lastname" className="text-gray-700" style={{ fontFamily: 'Calibri, sans-serif' }}>Last Name</Label>
@@ -144,17 +171,19 @@ export function Onboarding() {
                         placeholder="Doe"
                         className="border border-gray-300 rounded-lg"
                         value={formData.lastname}
-                        onChange={handleChange} />
+                        onChange={handleChange}
+                        required />
                     </div>
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="email" className="text-gray-700" style={{ fontFamily: 'Calibri, sans-serif' }}>Email</Label>
                     <Input id="email"
                       type="email"
-                      placeholder="john@example.com"
+                      placeholder="alex@gmail.com"
                       className="border border-gray-300 rounded-lg"
                       value={formData.email}
-                      onChange={handleChange} />
+                      onChange={handleChange}
+                      required />
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="phone" className="text-gray-700" style={{ fontFamily: 'Calibri, sans-serif' }}>Phone</Label>
@@ -163,7 +192,8 @@ export function Onboarding() {
                       placeholder="+1 (555) 555-5555"
                       className="border border-gray-300 rounded-lg"
                       value={formData.phone}
-                      onChange={handleChange} />
+                      onChange={handleChange}
+                      required />
                   </div>
                 </div>
               )}
@@ -199,7 +229,8 @@ export function Onboarding() {
                       placeholder="Computer Science"
                       className="border border-gray-300 rounded-lg"
                       value={formData.major}
-                      onChange={handleChange} />
+                      onChange={handleChange}
+                      required />
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="graduationYear" className="text-gray-700" style={{ fontFamily: 'Calibri, sans-serif' }}>Graduation Year</Label>
@@ -208,7 +239,8 @@ export function Onboarding() {
                       placeholder="2023"
                       className="border border-gray-300 rounded-lg"
                       value={formData.graduationyear}
-                      onChange={handleChange} />
+                      onChange={handleChange}
+                      required />
                   </div>
                 </div>
               )}
@@ -220,7 +252,8 @@ export function Onboarding() {
                       placeholder="Software Engineer"
                       className="border border-gray-300 rounded-lg"
                       value={formData.currentrole}
-                      onChange={handleChange} />
+                      onChange={handleChange}
+                      required />
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="currentcompany" className="text-gray-700" style={{ fontFamily: 'Calibri, sans-serif' }}>Current Company</Label>
@@ -228,7 +261,8 @@ export function Onboarding() {
                       placeholder="Acme Inc"
                       className="border border-gray-300 rounded-lg"
                       value={formData.currentcompany}
-                      onChange={handleChange} />
+                      onChange={handleChange}
+                      required />
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="yearsofexperience" className="text-gray-700" style={{ fontFamily: 'Calibri, sans-serif' }}>Years of Experience</Label>
@@ -239,6 +273,7 @@ export function Onboarding() {
                       className="border border-gray-300 rounded-lg"
                       value={formData.yearsofexperience}
                       onChange={handleChange}
+                      required
                     />
                   </div>
                 </div>
@@ -255,6 +290,7 @@ export function Onboarding() {
                         type="file"
                         className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
                         onChange={handleFileChange}
+                        required
                       />
                       <img
                         src="resumeUpload.svg"
@@ -292,15 +328,25 @@ export function Onboarding() {
                   <Button
                     type="submit"
                     className="ml-auto px-4 py-2 bg-green-600 text-white rounded-md shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-75 transition-transform transform active:scale-95"
+                    disabled={!isFormValid}
+                    onClick={handleFinalSubmit}
                   >
                     Submit Application
                   </Button>
                 )}
               </div>
             </div>
+            <Banner />
           </form>
         </div>
       </div>
+
+      {/* Modal Component */}
+      <Modal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onScheduleCall={handleScheduleCall}
+      />
     </>
   )
 }
