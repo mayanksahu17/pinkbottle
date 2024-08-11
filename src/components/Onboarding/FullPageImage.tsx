@@ -2,7 +2,7 @@ const BannerWithText = () => {
     return (
       <div className="relative w-full h-auto mt-4">
         <img
-          src="OnboardingBanner.jpg" // Replace with your actual image path
+          src="Onboardingbanner.jpg" // Replace with your actual image path
           alt="Background Image"
           className="object-cover w-full h-auto"
           style={{
