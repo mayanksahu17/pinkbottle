@@ -11,7 +11,7 @@ interface Job {
 }
 
 interface JobTableProps {
-  jobData: Job[];  // Keep the original props
+  jobData: Job[]; // Keep the original props
 }
 
 const SavedJobsTable: React.FC<JobTableProps> = ({ jobData }) => {
@@ -30,10 +30,10 @@ const SavedJobsTable: React.FC<JobTableProps> = ({ jobData }) => {
         console.error('Failed to fetch jobs:', error);
       }
     }
-  
+
     fetchJobs();
   }, []);
-  
+
   const filteredJobs = useMemo(
     () =>
       jobs.filter(
@@ -101,7 +101,42 @@ const SavedJobsTable: React.FC<JobTableProps> = ({ jobData }) => {
                   <td className="py-4 px-6">{job.position}</td>
                   <td className="py-4 px-6">{job.location}</td>
                   <td className="py-4 px-6">{formatDate(job.date)}</td>
-                  <td className="py-4 px-6">Actions</td>
+                  <td className="py-4 px-6">
+                    <select
+                      value={job.status}
+                      onChange={async (e) => {
+                        const newStatus = e.target.value;
+                        try {
+                          const response = await fetch(`/api/updatejobstatus`, {
+                            method: 'PUT',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                              id: job._id,
+                              status: newStatus,
+                            }),
+                          });
+                          if (response.ok) {
+                            setJobs((prevJobs) =>
+                              prevJobs.map((j) =>
+                                j._id === job._id
+                                  ? { ...j, status: newStatus }
+                                  : j
+                              )
+                            );
+                          } else {
+                            console.error('Failed to update job status');
+                          }
+                        } catch (error) {
+                          console.error('Error updating job status:', error);
+                        }
+                      }}
+                    >
+                      <option value="Applied">Applied</option>
+                      <option value="Interviewed">Interviewed</option>
+                      <option value="Offer">Offer</option>
+                      <option value="Rejected">Rejected</option>
+                    </select>
+                  </td>
                 </tr>
               ))
             ) : (
@@ -121,7 +156,7 @@ const SavedJobsTable: React.FC<JobTableProps> = ({ jobData }) => {
         </div>
         <div className="flex items-center space-x-4">
           <div>
-            Rows per page: 
+            Rows per page:
             <select
               value={jobsPerPage}
               onChange={(e) => {
