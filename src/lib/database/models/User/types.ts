@@ -1,12 +1,14 @@
 import { ISubscription } from '../Subscription/types';
 
 export type Jobs = {
+  [x: string]: string;
   _id?: string;
   image: string;
   title: string;
   position: string;
-  date: Date;
+  date: string;
   status: string;
+  location:string;
 };
 
 export interface IUser {

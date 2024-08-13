@@ -1,16 +1,26 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { UserButton, auth, useUser } from "@clerk/nextjs";
+import { useUser } from "@clerk/nextjs";
 import React, { useState } from "react";
 import { CiLock } from "react-icons/ci";
 import DashboardMain from "./dashboard-main";
 import Warmup from "../Interview/warmup";
 import JobsMain from "../jobs/jobs-main";
 import { Jobs } from "@/lib/database/models/User/types";
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import Navbar from "../navbar/navbar";
 import Footer from "../footer/footer";
 import Resume from "../profile/resume";
+
+interface Job {
+  _id?: string;
+  image: string;
+  title: string;
+  position: string;
+  date: string;
+  status: string;
+  location: string; // Add this field to match the expected type in JobsMain
+}
 
 const DashboardPage = ({
   isPaidUser,
@@ -25,142 +35,97 @@ const DashboardPage = ({
   resume: string;
   cover: string;
 }) => {
-  const { user } = useUser();
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isAsideMenuOpen, setIsAsideMenuOpen] = useState(false);
   const [currentTab, setCurrentTab] = useState("dashboard");
   const router = useRouter();
 
-  const toggleMenu = () => {
-    setIsMenuOpen((prev) => !prev);
-    if (!isMenuOpen) setIsAsideMenuOpen(false);
-  };
-
-  const toggleAsideMenu = () => {
-    setIsAsideMenuOpen((prev) => !prev);
-    if (!isAsideMenuOpen) setIsMenuOpen(false);
-  };
+  // Transform the jobs data to include the required location field
+  const transformedJobs: Job[] = (jobs || []).map((job) => ({
+    _id: job._id,
+    image: job.image,
+    title: job.title,
+    position: job.position,
+    date: job.date.toString(), // Convert date to string if necessary
+    status: job.status,
+    location: job.location || 'Unknown', // Add a default or actual location here
+  }));
+  
 
   return (
     <>
-      <div
-        className="min-h-screen text-black"
-        style={{ backgroundColor: "#FAF6F6" }}
-      >
-        <Navbar />
-        <div className="flex">
-          <div className="relative z-5 md:hidden">
-            <button
-              className="text-gray-600 focus:outline-none absolute top-0 left-0 mt-4 ml-4"
-              onClick={toggleAsideMenu}
+      <Navbar />
+      <div className="flex min-h-screen pt-8">
+        <aside
+          className="fixed inset-y-0 left-0 z-40 w-64 bg-white p-4 transform transition-transform duration-300 ease-in-out h-screen md:relative md:translate-x-0 md:block shadow-xl"
+        >
+          <nav className="mt-16 flex flex-col space-y-1">
+            <Button
+              className={`justify-center text-sm text-black ${
+                currentTab === "dashboard" && "bg-gray-200"
+              }`}
+              variant="ghost"
+              onClick={() => setCurrentTab("dashboard")}
             >
-              <svg
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                className="w-8 h-8"
-              >
-                {!isAsideMenuOpen && (
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M4 6h16M4 12h16M4 18h16"
-                  />
-                )}
-              </svg>
-            </button>
-          </div>
-
-          <aside
-            className={`fixed inset-y-0 left-0 z-40 w-64 bg-[#f7f7f7] p-4 transform transition-transform duration-300 ease-in-out h-screen ${
-              isAsideMenuOpen ? "translate-x-0" : "-translate-x-full"
-            } md:relative md:translate-x-0 md:block shadow-xl`}
-          >
-            {isAsideMenuOpen && (
-              <button
-                className="text-gray-600 focus:outline-none absolute top-0 right-0 mt-4 mr-4"
-                onClick={toggleAsideMenu}
-              >
-                <svg
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  className="w-8 h-8"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
-              </button>
-            )}
-            <nav className="mt-16 flex flex-col space-y-1">
+              Dashboard
+            </Button>
+            <Button
+              className={`justify-center text-sm text-black ${
+                currentTab === "call" && "bg-gray-200"
+              }`}
+              variant="ghost"
+              onClick={() =>
+                router.push(
+                  "https://apply.neetocal.com/meeting-with-nikhil-jain"
+                )
+              }
+            >
+              Call with Founders
+            </Button>
+            <Button
+              className={`justify-center text-sm text-black ${
+                currentTab === "interview" && "bg-gray-200"
+              }`}
+              variant="ghost"
+              onClick={() => setCurrentTab("interview")}
+            >
+              Interview Warmup
+            </Button>
+            <div className="flex items-center">
               <Button
-                className={`justify-start text-sm text-black ${
-                  currentTab === "dashboard" && "bg-gray-200"
+                disabled={!isPaidUser}
+                className={`justify-center w-full disabled:cursor-not-allowed flex items-center text-sm text-black ${
+                  currentTab === "jobs" && "bg-gray-200"
                 }`}
                 variant="ghost"
-                onClick={() => setCurrentTab("dashboard")}
+                onClick={() => setCurrentTab("jobs")}
               >
-                Dashboard
+                Jobs
               </Button>
+              {!isPaidUser && <CiLock />}
+            </div>
+            <div className="flex items-center">
               <Button
-                className={`justify-start text-sm text-black ${
-                  currentTab === "call" && "bg-gray-200"
+                disabled={!isPaidUser}
+                className={`justify-center w-full disabled:cursor-not-allowed flex items-center text-sm text-black ${
+                  currentTab === "profile" && "bg-gray-200"
                 }`}
                 variant="ghost"
-                onClick={() =>
-                  router.push(
-                    "https://apply.neetocal.com/meeting-with-nikhil-jain"
-                  )
-                }
+                onClick={() => setCurrentTab("profile")}
               >
-                Call with Founders
+                Profile
               </Button>
-              <Button
-                className={`justify-start text-sm text-black ${
-                  currentTab === "interview" && "bg-gray-200"
-                }`}
-                variant="ghost"
-                onClick={() => setCurrentTab("interview")}
-              >
-                Interview Warmup
-              </Button>
-              <div className="flex items-center">
-                <Button
-                  disabled={!isPaidUser}
-                  className={`justify-start w-full disabled:cursor-not-allowed flex items-center text-sm text-black ${
-                    currentTab === "jobs" && "bg-gray-200"
-                  }`}
-                  variant="ghost"
-                  onClick={() => setCurrentTab("jobs")}
-                >
-                  Jobs
-                </Button>
-                {!isPaidUser && <CiLock />}
-              </div>
-              <div className="flex items-center">
-                <Button
-                  disabled={!isPaidUser}
-                  className={`justify-start w-full disabled:cursor-not-allowed flex items-center text-sm text-black ${
-                    currentTab === "profile" && "bg-gray-200"
-                  }`}
-                  variant="ghost"
-                  onClick={() => setCurrentTab("profile")}
-                >
-                  Profile
-                </Button>
-                {!isPaidUser && <CiLock />}
-              </div>
-            </nav>
-          </aside>
+              {!isPaidUser && <CiLock />}
+            </div>
+          </nav>
+        </aside>
+        <div className="flex-1 p-6 overflow-y-auto">
           {currentTab === "dashboard" && (
             <DashboardMain isPaidUser={isPaidUser} />
           )}
-          {currentTab === "profile" && <Resume resume={resume} cover={cover} />}
-          {currentTab === "jobs" && (
-            <JobsMain jobs={jobs || []} firstName={firstName} />
+          {currentTab === "profile" && (
+            <Resume resume={resume} cover={cover} />
+          )}
+          {currentTab === "jobs" && isPaidUser && (
+            <JobsMain jobs={transformedJobs} firstName={firstName} />
           )}
           {currentTab === "interview" && <Warmup />}
         </div>
