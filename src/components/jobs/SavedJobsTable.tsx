@@ -47,7 +47,17 @@ const SavedJobsTable: React.FC<JobTableProps> = ({ jobData }) => {
 
   const indexOfLastJob = currentPage * jobsPerPage;
   const indexOfFirstJob = indexOfLastJob - jobsPerPage;
-  const currentJobs = filteredJobs.slice(indexOfFirstJob, indexOfLastJob);
+
+  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
+  const sortedJobs = useMemo(() => {
+    return [...filteredJobs].sort((a, b) => {
+      const dateA = new Date(a.date).getTime();
+      const dateB = new Date(b.date).getTime();
+      return sortOrder === 'asc' ? dateA - dateB : dateB - dateA;
+    });
+  }, [filteredJobs, sortOrder]);
+  const currentJobs = sortedJobs.slice(indexOfFirstJob, indexOfLastJob);
+
 
   const pageCount = Math.ceil(filteredJobs.length / jobsPerPage);
 
@@ -82,8 +92,12 @@ const SavedJobsTable: React.FC<JobTableProps> = ({ jobData }) => {
               <th scope="col" className="py-3 px-6">
                 Location
               </th>
-              <th scope="col" className="py-3 px-6">
-                Date <span className="ml-1">⇅</span>
+              <th
+                scope="col"
+                className="py-3 px-6 cursor-pointer"
+                onClick={() => setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc')}
+              >
+                Date <span className="ml-1">{sortOrder === 'asc' ? '⇅' : '⇅'}</span>
               </th>
               <th scope="col" className="py-3 px-6">
                 Actions
