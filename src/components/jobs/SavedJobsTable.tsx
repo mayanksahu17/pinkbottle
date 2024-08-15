@@ -11,28 +11,32 @@ interface Job {
 }
 
 interface JobTableProps {
-  jobData: Job[]; // Keep the original props
+  jobData?: Job[]; // Optional to accommodate both fetched and passed data
 }
 
-const SavedJobsTable: React.FC<JobTableProps> = ({ jobData }) => {
-  const [jobs, setJobs] = useState<Job[]>([]);
+const SavedJobsTable: React.FC<JobTableProps> = ({ jobData = [] }) => {
+  const [jobs, setJobs] = useState<Job[]>(jobData);
   const [currentPage, setCurrentPage] = useState(1);
   const [jobsPerPage, setJobsPerPage] = useState(10);
   const [searchTerm, setSearchTerm] = useState('');
+  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
 
   useEffect(() => {
-    async function fetchJobs() {
-      try {
-        const response = await fetch('/api/savedjobs'); // This will default to GET method
-        const data = await response.json();
-        setJobs(data);
-      } catch (error) {
-        console.error('Failed to fetch jobs:', error);
+    // Fetch jobs only if jobData is not passed or is empty
+    if (jobData.length === 0) {
+      async function fetchJobs() {
+        try {
+          const response = await fetch('/api/savedjobs'); // This will default to GET method
+          const data = await response.json();
+          setJobs(data);
+        } catch (error) {
+          console.error('Failed to fetch jobs:', error);
+        }
       }
-    }
 
-    fetchJobs();
-  }, []);
+      fetchJobs();
+    }
+  }, [jobData]);
 
   const filteredJobs = useMemo(
     () =>
@@ -45,10 +49,6 @@ const SavedJobsTable: React.FC<JobTableProps> = ({ jobData }) => {
     [jobs, searchTerm]
   );
 
-  const indexOfLastJob = currentPage * jobsPerPage;
-  const indexOfFirstJob = indexOfLastJob - jobsPerPage;
-
-  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
   const sortedJobs = useMemo(() => {
     return [...filteredJobs].sort((a, b) => {
       const dateA = new Date(a.date).getTime();
@@ -56,8 +56,10 @@ const SavedJobsTable: React.FC<JobTableProps> = ({ jobData }) => {
       return sortOrder === 'asc' ? dateA - dateB : dateB - dateA;
     });
   }, [filteredJobs, sortOrder]);
-  const currentJobs = sortedJobs.slice(indexOfFirstJob, indexOfLastJob);
 
+  const indexOfLastJob = currentPage * jobsPerPage;
+  const indexOfFirstJob = indexOfLastJob - jobsPerPage;
+  const currentJobs = sortedJobs.slice(indexOfFirstJob, indexOfLastJob);
 
   const pageCount = Math.ceil(filteredJobs.length / jobsPerPage);
 

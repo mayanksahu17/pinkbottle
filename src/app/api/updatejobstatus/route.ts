@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { dbConnect } from '@/lib/database/mongodb';
-import User from '@/lib/database/models/User/User'; // Import your User model
+import User from '@/lib/database/models/User/User'; 
 import { ObjectId } from 'mongodb';
 
 export async function PUT(request: Request) {

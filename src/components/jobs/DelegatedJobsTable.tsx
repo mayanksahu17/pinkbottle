@@ -1,33 +1,33 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 
 interface Job {
   _id?: string;
-  image: string;
   title: string;
-  position: string;
-  date: string;
-  status: string;
+  company: string;
   location: string;
+  date: string;
+  applyLink: string;
 }
 
-interface JobTableProps {
-  jobData: Job[];  // Renamed from 'jobs' to 'jobData'
+interface DelegatedJobsTableProps {
+  jobData: Job[]; // Receive jobData as a prop to avoid refetching
 }
 
-const DelegatedJobsTable: React.FC<JobTableProps> = ({ jobData }) => {
+const DelegatedJobsTable: React.FC<DelegatedJobsTableProps> = ({ jobData }) => {
+  const [jobs, setJobs] = useState<Job[]>(jobData); // Initialize with preloaded jobData
   const [currentPage, setCurrentPage] = useState(1);
   const [jobsPerPage, setJobsPerPage] = useState(10);
   const [searchTerm, setSearchTerm] = useState('');
 
   const filteredJobs = useMemo(
     () =>
-      jobData.filter(
+      jobs.filter(
         (job) =>
           job.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          job.position.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          job.date.toLowerCase().includes(searchTerm.toLowerCase())
+          job.company.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          job.location.toLowerCase().includes(searchTerm.toLowerCase())
       ),
-    [jobData, searchTerm]
+    [jobs, searchTerm]
   );
 
   const indexOfLastJob = currentPage * jobsPerPage;
@@ -36,8 +36,11 @@ const DelegatedJobsTable: React.FC<JobTableProps> = ({ jobData }) => {
 
   const pageCount = Math.ceil(filteredJobs.length / jobsPerPage);
 
-  const formatDate = (dateString: string) =>
-    new Date(dateString).toLocaleDateString();
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    return isNaN(date.getTime()) ? 'N/A' : date.toLocaleDateString(); 
+  };
+  
 
   return (
     <>
@@ -71,7 +74,7 @@ const DelegatedJobsTable: React.FC<JobTableProps> = ({ jobData }) => {
                 Date <span className="ml-1">⇅</span>
               </th>
               <th scope="col" className="py-3 px-6">
-                Actions
+                Link
               </th>
             </tr>
           </thead>
@@ -83,10 +86,14 @@ const DelegatedJobsTable: React.FC<JobTableProps> = ({ jobData }) => {
                     <input type="checkbox" />
                   </td>
                   <td className="py-4 px-6">{job.title}</td>
-                  <td className="py-4 px-6">{job.position}</td>
+                  <td className="py-4 px-6">{job.company}</td>
                   <td className="py-4 px-6">{job.location}</td>
                   <td className="py-4 px-6">{formatDate(job.date)}</td>
-                  <td className="py-4 px-6">Actions</td>
+                  <td className="py-4 px-6">
+                    <a href={job.applyLink} target="_blank" rel="noopener noreferrer">
+                      Link
+                    </a>
+                  </td>
                 </tr>
               ))
             ) : (
@@ -106,7 +113,7 @@ const DelegatedJobsTable: React.FC<JobTableProps> = ({ jobData }) => {
         </div>
         <div className="flex items-center space-x-4">
           <div>
-            Rows per page: 
+            Rows per page:
             <select
               value={jobsPerPage}
               onChange={(e) => {

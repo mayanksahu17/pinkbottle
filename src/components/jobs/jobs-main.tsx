@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import SavedJobsTable from './SavedJobsTable';
 import DelegatedJobsTable from './DelegatedJobsTable';
 import FAQTable from './FAQTable';
@@ -12,15 +12,41 @@ interface Job {
   date: string;
   status: string;
   location: string;
+  company: string;
+  applyLink: string;
 }
 
-interface JobsMainProps {
-  jobs: Job[];
-  firstName: string;
-}
-
-const JobsMain: React.FC<JobsMainProps> = ({ jobs, firstName }) => {
+const JobsMain: React.FC = () => {
+  const [savedJobs, setSavedJobs] = useState<Job[]>([]);
+  const [delegatedJobs, setDelegatedJobs] = useState<Job[]>([]);
   const [currentTable, setCurrentTable] = useState<'jobs1' | 'jobs2' | 'faqs'>('jobs1');
+
+  useEffect(() => {
+    async function fetchSavedJobs() {
+      try {
+        const response = await fetch('/api/savedjobs');
+        const data = await response.json();
+        console.log('Fetched Saved Jobs:', data);
+        setSavedJobs(data);
+      } catch (error) {
+        console.error('Failed to fetch saved jobs:', error);
+      }
+    }
+
+    async function fetchDelegatedJobs() {
+      try {
+        const response = await fetch('/api/delegatedjobs');
+        const data = await response.json();
+        console.log('Fetched Delegated Jobs:', data);
+        setDelegatedJobs(data);
+      } catch (error) {
+        console.error('Failed to fetch delegated jobs:', error);
+      }
+    }
+
+    fetchSavedJobs();
+    fetchDelegatedJobs();
+  }, []);
 
   return (
     <main className="flex flex-col w-full p-6 pt-16 bg-gray-50">
@@ -34,7 +60,7 @@ const JobsMain: React.FC<JobsMainProps> = ({ jobs, firstName }) => {
                 : 'text-gray-500 bg-gray-100'
             } transition ease-in-out duration-300 hover:bg-white hover:text-gray-900`}
           >
-            Saved ({jobs.filter(job => job.status === 'Saved').length})
+            Saved ({savedJobs.length})
           </button>
           <button
             onClick={() => setCurrentTable('jobs2')}
@@ -44,7 +70,7 @@ const JobsMain: React.FC<JobsMainProps> = ({ jobs, firstName }) => {
                 : 'text-gray-500 bg-gray-100'
             } transition ease-in-out duration-300 hover:bg-white hover:text-gray-900`}
           >
-            Delegated ({jobs.filter(job => job.status === 'Delegated').length})
+            Delegated ({delegatedJobs.length})
           </button>
           <button
             onClick={() => setCurrentTable('faqs')}
@@ -71,8 +97,8 @@ const JobsMain: React.FC<JobsMainProps> = ({ jobs, firstName }) => {
       </div>
 
       <div className="bg-white rounded-lg shadow-lg p-6">
-        {currentTable === 'jobs1' && <SavedJobsTable jobData={jobs.filter(job => job.status === 'Saved')} />}
-        {currentTable === 'jobs2' && <DelegatedJobsTable jobData={jobs.filter(job => job.status === 'Delegated')} />}
+        {currentTable === 'jobs1' && <SavedJobsTable jobData={savedJobs} />}
+        {currentTable === 'jobs2' && <DelegatedJobsTable jobData={delegatedJobs} />}
         {currentTable === 'faqs' && <FAQTable />}
       </div>
     </main>
