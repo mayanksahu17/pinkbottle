@@ -38,13 +38,13 @@ const JobsMain: React.FC = () => {
         const response = await fetch('/api/delegatedjobs');
         const data = await response.json();
         console.log('Fetched Delegated Jobs:', data);
-        setDelegatedJobs(data);
+        setDelegatedJobs(Array.isArray(data) ? data : []); // Ensures data is an array
       } catch (error) {
         console.error('Failed to fetch delegated jobs:', error);
+        setDelegatedJobs([]); // Handle the case where the fetch fails
       }
     }
-
-    fetchSavedJobs();
+  
     fetchDelegatedJobs();
   }, []);
 
