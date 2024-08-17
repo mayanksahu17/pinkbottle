@@ -9,154 +9,157 @@ import 'react-toastify/dist/ReactToastify.css';
 const FAQ_CONTENT = [
   {
     id: '1',
-    name: 'LinkedIn Connection Request',
-    subject: 'Connecting on LinkedIn',
-    content: `Hi [Name],
+    name: 'Asking For Referral Over a Linkedin Note',
+    subject: 'Connection Request',
+    content: `Hello [Name],
 
-I came across your profile and was impressed by your experience in [Industry/Skill]. I'd love to connect and learn more about your work at [Company Name]. Looking forward to connecting!
-
-Best,
-[Your Name]`,
-    updated: '8/17/2024',
-  },
-  {
-    id: '2',
-    name: 'Requesting a Referral on LinkedIn',
-    subject: 'Referral Request for [Job Title] at [Company Name]',
-    content: `Hi [Connection's Name],
-
-I hope you're doing well. I noticed that [Company Name] is hiring for a [Job Title] role. Given your experience at the company, I wanted to see if you might be open to referring me for this position. I'm confident that my skills in [Skill 1] and [Skill 2] would make me a strong fit.
-
-Thank you for considering my request.
+I’m a graduate student at [University Name] and currently looking for summer internship opportunities. I came across a position at [Company Name] that aligns with my skills in [Relevant Field]. If possible, could you refer me to this job at [Company Name]?
 
 Best regards,
 [Your Name]`,
-    updated: '8/17/2024',
+    updated: '8/18/2024',
+  },
+  {
+    id: '2',
+    name: 'Cold Email to HR for a Job with Job Link',
+    subject: 'Job Application - [Job Title]',
+    content: `Dear [HR Manager’s Name],
+
+I hope this email finds you well. My name is [Your Name], and I came across the [Job Title] position at [Company Name] on [Job Platform]. With a strong background in [Relevant Skills], I’m eager to bring my expertise to your team.
+
+I’ve attached my resume and would appreciate the opportunity to discuss how my experience aligns with the needs of your company.
+
+Thank you for your time and consideration.
+
+Best regards,
+[Your Name]
+[Your Contact Information]`,
+    updated: '8/18/2024',
   },
   {
     id: '3',
-    name: 'Cold Email to HR for a Job with a Job Link',
-    subject: 'Application for [Job Title] at [Company Name]',
-    content: `Dear [HR Manager's Name],
+    name: 'Referral Request from a LinkedIn Connection',
+    subject: 'Referral Request for [Job Title] at [Company Name]',
+    content: `Hi [Connection’s Name],
 
-I hope this message finds you well. I recently came across the [Job Title] position at [Company Name] and I am very interested in applying. My background in [Your Field/Industry] aligns well with the requirements of this role. Here is the link to the job posting: [Job Link].
+I hope you’re doing well. I noticed an opening for a [Job Title] at [Company Name] and thought it would be a great fit for my background in [Relevant Skills]. If you’re comfortable, I’d greatly appreciate a referral.
 
-Could you please let me know the best way to proceed with my application?
+I’ve attached my resume for your reference. Thank you for considering this request, and I’m happy to provide any additional information.
+
+Best regards,
+[Your Name]`,
+    updated: '8/18/2024',
+  },
+  {
+    id: '4',
+    name: 'Cold Email to a Tech Manager for Job Opportunity',
+    subject: 'Exploring Opportunities in [Field/Technology]',
+    content: `Dear [Manager’s Name],
+
+I’m reaching out to introduce myself—my name is [Your Name], and I have a background in [Specific Field or Technology]. I noticed your work at [Company Name] and I am keen to explore any opportunities within your team.
+
+I am particularly impressed by your recent project on [Project Name], and I believe my skills in [Relevant Skills] could contribute effectively.
+
+Looking forward to the possibility of discussing this further.
+
+Best regards,
+[Your Name]
+[Your Contact Information]`,
+    updated: '8/18/2024',
+  },
+  {
+    id: '5',
+    name: 'Follow-Up Email After Applying for a Position',
+    subject: 'Follow-Up on [Job Title] Application',
+    content: `Dear [Hiring Manager’s Name],
+
+I hope this message finds you well. I recently applied for the [Job Title] position at [Company Name] and wanted to reiterate my strong interest in the role. With my experience in [Relevant Skills], I am confident that I can contribute to your team.
+
+I would appreciate any updates you can provide on my application.
 
 Thank you for your time and consideration.
 
 Best regards,
 [Your Name]`,
-    updated: '8/17/2024',
+    updated: '8/18/2024',
   },
   {
-    id: '4',
-    name: 'Cold Email to a Hiring Manager',
-    subject: 'Interest in [Job Title] Position at [Company Name]',
-    content: `Dear [Hiring Manager's Name],
+    id: '6',
+    name: 'LinkedIn Connection Request for Referral',
+    subject: 'Connection Request and Referral Opportunity',
+    content: `Hello [Name],
 
-I hope you're doing well. I'm writing to express my interest in the [Job Title] position at [Company Name]. With my experience in [Skill 1], [Skill 2], and a strong passion for [Industry/Field], I believe I would be a valuable addition to your team.
+I’m reaching out to you based on your work in [Industry/Field] at [Company Name]. I am currently seeking opportunities in this area and would love to connect and potentially learn from your experience.
 
-I would love the opportunity to discuss how my background and skills could contribute to the success of your team.
-
-Looking forward to your reply.
+I appreciate your consideration and look forward to connecting.
 
 Best regards,
 [Your Name]`,
-    updated: '8/17/2024',
+    updated: '8/18/2024',
   },
   {
-    id: '5',
-    name: 'Cold Email to a Tech Manager',
-    subject: 'Exploring Opportunities in [Specific Field/Tech]',
-    content: `Dear [Tech Manager's Name],
+    id: '7',
+    name: 'Cold Email to HR Asking for Opportunities',
+    subject: 'Exploring Opportunities at [Company Name]',
+    content: `Dear [HR Manager’s Name],
 
-I hope this message finds you well. I'm reaching out to explore any opportunities in [Specific Field/Technology] at [Company Name]. My experience in [Skill 1] and [Skill 2] has equipped me with the technical expertise needed for such roles.
+My name is [Your Name], and I’m currently exploring new opportunities in [Specific Field or Technology]. I’ve followed [Company Name] for some time and admire the innovative work you’re doing in [Specific Area].
 
-Please let me know if there are any relevant openings or if we could set up a time to discuss potential opportunities.
+If there are any openings that align with my skills, I would love to discuss how I can contribute to your team.
+
+Thank you for your consideration.
+
+Best regards,
+[Your Name]
+[Your Contact Information]`,
+    updated: '8/18/2024',
+  },
+  {
+    id: '8',
+    name: 'Referral Request Email to a School Alumni',
+    subject: 'Request for Referral from a Fellow [School Name] Alum',
+    content: `Hi [Alumni Name],
+
+I hope you’re doing well. I’m [Your Name], a fellow alum from [School Name]. I recently noticed a job opening for a [Job Title] at [Company Name] and believe my background in [Relevant Skills] would be a great match.
+
+If you feel comfortable, I would greatly appreciate your referral. I’ve attached my resume for your review.
+
+Thank you for considering this request.
+
+Best regards,
+[Your Name]`,
+    updated: '8/18/2024',
+  },
+  {
+    id: '9',
+    name: 'Cold Email for a Job Opportunity',
+    subject: 'Interest in Opportunities at [Company Name]',
+    content: `Dear [Hiring Manager’s Name],
+
+I’m [Your Name], and I’m writing to express my interest in potential job opportunities within [Company Name]. With my extensive experience in [Relevant Skills], I am excited about the possibility of contributing to your team.
+
+I’ve attached my resume and would welcome the chance to discuss how I can bring value to your company.
 
 Thank you for your time.
 
 Best regards,
 [Your Name]`,
-    updated: '8/17/2024',
-  },
-  {
-    id: '6',
-    name: 'Requesting a Referral from a School Alumni',
-    subject: 'Fellow Alumni Seeking Referral for [Job Title]',
-    content: `Hi [Alumni's Name],
-
-I hope you're doing well. I noticed that you're working at [Company Name], and I’m interested in the [Job Title] position there. As a fellow [School Name] alum, I would greatly appreciate it if you could refer me for this role.
-
-Thank you so much for your support!
-
-Best regards,
-[Your Name]`,
-    updated: '8/17/2024',
-  },
-  {
-    id: '7',
-    name: 'Cold Email to HR Asking for Any Opportunity',
-    subject: 'Exploring Opportunities at [Company Name]',
-    content: `Dear [HR Manager's Name],
-
-I hope you're well. I'm writing to express my interest in any current or upcoming opportunities at [Company Name]. My background in [Your Industry/Field] and passion for [Specific Area] align with the values and work at [Company Name].
-
-Please let me know if there are any suitable openings.
-
-Thank you for considering my application.
-
-Best regards,
-[Your Name]`,
-    updated: '8/17/2024',
-  },
-  {
-    id: '8',
-    name: 'Cold Email for a Job Follow-Up',
-    subject: 'Follow-Up on [Job Title] Application',
-    content: `Dear [HR Manager's Name],
-
-I hope you're doing well. I wanted to follow up on my application for the [Job Title] position at [Company Name]. I’m very excited about the opportunity and would appreciate any updates on the status of my application.
-
-Thank you for your time and consideration.
-
-Best regards,
-[Your Name]`,
-    updated: '8/17/2024',
-  },
-  {
-    id: '9',
-    name: 'Cold Email to a Senior Executive',
-    subject: 'Interest in Discussing [Job Title] at [Company Name]',
-    content: `Dear [Executive's Name],
-
-I hope this email finds you well. I am reaching out to express my interest in the [Job Title] position at [Company Name]. With my extensive experience in [Skill 1] and [Skill 2], I am confident that I could make a significant contribution to your team.
-
-I would greatly appreciate the opportunity to discuss how I could bring value to [Company Name].
-
-Thank you for your time and consideration.
-
-Best regards,
-[Your Name]`,
-    updated: '8/17/2024',
+    updated: '8/18/2024',
   },
   {
     id: '10',
-    name: 'Thank You Email After an Interview',
-    subject: 'Thank You for the Opportunity',
-    content: `Dear [Interviewer's Name],
+    name: 'Cold Email for Job Follow-Up',
+    subject: 'Follow-Up on [Job Title] Application',
+    content: `Dear [HR Manager’s Name],
 
-Thank you for taking the time to meet with me to discuss the [Job Title] position at [Company Name]. I enjoyed our conversation and am even more excited about the possibility of joining your team.
+I hope this email finds you well. I wanted to follow up on my application for the [Job Title] position at [Company Name]. I am very enthusiastic about this opportunity and would love to discuss how my skills in [Relevant Skills] can contribute to your team.
 
-Please don't hesitate to reach out if you need any additional information.
-
-Thank you once again for your consideration.
+Looking forward to any updates you can provide.
 
 Best regards,
 [Your Name]`,
-    updated: '8/17/2024',
-  },
+    updated: '8/18/2024',
+  }
 ];
 
 
