@@ -63,7 +63,7 @@ const Sidekick = () => {
               <div className="text-center p-2 mt-auto">
                 <hr className="border-gray-300 my-2 w-3/4 mx-auto" />
                 <a
-                  href="onboarding"
+                  href="https://apply.neetocal.com/meeting-with-nikhil-jain" target="_blank" rel="noopener noreferrer"
                   className="text-lg font-semibold text-gray-800"
                 >
                   Hire Your Assistant

@@ -56,8 +56,9 @@ const DashboardPage = ({
       <Navbar />
       <div className="flex min-h-screen pt-8 relative">
         {/* Sidebar */}
-        <aside className={`fixed top-16 left-0 z-40 w-64 bg-white p-4 transform transition-transform duration-300 ease-in-out h-full ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0 md:block shadow-xl`}>
-
+        <aside 
+          className={`fixed top-16 left-0 z-40 w-64 bg-white p-4 transform transition-transform duration-300 ease-in-out h-full ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0 md:block shadow-xl`}
+        >
           <nav className="mt-16 flex flex-col space-y-4">
             <Button
               className={`flex items-center justify-start text-base font-medium text-black rounded-lg py-2.5 transition-transform duration-300 ${
@@ -135,7 +136,7 @@ const DashboardPage = ({
             <Button
               className="flex items-center justify-center text-base font-medium text-black rounded-lg py-2.5 border border-gray-300 hover:bg-gray-100 transition-all duration-300"
               onClick={() => {
-                router.push("https://chrome.google.com/webstore");
+                router.push("https://chromewebstore.google.com/detail/hiredeasy/lklnlahilalmcnhgdkghjkcjiokggnkp");
                 setSidebarOpen(false);
               }}
             >

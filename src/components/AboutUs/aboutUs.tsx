@@ -73,8 +73,8 @@ const structuredData = {
 const Aboutus = () => {
   return (
     <div
-      className="min-h-screen text-black"
-      style={{ backgroundColor: '#FAF6F6' }}
+      className="min-h-screen text-black py-12"
+      style={{ backgroundColor: '#FAF6F6'}}
     >
       <Navbar />
       <head>

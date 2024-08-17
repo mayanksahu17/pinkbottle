@@ -4,6 +4,8 @@ import { dbConnect } from '@/lib/database/mongodb';
 import User from '@/lib/database/models/User/User';
 import { getAuth } from '@clerk/nextjs/server';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET(req: NextRequest) {
   try {
     await dbConnect();

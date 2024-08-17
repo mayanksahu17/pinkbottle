@@ -3,6 +3,8 @@ import { linkedinDbConnect } from '@/lib/database/linkedinmongo';
 import { getAuth } from '@clerk/nextjs/server';
 import { cache } from 'react';
 
+export const dynamic = 'force-dynamic';
+
 export async function DELETE(req: NextRequest) {
   try {
     const { userId } = getAuth(req);

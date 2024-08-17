@@ -47,7 +47,7 @@ const FrontMain = () => {
           </p>
 
           <div className="flex flex-col md:flex-row gap-4 mt-10 items-center">
-            <Link href="/onboarding">
+            <Link href="/onboarding" target="_blank" rel="noopener noreferrer">
               <button className="relative flex items-center justify-center gap-2 px-6 py-2 text-sm md:text-lg font-medium text-black bg-white rounded-full hover:bg-gray-100 transition-all shadow-lg border border-gray-300 w-full md:w-auto">
                 Schedule 3 days free trial
                 <svg
@@ -68,7 +68,7 @@ const FrontMain = () => {
             </Link>
 
             <div className="flex items-center justify-center w-full md:w-auto">
-              <Link href="https://apply.neetocal.com/meeting-with-nikhil-jain">
+              <Link href="https://apply.neetocal.com/meeting-with-nikhil-jain" target="_blank" rel="noopener noreferrer">
                 <button className="relative flex items-center justify-center gap-2 px-4 py-1.5 text-sm md:text-base font-medium text-primary-foreground bg-white rounded-full hover:bg-gray-100 transition-all shadow-md border border-gray-300 w-full md:w-auto">
                   <span className="rounded-full bg-white p-1.5">
                     <img

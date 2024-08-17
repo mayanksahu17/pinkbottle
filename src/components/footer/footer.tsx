@@ -4,7 +4,7 @@ import { SVGProps } from 'react';
 
 const Footer = () => {
   return (
-    <footer className="bg-[#f7fafc] py-16 shadow-lg ml-0 md:ml-[250px] md:px-4" style={{ fontFamily: 'Calibri, sans-serif', boxShadow: '0 -2px 10px rgba(0, 0, 0, 0.1)' }}>
+    <footer className="bg-[#f7fafc] py-16 shadow-lg w-full md:px-4" style={{ fontFamily: 'Calibri, sans-serif', boxShadow: '0 -2px 10px rgba(0, 0, 0, 0.1)', position: 'relative', zIndex: '1000' }}>
       <div className="max-w-7xl mx-auto px-2     sm:px-6 lg:px-4">
         <div className="flex flex-col md:flex-row justify-between items-center text-center md:text-left space-y-8 md:space-y-0">
           <div className="flex flex-col items-center md:items-start md:w-1/3 space-y-4">

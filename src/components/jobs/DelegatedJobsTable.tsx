@@ -19,9 +19,33 @@ const DelegatedJobsTable: React.FC<DelegatedJobsTableProps> = ({ jobData }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [jobsPerPage, setJobsPerPage] = useState(10);
   const [searchTerm, setSearchTerm] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+
+  const fetchData = useCallback(async () => {
+    setIsLoading(true);
+    try {
+      const response = await fetch('/api/delegatedjobs', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Cache-Control': 'no-cache', // Disable caching
+        },
+      });
+      const data = await response.json();
+      setJobs(data);
+    } catch (error) {
+      console.error('Error fetching jobs:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
 
   useEffect(() => {
-    setJobs(jobData);
+    fetchData(); // Fetch latest jobs when component mounts
+  }, [fetchData]);
+
+  useEffect(() => {
+    setJobs(jobData); // Sync jobs with prop updates
   }, [jobData]);
 
   const filteredJobs = useMemo(() => {
@@ -117,7 +141,11 @@ const DelegatedJobsTable: React.FC<DelegatedJobsTableProps> = ({ jobData }) => {
             </tr>
           </thead>
           <tbody>
-            {currentJobs.length > 0 ? (
+            {isLoading ? (
+              <tr>
+                <td colSpan={6} className="text-center py-4">Loading...</td>
+              </tr>
+            ) : currentJobs.length > 0 ? (
               currentJobs.map((job) => (
                 <tr key={job._id || `${job.title}-${job.company}`}>
                   <td className="py-4 px-6">
@@ -140,9 +168,7 @@ const DelegatedJobsTable: React.FC<DelegatedJobsTableProps> = ({ jobData }) => {
               ))
             ) : (
               <tr>
-                <td colSpan={6} className="text-center py-4">
-                  No results.
-                </td>
+                <td colSpan={6} className="text-center py-4">No results.</td>
               </tr>
             )}
           </tbody>
@@ -206,6 +232,5 @@ const DelegatedJobsTable: React.FC<DelegatedJobsTableProps> = ({ jobData }) => {
     </>
   );
 };
-
 
 export default DelegatedJobsTable;

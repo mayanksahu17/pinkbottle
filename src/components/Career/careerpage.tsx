@@ -3,6 +3,7 @@ import { useState, ChangeEvent, FormEvent, useEffect } from 'react';
 import Navbar from '../navbar/navbar';
 import Footer from '../footer/footer';
 import { Metadata } from 'next';
+import React from 'react';
 
 export const metadata: Metadata = {
   title: 'HiredEasy - Career Opportunities | Join Our Team',
@@ -220,7 +221,7 @@ export function CareerPage() {
       <head>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />
       </head>
-      <header className="bg-teal-700 text-white py-10">
+      <header className="bg-teal-700 text-white py-32">
         <div className="container mx-auto px-6 text-center">
           <h1 className="text-4xl font-bold mb-2">Join Our Team</h1>
           <p className="text-xl">

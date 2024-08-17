@@ -194,7 +194,7 @@ const PricingUser = () => {
   return (
     <div
       className="min-h-screen text-black"
-      style={{ backgroundColor: '#FAF6F6' }}
+      style={{ backgroundColor: '#FAF6F6', paddingTop: '4rem' }}
     >
       <Navbar />
       <head>

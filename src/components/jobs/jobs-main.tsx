@@ -32,7 +32,10 @@ const JobsMain: React.FC = () => {
         console.error('Failed to fetch saved jobs:', error);
       }
     }
+    fetchSavedJobs();
+  }, []); // Only runs once when the component mounts
 
+  useEffect(() => {
     async function fetchDelegatedJobs() {
       try {
         const response = await fetch('/api/delegatedjobs');
@@ -44,18 +47,17 @@ const JobsMain: React.FC = () => {
         setDelegatedJobs([]); // Handle the case where the fetch fails
       }
     }
-  
     fetchDelegatedJobs();
-  }, []);
+  }, []); // Only runs once when the component mounts
 
   useEffect(() => {
     const totalJobs = savedJobs.length + delegatedJobs.length;
-    if (totalJobs > 5) {
+    if (totalJobs > 1200) {
       setShowNotification(true);
     } else {
       setShowNotification(false);
     }
-  }, [savedJobs, delegatedJobs]);
+  }, [savedJobs, delegatedJobs]); // Runs whenever savedJobs or delegatedJobs changes
 
   return (
     <main className="flex flex-col w-full p-4 sm:p-6 pt-16 bg-gray-50">
