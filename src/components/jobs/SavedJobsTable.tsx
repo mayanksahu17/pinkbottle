@@ -109,51 +109,51 @@ const SavedJobsTable: React.FC<JobTableProps> = ({ jobData = [] }) => {
           <tbody>
             {currentJobs.length > 0 ? (
               currentJobs.map((job) => (
-                <tr key={job._id}>
-                  <td className="py-4 px-6">
-                    <input type="checkbox" />
-                  </td>
-                  <td className="py-4 px-6">{job.title}</td>
-                  <td className="py-4 px-6">{job.position}</td>
-                  <td className="py-4 px-6">{job.location}</td>
-                  <td className="py-4 px-6">{formatDate(job.date)}</td>
-                  <td className="py-4 px-6">
-                    <select
-                      value={job.status}
-                      onChange={async (e) => {
-                        const newStatus = e.target.value;
-                        try {
-                          const response = await fetch(`/api/updatejobstatus`, {
-                            method: 'PUT',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({
-                              id: job._id,
-                              status: newStatus,
-                            }),
-                          });
-                          if (response.ok) {
-                            setJobs((prevJobs) =>
-                              prevJobs.map((j) =>
-                                j._id === job._id
-                                  ? { ...j, status: newStatus }
-                                  : j
-                              )
-                            );
-                          } else {
-                            console.error('Failed to update job status');
-                          }
-                        } catch (error) {
-                          console.error('Error updating job status:', error);
-                        }
-                      }}
-                    >
-                      <option value="Applied">Applied</option>
-                      <option value="Interviewed">Interviewed</option>
-                      <option value="Offer">Offer</option>
-                      <option value="Rejected">Rejected</option>
-                    </select>
-                  </td>
-                </tr>
+<tr key={job._id}>
+  <td className="py-4 px-6">
+    <input type="checkbox" />
+  </td>
+  <td className="py-4 px-6">{job.title}</td>
+  <td className="py-4 px-6">{job.position}</td>
+  <td className="py-4 px-6">{job.location}</td>
+  <td className="py-4 px-6">{formatDate(job.date)}</td>
+  <td className="py-4 px-6">
+    <select
+      value={job.status}
+      onChange={async (e) => {
+        const newStatus = e.target.value;
+        try {
+          const response = await fetch(`/api/updatejobstatus`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              id: job._id,
+              status: newStatus,
+            }),
+          });
+          if (response.ok) {
+            setJobs((prevJobs) =>
+              prevJobs.map((j) =>
+                j._id === job._id ? { ...j, status: newStatus } : j
+              )
+            );
+          } else {
+            console.error('Failed to update job status');
+          }
+        } catch (error) {
+          console.error('Error updating job status:', error);
+        }
+      }}
+      className="px-2 py-1 bg-gray-100 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+    >
+      <option className="text-gray-700 bg-white hover:bg-gray-100" value="Applied">Applied</option>
+      <option className="text-gray-700 bg-white hover:bg-gray-100" value="Interviewed">Interviewed</option>
+      <option className="text-gray-700 bg-white hover:bg-gray-100" value="Offer">Offer</option>
+      <option className="text-gray-700 bg-white hover:bg-gray-100" value="Rejected">Rejected</option>
+    </select>
+  </td>
+</tr>
+
               ))
             ) : (
               <tr>

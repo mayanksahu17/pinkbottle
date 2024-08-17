@@ -2,7 +2,7 @@ import React from 'react';
 
 const Warmup = () => {
   return (
-    <div className="flex flex-col items-center justify-center w-full min-h-screen bg-gradient-to-r from-blue-50 to-blue-100 p-8">
+    <div className="flex-1 flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-blue-50 to-blue-100 p-8">
       <div className="w-full max-w-5xl bg-white shadow-2xl rounded-xl overflow-hidden border border-gray-200">
         <div className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white text-center py-6 rounded-t-xl">
           <h2 className="text-2xl font-bold tracking-wide">Google Interview Warmup</h2>

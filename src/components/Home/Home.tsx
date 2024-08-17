@@ -1,25 +1,24 @@
 'use client';
-import React, { SVGProps, useEffect, useState } from 'react';
-import { UserButton, auth, useUser } from '@clerk/nextjs';
+import React, { useState } from 'react';
+import dynamic from 'next/dynamic';
 import Link from 'next/link';
-import 'swiper/swiper-bundle.css';
-import Marquee from 'react-fast-marquee';
-import Help from '../GetInTouch/Help';
-import Model from '../GetInTouch/Model';
-import Footer from '../footer/footer';
-import Navbar from '../navbar/navbar';
 import Head from 'next/head';
-import FAQSection from '../FAQ/faq';
-import Sidekick from './sidekick';
-import IncreaseResult from './IncreaseInCalls';
+import Navbar from '../navbar/navbar';
+import Footer from '../footer/footer';
+import FrontMain from './FrontMain';
 import Sponsor from './sponsor';
+import IncreaseResult from './IncreaseInCalls';
 import WorksFor from './worksfor';
 import Universities from './Universities';
-import Testimonial from './Testimonial';
 import Message from './Message';
-import Investor from './Investor';
-import FrontMain from './FrontMain';
-import Widget from './Widget';
+
+// Dynamic imports with SSR disabled for non-critical components
+const Help = dynamic(() => import('../GetInTouch/Help'), { ssr: false });
+const Model = dynamic(() => import('../GetInTouch/Model'), { ssr: false });
+const Sidekick = dynamic(() => import('./sidekick'), { ssr: false });
+const FAQSection = dynamic(() => import('../FAQ/faq'), { ssr: false });
+const Widget = dynamic(() => import('./Widget'), { ssr: false });
+const Testimonial = dynamic(() => import('./Testimonial'), { ssr: false });
 
 const structuredData = {
   '@context': 'https://schema.org',
@@ -48,7 +47,7 @@ const structuredData = {
     },
     {
       '@type': 'WebPage',
-      url: 'https://hiredeasy.com/sing-up',
+      url: 'https://hiredeasy.com/sign-in',
       name: 'Sign In',
     },
     {
@@ -95,80 +94,24 @@ const breadcrumbData = {
     },
     {
       '@type': 'ListItem',
-      position: 5,
+      position: 6,
       name: 'Sign In',
       item: 'https://hiredeasy.com/sign-in',
     },
     {
       '@type': 'ListItem',
-      position: 6,
+      position: 7,
       name: 'Wall of Love',
-      itme: 'https://hiredeasy.com/Wall',
+      item: 'https://hiredeasy.com/Wall',
     },
   ],
 };
 
-type WindowSize = {
-  width: number | undefined;
-};
-
-// Custom hook to check window width
-const useWindowSize = (): WindowSize => {
-  const [windowSize, setWindowSize] = useState<WindowSize>({
-    width: undefined,
-  });
-
-  useEffect(() => {
-    function handleResize() {
-      setWindowSize({
-        width: window.innerWidth,
-      });
-    }
-
-    // Set the size initially on client-side
-    handleResize();
-
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
-  return windowSize;
-};
-
 const HomePage = () => {
-  const { isSignedIn, user } = useUser();
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { width } = useWindowSize();
-  const isMobile = width !== undefined && width < 768;
-  const [isOpen, setIsOpen] = useState(false);
-
-  const toggleMenu = () => {
-    setIsMenuOpen((prev) => !prev);
-  };
-
-  const testimonials = [
-    {
-      imgSrc: '/Whatsappone.jpeg',
-      // caption: 'A quick highlight from testimonial 1...',
-    },
-    {
-      imgSrc: '/Whatsapptwo.jpeg',
-      // caption: 'A quick highlight from testimonial 2...',
-    },
-    {
-      imgSrc: '/Whatsappone.jpeg',
-      // caption: 'A quick highlight from testimonial 1...',
-    },
-    {
-      imgSrc: '/Whatsapptwo.jpeg',
-      // caption: 'A quick highlight from testimonial 2...',
-    },
-    // Add more testimonials as needed
-  ];
-
-  //get in touch
-  const handleClose = () => setShowForm(false);
   const [showForm, setShowForm] = useState(false);
+
+  // Close the form modal
+  const handleClose = () => setShowForm(false);
 
   return (
     <>
@@ -221,7 +164,7 @@ const HomePage = () => {
       >
         <Navbar />
 
-        <div className="bg-[#bafff1] py-2 shadow-md">
+        <div className="bg-[#bafff1] py-2 shadow-md mt-16">
           <div className="max-w-xl mx-auto text-center px-4">
             <p className="text-base font-medium text-gray-800 animate-bounce">
               Ready to get a Job
@@ -246,15 +189,14 @@ const HomePage = () => {
                 >
                   <button className="flex items-center justify-center gap-2 px-6 py-2 text-sm md:text-lg font-medium text-primary-foreground bg-primary rounded-full hover:bg-primary-dark transition-all shadow-lg border">
                     <span className="rounded-full bg-white p-2">
-                      {' '}
                       <img
                         src="Nikhil.jpeg"
                         alt="Nikhil Jain"
                         className="h-6 w-6"
                         loading="lazy"
-                      />{' '}
+                      />
                     </span>
-                    <span>Schedule a call</span>{' '}
+                    <span>Schedule a call</span>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="24"
@@ -265,7 +207,7 @@ const HomePage = () => {
                       strokeWidth="2"
                       strokeLinecap="round"
                       strokeLinejoin="round"
-                      className="md:ml-1 h-5 w-5 text-gray-400  animate-pulse"
+                      className="md:ml-1 h-5 w-5 text-gray-400 animate-pulse"
                     >
                       <path d="m9 18 6-6-6-6"></path>
                     </svg>
@@ -294,25 +236,15 @@ const HomePage = () => {
             </div>
           </Model>
         </div>
+
         <FrontMain />
-        <main></main>
-
         <Sponsor />
-
         <IncreaseResult />
-
         <WorksFor />
-
         <Universities />
-
         <Sidekick />
-
         <Testimonial />
-
-        {/* <Investor /> */}
-
         <FAQSection />
-
         <Message />
         <Widget />
         <Footer />

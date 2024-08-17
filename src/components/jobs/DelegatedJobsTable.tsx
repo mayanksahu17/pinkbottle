@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo, useEffect, useCallback } from 'react';
 
 interface Job {
   _id?: string;
@@ -10,37 +10,81 @@ interface Job {
 }
 
 interface DelegatedJobsTableProps {
-  jobData: Job[]; // Receive jobData as a prop to avoid refetching
+  jobData: Job[];
 }
 
 const DelegatedJobsTable: React.FC<DelegatedJobsTableProps> = ({ jobData }) => {
-  const [jobs, setJobs] = useState<Job[]>(jobData); // Initialize with preloaded jobData
+  const [jobs, setJobs] = useState<Job[]>(jobData);
+  const [selectedJobs, setSelectedJobs] = useState<string[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [jobsPerPage, setJobsPerPage] = useState(10);
   const [searchTerm, setSearchTerm] = useState('');
 
-  const filteredJobs = useMemo(
-    () =>
-      jobs.filter(
-        (job) =>
-          job.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          job.company.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          job.location.toLowerCase().includes(searchTerm.toLowerCase())
-      ),
-    [jobs, searchTerm]
-  );
+  useEffect(() => {
+    setJobs(jobData);
+  }, [jobData]);
 
-  const indexOfLastJob = currentPage * jobsPerPage;
-  const indexOfFirstJob = indexOfLastJob - jobsPerPage;
-  const currentJobs = filteredJobs.slice(indexOfFirstJob, indexOfLastJob);
+  const filteredJobs = useMemo(() => {
+    const lowercasedSearchTerm = searchTerm.toLowerCase();
+    return jobs.filter(
+      (job) =>
+        job.title.toLowerCase().includes(lowercasedSearchTerm) ||
+        job.company.toLowerCase().includes(lowercasedSearchTerm) ||
+        job.location.toLowerCase().includes(lowercasedSearchTerm)
+    );
+  }, [jobs, searchTerm]);
 
-  const pageCount = Math.ceil(filteredJobs.length / jobsPerPage);
+  const currentJobs = useMemo(() => {
+    const indexOfLastJob = currentPage * jobsPerPage;
+    const indexOfFirstJob = indexOfLastJob - jobsPerPage;
+    return filteredJobs.slice(indexOfFirstJob, indexOfLastJob);
+  }, [filteredJobs, currentPage, jobsPerPage]);
 
-  const formatDate = (dateString: string) => {
+  const pageCount = useMemo(() => Math.ceil(filteredJobs.length / jobsPerPage), [filteredJobs.length, jobsPerPage]);
+
+  const formatDate = useCallback((dateString: string) => {
     const date = new Date(dateString);
-    return isNaN(date.getTime()) ? 'N/A' : date.toLocaleDateString(); 
-  };
-  
+    return isNaN(date.getTime()) ? 'N/A' : date.toLocaleDateString();
+  }, []);
+
+  const handleSelectAll = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.checked) {
+      const allJobIds = currentJobs.map((job) => job._id || `${job.title}-${job.company}`);
+      setSelectedJobs(allJobIds);
+    } else {
+      setSelectedJobs([]);
+    }
+  }, [currentJobs]);
+
+  const handleSelectRow = useCallback((e: React.ChangeEvent<HTMLInputElement>, job: Job) => {
+    const jobId = `${job.title}-${job.company}`;
+    if (e.target.checked) {
+      setSelectedJobs((prevSelectedJobs) => [...prevSelectedJobs, jobId]);
+    } else {
+      setSelectedJobs((prevSelectedJobs) => prevSelectedJobs.filter((id) => id !== jobId));
+    }
+  }, []);
+
+  const handleDelete = useCallback(async () => {
+    try {
+      const response = await fetch('/api/deletejobs', {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ jobIds: selectedJobs }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to delete jobs');
+      }
+
+      setJobs((prevJobs) => prevJobs.filter((job) => !selectedJobs.includes(`${job.title}-${job.company}`)));
+      setSelectedJobs([]);
+    } catch (error) {
+      console.error('Error deleting jobs:', error);
+    }
+  }, [selectedJobs]);
 
   return (
     <>
@@ -59,39 +103,37 @@ const DelegatedJobsTable: React.FC<DelegatedJobsTableProps> = ({ jobData }) => {
           <thead className="text-xs text-gray-700 uppercase bg-gray-50">
             <tr>
               <th scope="col" className="py-3 px-6">
-                <input type="checkbox" />
+                <input
+                  type="checkbox"
+                  checked={selectedJobs.length === currentJobs.length && currentJobs.length > 0}
+                  onChange={handleSelectAll}
+                />
               </th>
-              <th scope="col" className="py-3 px-6">
-                Title
-              </th>
-              <th scope="col" className="py-3 px-6">
-                Company
-              </th>
-              <th scope="col" className="py-3 px-6">
-                Location
-              </th>
-              <th scope="col" className="py-3 px-6">
-                Date <span className="ml-1">⇅</span>
-              </th>
-              <th scope="col" className="py-3 px-6">
-                Link
-              </th>
+              <th scope="col" className="py-3 px-6">Title</th>
+              <th scope="col" className="py-3 px-6">Company</th>
+              <th scope="col" className="py-3 px-6">Location</th>
+              <th scope="col" className="py-3 px-6">Date</th>
+              <th scope="col" className="py-3 px-6">Link</th>
             </tr>
           </thead>
           <tbody>
             {currentJobs.length > 0 ? (
               currentJobs.map((job) => (
-                <tr key={job._id}>
+                <tr key={job._id || `${job.title}-${job.company}`}>
                   <td className="py-4 px-6">
-                    <input type="checkbox" />
+                    <input
+                      type="checkbox"
+                      checked={selectedJobs.includes(job._id || `${job.title}-${job.company}`)}
+                      onChange={(e) => handleSelectRow(e, job)}
+                    />
                   </td>
                   <td className="py-4 px-6">{job.title}</td>
                   <td className="py-4 px-6">{job.company}</td>
                   <td className="py-4 px-6">{job.location}</td>
                   <td className="py-4 px-6">{formatDate(job.date)}</td>
                   <td className="py-4 px-6">
-                    <a href={job.applyLink} target="_blank" rel="noopener noreferrer">
-                      Link
+                    <a href={job.applyLink} target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">
+                      Apply
                     </a>
                   </td>
                 </tr>
@@ -107,27 +149,39 @@ const DelegatedJobsTable: React.FC<DelegatedJobsTableProps> = ({ jobData }) => {
         </table>
       </div>
 
-      <div className="flex justify-between items-center mt-4 flex-col sm:flex-row">
-        <div className="text-sm text-gray-500">
-          {filteredJobs.length} result(s) found.
+      <div className="flex flex-col space-y-4 sm:flex-row sm:space-y-0 sm:space-x-4 mt-4 items-center justify-between">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between w-full sm:w-auto space-y-4 sm:space-y-0 sm:space-x-4">
+          <div className="text-sm text-gray-500 text-center sm:text-left">
+            {filteredJobs.length} result(s) found.
+          </div>
+
+          <button
+            onClick={handleDelete}
+            disabled={selectedJobs.length === 0}
+            className="bg-red-500 text-white px-6 py-2 rounded-full shadow-md hover:bg-red-600 transition duration-300 ease-in-out disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
+          >
+            🗑️ Trash
+          </button>
         </div>
-        <div className="flex items-center space-x-4">
-          <div>
-            Rows per page:
+
+        <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-4 w-full sm:w-auto justify-center sm:justify-end space-y-4 sm:space-y-0">
+          <div className="flex items-center justify-center sm:justify-start">
+            <span className="mr-2 text-sm">Rows per page:</span>
             <select
               value={jobsPerPage}
               onChange={(e) => {
                 setJobsPerPage(Number(e.target.value));
-                setCurrentPage(1); // Reset to first page on change
+                setCurrentPage(1);
               }}
-              className="ml-2 p-1 border rounded"
+              className="p-2 border rounded"
             >
               <option value={5}>5</option>
               <option value={10}>10</option>
               <option value={50}>50</option>
             </select>
           </div>
-          <div className="flex items-center">
+
+          <div className="flex items-center justify-center sm:justify-end space-x-2">
             <button
               disabled={currentPage === 1}
               onClick={() => setCurrentPage(currentPage - 1)}
@@ -135,7 +189,7 @@ const DelegatedJobsTable: React.FC<DelegatedJobsTableProps> = ({ jobData }) => {
             >
               &laquo;
             </button>
-            <div className="mx-2 px-3 py-2 border rounded bg-gray-200">
+            <div className="px-4 py-2 border rounded bg-gray-200 text-center">
               Page {currentPage} of {pageCount}
             </div>
             <button
@@ -148,8 +202,10 @@ const DelegatedJobsTable: React.FC<DelegatedJobsTableProps> = ({ jobData }) => {
           </div>
         </div>
       </div>
+
     </>
   );
 };
+
 
 export default DelegatedJobsTable;

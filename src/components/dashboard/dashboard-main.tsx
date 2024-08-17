@@ -10,7 +10,7 @@ const DashboardMain = ({ isPaidUser }: { isPaidUser: boolean }) => {
   const { user } = useUser();
 
   return (
-    <main className="w-full p-6 bg-white rounded-lg shadow-md">
+    <main className="w-full p-6 bg-white rounded-lg shadow-md mt-10">
       <div className="flex items-center space-x-4">
         <Avatar className="w-16 h-16">
           <AvatarImage
