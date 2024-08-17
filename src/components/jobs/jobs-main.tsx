@@ -1,185 +1,141 @@
-import React, { useState, useMemo } from 'react';
-import { saveAs } from 'file-saver';
+import React, { useState, useEffect } from 'react';
+import SavedJobsTable from './SavedJobsTable';
+import DelegatedJobsTable from './DelegatedJobsTable';
+import FAQTable from './FAQTable';
 
 interface Job {
-  _id: string;
+  _id?: string;
   image: string;
   title: string;
   position: string;
   date: string;
   status: string;
+  location: string;
+  company: string;
+  applyLink: string;
 }
 
-interface JobsMainProps {
-  jobs: (Job | { _id?: string })[]; // Allow for optional _id
-  firstName: string;
-}
+const JobsMain: React.FC = () => {
+  const [savedJobs, setSavedJobs] = useState<Job[]>([]);
+  const [delegatedJobs, setDelegatedJobs] = useState<Job[]>([]);
+  const [currentTable, setCurrentTable] = useState<'jobs1' | 'jobs2' | 'faqs'>('jobs1');
+  const [showNotification, setShowNotification] = useState(false);
 
-const JobsMain: React.FC<JobsMainProps> = ({ jobs = [], firstName }) => {
-  console.log('Job was called here');
-  const [currentPage, setCurrentPage] = useState(1);
-  const [jobsPerPage, setJobsPerPage] = useState(7); // Number of jobs per page
-  const [searchTerm, setSearchTerm] = useState('');
+  useEffect(() => {
+    async function fetchSavedJobs() {
+      try {
+        const response = await fetch('/api/savedjobs');
+        const data = await response.json();
+        console.log('Fetched Saved Jobs:', data);
+        setSavedJobs(data);
+      } catch (error) {
+        console.error('Failed to fetch saved jobs:', error);
+      }
+    }
 
-  // Transform jobs to ensure `_id` is always a string
-  const transformedJobs: Job[] = useMemo(
-    () =>
-      jobs
-        .map((job) => ({
-          _id: job._id ?? 'N/A',
-          image: (job as Job).image ?? '',
-          title: (job as Job).title ?? '',
-          position: (job as Job).position ?? '',
-          date: (job as Job).date ?? '',
-          status: (job as Job).status ?? '',
-        }))
-        .sort(
-          (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
-        ),
-    [jobs]
-  );
+    async function fetchDelegatedJobs() {
+      try {
+        const response = await fetch('/api/delegatedjobs');
+        const data = await response.json();
+        console.log('Fetched Delegated Jobs:', data);
+        setDelegatedJobs(data);
+      } catch (error) {
+        console.error('Failed to fetch delegated jobs:', error);
+      }
+    }
 
-  // Filter jobs based on the search term
-  const filteredJobs = transformedJobs.filter(
-    (job) =>
-      job.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      job.position.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      job.date.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+    fetchSavedJobs();
+    fetchDelegatedJobs();
+  }, []);
 
-  const indexOfLastJob = currentPage * jobsPerPage;
-  const indexOfFirstJob = indexOfLastJob - jobsPerPage;
-  const currentJobs = filteredJobs.slice(indexOfFirstJob, indexOfLastJob);
-
-  const pageCount = Math.ceil(filteredJobs.length / jobsPerPage);
-
-  // Helper function to format date
-  const formatDate = (dateString: string) =>
-    new Date(dateString).toLocaleDateString();
-
-  const downloadCSV = () => {
-    const header = 'Job Title,Company,Date\n';
-    const rows = filteredJobs
-      .map((job) => `${job.title},${job.position},${formatDate(job.date)}`)
-      .join('\n');
-
-    const csvContent = 'data:text/csv;charset=utf-8,' + header + rows;
-    const encodedUri = encodeURI(csvContent);
-    saveAs(encodedUri, 'jobs_export.csv');
-  };
+  useEffect(() => {
+    const totalJobs = savedJobs.length + delegatedJobs.length;
+    if (totalJobs > 5) {
+      setShowNotification(true);
+    } else {
+      setShowNotification(false);
+    }
+  }, [savedJobs, delegatedJobs]);
 
   return (
-    <main className="flex flex-col w-full p-4 md:p-6 pt-16">
-      <div className="flex flex-col items-center w-full mb-4">
-        <h1 className="font-semibold text-lg md:text-2xl text-gray-800 dark:text-white">
-          Hey {firstName}, here's a list of the jobs you've applied for 🧑‍💻
-        </h1>
-        <input
-          type="text"
-          placeholder="Search jobs..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className="p-2 w-full max-w-md border rounded shadow mt-4"
-        />
-      </div>
-      <div className="flex flex-col md:flex-row justify-between items-center w-full mb-5">
-        <button
-          onClick={downloadCSV}
-          className={`px-6 py-2 ${filteredJobs.length === 0 ? 'bg-gray-400 cursor-not-allowed' : 'bg-green-500 hover:bg-green-600'} text-white font-bold rounded-lg shadow transition duration-150 ease-in-out`}
-          disabled={filteredJobs.length === 0}
-        >
-          Export to CSV
-        </button>
-        <div className="text-lg text-gray-800 dark:text-white underline w-full md:w-auto text-center md:text-right">
-          Total Applications: {filteredJobs.length}
-        </div>
-      </div>
-
-      <div className="overflow-x-auto relative shadow-md sm:rounded-lg">
-        <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-          <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-white">
-            <tr>
-              <th scope="col" className="py-3 px-6">
-                Image
-              </th>
-              <th scope="col" className="py-3 px-6">
-                Job Title
-              </th>
-              <th scope="col" className="py-3 px-6">
-                Company
-              </th>
-              <th scope="col" className="py-3 px-6">
-                Date
-              </th>
-              <th scope="col" className="py-3 px-6">
-                Status
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {currentJobs.length > 0 ? (
-              currentJobs.map((job) => (
-                <tr key={job._id}>
-                  <td className="py-4 px-6">
-                    <img
-                      alt="Company logo"
-                      className="h-10 w-10 rounded-full"
-                      src={job.image}
-                    />
-                  </td>
-                  <td className="py-4 px-6">{job.title}</td>
-                  <td className="py-4 px-6">{job.position}</td>
-                  <td className="py-4 px-6">{formatDate(job.date)}</td>
-                  <td className="py-4 px-6">{job.status}</td>
-                </tr>
-              ))
-            ) : (
-              <tr>
-                <td colSpan={5} className="text-center py-4">
-                  No Jobs are available
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
-      </div>
-
-      <div className="flex justify-between items-center mt-4">
-        <div className="flex items-center">
-          <span className="mr-2">Rows per page:</span>
-          <select
-            value={jobsPerPage}
-            onChange={(e) => {
-              setJobsPerPage(Number(e.target.value));
-              setCurrentPage(1); // Reset to first page on change
-            }}
-            className="p-2 border rounded"
-          >
-            <option value={5}>5</option>
-            <option value={7}>7</option>
-            <option value={10}>10</option>
-            <option value={15}>15</option>
-          </select>
-        </div>
-        <div className="flex items-center">
+    <main className="flex flex-col w-full p-4 sm:p-6 pt-16 bg-gray-50">
+      <div className="flex flex-col sm:flex-row justify-between items-center mb-6 space-y-4 sm:space-y-0 mt-10">
+        <div className="flex flex-wrap space-x-2 sm:space-x-4 w-full sm:w-auto justify-center sm:justify-start">
           <button
-            disabled={currentPage === 1}
-            onClick={() => setCurrentPage(currentPage - 1)}
-            className={`px-4 py-2 border rounded text-sm ${currentPage === 1 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-blue-500 hover:text-white'}`}
+            onClick={() => setCurrentTable('jobs1')}
+            className={`px-4 sm:px-6 py-2 text-sm font-semibold rounded-full ${
+              currentTable === 'jobs1'
+                ? 'bg-white text-gray-900 border border-gray-300 shadow-md'
+                : 'text-gray-500 bg-gray-100'
+            } transition ease-in-out duration-300 hover:bg-white hover:text-gray-900`}
           >
-            Prev
+            Saved ({savedJobs.length})
           </button>
-          <div className="mx-2 px-4 py-2 border rounded text-sm bg-blue-500 text-white">
-            {currentPage}
+          <button
+            onClick={() => setCurrentTable('jobs2')}
+            className={`px-4 sm:px-6 py-2 text-sm font-semibold rounded-full ${
+              currentTable === 'jobs2'
+                ? 'bg-white text-gray-900 border border-gray-300 shadow-md'
+                : 'text-gray-500 bg-gray-100'
+            } transition ease-in-out duration-300 hover:bg-white hover:text-gray-900`}
+          >
+            Delegated ({delegatedJobs.length})
+          </button>
+          <button
+            onClick={() => setCurrentTable('faqs')}
+            className={`px-4 sm:px-6 py-2 text-sm font-semibold rounded-full ${
+              currentTable === 'faqs'
+                ? 'bg-white text-gray-900 border border-gray-300 shadow-md'
+                : 'text-gray-500 bg-gray-100'
+            } transition ease-in-out duration-300 hover:bg-white hover:text-gray-900`}
+          >
+            Email Responses
+          </button>
+        </div>
+        <div className="flex items-center text-sm font-semibold text-gray-500 w-full sm:w-auto justify-center sm:justify-end mt-4 sm:mt-0">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="currentColor"
+            viewBox="0 0 24 24"
+            className="w-4 h-4 text-red-500 mr-1"
+          >
+            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+          </svg>
+          Refer & Earn $100
+        </div>
+      </div>
+
+      {showNotification && (
+        <div className="bg-gradient-to-r from-red-500 to-red-700 text-white p-4 rounded-lg mb-6 flex flex-col sm:flex-row justify-between items-center shadow-lg">
+          <div className="flex items-center space-x-3">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="currentColor"
+              viewBox="0 0 24 24"
+              className="w-6 h-6"
+            >
+              <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+            </svg>
+            <span className="font-medium text-lg">
+              Subscription Limit Reached!
+            </span>
           </div>
+          <span className="text-sm text-center sm:text-left mt-2 sm:mt-0">
+            Your subscription has exceeded the limit. Please renew to continue applying for more jobs.
+          </span>
           <button
-            disabled={currentPage === pageCount}
-            onClick={() => setCurrentPage(currentPage + 1)}
-            className={`px-4 py-2 border rounded text-sm ${currentPage === pageCount ? 'opacity-50 cursor-not-allowed' : 'hover:bg-blue-500 hover:text-white'}`}
+            className="bg-white text-red-700 px-4 py-2 rounded-full font-semibold shadow-lg hover:bg-gray-100 transition ease-in-out duration-300 mt-2 sm:mt-0"
+            onClick={() => alert('Redirecting to renew subscription')}
           >
-            Next
+            Renew Now
           </button>
         </div>
+      )}
+
+      <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6">
+        {currentTable === 'jobs1' && <SavedJobsTable jobData={savedJobs} />}
+        {currentTable === 'jobs2' && <DelegatedJobsTable jobData={delegatedJobs} />}
+        {currentTable === 'faqs' && <FAQTable />}
       </div>
     </main>
   );

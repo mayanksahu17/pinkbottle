@@ -35,6 +35,7 @@ const userSchema = new mongoose.Schema<IUser>({
       position: String,
       date: Date,
       status: String,
+      location: String,
     },
   ],
   resume: {

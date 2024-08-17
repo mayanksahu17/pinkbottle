@@ -3,38 +3,36 @@ import React from 'react';
 import { Button } from '../ui/button';
 import Link from 'next/link';
 import { AvatarImage, AvatarFallback, Avatar } from '@/components/ui/avatar';
-import { currentUser, useUser } from '@clerk/nextjs';
+import { useUser } from '@clerk/nextjs';
 import { CiLock } from 'react-icons/ci';
 
 const DashboardMain = ({ isPaidUser }: { isPaidUser: boolean }) => {
-  const { isSignedIn, user } = useUser();
-  console.log(isPaidUser);
-  console.log(process.env.MONGODB_URI);
+  const { user } = useUser();
+
   return (
-    <main className={`flex-1 px-4 py-6 pt-[4rem]`}>
+    <main className="w-full p-6 bg-white rounded-lg shadow-md mt-10">
       <div className="flex items-center space-x-4">
-        <div className={`transition-all duration-300 ease-in-out`}>
-          <Avatar>
-            <AvatarImage
-              alt="Profile picture"
-              src="https://github.com/shadcn.png"
-            />
-            <AvatarFallback>AN</AvatarFallback>
-          </Avatar>
-        </div>
+        <Avatar className="w-16 h-16">
+          <AvatarImage
+            alt="Profile picture"
+            src="https://github.com/shadcn.png"
+          />
+          <AvatarFallback>AN</AvatarFallback>
+        </Avatar>
         <div>
-          <h1 className="text-2xl font-bold text-black">
-            Hey {user?.firstName}, You are almost there!
+          <h1 className="text-2xl font-bold text-gray-900">
+            Hey {user?.firstName}, You're almost there!
           </h1>
-          <p className="text-sm text-black">
+          <p className="text-sm text-gray-600">
             Select a plan, team up with your associate, and start saving time
             right away.
           </p>
         </div>
       </div>
-      <div className="mt-6 flex space-x-4">
+
+      <div className="mt-6 space-x-4">
         <Link href="/">
-          <button className="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 py-2 md:text-lg md:font-light px-4 md:px-6 md:glow-btn rounded-xl md:h-12 shiny-button border border-gray-800">
+          <Button className="bg-blue-600 text-white hover:bg-blue-700 shadow-md rounded-lg px-6 py-3">
             Explore Platform
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -46,83 +44,65 @@ const DashboardMain = ({ isPaidUser }: { isPaidUser: boolean }) => {
               strokeWidth="2"
               strokeLinecap="round"
               strokeLinejoin="round"
-              className="md:ml-1 h-5 w-5 text-gray-400  animate-pulse"
+              className="ml-2 h-5 w-5"
             >
               <path d="m9 18 6-6-6-6"></path>
             </svg>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="-ml-3 h-5 w-5 animate-pulse"
-            >
-              <path d="m9 18 6-6-6-6"></path>
-            </svg>
-          </button>
+          </Button>
         </Link>
-        <a
+        {/* <a
           href="https://apply.neetocal.com/meeting-with-nikhil-jain"
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border-gray-800 bg-transparent shadow-sm hover:bg-accent hover:text-accent-foreground h-9 py-2 relative group md:font-bold px-4 md:px-6 border-2 rounded-xl md:text-md md:h-12"
-          aria-haspopup="dialog"
-          aria-expanded="false"
+          className="bg-transparent border-2 border-gray-600 text-gray-600 hover:bg-gray-100 rounded-lg px-6 py-3 flex items-center shadow-sm"
         >
-          <span className="absolute animate-pulse bottom-auto left-auto right-0 top-0 z-10 inline-block -translate-y-1/2 translate-x-2/4 rotate-0 skew-x-0 skew-y-0 scale-x-100 scale-y-100 rounded-full bg-primary p-1.5 text-xs"></span>
-          Talk to founder
-          <span className="group-hover:animate-bounce ml-2">👋</span>
-        </a>
+          Talk to Founder
+          <span className="ml-2">👋</span>
+        </a> */}
       </div>
+
       <div className="mt-6">
         <div className="flex items-center mb-4">
-          <span className="text-3xl font-bold text-black text-[#bd1e59]">
-            1
-          </span>
-          <div className="flex-1 ml-4 border-t-2 border-dashed border-gray-300" />
+          <span className="text-3xl font-bold text-blue-600">1</span>
+          <div className="flex-1 ml-4 border-t-2 border-dashed border-gray-300"></div>
         </div>
-        <h2 className="text-xl font-semibold text-black">
-          Unlock Access to your Associate
+        <h2 className="text-xl font-semibold text-gray-900">
+          Unlock Access to Your Associate
         </h2>
-        <p className="mt-1 text-sm text-black">
+        <p className="mt-1 text-sm text-gray-600">
           See our impact on other clients,{' '}
-          <Link className="text-[#bd1e59] text-black" href="#">
+          <Link className="text-blue-600" href="#">
             Testimonials
           </Link>
         </p>
-        <Button className="mt-4 text-black" variant="secondary">
-          <a
-            href="/pricing"
-            className="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 py-2 md:text-lg md:font-light px-4 md:px-6 md:glow-btn rounded-xl md:h-12 shiny-button border border-gray-800"
-          >
-            Check Plan
-          </a>
+        <Button className="mt-4 bg-green-600 text-white hover:bg-green-700 shadow-md rounded-lg px-6 py-3">
+          <a href="/pricing">Check Plan</a>
         </Button>
       </div>
+
       <div className="mt-6">
         <div className="flex items-center mb-4">
-          <span className="text-3xl font-bold text-black text-[#bd1e59]">
-            2
-          </span>
-          <div className="flex-1 ml-4 border-t-2 border-dashed border-gray-300" />
+          <span className="text-3xl font-bold text-blue-600">2</span>
+          <div className="flex-1 ml-4 border-t-2 border-dashed border-gray-300"></div>
         </div>
-        <h2 className="text-xl font-semibold text-black">Onboarding Call</h2>
-        <p className="mt-1 text-sm text-black">
+        <h2 className="text-xl font-semibold text-gray-900">Onboarding Call</h2>
+        <p className="mt-1 text-sm text-gray-600">
           You will be greeted by your dedicated assistant
         </p>
-        <Button disabled={!isPaidUser} className="mt-4 text-black">
+        <Button
+          disabled={!isPaidUser}
+          className={`mt-4 ${
+            !isPaidUser
+              ? 'bg-gray-200 text-gray-500 border-gray-300'
+              : 'bg-blue-600 text-white hover:bg-blue-700'
+          } shadow-md rounded-lg px-6 py-3 flex items-center`}
+        >
           <a
             href="https://apply.neetocal.com/meeting-with-nikhil-jain"
             target="_blank"
             rel="noopener noreferrer"
-            className={`inline-flex ${!isPaidUser && 'bg-white text-neutral-500 border-neutral-400'} items-center justify-center whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 py-2 md:text-lg md:font-light px-4 md:px-6 md:glow-btn rounded-xl md:h-12 shiny-button border border-gray-800`}
           >
-            Pick a splot
+            Pick a Slot
             {!isPaidUser && <CiLock className="ml-2" />}
           </a>
         </Button>
