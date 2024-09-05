@@ -1,4 +1,5 @@
 import { ISubscription } from '../Subscription/types';
+import { Document } from 'mongoose';
 
 export type Jobs = {
   [x: string]: string;
@@ -11,7 +12,7 @@ export type Jobs = {
   location:string;
 };
 
-export interface IUser {
+export interface IUser extends Document{
   clerkId: string;
   firstName: string;
   lastName: string;

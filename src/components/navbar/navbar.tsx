@@ -80,11 +80,11 @@ const Navbar = () => {
                 Pricing
               </span>
             </Link>
-            <Link href="/career" passHref>
+            {/* <Link href="/career" passHref>
               <span className="text-sm font-medium text-gray-700 hover:text-green-500 cursor-pointer block py-2">
                 Career
               </span>
-            </Link>
+            </Link> */}
             <Link href="/" passHref>
               <span className="text-sm font-medium text-gray-700 hover:text-green-500 cursor-pointer block py-2">
                 Try the Copilot Free
@@ -142,11 +142,11 @@ const Navbar = () => {
                 Pricing
               </span>
             </Link>
-            <Link href="/career" passHref>
+            {/* <Link href="/career" passHref>
               <span className="text-sm font-medium text-gray-500 hover:text-green-600 cursor-pointer mx-2">
                 Career
               </span>
-            </Link>
+            </Link> */}
             <Link href="#" passHref>
               <span className="text-sm bg-green-600 text-white py-2 px-4 rounded-full hover:bg-green-700 cursor-not-allowed relative group mx-2">
                 Try the Copilot Free

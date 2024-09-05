@@ -8,6 +8,7 @@ import React from "react"
 import Navbar from '../navbar/navbar';
 import Banner from './FullPageImage';
 import Modal from './Call'; // Import the modal component
+import Footer from "../footer/footer"
 
 export function Onboarding() {
 
@@ -76,7 +77,7 @@ export function Onboarding() {
 
   const handleSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    const url = 'https://script.google.com/macros/s/AKfycbxtT3VXqDIcF2BhflAh4l7l6DJfRaUevq6AT7Fk-humRKrhuWum0gQX97ZiLUxTEt7qIQ/exec';
+    const url = 'https://script.google.com/macros/s/AKfycbxhS88w-PVah8s2Htyj8IinBGpcWUtCZ6LYvO5qO3aaZBuIgfx4HEZVs1jkRNLAH7ALyw/exec';
     const formDataToSend = new FormData();
 
     Object.entries(formData).forEach(([key, value]) => {
@@ -118,7 +119,7 @@ export function Onboarding() {
   return (
     <>
       <Navbar />
-      <div style={{ filter: isModalOpen ? "blur(5px)" : "none" }} className="min-h-screen w-full lg:grid lg:grid-cols-[300px_1fr] bg-gray-100">
+      <div style={{ filter: isModalOpen ? "blur(5px)" : "none" }} className="min-h-screen w-full lg:grid lg:grid-cols-[300px_1fr] bg-gray-100 py-16">
         <div className="flex flex-col border-r bg-white shadow-md p-6">
           <div className="mb-6 flex items-center justify-between">
             <h2 className="text-lg font-semibold text-gray-800" style={{ fontFamily: 'Calibri, sans-serif' }}>Onboarding Form</h2>
@@ -347,6 +348,7 @@ export function Onboarding() {
         onClose={() => setIsModalOpen(false)}
         onScheduleCall={handleScheduleCall}
       />
+      <Footer />
     </>
   )
 }
