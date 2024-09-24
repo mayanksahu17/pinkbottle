@@ -165,10 +165,10 @@ const Aboutus = () => {
           </div>
           <div className="flex flex-col items-center text-center">
             <img
-              alt="Kshitij Salecha"
+              alt="Ashwin Agrawal"
               className="mb-4 rounded-xl shadow-lg"
               height="200"
-              src="/Kshitj.png"
+              src="/Ashwin_jain.png"
               style={{
                 aspectRatio: '1/1',
                 objectFit: 'cover',
@@ -177,16 +177,10 @@ const Aboutus = () => {
               loading="lazy"
             />
 
-            <h2 className="font-bold text-2xl mb-2">Kshitij Salecha</h2>
+            <h2 className="font-bold text-2xl mb-2">Ashwin Agrawal</h2>
             <p className="text-gray-700 mb-4">
-              Co-Founder | Operations |{' '}
-              <a
-                href="https://www.linkedin.com/in/kshitij-salecha-14237b1b1/"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <LinkedinIcon className="inline ml-1" />
-              </a>
+              Co-Founder | Tech |{' '}
+            
             </p>
             <p className="text-gray-600 mb-4">
               I have recruiting experience of 3+ years. I know how hiring works
@@ -208,9 +202,9 @@ const Aboutus = () => {
                 loading="lazy"
               />
               <img
-                alt="Mindtek"
+                alt="Atlassian"
                 height="150"
-                src="/mindtek.jpg"
+                src="/Atlassian.png"
                 style={{
                   aspectRatio: '120/40',
                   objectFit: 'contain',
@@ -293,3 +287,12 @@ function LinkedinIcon(
     </svg>
   );
 }
+
+
+{/* <a
+href="https://www.linkedin.com/in/kshitij-salecha-14237b1b1/"
+target="_blank"
+rel="noopener noreferrer"
+>
+<LinkedinIcon className="inline ml-1" />
+</a> */}
