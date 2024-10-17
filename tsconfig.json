@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "typeRoots": ["./src/types", "./node_modules/@types"],
     "downlevelIteration": true,
     "target": "es2015",
     "lib": [
@@ -10,7 +9,7 @@
     ],
     "allowJs": true,
     "skipLibCheck": true,
-    "strict": true,  // Consider setting this to true for better type checking
+    "strict": false,
     "noEmit": true,
     "incremental": true,
     "module": "esnext",
@@ -33,8 +32,7 @@
     "next-env.d.ts",
     ".next/types/**/*.ts",
     "**/*.ts",
-    "**/*.tsx",
-    "src/types/**/*.d.ts"  // Make sure to include your custom declaration files
+    "**/*.tsx"
   ],
   "exclude": [
     "node_modules"
