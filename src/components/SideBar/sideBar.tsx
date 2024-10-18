@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 'use client';
 
 import React from 'react';
@@ -17,20 +15,19 @@ interface SidebarProps {
   sidebarOpen: boolean;
 }
 
-const Sidebar: React.FC<SidebarProps> = ({
+function Sidebar({
   currentTab,
   setCurrentTab,
   setSidebarOpen,
   isPaidUser,
   sidebarOpen,
-}) => {
+}: SidebarProps) {
   const router = useRouter();
 
   return (
     <aside
-      className={`fixed top-16 left-0 z-40 w-64 bg-white p-4 transform transition-transform duration-300 ease-in-out h-full ${
-        sidebarOpen ? 'translate-x-0' : '-translate-x-full'
-      } md:translate-x-0 md:block shadow-xl`}
+      className={`sticky top-16 z-40 w-64 bg-white p-4 h-screen shadow-xl`}
+      style={{ minHeight: '100vh' }} // Ensures the sidebar has the full viewport height
     >
       <nav className="mt-16 flex flex-col space-y-4">
         <Button
@@ -124,7 +121,6 @@ const Sidebar: React.FC<SidebarProps> = ({
       </nav>
     </aside>
   );
-};
+}
 
 export default Sidebar;
->>>>>>> parent of 9edeca3 (ui of sidebar fixed)
