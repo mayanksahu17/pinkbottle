@@ -1,18 +1,40 @@
-import { createUploadthing, type FileRouter } from 'uploadthing/next';
-import { UploadThingError } from 'uploadthing/server';
+import { createUploadthing, type FileRouter } from "uploadthing/next";
+import { UploadThingError } from "uploadthing/server";
 
 const f = createUploadthing();
 
-const auth = (req: Request) => ({ id: 'fakeId' }); // Fake auth function
+const auth = (req: Request) => ({ id: "fakeId" });
 
-// FileRouter for your app, can contain multiple FileRoutes
 export const ourFileRouter = {
-  mediaPost: f({
-    pdf: { maxFileSize: '2MB', maxFileCount: 1 },
-    'application/msword': { maxFileCount: 1, maxFileSize: '2MB' },
+ 
+  profilePictureUploader: f({ image: { maxFileSize: "2MB" } }) 
+    .middleware(async ({ req }) => {
+      const user = await auth(req);
+      if (!user) throw new UploadThingError("Unauthorized");
+      return { userId: user.id };
+    })
+    .onUploadComplete(async ({ metadata, file }) => {
+      console.log("Profile Picture upload complete for userId:", metadata.userId);
+      console.log("File URL:", file.url);
+      return { uploadedBy: metadata.userId, url: file.url };
+    }),
+
+  // Route for CV uploads
+  cvUploader: f({
+    image: {
+      maxFileSize: "8MB", // Change this to a valid size
+    },
   })
-    .middleware(({ req }) => auth(req))
-    .onUploadComplete((data) => console.log('file', data)),
+    .middleware(async ({ req }) => {
+      const user = await auth(req);
+      if (!user) throw new UploadThingError("Unauthorized");
+      return { userId: user.id };
+    })
+    .onUploadComplete(async ({ metadata, file }) => {
+      console.log("CV upload complete for userId:", metadata.userId);
+      console.log("File URL:", file.url);
+      return { uploadedBy: metadata.userId, url: file.url };
+    }),
 } satisfies FileRouter;
 
 export type OurFileRouter = typeof ourFileRouter;

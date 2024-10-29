@@ -1,13 +1,15 @@
 'use client';
-import React from 'react';
+import React, { useState } from 'react';
 import { Button } from '../ui/button';
 import Link from 'next/link';
 import { AvatarImage, AvatarFallback, Avatar } from '@/components/ui/avatar';
 import { useUser } from '@clerk/nextjs';
 import { CiLock } from 'react-icons/ci';
+import FormModal from '../formTest/ProfileForm/FormModal'; 
 
 const DashboardMain = ({ isPaidUser }: { isPaidUser: boolean }) => {
   const { user } = useUser();
+  const [isProfileFormOpen, setIsProfileFormOpen] = useState(false);
 
   return (
     <main className="w-full p-6 bg-white rounded-lg shadow-md mt-10">
@@ -50,15 +52,6 @@ const DashboardMain = ({ isPaidUser }: { isPaidUser: boolean }) => {
             </svg>
           </Button>
         </Link>
-        {/* <a
-          href="https://apply.neetocal.com/meeting-with-nikhil-jain"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="bg-transparent border-2 border-gray-600 text-gray-600 hover:bg-gray-100 rounded-lg px-6 py-3 flex items-center shadow-sm"
-        >
-          Talk to Founder
-          <span className="ml-2">👋</span>
-        </a> */}
       </div>
 
       <div className="mt-6">
@@ -107,6 +100,30 @@ const DashboardMain = ({ isPaidUser }: { isPaidUser: boolean }) => {
           </a>
         </Button>
       </div>
+
+      {/* New Step with Complete Profile Button */}
+      <div className="mt-6">
+        <div className="flex items-center mb-4">
+          <span className="text-3xl font-bold text-blue-600">3</span>
+          <div className="flex-1 ml-4 border-t-2 border-dashed border-gray-300"></div>
+        </div>
+        <h2 className="text-xl font-semibold text-gray-900">Complete Your Profile</h2>
+        <p className="mt-1 text-sm text-gray-600">
+          Make sure your profile is complete to get the most out of our platform.
+        </p>
+        <Button
+          onClick={() => setIsProfileFormOpen(true)}
+          className="mt-4 bg-blue-600 text-white hover:bg-blue-700 shadow-md rounded-lg px-6 py-3"
+        >
+          Complete Profile
+        </Button>
+      </div>
+
+      {/* Profile Completion Modal */}
+      <FormModal
+        isOpen={isProfileFormOpen}
+        onClose={() => setIsProfileFormOpen(false)}
+      />
     </main>
   );
 };
