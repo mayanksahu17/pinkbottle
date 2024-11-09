@@ -14,11 +14,12 @@ export default function FormModal({ isOpen, onClose }: FormModalProps) {
       <DialogOverlay className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-md z-40" />
 
       {/* Centered Modal Content */}
-      <DialogContent
-        className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 max-w-lg w-full max-h-screen overflow-y-auto bg-white shadow-lg rounded-lg p-6 z-50"
-      >
-        <MultiStepForm onClose={onClose} />
-      </DialogContent>
-    </Dialog>
+       {/* Centered Modal Content */}
+  <DialogContent
+    className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 max-w-lg w-full max-h-screen overflow-y-auto bg-white shadow-lg rounded-lg p-6 z-50"
+  >
+    <MultiStepForm onClose={onClose} />
+  </DialogContent>
+</Dialog>
   );
 }

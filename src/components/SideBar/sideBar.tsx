@@ -26,7 +26,7 @@ function Sidebar({
 
   return (
     <aside
-      className={`sticky top-16 z-40 w-64 bg-white p-4 h-screen shadow-xl`}
+      className={`sticky top-16 z-9 w-64 bg-white p-4 h-screen shadow-xl `}
       style={{ minHeight: '100vh' }} // Ensures the sidebar has the full viewport height
     >
       <nav className="mt-16 flex flex-col space-y-4">
