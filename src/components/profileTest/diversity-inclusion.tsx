@@ -46,7 +46,7 @@ export default function DiversityInclusion({ data, onUpdate }: DiversityInclusio
           <SelectTrigger id={field}>
             <SelectValue placeholder={`Select ${label.toLowerCase()}`} />
           </SelectTrigger>
-          <SelectContent>
+          <SelectContent className="bg-white shadow-lg rounded-md">
             {getOptionsForField(field)}
           </SelectContent>
         </Select>
@@ -57,31 +57,32 @@ export default function DiversityInclusion({ data, onUpdate }: DiversityInclusio
   )
 
   const getOptionsForField = (field: keyof DiversityInclusionData) => {
+    const itemClass = "bg-white text-gray-800"
     switch (field) {
       case 'gender':
         return [
-          <SelectItem key="male" value="male">Male</SelectItem>,
-          <SelectItem key="female" value="female">Female</SelectItem>,
-          <SelectItem key="non-binary" value="non-binary">Non-binary</SelectItem>,
-          <SelectItem key="other" value="other">Other</SelectItem>,
-          <SelectItem key="prefer-not-to-say" value="prefer-not-to-say">Prefer not to say</SelectItem>
+          <SelectItem className={itemClass} key="male" value="male">Male</SelectItem>,
+          <SelectItem className={itemClass} key="female" value="female">Female</SelectItem>,
+          <SelectItem className={itemClass} key="non-binary" value="non-binary">Non-binary</SelectItem>,
+          <SelectItem className={itemClass} key="other" value="other">Other</SelectItem>,
+          <SelectItem className={itemClass} key="prefer-not-to-say" value="prefer-not-to-say">Prefer not to say</SelectItem>
         ]
       case 'ethnicity':
         return [
-          <SelectItem key="asian" value="asian">Asian</SelectItem>,
-          <SelectItem key="black" value="black">Black</SelectItem>,
-          <SelectItem key="hispanic" value="hispanic">Hispanic</SelectItem>,
-          <SelectItem key="white" value="white">White</SelectItem>,
-          <SelectItem key="mixed" value="mixed">Mixed</SelectItem>,
-          <SelectItem key="other" value="other">Other</SelectItem>,
-          <SelectItem key="prefer-not-to-say" value="prefer-not-to-say">Prefer not to say</SelectItem>
+          <SelectItem className={itemClass} key="asian" value="asian">Asian</SelectItem>,
+          <SelectItem className={itemClass} key="black" value="black">Black</SelectItem>,
+          <SelectItem className={itemClass} key="hispanic" value="hispanic">Hispanic</SelectItem>,
+          <SelectItem className={itemClass} key="white" value="white">White</SelectItem>,
+          <SelectItem className={itemClass} key="mixed" value="mixed">Mixed</SelectItem>,
+          <SelectItem className={itemClass} key="other" value="other">Other</SelectItem>,
+          <SelectItem className={itemClass} key="prefer-not-to-say" value="prefer-not-to-say">Prefer not to say</SelectItem>
         ]
       case 'disability':
       case 'veteranStatus':
         return [
-          <SelectItem key="yes" value="yes">Yes</SelectItem>,
-          <SelectItem key="no" value="no">No</SelectItem>,
-          <SelectItem key="prefer-not-to-say" value="prefer-not-to-say">Prefer not to say</SelectItem>
+          <SelectItem className={itemClass} key="yes" value="yes">Yes</SelectItem>,
+          <SelectItem className={itemClass} key="no" value="no">No</SelectItem>,
+          <SelectItem className={itemClass} key="prefer-not-to-say" value="prefer-not-to-say">Prefer not to say</SelectItem>
         ]
       default:
         return []
@@ -90,12 +91,11 @@ export default function DiversityInclusion({ data, onUpdate }: DiversityInclusio
 
   return (
     <Card>
-      {/* Container for Title and Description */}
-      <div className="p-4 border-b border-gray-200 flex justify-between items-start">
+      <CardHeader className="p-4 border-b border-gray-200 flex justify-between items-start">
         <div>
           <CardTitle>Diversity & Inclusion</CardTitle>
-          <p className="text-gray-500 mt-2">
-            This section includes an optional survey on your diversity and inclusion information. Skipping the completion will still be added to your Profile strength.
+          <p className="text-gray-500 mt-2 text-sm">
+            This section includes an optional survey on your diversity and inclusion information. Skipping it will still contribute to your profile strength.
           </p>
         </div>
         {!isEditing ? (
@@ -104,19 +104,18 @@ export default function DiversityInclusion({ data, onUpdate }: DiversityInclusio
           </Button>
         ) : (
           <div className="flex gap-2">
-            <Button variant="ghost" size="icon" onClick={() => setIsEditing(false)} aria-label="Cancel">
+            <Button variant="default" size="icon" onClick={() => setIsEditing(false)} aria-label="Cancel">
               <X className="h-4 w-4" />
             </Button>
-            <Button variant="ghost" size="icon" onClick={handleSubmit} aria-label="Save">
+            <Button variant="default" size="icon" onClick={handleSubmit} aria-label="Save">
               <Save className="h-4 w-4" />
             </Button>
           </div>
         )}
-      </div>
+      </CardHeader>
 
-      {/* Container for Form Data */}
-      <CardContent>
-        <form onSubmit={handleSubmit} className="space-y-4 mt-4">
+      <CardContent className="p-4">
+        <form onSubmit={handleSubmit} className="space-y-4">
           {renderField('Gender identity', formData.gender, 'gender')}
           {renderField('Ethnicity', formData.ethnicity, 'ethnicity')}
           {renderField('Disability', formData.disability, 'disability')}
