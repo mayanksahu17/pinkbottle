@@ -213,7 +213,7 @@ const resultHome = () => {
             <button className="flex items-center justify-center gap-2 px-6 py-2 text-sm md:text-lg font-medium text-primary-foreground bg-primary rounded-full hover:bg-primary-dark transition-all shadow-lg">
               <span className="rounded-full bg-white p-2">
                 <img
-                  src="Nikhil.jpeg"
+                  src="Ashwin_jain.png"
                   alt="Custom Image"
                   className="h-6 w-6"
                   loading="lazy"

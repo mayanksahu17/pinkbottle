@@ -316,7 +316,7 @@ const PricingUser = () => {
             <div className="space-y-4">
               {/* Individual roadmap items */}
               {[
-                "You're paying us $0.75/hour",
+                "You're paying us $0.05/hour",
                 'Increase in interviews 5x',
                 'Advantage in interviews 3x',
                 'Full-time Pay Range $50 - $150/hour',

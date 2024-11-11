@@ -8,9 +8,9 @@ const Footer = () => {
       <div className="max-w-7xl mx-auto px-2     sm:px-6 lg:px-4">
         <div className="flex flex-col md:flex-row justify-between items-center text-center md:text-left space-y-8 md:space-y-0">
           <div className="flex flex-col items-center md:items-start md:w-1/3 space-y-4">
-            <img src="Hiredeasy.png" alt="Scale.jobs Logo" className="h-20" />
+            <img src="Hiredeasy.png" alt="HiredEasy Logo" className="h-20" />
             <p className="text-gray-600 text-sm">
-              Empowering job seekers with smart and efficient tools to land their dream job.
+              Empowering job seekers with smart and efficient tools<br />  to land their dream job.
             </p>
             <div className="flex space-x-4">
               <a href="https://www.instagram.com/hiredeasy/" target="_blank" className="text-gray-600 hover:text-blue-500 transition-colors duration-300">
@@ -53,7 +53,7 @@ const Footer = () => {
           <div className="md:w-1/3 text-center md:text-right">
             <h4 className="text-gray-800 text-lg font-semibold">OUR STORY</h4>
             <p className="mt-4 text-gray-600 text-sm">
-              Created by two corporate professionals guys who understand the challenges of today's job market.
+              Created by a team of corporate professionals guys who understand the challenges of today's job market.
               <br />
                 Made without a choice in 
                   <span className="inline-flex items-center">

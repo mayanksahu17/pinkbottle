@@ -107,22 +107,22 @@ const Aboutus = () => {
         </section>
         <section className="grid grid-cols-1 md:grid-cols-2 gap-12">
           <div className="flex flex-col items-center text-center">
-            <img
-              alt="Nikhil Jain"
-              className="mb-4 rounded-xl shadow-lg "
-              height="200"
-              src="/Nikhil.jpeg"
-              style={{
-                aspectRatio: '1/1',
-                objectFit: 'cover',
-              }}
-              width="200"
-              loading="lazy"
-            />
+          <img
+            alt="Shubham Jain"
+            className="mb-4 rounded-xl shadow-lg"
+            height="200"
+            src="/Shubham.png"
+            style={{
+              aspectRatio: '1/1',
+              objectFit: 'contain', // Prevents zooming and fits the entire image
+            }}
+            width="200"
+            loading="lazy"
+          />
 
-            <h2 className="font-bold text-2xl mb-2">Nikhil Jain</h2>
+            <h2 className="font-bold text-2xl mb-2">Shubham Jain</h2>
             <p className="text-gray-700 mb-4">
-              Co-Founder | Product |{' '}
+              Co-Founder | Operations
               {/* <a
                 href="https://www.linkedin.com/in/wnikhil/"
                 target="_blank"
@@ -132,13 +132,11 @@ const Aboutus = () => {
               </a> */}
             </p>
             <p className="text-gray-600 mb-4">
-              I co-founded a startup that helps students and professionals by
-              applying for jobs on their behalf, crafting resumes, and updating
-              cover letters. As an IIM Kolkata alumnus with experience at S&P
-              Global, I'm dedicated to enhancing user experiences and
-              simplifying the job application process.
+            I lived in the USA and worked for Amazon but had to return to India due to visa issues. 
+            Now, I've founded HireEasy to help people land their dream jobs. Having seen the U.S. job market up close, 
+            I am dedicated to simplifying the job application process and providing support for students and professionals navigating their career paths.
             </p>
-            <div className="flex space-x-2">
+            {/* <div className="flex space-x-2">
               <img
                 alt="IIM Kolkata logo"
                 height="70"
@@ -161,7 +159,7 @@ const Aboutus = () => {
                 width="140"
                 loading="lazy"
               />
-            </div>
+            </div> */}
           </div>
           <div className="flex flex-col items-center text-center">
             <img
@@ -179,17 +177,13 @@ const Aboutus = () => {
 
             <h2 className="font-bold text-2xl mb-2">Ashwin Agrawal</h2>
             <p className="text-gray-700 mb-4">
-              Co-Founder | Tech |{' '}
+              Co-Founder | Tech 
             
             </p>
             <p className="text-gray-600 mb-4">
-              I have recruiting experience of 3+ years. I know how hiring works
-              as I have hired more than 2000+ candidates for multiple companies.
-              My goal is to leverage my experience to create efficient and
-              effective hiring strategies that benefit both employers and job
-              seekers.
+            I work for Atlassian as a software developer with over 6 years of experience in the tech industry. I'm currently building HireEasy’s platform, focusing on innovative technology to streamline the job application process. Through our Human AI Assistant, we aim to simplify and support every step for job seekers. 
             </p>
-            <div className="flex space-x-2">
+            {/* <div className="flex space-x-2">
               <img
                 alt="DAVV logo"
                 height="70"
@@ -212,7 +206,7 @@ const Aboutus = () => {
                 width="140"
                 loading="lazy"
               />
-            </div>
+            </div> */}
           </div>
         </section>
       </main>

@@ -61,32 +61,35 @@ const Message = () => {
           assist others who are struggling through the job hunt ordeal.
         </p>
         <div className="flex items-center mb-8">
-          <img
-            className="w-24 h-24 border border-gray-300 rounded-lg mr-4"
-            src="Nikhil.jpeg"
-            alt="Nikhil Jain"
-          />
+        <div className="w-24 h-24 border border-gray-300 rounded-lg mr-4 overflow-hidden">
+        <img
+          src="Shubham.png"
+          alt="Shubham Jain"
+          className="w-full h-full transform scale-100 object-cover"
+        />
+      </div>
+
 
           <div>
             <p
               className="text-gray-800 font-bold"
               style={{ fontFamily: 'Calibri' }}
             >
-              Nikhil Jain
+              Shubham Jain
             </p>
             <p
               className="text-gray-600"
               style={{ fontFamily: 'Calibri, sans-serif' }}
             >
-              Co-Founder & IIM Kolkata
+              Co-Founder | Operations | Ex - Amazon
             </p>
-            <a
+            {/* <a
               href="https://www.linkedin.com/in/nikhil-jain-profile"
               target="_blank"
               className="text-green-500"
             >
               LinkedIn Profile →
-            </a>
+            </a> */}
           </div>
         </div>
         <div className="flex flex-col md:flex-row gap-4 mt-10 items-center justify-center">
@@ -115,7 +118,7 @@ const Message = () => {
               <button className="relative flex items-center justify-center gap-2 px-4 py-1.5 text-sm md:text-base font-medium text-primary-foreground bg-white rounded-full hover:bg-gray-100 transition-all shadow-md border border-gray-300 w-full md:w-auto">
                 <span className="rounded-full bg-white p-1.5">
                   <img
-                    src="Nikhil.jpeg"
+                    src="Ashwin_jain.png"
                     alt="Custom Image"
                     className="h-5 w-5 rounded-full"
                     loading="lazy"
