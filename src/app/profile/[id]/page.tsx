@@ -77,6 +77,9 @@ export default function ProfilePage({ params }: { params: { id: string } }) {
 
   const handleUpdateProfile = async (section: string, data: any) => {
     try {
+      console.log("Updating section:", section);
+      console.log("Data being sent:", JSON.stringify(data, null, 2)); // Detailed log
+  
       const response = await fetch(`/api/profile/${params.id}`, {
         method: 'PATCH',
         headers: {
@@ -87,18 +90,25 @@ export default function ProfilePage({ params }: { params: { id: string } }) {
         }),
       });
 
+      console.log("API Response after the call", response)
+
       if (!response.ok) {
         throw new Error('Failed to update profile');
       }
-
       const updatedProfile = await response.json();
-      setProfileData(updatedProfile);
+      console.log("Updated profile data received from server:", JSON.stringify(updatedProfile, null, 2));
+
+      setProfileData((prevProfile) => ({
+        ...prevProfile,
+        [section]: updatedProfile[section],
+      }));
 
       toast({
         title: "Success",
         description: "Profile updated successfully",
       });
     } catch (err) {
+
       console.error('Error updating profile:', err);
       toast({
         title: "Error",
@@ -107,6 +117,7 @@ export default function ProfilePage({ params }: { params: { id: string } }) {
       });
     }
   };
+    
 
   if (loading) {
     return <div className="flex items-center justify-center min-h-screen">Loading...</div>;

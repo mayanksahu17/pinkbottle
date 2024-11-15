@@ -17,11 +17,6 @@ export default function PersonalInfo({ data, onUpdate }) {
     setFormData(prev => ({ ...prev, [name]: value }))
   }
 
-  const handlePhotoUpload = (url : string) => {
-    setFormData(prev => ({ ...prev, profilePhoto: url }))
-    onUpdate({ ...formData, profilePhoto: url })
-  }
-
   const handleSubmit = (e) => {
     e.preventDefault()
     onUpdate(formData)
@@ -29,17 +24,24 @@ export default function PersonalInfo({ data, onUpdate }) {
   }
 
   const handleUploadComplete = (res) => {
-    setIsUploading(false)
+    setIsUploading(false);
+  
     if (res && res.length > 0) {
-      const newPhotoUrl = res[0].fileUrl
-      setFormData(prev => ({ ...prev, profilePhoto: newPhotoUrl }))
-      onUpdate({ ...formData, profilePhoto: newPhotoUrl })
+      const newPhotoUrl = res[0].url; 
+      console.log("New photo URL received:", newPhotoUrl);
+  
+      const updatedData = { ...formData, profilePhoto: newPhotoUrl };
+      console.log("Updated formData with profilePhoto:", updatedData);
+  
+      setFormData(updatedData);
+  
+      onUpdate(updatedData);
     }
-  }
-
+  };
+  
   const handleRemovePhoto = () => {
-    setFormData(prev => ({ ...prev, profilePhoto: null })) // Set to null instead of removing
-    onUpdate({ ...formData, profilePhoto: null }) // Send null to backend explicitly
+    setFormData(prev => ({ ...prev, profilePhoto: null })) 
+    onUpdate({ ...formData, profilePhoto: null }) 
   }
 
   return (
