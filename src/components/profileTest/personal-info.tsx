@@ -4,8 +4,8 @@ import { Input } from "@/components/ui/input"
 import { Card, CardContent } from "@/components/ui/card"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Pencil, Camera, X ,Save} from 'lucide-react'
-import { UploadButton } from "@/utils/uploadthing"  // Adjust import if needed
+import { Pencil, Camera, X, Save } from 'lucide-react'
+import ChangePhotoButton from "@/components/Buttons/change-photo-button"
 
 export default function PersonalInfo({ data, onUpdate }) {
   const [isEditing, setIsEditing] = useState(false)
@@ -17,8 +17,9 @@ export default function PersonalInfo({ data, onUpdate }) {
     setFormData(prev => ({ ...prev, [name]: value }))
   }
 
-  const handlePhotoUpload = (url) => {
+  const handlePhotoUpload = (url : string) => {
     setFormData(prev => ({ ...prev, profilePhoto: url }))
+    onUpdate({ ...formData, profilePhoto: url })
   }
 
   const handleSubmit = (e) => {
@@ -27,20 +28,18 @@ export default function PersonalInfo({ data, onUpdate }) {
     setIsEditing(false)
   }
 
-  const handleUploadStart = () => {
-    setIsUploading(true)
-  }
-
   const handleUploadComplete = (res) => {
     setIsUploading(false)
     if (res && res.length > 0) {
-      handlePhotoUpload(res[0].fileUrl)  // Update profile photo with the uploaded file URL
+      const newPhotoUrl = res[0].fileUrl
+      setFormData(prev => ({ ...prev, profilePhoto: newPhotoUrl }))
+      onUpdate({ ...formData, profilePhoto: newPhotoUrl })
     }
   }
 
-  const handleUploadError = (error) => {
-    setIsUploading(false)
-    console.error("Upload error:", error)
+  const handleRemovePhoto = () => {
+    setFormData(prev => ({ ...prev, profilePhoto: null })) // Set to null instead of removing
+    onUpdate({ ...formData, profilePhoto: null }) // Send null to backend explicitly
   }
 
   return (
@@ -62,7 +61,7 @@ export default function PersonalInfo({ data, onUpdate }) {
               <X className="h-4 w-4" />
             </Button>
             <Button variant="ghost" size="icon" onClick={handleSubmit}>
-              <Save className="h-4 w-4" /> {/* Display save icon when editing */}
+              <Save className="h-4 w-4" />
             </Button>
           </div>
         )}
@@ -84,23 +83,19 @@ export default function PersonalInfo({ data, onUpdate }) {
                     <Button 
                       variant="outline" 
                       className="text-red-500 border-red-500 hover:bg-red-50"
-                      onClick={() => setFormData(prev => ({ ...prev, profilePhoto: '' }))}>
-                      <Camera className="h-4 w-4 mr-2" /> Remove photo
+                      onClick={handleRemovePhoto}
+                      disabled={!formData.profilePhoto}
+                    >
+                      <Camera className="h-4 w-4 mr-2" /> {formData.profilePhoto ? 'Remove photo' : 'No photo'}
                     </Button>
-                    <UploadButton
-                      endpoint="profilePictureUploader"  
+                    <ChangePhotoButton
+                      endpoint="profilePictureUploader"
                       onClientUploadComplete={handleUploadComplete}
-                      onUploadError={handleUploadError}
+                      onUploadError={(error) => console.error("Upload error:", error)}
                     />
-                    <Button 
-                      className="bg-emerald-400 hover:bg-emerald-500"
-                      disabled={isUploading}>
-                      <Camera className="h-4 w-4 mr-2" />
-                      {isUploading ? "Uploading..." : "Change photo"}
-                    </Button>
                   </div>
                   <p className="text-sm text-neutral-600">
-                    File upload criteria like file format: JPG, JPEG, PNG, and max file size of 5MB.
+                    File upload criteria: JPG, JPEG, PNG; max size 5MB.
                   </p>
                 </div>
               </div>
@@ -113,50 +108,53 @@ export default function PersonalInfo({ data, onUpdate }) {
               </div>
 
               <div className="space-y-4">
-                <div className="grid gap-y-4">
-                  {[{ label: 'Full name', name: 'fullName' }, { label: 'Location', name: 'location' }, { label: 'Postcode', name: 'postcode' }, { label: 'Phone number', name: 'phone' }].map((field) => (
-                    <div key={field.name} className="flex items-center py-2">
-                      <div className="w-1/3">
-                        <span className="text-neutral-700 font-medium">{field.label}:</span>
-                      </div>
-                      {isEditing ? (
-                        <Input
-                          name={field.name}
-                          value={formData[field.name] || ''}
-                          onChange={handleChange}
-                          className="w-2/3"
-                        />
-                      ) : (
-                        <span className="text-neutral-600 w-2/3">{formData[field.name]}</span>
-                      )}
-                    </div>
-                  ))}
-
-                  <div className="flex items-center py-2">
+                {[
+                  { label: 'Full name', name: 'fullName' },
+                  { label: 'Location', name: 'location' },
+                  { label: 'Postcode', name: 'postcode' },
+                  { label: 'Phone number', name: 'phone' }
+                ].map((field) => (
+                  <div key={field.name} className="flex items-center py-2">
                     <div className="w-1/3">
-                      <span className="text-neutral-700 font-medium">English level:</span>
+                      <span className="text-neutral-700 font-medium">{field.label}:</span>
                     </div>
-                    <div className="w-2/3">
-                      {isEditing ? (
-                        <Select
-                          value={formData.englishLevel}
-                          onValueChange={(value) => setFormData(prev => ({ ...prev, englishLevel: value }))}>
-                          <SelectTrigger>
-                            <SelectValue placeholder="Select English level" />
-                          </SelectTrigger>
-                          <SelectContent className="bg-white shadow-lg">
-                            <SelectItem value="professional">Professional working proficiency</SelectItem>
-                            <SelectItem value="native">Native</SelectItem>
-                            <SelectItem value="fluent">Fluent</SelectItem>
-                            <SelectItem value="advanced">Advanced</SelectItem>
-                            <SelectItem value="intermediate">Intermediate</SelectItem>
-                            <SelectItem value="basic">Basic</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      ) : (
-                        <span className="text-neutral-600 w-2/3">{formData.englishLevel}</span>
-                      )}
-                    </div>
+                    {isEditing ? (
+                      <Input
+                        name={field.name}
+                        value={formData[field.name] || ''}
+                        onChange={handleChange}
+                        className="w-2/3"
+                      />
+                    ) : (
+                      <span className="text-neutral-600 w-2/3">{formData[field.name]}</span>
+                    )}
+                  </div>
+                ))}
+
+                <div className="flex items-center py-2">
+                  <div className="w-1/3">
+                    <span className="text-neutral-700 font-medium">English level:</span>
+                  </div>
+                  <div className="w-2/3">
+                    {isEditing ? (
+                      <Select
+                        value={formData.englishLevel}
+                        onValueChange={(value) => setFormData(prev => ({ ...prev, englishLevel: value }))}>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select English level" />
+                        </SelectTrigger>
+                        <SelectContent className="bg-white shadow-lg">
+                          <SelectItem value="professional">Professional working proficiency</SelectItem>
+                          <SelectItem value="native">Native</SelectItem>
+                          <SelectItem value="fluent">Fluent</SelectItem>
+                          <SelectItem value="advanced">Advanced</SelectItem>
+                          <SelectItem value="intermediate">Intermediate</SelectItem>
+                          <SelectItem value="basic">Basic</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    ) : (
+                      <span className="text-neutral-600 w-2/3">{formData.englishLevel}</span>
+                    )}
                   </div>
                 </div>
               </div>

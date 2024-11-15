@@ -2,6 +2,7 @@ import { Label } from "@/components/ui/label";
 import { UploadButton } from "@/utils/uploadthing";
 import { UseFormReturn } from 'react-hook-form';
 import { FormData } from "../types";
+import CVButton from "@/components/Buttons/cv-upload-button"
 
 interface CV {
   form: UseFormReturn<FormData>;
@@ -12,8 +13,7 @@ export default function CV({ form }: CV) {
     <div className="space-y-6">
       <div>
         <Label htmlFor="resume">Resume/CV</Label>
-        <UploadButton
-          endpoint="cvUploader" // Update to match your backend endpoint
+        <CVButton
           onClientUploadComplete={(res) => {
             if (res?.[0]) {
               form.setValue("resume", res[0].url);

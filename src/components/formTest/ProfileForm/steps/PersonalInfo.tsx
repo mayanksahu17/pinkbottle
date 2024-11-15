@@ -2,20 +2,19 @@ import { useForm } from 'react-hook-form';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { createUploadthing, type FileRouter } from "uploadthing/next";
-import { UploadButton } from '@/utils/uploadthing';
+import UploadPhotoButton from '@/components/Buttons/upload-button';
 
 export default function PersonalInfo({ form }) {
-  const { register } = form;
+  const { register, setValue } = form;
 
   return (
     <div className="space-y-4">
       <div>
         <Label>Profile Photo</Label>
-        <UploadButton
-          endpoint="profilePictureUploader"
+        <UploadPhotoButton
           onClientUploadComplete={(res) => {
             if (res?.[0]) {
-              form.setValue('profilePhoto', res[0].url);
+              setValue('profilePhoto', res[0].url);
             }
           }}
           onUploadError={(error: Error) => {

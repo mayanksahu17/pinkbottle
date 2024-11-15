@@ -19,6 +19,9 @@ const config: Config = withUt({
       },
     },
     extend: {
+      fontFamily: {
+        bebas: ['Bebas Neue', 'sans-serif'],
+      },
       keyframes: {
         'accordion-down': {
           from: { height: '0' },

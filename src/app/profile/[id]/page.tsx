@@ -1,19 +1,18 @@
 'use client'
-
-import React, { useState, useEffect } from 'react'
-import { Button } from "@/components/ui/button"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { useToast } from "@/hooks/use-toast"
-import { AlertCircle } from 'lucide-react'
-import Sidebar from '../../../components/SideBar/sideBar'
-import PersonalInfo from '../../../components/profileTest/personal-info'
-import RolesSkills from '../../../components/profileTest/roles-skills'
-import Expectations from '../../../components/profileTest/expectations'
-import Experience from '../../../components/profileTest/experience'
-import CV from '../../../components/profileTest/cv'
-import DiversityInclusion from '../../../components/profileTest/diversity-inclusion'
-import SectionNavigation from './SectionNavigation'
-import ProfileStrength from './ProfileStrength'
+import React, { useState, useEffect } from 'react';
+import { Button } from "@/components/ui/button";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { useToast } from "@/hooks/use-toast";
+import { AlertCircle } from 'lucide-react';
+import Sidebar from '../../../components/SideBar/sideBar';
+import PersonalInfo from '../../../components/profileTest/personal-info';
+import RolesSkills from '../../../components/profileTest/roles-skills';
+import Expectations from '../../../components/profileTest/expectations';
+import Experience from '../../../components/profileTest/experience';
+import CV from '../../../components/profileTest/cv';
+import DiversityInclusion from '../../../components/profileTest/diversity-inclusion';
+import SectionNavigation from './SectionNavigation';
+import ProfileStrength from './ProfileStrength';
 
 interface ProfileData {
   personalInfo?: any;
@@ -37,44 +36,44 @@ const sections: Section[] = [
   { id: 'experience', label: 'Experience', Component: Experience },
   { id: 'cv', label: 'CV', Component: CV },
   { id: 'diversityInclusion', label: 'Diversity & Inclusion', Component: DiversityInclusion },
-]
+];
 
 export default function ProfilePage({ params }: { params: { id: string } }) {
-  const [activeSection, setActiveSection] = useState('personalInfo')
-  const [profileData, setProfileData] = useState<ProfileData | null>(null)
-  const [currentTab, setCurrentTab] = useState('profile')
-  const [sidebarOpen, setSidebarOpen] = useState(true)
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
-  const { toast } = useToast()
+  const [activeSection, setActiveSection] = useState('personalInfo');
+  const [profileData, setProfileData] = useState<ProfileData | null>(null);
+  const [currentTab, setCurrentTab] = useState('profile');
+  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const { toast } = useToast();
 
   useEffect(() => {
-    if (!params.id) return
+    if (!params.id) return;
 
     const fetchProfile = async () => {
-      setLoading(true)
+      setLoading(true);
       try {
-        const response = await fetch(`/api/profile/${params.id}`)
+        const response = await fetch(`/api/profile/${params.id}`);
         if (!response.ok) {
-          throw new Error('Failed to fetch profile')
+          throw new Error('Failed to fetch profile');
         }
-        const data = await response.json()
-        setProfileData(data)
+        const data = await response.json();
+        setProfileData(data);
       } catch (err) {
-        console.error('Error fetching profile:', err)
-        setError(err.message)
+        console.error('Error fetching profile:', err);
+        setError(err.message);
         toast({
           title: "Error",
           description: "Failed to load profile data",
           variant: "destructive",
-        })
+        });
       } finally {
-        setLoading(false)
+        setLoading(false);
       }
-    }
+    };
 
-    fetchProfile()
-  }, [params.id, toast])
+    fetchProfile();
+  }, [params.id, toast]);
 
   const handleUpdateProfile = async (section: string, data: any) => {
     try {
@@ -84,55 +83,55 @@ export default function ProfilePage({ params }: { params: { id: string } }) {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          [section]: data
-        })
-      })
+          [section]: data,
+        }),
+      });
 
       if (!response.ok) {
-        throw new Error('Failed to update profile')
+        throw new Error('Failed to update profile');
       }
 
-      const updatedProfile = await response.json()
-      setProfileData(updatedProfile)
-      
+      const updatedProfile = await response.json();
+      setProfileData(updatedProfile);
+
       toast({
         title: "Success",
         description: "Profile updated successfully",
-      })
+      });
     } catch (err) {
-      console.error('Error updating profile:', err)
+      console.error('Error updating profile:', err);
       toast({
         title: "Error",
         description: "Failed to update profile",
         variant: "destructive",
-      })
+      });
     }
-  }
+  };
 
   if (loading) {
-    return <div className="flex items-center justify-center min-h-screen">Loading...</div>
+    return <div className="flex items-center justify-center min-h-screen">Loading...</div>;
   }
 
   if (error) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
+      <div className=" font-bebas flex items-center justify-center min-h-screen">
         <div className="text-center">
           <AlertCircle className="h-10 w-10 text-destructive mx-auto mb-4" />
           <h2 className="text-lg font-semibold mb-2">Error Loading Profile</h2>
           <p className="text-muted-foreground">{error}</p>
         </div>
       </div>
-    )
+    );
   }
 
   if (!profileData) {
-    return null
+    return null;
   }
 
-  const ActiveSection = sections.find(section => section.id === activeSection)
-  
+  const ActiveSection = sections.find(section => section.id === activeSection);
+
   // Create a simplified version of sections for the navigation and strength components
-  const sectionInfo = sections.map(({ id, label }) => ({ id, label }))
+  const sectionInfo = sections.map(({ id, label }) => ({ id, label }));
 
   return (
     <div className="min-h-screen bg-background flex">
@@ -196,9 +195,10 @@ export default function ProfilePage({ params }: { params: { id: string } }) {
             )}
           </div>
 
-          <ProfileStrength
-            sections={sectionInfo}
-            profileData={profileData}
+          {/* Pass profileData to ProfileStrength */}
+          <ProfileStrength 
+            sections={sections} 
+            profileData={profileData}  // Pass profileData directly
           />
         </div>
       </div>

@@ -24,7 +24,7 @@ export default function DiversityInclusion({ form }) {
           <SelectTrigger>
             <SelectValue placeholder="Select gender" />
           </SelectTrigger>
-          <SelectContent>
+          <SelectContent className="bg-white">
             {genderOptions.map((option) => (
               <SelectItem key={option} value={option}>
                 {option}
@@ -40,7 +40,7 @@ export default function DiversityInclusion({ form }) {
           <SelectTrigger>
             <SelectValue placeholder="Select pronouns" />
           </SelectTrigger>
-          <SelectContent>
+          <SelectContent className="bg-white">
             {pronounOptions.map((option) => (
               <SelectItem key={option} value={option}>
                 {option}
@@ -56,7 +56,7 @@ export default function DiversityInclusion({ form }) {
           <SelectTrigger>
             <SelectValue placeholder="Select ethnicity" />
           </SelectTrigger>
-          <SelectContent>
+          <SelectContent className="bg-white">
             {ethnicityOptions.map((option) => (
               <SelectItem key={option} value={option}>
                 {option}
