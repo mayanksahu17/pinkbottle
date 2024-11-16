@@ -106,6 +106,9 @@ export default function ProfilePage({ params }: { params: { id: string } }) {
 
   const handleUpdateProfile = async (section: string, data: any) => {
     try {
+      console.log("Updating section:", section);
+      console.log("Data being sent:", JSON.stringify(data, null, 2)); // Detailed log
+  
       const response = await fetch(`/api/profile/${params.id}`, {
         method: 'PATCH',
         headers: {
@@ -115,6 +118,8 @@ export default function ProfilePage({ params }: { params: { id: string } }) {
           [section]: data,
         }),
       });
+
+      console.log("API Response after the call", response)
 
       if (!response.ok) {
         throw new Error('Failed to update profile');
@@ -131,6 +136,7 @@ export default function ProfilePage({ params }: { params: { id: string } }) {
         description: "Profile updated successfully",
       });
     } catch (err) {
+
       console.error('Error updating profile:', err);
       toast({
         title: "Error",
@@ -139,6 +145,7 @@ export default function ProfilePage({ params }: { params: { id: string } }) {
       });
     }
   };
+    
 
   if (loading) {
     return <div className="flex items-center justify-center min-h-screen">Loading...</div>;

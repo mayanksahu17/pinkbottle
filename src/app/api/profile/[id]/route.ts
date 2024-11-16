@@ -61,29 +61,44 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
   }
 }
 
-export async function PATCH(request, { params }) {
-  const { id } = params
-  await dbConnect()
+export async function PATCH(request: NextRequest, { params }: { params: { id: string } }) {
+  const { id } = params;
+  await dbConnect();
 
   try {
-    const updateData = await request.json()
+    const updateData = await request.json();
+    console.log("Received updateData payload:", JSON.stringify(updateData, null, 2));
 
-    if (!updateData.profilePhoto) {
-      updateData.profilePhoto = null
+    const existingProfile = await Profile.findById(id);
+    if (!existingProfile) {
+      console.log("Profile not found in the database for ID:", id);
+      return NextResponse.json({ error: 'Profile not found' }, { status: 404 });
     }
+
+    console.log("Existing personalInfo before update:", JSON.stringify(existingProfile.personalInfo, null, 2));
+
+    const updatedPersonalInfo = {
+      ...existingProfile.personalInfo, 
+      ...updateData.personalInfo,      
+    };
+
+    console.log("Updated personalInfo to be saved:", JSON.stringify(updatedPersonalInfo, null, 2));
 
     const updatedProfile = await Profile.findByIdAndUpdate(
       id,
-      { $set: updateData },
+      { $set: { personalInfo: updatedPersonalInfo } },
       { new: true }
-    )
+    );
 
-    if (!updatedProfile) {
-      return NextResponse.json({ error: 'Profile not found' }, { status: 404 })
-    }
-    return NextResponse.json(updatedProfile)
+    console.log("Updated Profile after DB save:", JSON.stringify(updatedProfile, null, 2));
+
+    return NextResponse.json(updatedProfile);
   } catch (error) {
-    console.error("Error updating profile:", error)
-    return NextResponse.json({ error: 'Failed to update profile' }, { status: 500 })
+    console.error("Error updating profile:", error);
+    return NextResponse.json({ error: 'Failed to update profile' }, { status: 500 });
   }
 }
+
+
+
+

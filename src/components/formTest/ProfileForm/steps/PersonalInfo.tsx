@@ -93,10 +93,10 @@ export default function PersonalInfo({ form }) {
         />
         <datalist id="locations">
           <option value="New York" />
-          <option value="London" />
-          <option value="Berlin" />
-          <option value="Tokyo" />
-          <option value="Singapore" />
+          <option value="California" />
+          <option value="Seattle" />
+          <option value="Boston" />
+          <option value="Chicago" />
         </datalist>
         {errors.location && <p className="text-red-500 text-sm">{errors.location.message}</p>}
       </div>
