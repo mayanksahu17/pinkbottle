@@ -1,84 +1,179 @@
-import { useFieldArray, UseFormReturn } from 'react-hook-form';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Badge } from '@/components/ui/badge';
-import { X, Plus } from 'lucide-react';
+import { useFieldArray, UseFormReturn } from "react-hook-form";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Badge } from "@/components/ui/badge";
+import { X, Plus } from "lucide-react";
+import { useState } from 'react';
 
-// Define Skill type
+// Updated Skill interface to include 'level'
 interface Skill {
   name: string;
   level: string;
 }
 
-// Define FormValues type, including primaryRole and skills
 interface FormValues {
-  primaryRole: string;
+  primaryRole: string[];
   skills: Skill[];
 }
 
 const skillSuggestions = [
-  'JavaScript', 'React', 'Node.js', 'Python', 'Java', 'TypeScript',
-  'AWS', 'Docker', 'Kubernetes', 'SQL', 'MongoDB', 'GraphQL'
+  "JavaScript",
+  "React",
+  "Node.js",
+  "Python",
+  "Java",
+  "TypeScript",
+  "AWS",
+  "Docker",
+  "Kubernetes",
+  "SQL",
+  "MongoDB",
+  "GraphQL",
 ];
 
 const roleSuggestions = [
-  'Frontend Developer', 'Backend Developer', 'Full Stack Developer',
-  'DevOps Engineer', 'Data Scientist', 'UI/UX Designer', 'Product Manager'
+  "Frontend Developer",
+  "Backend Developer",
+  "Full Stack Developer",
+  "DevOps Engineer",
+  "Data Scientist",
+  "UI/UX Designer",
+  "Product Manager",
 ];
 
 export default function RolesSkills({ form }: { form: UseFormReturn<FormValues> }) {
-  const { register, control, setValue } = form;
-
-  // Correctly typed useFieldArray using FormValues
-  const { fields, append, remove } = useFieldArray<FormValues>({
+  const {
     control,
-    name: "skills"
-  });
+    setValue,
+    getValues,
+    formState: { errors },
+  } = form;
+
+  // Separate state for input values
+  const [roleInput, setRoleInput] = useState("");
+  const [skillInput, setSkillInput] = useState("");
+  const [skillLevel, setSkillLevel] = useState("Beginner");
+
+  const { fields: skillFields, append: appendSkill, remove: removeSkill } =
+    useFieldArray<FormValues>({
+      control,
+      name: "skills",
+    });
+
+  const primaryRoles = getValues("primaryRole") || [];
+
+  // Handle adding primary roles
+  const handleRoleAdd = () => {
+    if (roleInput && /^[a-zA-Z\s]+$/.test(roleInput)) {
+      const role = roleInput.trim();
+      if (!primaryRoles.includes(role)) {
+        setValue("primaryRole", [...primaryRoles, role]);
+      }
+      setRoleInput("");
+    }
+  };
+
+  // Handle adding skills
+  const handleSkillAdd = () => {
+    if (skillInput && skillLevel && /^[a-zA-Z0-9.\s\-]+$/.test(skillInput)) {
+      appendSkill({ name: skillInput.trim(), level: skillLevel });
+      setSkillInput("");
+      setSkillLevel("Beginner");
+    }
+  };
+
+  // Remove a primary role
+  const removePrimaryRole = (role: string) => {
+    setValue("primaryRole", primaryRoles.filter((r) => r !== role));
+  };
+
+  // Handle skill level change
+  const handleSkillLevelChange = (level: string) => {
+    setSkillLevel(level);
+  };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 p-4 sm:p-6 lg:p-8">
+      {/* Primary Roles */}
       <div>
-        <Label htmlFor="primaryRole">Primary Role</Label>
-        <Input 
-          id="primaryRole" 
-          {...register('primaryRole')} 
-          list="roles"
-        />
-        <datalist id="roles">
-          {roleSuggestions.map((role) => (
-            <option key={role} value={role} />
-          ))}
-        </datalist>
-      </div>
-
-      <div>
-        <Label>Skills</Label>
+        <Label>Primary Roles</Label>
         <div className="space-y-2">
           <div className="flex gap-2">
             <Input
-              placeholder="Add a skill"
-              list="skills"
+              value={roleInput}
+              onChange={(e) => setRoleInput(e.target.value)}
+              placeholder="Add a role"
+              list="roles"
               onKeyDown={(e) => {
-                if (e.key === 'Enter') {
+                if (e.key === "Enter") {
                   e.preventDefault();
-                  const input = e.target as HTMLInputElement;
-                  append({ name: input.value, level: 'Beginner' });
-                  input.value = '';
+                  handleRoleAdd();
                 }
               }}
             />
             <Button
               type="button"
               variant="outline"
-              onClick={() => {
-                const input = document.querySelector('input[placeholder="Add a skill"]') as HTMLInputElement;
-                if (input.value) {
-                  append({ name: input.value, level: 'Beginner' });
-                  input.value = '';
+              onClick={handleRoleAdd}
+            >
+              <Plus className="h-4 w-4" />
+            </Button>
+          </div>
+          <datalist id="roles">
+            {roleSuggestions.map((role) => (
+              <option key={role} value={role} />
+            ))}
+          </datalist>
+        </div>
+        {errors.primaryRole && (
+          <span className="text-sm text-red-500">
+            {errors.primaryRole.message}
+          </span>
+        )}
+
+        {/* Selected Roles Preview */}
+        <div className="mt-4">
+          <Label>Selected Roles</Label>
+          <div className="mt-2 flex flex-wrap gap-2">
+            {primaryRoles.map((role) => (
+              <Badge key={role} variant="secondary" className="p-2">
+                {role}
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => removePrimaryRole(role)}
+                  className="ml-2 h-4 w-4 p-0"
+                >
+                  <X className="h-3 w-3" />
+                </Button>
+              </Badge>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Skills */}
+      <div>
+        <Label>Skills</Label>
+        <div className="space-y-2">
+          <div className="flex gap-2">
+            <Input
+              value={skillInput}
+              onChange={(e) => setSkillInput(e.target.value)}
+              placeholder="Add a skill"
+              list="skills"
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  e.preventDefault();
+                  handleSkillAdd();
                 }
               }}
+            />
+            <Button
+              type="button"
+              variant="outline"
+              onClick={handleSkillAdd}
             >
               <Plus className="h-4 w-4" />
             </Button>
@@ -88,38 +183,43 @@ export default function RolesSkills({ form }: { form: UseFormReturn<FormValues> 
               <option key={skill} value={skill} />
             ))}
           </datalist>
-        </div>
 
-        <div className="mt-4 flex flex-wrap gap-2">
-          {fields.map((field, index) => (
-            <Badge key={field.id} variant="secondary" className="p-2">
-              {field.name}
-              <Select
-                value={field.level}
-                onValueChange={(value) => {
-                  setValue(`skills.${index}.level`, value);
-                }}
-              >
-                <SelectTrigger className="w-[100px] ml-2">
-                  <SelectValue placeholder="Select level" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="Beginner">Beginner</SelectItem>
-                  <SelectItem value="Intermediate">Intermediate</SelectItem>
-                  <SelectItem value="Advanced">Advanced</SelectItem>
-                  <SelectItem value="Expert">Expert</SelectItem>
-                </SelectContent>
-              </Select>
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => remove(index)}
-                className="ml-2 h-4 w-4 p-0"
-              >
-                <X className="h-3 w-3" />
-              </Button>
-            </Badge>
-          ))}
+          {/* Skill Level Selector */}
+          <div className="flex gap-2 mt-2">
+            <select
+              value={skillLevel}
+              onChange={(e) => handleSkillLevelChange(e.target.value)}
+              className="border rounded px-2 py-1"
+            >
+              <option value="Beginner">Beginner</option>
+              <option value="Intermediate">Intermediate</option>
+              <option value="Advanced">Advanced</option>
+              <option value="Expert">Expert</option>
+            </select>
+          </div>
+        </div>
+        {errors.skills && (
+          <span className="text-sm text-red-500">{errors.skills.message}</span>
+        )}
+
+        {/* Selected Skills Preview */}
+        <div className="mt-4">
+          <Label>Selected Skills</Label>
+          <div className="mt-2 flex flex-wrap gap-2">
+            {skillFields.map((field, index) => (
+              <Badge key={field.id} variant="secondary" className="p-2">
+                {field.name} ({field.level})
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => removeSkill(index)}
+                  className="ml-2 h-4 w-4 p-0"
+                >
+                  <X className="h-3 w-3" />
+                </Button>
+              </Badge>
+            ))}
+          </div>
         </div>
       </div>
     </div>

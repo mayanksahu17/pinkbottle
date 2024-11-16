@@ -34,56 +34,59 @@ export default function CV({ data, onUpdate }: CVProps) {
   }
 
   return (
-    <Card>
-      <CardHeader className="flex flex-row items-center justify-between">
-        <CardTitle>CV</CardTitle>
+    <Card className="rounded-xl shadow-lg border border-neutral-200">
+      <CardHeader className="flex flex-row items-center justify-between p-6 bg-neutral-50 rounded-t-xl">
+        <CardTitle className="text-xl font-semibold text-neutral-900">CV</CardTitle>
         {!isEditing ? (
           <Button variant="ghost" size="icon" onClick={() => setIsEditing(true)}>
-            <Pencil className="h-4 w-4" />
+            <Pencil className="h-5 w-5 text-neutral-700" />
           </Button>
         ) : (
           <div className="flex gap-2">
             <Button variant="ghost" size="icon" onClick={() => setIsEditing(false)}>
-              <X className="h-4 w-4" />
+              <X className="h-5 w-5 text-neutral-700" />
             </Button>
             <Button variant="ghost" size="icon" onClick={handleSubmit}>
-              <Save className="h-4 w-4" />
+              <Save className="h-5 w-5 text-neutral-700" />
             </Button>
           </div>
         )}
       </CardHeader>
-      <CardContent>
-        <form className="space-y-4" onSubmit={handleSubmit}>
+      <CardContent className="p-6 space-y-4">
+        <form onSubmit={handleSubmit}>
           {cv ? (
-            <div className="flex items-center gap-4 p-4 rounded-lg border">
-              <FileText className="h-8 w-8 text-muted-foreground" />
+            <div className="flex items-center gap-4 p-4 rounded-lg border border-neutral-200">
+              <FileText className="h-8 w-8 text-neutral-600" />
               <div className="flex-1">
-                <p className="font-medium">Your CV</p>
+                <p className="font-medium text-neutral-800">Your CV</p>
                 <a href={cv} target="_blank" rel="noopener noreferrer" className="text-sm text-blue-500 hover:underline">
                   View uploaded CV
                 </a>
               </div>
               {isEditing && (
                 <Button variant="ghost" size="icon" onClick={() => setCV(null)}>
-                  <X className="h-4 w-4" />
+                  <X className="h-5 w-5 text-red-500" />
                 </Button>
               )}
             </div>
           ) : (
-            <div className="flex flex-col items-center justify-center p-8 border-2 border-dashed rounded-lg">
-              <Upload className="h-8 w-8 text-muted-foreground mb-4" />
-              <p className="text-sm text-muted-foreground mb-2">
+            <div className="flex flex-col items-center justify-center p-8 border-2 border-dashed rounded-lg border-neutral-300">
+              <Upload className="h-8 w-8 text-neutral-600 mb-4" />
+              <p className="text-sm text-neutral-600 mb-2">
                 Upload your CV here
               </p>
               {isEditing && (
                 <div>
-                  <Label htmlFor="cv-upload">Resume/CV</Label>
+                  <Label htmlFor="cv-upload" className="text-sm font-medium text-neutral-800">
+                    Resume/CV
+                  </Label>
                   <UploadButton
                     endpoint="cvUploader"
                     onClientUploadComplete={handleUploadComplete}
                     onUploadError={handleUploadError}
+                    className="mt-4"
                   />
-                  <p className="text-sm text-gray-500 mt-2">
+                  <p className="text-xs text-neutral-500 mt-2">
                     Accepted formats: <strong>PDF, DOC, DOCX</strong>. Max file size: <strong>10MB</strong>
                   </p>
                 </div>

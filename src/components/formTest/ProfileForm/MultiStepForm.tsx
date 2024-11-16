@@ -29,7 +29,7 @@ export default function MultiStepForm({ onClose }: { onClose: () => void }) {
 
   const onSubmit = async (data: FormData) => {
     try {
-      await fetch('/api/profile', {
+      await fetch('/api/ProfileForm', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
@@ -52,33 +52,37 @@ export default function MultiStepForm({ onClose }: { onClose: () => void }) {
   const CurrentStepComponent = steps[currentStep].component;
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 px-4 sm:px-6 md:px-8 lg:px-12">
       <div className="space-y-2">
         <h2 className="text-2xl font-bold">{steps[currentStep].title}</h2>
         <Progress value={(currentStep / (steps.length - 1)) * 100} />
       </div>
 
       <form onSubmit={currentStep === steps.length - 1 ? handleFinalSubmit : undefined}>
-        <Card className="p-6">
+        <Card className="p-6 sm:p-8 md:p-10">
           <CurrentStepComponent form={form} />
 
-          <div className="flex justify-between mt-6">
+          <div className="flex flex-col sm:flex-row justify-between items-center mt-6 space-y-4 sm:space-y-0 sm:space-x-4">
             <Button
               type="button"
               variant="outline"
               onClick={() => setCurrentStep(prev => prev - 1)}
               disabled={currentStep === 0}
+              className="w-full sm:w-auto"
             >
               <ChevronLeft className="mr-2 h-4 w-4" />
               Previous
             </Button>
 
             {currentStep === steps.length - 1 ? (
-              <Button type="submit">Complete Profile</Button>
+              <Button type="submit" className="w-full sm:w-auto">
+                Complete Profile
+              </Button>
             ) : (
               <Button
                 type="button"
-                onClick={handleSubmit(handleNext)} 
+                onClick={handleSubmit(handleNext)}
+                className="w-full sm:w-auto"
               >
                 Next
                 <ChevronRight className="ml-2 h-4 w-4" />

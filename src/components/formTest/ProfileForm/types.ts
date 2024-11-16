@@ -1,7 +1,7 @@
 export type Skill = {
   name: string;
   level: string;
-}
+};
 
 export type Experience = {
   title: string;
@@ -10,7 +10,7 @@ export type Experience = {
   endDate: string;
   current: boolean;
   description: string;
-}
+};
 
 export type FormData = {
   // Personal Info
@@ -19,25 +19,27 @@ export type FormData = {
   email: string;
   location: string;
   phone: string;
-  
+
   // Roles and Skills
   title: string;
   skills: Skill[];
-  primaryRole: string;
-  
+  roles: string[]; // Updated to accept multiple roles
+
   // Expectations
   hourlyRate: string;
   availability: string;
   workPreference: string[];
-  
+  rightToWork: string; // New field: Visa or work authorization status
+  securityClearance: string; // New field: Security clearance details
+
   // Experience
   experiences: Experience[];
-  
+
   // CV
   resume: string;
-  
+
   // Diversity and Inclusion
   gender: string;
   pronouns: string;
   ethnicity: string;
-}
+};

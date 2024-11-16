@@ -13,15 +13,16 @@ interface SectionNavigationProps {
 
 const SectionNavigation = ({ sections, activeSection, onSectionChange }: SectionNavigationProps) => {
   return (
-    <nav className="w-1/4 bg-white rounded-lg border p-4 space-y-2">
+    <nav className="w-full md:w-1/4 bg-white rounded-xl shadow-lg border p-4 space-y-2">
+      <h3 className="text-lg font-semibold text-gray-800 mb-4">Sections</h3>
       {sections.map((section) => (
         <button
           key={section.id}
           onClick={() => onSectionChange(section.id)}
-          className={`w-full text-left px-4 py-2 rounded-lg transition-colors ${
+          className={`w-full text-left px-4 py-3 rounded-lg transition-all duration-200 ${
             activeSection === section.id
-              ? 'bg-green-50 text-green-600 font-medium'
-              : 'text-gray-600 hover:bg-green-50 hover:text-green-600'
+              ? 'bg-green-100 text-green-700 font-semibold shadow-sm'
+              : 'text-gray-700 hover:bg-gray-100 hover:text-gray-900'
           }`}
         >
           {section.label}

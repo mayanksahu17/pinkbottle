@@ -1,10 +1,9 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, KeyboardEvent } from 'react'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Pencil, Save, X, Plus, Trash, Info } from 'lucide-react'
+import { Pencil, Save, X, Plus, Info } from 'lucide-react'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 
@@ -13,9 +12,13 @@ interface Skill {
   level: string
 }
 
+interface Role {
+  name: string
+}
+
 interface RolesSkillsData {
-  primaryRole: string
-  skills: Skill[]
+  roles: Role[] // Array of roles
+  skills: Skill[] // Array of skills
 }
 
 interface RolesSkillsProps {
@@ -25,10 +28,17 @@ interface RolesSkillsProps {
 
 export default function RolesSkills({ data, onUpdate }: RolesSkillsProps) {
   const [isEditing, setIsEditing] = useState(false)
-  const [formData, setFormData] = useState<RolesSkillsData>(data)
-  const [newSkill, setNewSkill] = useState<Skill>({ name: '', level: '' })
 
-  const handleChange = (field: keyof RolesSkillsData, value: string) => {
+  // Ensure roles and skills arrays are always initialized
+  const [formData, setFormData] = useState<RolesSkillsData>({
+    roles: data.roles || [], // Default to an empty array if data.roles is undefined
+    skills: data.skills || [] // Default to an empty array if data.skills is undefined
+  })
+
+  const [newSkill, setNewSkill] = useState<Skill>({ name: '', level: '' })
+  const [newRole, setNewRole] = useState<string>('')
+
+  const handleChange = (field: keyof RolesSkillsData, value: string | Role[]) => {
     setFormData(prev => ({ ...prev, [field]: value }))
   }
 
@@ -48,10 +58,34 @@ export default function RolesSkills({ data, onUpdate }: RolesSkillsProps) {
     }
   }
 
+  const handleKeyPress = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter' && newSkill.name && newSkill.level) {
+      e.preventDefault()
+      handleAddSkill()
+    }
+  }
+
   const handleRemoveSkill = (index: number) => {
     setFormData(prev => ({
       ...prev,
       skills: prev.skills.filter((_, i) => i !== index)
+    }))
+  }
+
+  const handleAddRole = () => {
+    if (newRole.trim() !== '') {
+      setFormData(prev => ({
+        ...prev,
+        roles: [...prev.roles, { name: newRole }]
+      }))
+      setNewRole('')
+    }
+  }
+
+  const handleRemoveRole = (index: number) => {
+    setFormData(prev => ({
+      ...prev,
+      roles: prev.roles.filter((_, i) => i !== index)
     }))
   }
 
@@ -63,12 +97,12 @@ export default function RolesSkills({ data, onUpdate }: RolesSkillsProps) {
 
   return (
     <div className="space-y-8">
-      {/* Desired Roles Section */}
+      {/* Roles Section */}
       <div className="bg-white rounded-lg p-6">
         <div className="flex items-center justify-between mb-2">
           <div className="space-y-1">
-            <h2 className="text-xl font-semibold">Desired Roles & Work Experience</h2>
-            <p className="text-sm text-muted-foreground">You can choose up to 10 desired roles.</p>
+            <h2 className="text-xl font-semibold">Desired Roles</h2>
+            <p className="text-sm text-muted-foreground">You can choose multiple roles.</p>
           </div>
           {!isEditing ? (
             <Button variant="ghost" size="icon" onClick={() => setIsEditing(true)}>
@@ -86,21 +120,41 @@ export default function RolesSkills({ data, onUpdate }: RolesSkillsProps) {
           )}
         </div>
 
-        <div className="flex flex-wrap gap-2 mt-4">
-          <div className="bg-gray-50 rounded-full px-4 py-2 text-sm">
-            {formData.primaryRole} (0-1 years)
+        <div className="space-y-4">
+          {/* Displaying roles */}
+          <div className="flex flex-wrap gap-2">
+            {formData.roles && formData.roles.map((role, index) => (
+              <div
+                key={index}
+                className="bg-gray-50 rounded-full px-4 py-2 text-sm flex items-center gap-2"
+              >
+                <span>{role.name}</span>
+                {isEditing && (
+                  <button
+                    onClick={() => handleRemoveRole(index)}
+                    className="text-gray-400 hover:text-gray-600"
+                  >
+                    <X className="h-3 w-3" />
+                  </button>
+                )}
+              </div>
+            ))}
           </div>
-        </div>
 
-        {/* Info Box */}
-        <div className="mt-6 bg-blue-50 rounded-lg p-4 flex items-center justify-between">
-          <div className="flex items-center gap-2 text-sm text-blue-700">
-            <Info className="h-4 w-4" />
-            <p>Add work experience skills to the 'Experience' section to demonstrate their commercial use to companies.</p>
-          </div>
-          <Button variant="outline" className="text-blue-700 border-blue-200 hover:bg-blue-100">
-            Go to Experience
-          </Button>
+          {/* Editing roles */}
+          {isEditing && (
+            <div className="flex items-center gap-2">
+              <Input
+                value={newRole}
+                onChange={(e) => setNewRole(e.target.value)}
+                placeholder="Add a new role"
+                className="max-w-xs"
+              />
+              <Button variant="outline" size="icon" onClick={handleAddRole}>
+                <Plus className="h-4 w-4" />
+              </Button>
+            </div>
+          )}
         </div>
       </div>
 
@@ -120,7 +174,11 @@ export default function RolesSkills({ data, onUpdate }: RolesSkillsProps) {
               </Tooltip>
             </TooltipProvider>
           </div>
-          {isEditing && (
+          {!isEditing ? (
+            <Button variant="ghost" size="icon" onClick={() => setIsEditing(true)}>
+              <Pencil className="h-4 w-4" />
+            </Button>
+          ) : (
             <div className="flex gap-2">
               <Button variant="ghost" size="icon" onClick={() => setIsEditing(false)}>
                 <X className="h-4 w-4" />
@@ -135,12 +193,12 @@ export default function RolesSkills({ data, onUpdate }: RolesSkillsProps) {
         <div className="space-y-6">
           <div className="space-y-4">
             <div className="flex flex-wrap gap-2">
-              {formData.skills.map((skill, index) => (
+              {formData.skills && formData.skills.map((skill, index) => (
                 <div
                   key={index}
                   className="bg-gray-50 rounded-full px-4 py-2 text-sm flex items-center gap-2"
                 >
-                  <span>{skill.name}</span>
+                  <span>{skill.name} - {skill.level}</span>
                   {isEditing && (
                     <button onClick={() => handleRemoveSkill(index)} className="text-gray-400 hover:text-gray-600">
                       <X className="h-3 w-3" />
@@ -155,6 +213,7 @@ export default function RolesSkills({ data, onUpdate }: RolesSkillsProps) {
                 <Input
                   value={newSkill.name}
                   onChange={(e) => setNewSkill(prev => ({ ...prev, name: e.target.value }))}
+                  onKeyPress={handleKeyPress}
                   placeholder="Add a new skill"
                   className="max-w-xs"
                 />
@@ -162,10 +221,10 @@ export default function RolesSkills({ data, onUpdate }: RolesSkillsProps) {
                   value={newSkill.level}
                   onValueChange={(value) => setNewSkill(prev => ({ ...prev, level: value }))}
                 >
-                  <SelectTrigger className="w-[180px]">
+                  <SelectTrigger className="w-[180px] bg-white">
                     <SelectValue placeholder="Skill level" />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className="bg-white">
                     <SelectItem value="Beginner">Beginner</SelectItem>
                     <SelectItem value="Intermediate">Intermediate</SelectItem>
                     <SelectItem value="Advanced">Advanced</SelectItem>

@@ -1,127 +1,146 @@
-import { useState } from 'react'
-import { Button } from "@/components/ui/button"
-import { Label } from "@/components/ui/label"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Pencil, Save, X } from 'lucide-react'
+'use client';
+
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { Label } from '@/components/ui/label';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Pencil, Save, X, Info } from 'lucide-react';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 
 interface DiversityInclusionData {
-  gender?: string
-  ethnicity?: string
-  disability?: string
-  veteranStatus?: string
+  gender?: string;
+  ethnicity?: string;
+  disability?: string;
+  veteranStatus?: string;
 }
 
 interface DiversityInclusionProps {
-  data: DiversityInclusionData
-  onUpdate: (data: DiversityInclusionData) => Promise<void>
+  data: DiversityInclusionData;
+  onUpdate: (data: DiversityInclusionData) => Promise<void>;
 }
 
 export default function DiversityInclusion({ data, onUpdate }: DiversityInclusionProps) {
-  const [isEditing, setIsEditing] = useState(false)
-  const [formData, setFormData] = useState<DiversityInclusionData>(data || {})
+  const [isEditing, setIsEditing] = useState(false);
+  const [formData, setFormData] = useState<DiversityInclusionData>(data || {});
 
   const handleChange = (field: keyof DiversityInclusionData, value: string) => {
-    setFormData(prev => ({ ...prev, [field]: value }))
-  }
+    setFormData((prev) => ({ ...prev, [field]: value }));
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    try {
-      await onUpdate(formData)
-      setIsEditing(false)
-    } catch (error) {
-      console.error('Error updating diversity and inclusion data:', error)
-    }
-  }
+    e.preventDefault();
+    await onUpdate(formData);
+    setIsEditing(false);
+  };
 
   const renderField = (label: string, value: string | undefined, field: keyof DiversityInclusionData) => (
     <div className="space-y-2">
-      <Label htmlFor={field}>{label}</Label>
+      <Label htmlFor={field} className="text-lg font-semibold text-gray-800">
+        {label}
+      </Label>
       {isEditing ? (
         <Select
           value={formData[field]}
           onValueChange={(value) => handleChange(field, value)}
         >
-          <SelectTrigger id={field}>
+          <SelectTrigger id={field} className="w-full border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-indigo-500">
             <SelectValue placeholder={`Select ${label.toLowerCase()}`} />
           </SelectTrigger>
-          <SelectContent className="bg-white shadow-lg rounded-md">
+          <SelectContent className="bg-white border border-gray-300 rounded-md shadow-lg">
             {getOptionsForField(field)}
           </SelectContent>
         </Select>
       ) : (
-        <p className="text-sm text-gray-600">{value || 'Not specified'}</p>
+        <p className="text-sm text-muted-foreground">{value || 'Not specified'}</p>
       )}
     </div>
-  )
+  );
 
   const getOptionsForField = (field: keyof DiversityInclusionData) => {
-    const itemClass = "bg-white text-gray-800"
     switch (field) {
       case 'gender':
-        return [
-          <SelectItem className={itemClass} key="male" value="male">Male</SelectItem>,
-          <SelectItem className={itemClass} key="female" value="female">Female</SelectItem>,
-          <SelectItem className={itemClass} key="non-binary" value="non-binary">Non-binary</SelectItem>,
-          <SelectItem className={itemClass} key="other" value="other">Other</SelectItem>,
-          <SelectItem className={itemClass} key="prefer-not-to-say" value="prefer-not-to-say">Prefer not to say</SelectItem>
-        ]
+        return (
+          <>
+            <SelectItem className="bg-white" value="Male">Male</SelectItem>
+            <SelectItem className="bg-white" value="Female">Female</SelectItem>
+            <SelectItem className="bg-white" value="Non-binary">Non-binary</SelectItem>
+            <SelectItem className="bg-white" value="Other">Other</SelectItem>
+            <SelectItem className="bg-white" value="Prefer not to say">Prefer not to say</SelectItem>
+          </>
+        );
       case 'ethnicity':
-        return [
-          <SelectItem className={itemClass} key="asian" value="asian">Asian</SelectItem>,
-          <SelectItem className={itemClass} key="black" value="black">Black</SelectItem>,
-          <SelectItem className={itemClass} key="hispanic" value="hispanic">Hispanic</SelectItem>,
-          <SelectItem className={itemClass} key="white" value="white">White</SelectItem>,
-          <SelectItem className={itemClass} key="mixed" value="mixed">Mixed</SelectItem>,
-          <SelectItem className={itemClass} key="other" value="other">Other</SelectItem>,
-          <SelectItem className={itemClass} key="prefer-not-to-say" value="prefer-not-to-say">Prefer not to say</SelectItem>
-        ]
+        return (
+          <>
+            <SelectItem className="bg-white" value="Asian">Asian</SelectItem>
+            <SelectItem className="bg-white" value="Black">Black</SelectItem>
+            <SelectItem className="bg-white" value="Hispanic">Hispanic</SelectItem>
+            <SelectItem className="bg-white" value="White">White</SelectItem>
+            <SelectItem className="bg-white" value="Mixed">Mixed</SelectItem>
+            <SelectItem className="bg-white" value="Other">Other</SelectItem>
+            <SelectItem className="bg-white" value="Prefer not to say">Prefer not to say</SelectItem>
+          </>
+        );
       case 'disability':
       case 'veteranStatus':
-        return [
-          <SelectItem className={itemClass} key="yes" value="yes">Yes</SelectItem>,
-          <SelectItem className={itemClass} key="no" value="no">No</SelectItem>,
-          <SelectItem className={itemClass} key="prefer-not-to-say" value="prefer-not-to-say">Prefer not to say</SelectItem>
-        ]
+        return (
+          <>
+            <SelectItem className="bg-white" value="Yes">Yes</SelectItem>
+            <SelectItem className="bg-white" value="No">No</SelectItem>
+            <SelectItem className="bg-white" value="Prefer not to say">Prefer not to say</SelectItem>
+          </>
+        );
       default:
-        return []
+        return null;
     }
-  }
+  };
 
   return (
-    <Card>
-      <CardHeader className="p-4 border-b border-gray-200 flex justify-between items-start">
-        <div>
-          <CardTitle>Diversity & Inclusion</CardTitle>
-          <p className="text-gray-500 mt-2 text-sm">
-            This section includes an optional survey on your diversity and inclusion information. Skipping it will still contribute to your profile strength.
-          </p>
-        </div>
-        {!isEditing ? (
-          <Button variant="ghost" size="icon" onClick={() => setIsEditing(true)} aria-label="Edit">
-            <Pencil className="h-4 w-4" />
-          </Button>
-        ) : (
-          <div className="flex gap-2">
-            <Button variant="default" size="icon" onClick={() => setIsEditing(false)} aria-label="Cancel">
-              <X className="h-4 w-4" />
-            </Button>
-            <Button variant="default" size="icon" onClick={handleSubmit} aria-label="Save">
-              <Save className="h-4 w-4" />
-            </Button>
+    <div className="space-y-8">
+      {/* Header Section */}
+      <div className="bg-white rounded-lg p-6 shadow-md">
+        <div className="flex items-center justify-between mb-4">
+          <div className="space-y-1">
+            <h2 className="text-2xl font-semibold text-gray-800">Diversity & Inclusion</h2>
+            <p className="text-sm text-muted-foreground">
+              This section includes an optional survey on your diversity and inclusion information.
+            </p>
           </div>
-        )}
-      </CardHeader>
+          <div className="flex gap-2">
+            {!isEditing ? (
+              <Button variant="ghost" size="icon" onClick={() => setIsEditing(true)}>
+                <Pencil className="h-4 w-4" />
+              </Button>
+            ) : (
+              <>
+                <Button variant="ghost" size="icon" onClick={() => setIsEditing(false)}>
+                  <X className="h-4 w-4" />
+                </Button>
+                <Button variant="ghost" size="icon" onClick={handleSubmit}>
+                  <Save className="h-4 w-4" />
+                </Button>
+              </>
+            )}
+          </div>
+        </div>
 
-      <CardContent className="p-4">
-        <form onSubmit={handleSubmit} className="space-y-4">
-          {renderField('Gender identity', formData.gender, 'gender')}
+        {/* Info Box */}
+        <div className="bg-blue-50 rounded-lg p-4 flex items-center text-blue-700">
+          <Info className="h-4 w-4 mr-2" />
+          <span>
+            Skipping this survey will still contribute to your profile strength.
+          </span>
+        </div>
+      </div>
+
+      {/* Form Section */}
+      <div className="bg-white rounded-lg p-6 shadow-md space-y-4">
+        <form onSubmit={handleSubmit}>
+          {renderField('Gender Identity', formData.gender, 'gender')}
           {renderField('Ethnicity', formData.ethnicity, 'ethnicity')}
           {renderField('Disability', formData.disability, 'disability')}
           {renderField('Veteran Status', formData.veteranStatus, 'veteranStatus')}
         </form>
-      </CardContent>
-    </Card>
-  )
+      </div>
+    </div>
+  );
 }

@@ -20,7 +20,7 @@ const config: Config = withUt({
     },
     extend: {
       fontFamily: {
-        bebas: ['Bebas Neue', 'sans-serif'],
+        poppins: ['Poppins'],
       },
       keyframes: {
         'accordion-down': {
