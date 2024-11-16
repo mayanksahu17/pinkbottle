@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Progress } from '@/components/ui/progress';
-import { Check, AlertCircle } from 'lucide-react';
+import React, { useEffect, useState } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Progress } from "@/components/ui/progress";
+import { Check, AlertCircle } from "lucide-react";
 import {
   Tooltip,
   TooltipContent,
@@ -10,41 +10,12 @@ import {
 } from "@/components/ui/tooltip";
 
 interface ProfileData {
-  personalInfo?: {
-    fullName?: string;
-    email?: string;
-    location?: string;
-    phone?: string;
-    profilePhoto?: string;
-    postcode?: string;
-  };
-  rolesSkills?: {
-    roles?: string[];
-    skills?: string[];
-  };
-  expectations?: {
-    hourlyRate?: string;
-    availability?: string;
-    workPreference?: string[];
-    rightToWork?: string;
-    securityClearance?: string;
-  };
-  experience?: Array<{
-    title?: string;
-    company?: string;
-    startDate?: string;
-    endDate?: string;
-    current?: boolean;
-    description?: string;
-  }>;
-  cv?: string;
-  diversityInclusion?: {
-    gender?: string;
-    pronouns?: string;
-    ethnicity?: string;
-    disability?: string;
-    veteranStatus?: string;
-  };
+  personalInfo?: any;
+  rolesSkills?: any;
+  expectations?: any;
+  experience?: any;
+  cv?: any;
+  diversityInclusion?: any;
 }
 
 interface SectionConfig {
@@ -55,71 +26,80 @@ interface SectionConfig {
 
 const sections: SectionConfig[] = [
   {
-    id: 'personalInfo',
-    label: 'Personal Info',
-    requiredFields: ['fullName', 'email']
+    id: "personalInfo",
+    label: "Personal Info",
+    requiredFields: ["fullName", "email", "location", "profilePhoto", "postcode", "englishLevel"],
   },
   {
-    id: 'rolesSkills',
-    label: 'Roles & Skills',
-    requiredFields: ['roles', 'skills']
+    id: "rolesSkills",
+    label: "Roles & Skills",
+    requiredFields: ["roles", "skills"],
   },
   {
-    id: 'expectations',
-    label: 'Expectations',
-    requiredFields: ['hourlyRate', 'availability', 'rightToWork']
+    id: "expectations",
+    label: "Expectations",
+    requiredFields: ["hourlyRate", "availability", "workPreference", "rightToWork", "securityClearance"],
   },
   {
-    id: 'experience',
-    label: 'Experience',
-    requiredFields: ['title', 'company', 'startDate']
+    id: "experience",
+    label: "Experience",
+    requiredFields: ["title", "company", "startDate", "endDate", "current", "description"],
   },
   {
-    id: 'cv',
-    label: 'CV',
-    requiredFields: ['cv']
+    id: "cv",
+    label: "CV",
+    requiredFields: ["cv"],
   },
   {
-    id: 'diversityInclusion',
-    label: 'Diversity & Inclusion',
-    requiredFields: [] // Optional section
-  }
+    id: "diversityInclusion",
+    label: "Diversity & Inclusion",
+    requiredFields: ["gender", "pronouns", "ethnicity", "disability", "veteranStatus"],
+  },
 ];
 
 interface ProfileStrengthProps {
   profileData: ProfileData;
   onSectionClick?: (sectionId: string) => void;
+  className?: string; 
 }
 
-const ProfileStrength = ({ profileData, onSectionClick }: ProfileStrengthProps) => {
+const ProfileStrength = ({ profileData, onSectionClick ,className}: ProfileStrengthProps) => {
   const [strength, setStrength] = useState(0);
   const [analytics, setAnalytics] = useState({
     totalFields: 0,
     completedFields: 0,
-    requiredRemaining: 0
+    requiredRemaining: 0,
   });
 
   const isFieldComplete = (sectionId: string, field: string, data: any) => {
     if (!data) return false;
-    
+
+    // Special handling for the 'experience' array
+    if (sectionId === "experience") {
+      return Array.isArray(data) && data.every((entry: any) => entry[field]); // All objects must have the field
+    }
+
+    // Special handling for 'cv' (URL directly)
+    if (sectionId === "cv" && field === "cv") {
+      return typeof data === "string" && data.trim().length > 0; // URL exists and is not empty
+    }
+
+    // Generic check for arrays and non-array fields
     const value = data[field];
     if (Array.isArray(value)) {
       return value.length > 0;
     }
-    if (sectionId === 'experience') {
-      return data.length > 0 && data[0][field];
-    }
-    return value !== undefined && value !== null && value !== '';
+    return value !== undefined && value !== null && value !== "";
   };
 
   const calculateProfileStrength = () => {
     let totalRequired = 0;
     let completed = 0;
 
-    sections.forEach(section => {
+    sections.forEach((section) => {
       const sectionData = profileData[section.id as keyof ProfileData];
-      
-      section.requiredFields.forEach(field => {
+
+      section.requiredFields.forEach((field) => {
         totalRequired++;
         if (isFieldComplete(section.id, field, sectionData)) {
           completed++;
@@ -131,7 +111,7 @@ const ProfileStrength = ({ profileData, onSectionClick }: ProfileStrengthProps) 
     setAnalytics({
       totalFields: totalRequired,
       completedFields: completed,
-      requiredRemaining: remaining
+      requiredRemaining: remaining,
     });
 
     return totalRequired === 0 ? 0 : (completed / totalRequired) * 100;
@@ -143,16 +123,16 @@ const ProfileStrength = ({ profileData, onSectionClick }: ProfileStrengthProps) 
   }, [profileData]);
 
   const getStrengthColor = (strengthValue: number) => {
-    if (strengthValue < 40) return 'bg-red-400';
-    if (strengthValue < 70) return 'bg-yellow-400';
-    return 'bg-emerald-400';
+    if (strengthValue < 40) return "bg-red-400";
+    if (strengthValue < 70) return "bg-yellow-400";
+    return "bg-emerald-400";
   };
 
   const getSectionStatus = (section: SectionConfig) => {
     const sectionData = profileData[section.id as keyof ProfileData];
     let completed = 0;
 
-    section.requiredFields.forEach(field => {
+    section.requiredFields.forEach((field) => {
       if (isFieldComplete(section.id, field, sectionData)) {
         completed++;
       }
@@ -161,17 +141,17 @@ const ProfileStrength = ({ profileData, onSectionClick }: ProfileStrengthProps) 
     return {
       total: section.requiredFields.length,
       completed,
-      isComplete: completed === section.requiredFields.length
+      isComplete: completed === section.requiredFields.length,
     };
   };
 
   return (
-    <div className="font-bebas w-72">
+    <div className=" w-72">
       <Card className="bg-white shadow-sm hover:shadow-md transition-shadow duration-200">
         <CardHeader className="pb-2">
           <div className="space-y-1.5">
             <div className="flex items-center justify-between">
-              <span className="font-bebas text-5xl font-bold text-neutral-900">
+              <span className=" text-5xl font-bold text-neutral-900">
                 {strength.toFixed(0)}%
               </span>
               {analytics.requiredRemaining > 0 && (
@@ -187,22 +167,22 @@ const ProfileStrength = ({ profileData, onSectionClick }: ProfileStrengthProps) 
                 </TooltipProvider>
               )}
             </div>
-            <CardTitle className="text-lg font-medium text-neutral-900">
-              Profile Strength
-            </CardTitle>
+            <CardTitle className="text-lg font-medium text-neutral-900">Profile Strength</CardTitle>
           </div>
         </CardHeader>
         <CardContent className="pt-4">
-          <Progress 
-            value={strength} 
-            className={`h-2 mb-8 bg-neutral-100 [&>div]:${getStrengthColor(strength)}`} 
-          />
+          
+
+          {/* Green line under the percentage number */}
+          <div
+            className={`w-full h-1 mt-2 ${getStrengthColor(strength)} rounded-full`}
+          ></div>
 
           <div className="space-y-4">
             {sections.map((section) => {
               const status = getSectionStatus(section);
               const sectionClasses = `flex items-center gap-3 p-2 rounded-lg transition-colors duration-200
-                ${onSectionClick ? 'cursor-pointer hover:bg-neutral-50' : ''}`;
+                ${onSectionClick ? "cursor-pointer hover:bg-neutral-50" : ""}`;
 
               return (
                 <div
@@ -214,14 +194,13 @@ const ProfileStrength = ({ profileData, onSectionClick }: ProfileStrengthProps) 
                 >
                   <div
                     className={`h-5 w-5 rounded-full flex items-center justify-center
-                      ${status.isComplete 
-                        ? getStrengthColor(strength)
-                        : 'bg-white border-2 border-neutral-200'
+                      ${
+                        status.isComplete
+                          ? getStrengthColor(strength)
+                          : "bg-white border-2 border-neutral-200"
                       }`}
                   >
-                    {status.isComplete && (
-                      <Check className="h-3.5 w-3.5 text-white stroke-[3]" />
-                    )}
+                    {status.isComplete && <Check className="h-3.5 w-3.5 text-white stroke-[3]" />}
                   </div>
                   <div className="flex-1">
                     <span className="text-sm text-neutral-700">{section.label}</span>

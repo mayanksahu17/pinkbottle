@@ -23,37 +23,63 @@ const sections: Section[] = [
     fields: [
       { id: 'fullName', required: true },
       { id: 'email', required: true },
+      { id: 'location', required: true },
+      { id: 'profilePhoto', required: true },
+      { id: 'postcode', required: true },
+      { id: 'englishLevel', required: true },
     ],
     Component: PersonalInfo,
   },
   {
     id: 'rolesSkills',
     label: 'Roles and skills',
-    fields: [{ id: 'skills', required: true }],
+    fields: [
+      { id: 'roles', required: true },
+      { id: 'skills', required: true },
+    ],
     Component: RolesSkills,
   },
   {
     id: 'expectations',
     label: 'Expectations',
-    fields: [],
+    fields: [
+      { id: 'hourlyRate', required: true },
+      { id: 'availability', required: true },
+      { id: 'workPreference', required: true },
+      { id: 'rightToWork', required: true },
+      { id: 'securityClearance', required: true },
+    ],
     Component: Expectations,
   },
   {
     id: 'experience',
     label: 'Experience',
-    fields: [{ id: 'years', required: true }],
+    fields: [
+      { id: 'title', required: true },
+      { id: 'company', required: true },
+      { id: 'startDate', required: true },
+      { id: 'endDate', required: true },
+      { id: 'current', required: true },
+      { id: 'description', required: true },
+    ],
     Component: Experience,
   },
   {
     id: 'cv',
     label: 'CV',
-    fields: [{ id: 'CV', required: true }],
+    fields: [{ id: 'cv', required: true }],
     Component: CV,
   },
   {
     id: 'diversityInclusion',
     label: 'Diversity & Inclusion',
-    fields: [{ id: 'preferences', required: false }],
+    fields: [
+      { id: 'gender', required: true },
+      { id: 'pronouns', required: true },
+      { id: 'ethnicity', required: true },
+      { id: 'disability', required: true },
+      { id: 'veteranStatus', required: true },
+    ],
     Component: DiversityInclusion,
   },
 ];
@@ -71,7 +97,7 @@ export default function ProfilePage({ params }: { params: { id: string } }) {
   const [activeSection, setActiveSection] = useState('personalInfo');
   const [profileData, setProfileData] = useState<ProfileData | null>(null);
   const [currentTab, setCurrentTab] = useState('profile');
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState(false); // Start with closed sidebar for mobile
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const { toast } = useToast();
@@ -107,8 +133,7 @@ export default function ProfilePage({ params }: { params: { id: string } }) {
   const handleUpdateProfile = async (section: string, data: any) => {
     try {
       console.log("Updating section:", section);
-      console.log("Data being sent:", JSON.stringify(data, null, 2)); // Detailed log
-  
+
       const response = await fetch(`/api/profile/${params.id}`, {
         method: 'PATCH',
         headers: {
@@ -119,16 +144,17 @@ export default function ProfilePage({ params }: { params: { id: string } }) {
         }),
       });
 
-      console.log("API Response after the call", response)
-
       if (!response.ok) {
         throw new Error('Failed to update profile');
       }
+
       const updatedProfile = await response.json();
 
       setProfileData((prevProfile) => ({
         ...prevProfile,
-        [section]: updatedProfile[section],
+        [section]: section === 'experience'
+          ? [...(prevProfile?.experience || []), ...data]
+          : updatedProfile[section],
       }));
 
       toast({
@@ -136,7 +162,6 @@ export default function ProfilePage({ params }: { params: { id: string } }) {
         description: "Profile updated successfully",
       });
     } catch (err) {
-
       console.error('Error updating profile:', err);
       toast({
         title: "Error",
@@ -145,7 +170,6 @@ export default function ProfilePage({ params }: { params: { id: string } }) {
       });
     }
   };
-    
 
   if (loading) {
     return <div className="flex items-center justify-center min-h-screen">Loading...</div>;
@@ -172,30 +196,43 @@ export default function ProfilePage({ params }: { params: { id: string } }) {
   const sectionInfo = sections.map(({ id, label }) => ({ id, label }));
 
   return (
-    <div className="min-h-screen bg-background flex">
+    <div className="min-h-screen bg-background flex flex-col lg:flex-row">
+      {/* Sidebar: Hidden on mobile */}
       <Sidebar
         currentTab={currentTab}
         setCurrentTab={setCurrentTab}
         setSidebarOpen={setSidebarOpen}
         isPaidUser={true}
         sidebarOpen={sidebarOpen}
+        className="hidden lg:block"
       />
 
       <div className="flex-1 flex flex-col">
+        {/* Mobile Header */}
         <header className="h-16 border-b bg-background z-10">
           <div className="container mx-auto px-4 h-16 flex items-center justify-between">
             <h1 className="text-2xl font-bold">Profile</h1>
+            <Button
+              variant="ghost"
+              className="lg:hidden"
+              onClick={() => setSidebarOpen((prev) => !prev)}
+            >
+              ☰
+            </Button>
           </div>
         </header>
 
-        <div className="flex flex-row gap-6 p-8">
+        <div className="flex flex-col lg:flex-row gap-6 p-4 lg:p-8">
+          {/* Section Navigation: Stacked on mobile */}
           <SectionNavigation
             sections={sectionInfo}
             activeSection={activeSection}
             onSectionChange={setActiveSection}
+            className="lg:w-1/4"
           />
 
-          <div className="flex-1 bg-white rounded-lg p-6">
+          {/* Active Section */}
+          <div className="flex-1 bg-white rounded-lg p-4 lg:p-6">
             {ActiveSection && (
               <ActiveSection.Component
                 id={ActiveSection.id}
@@ -205,7 +242,10 @@ export default function ProfilePage({ params }: { params: { id: string } }) {
             )}
           </div>
 
-          <ProfileStrength profileData={profileData} />
+          {/* Profile Strength: Hidden on mobile */}
+          <div className="hidden lg:block lg:w-1/4">
+            <ProfileStrength profileData={profileData} />
+          </div>
         </div>
       </div>
     </div>

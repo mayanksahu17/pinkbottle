@@ -9,9 +9,10 @@ interface SectionNavigationProps {
   sections: Section[];
   activeSection: string;
   onSectionChange: (sectionId: string) => void;
+  className : string;
 }
 
-const SectionNavigation = ({ sections, activeSection, onSectionChange }: SectionNavigationProps) => {
+const SectionNavigation = ({ sections, activeSection, onSectionChange,className }: SectionNavigationProps) => {
   return (
     <nav className="w-full md:w-1/4 bg-white rounded-xl shadow-lg border p-4 space-y-2">
       <h3 className="text-lg font-semibold text-gray-800 mb-4">Sections</h3>

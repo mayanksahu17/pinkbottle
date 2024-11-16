@@ -32,6 +32,7 @@ export default function ExperienceSection({ profileId, data, onUpdate }: Experie
     description: '',
   });
   const [expandedExperience, setExpandedExperience] = useState<string | null>(null);
+  const [hourlyRate, setHourlyRate] = useState(30); // Default hourly rate (can be dynamic)
 
   useEffect(() => {
     setExperiences(data || []);
@@ -76,6 +77,11 @@ export default function ExperienceSection({ profileId, data, onUpdate }: Experie
     }
   };
 
+  // Handle slider change for hourly rate
+  const handleSliderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setHourlyRate(Number(e.target.value));
+  };
+
   return (
     <div className="space-y-8">
       {/* Header Section with Edit/Save/Cancel Icons */}
@@ -104,6 +110,26 @@ export default function ExperienceSection({ profileId, data, onUpdate }: Experie
               </Button>
             </div>
           )}
+        </div>
+      </div>
+
+      {/* Add Hourly Rate Slider */}
+      <div className="space-y-4 mt-6">
+        <h3 className="text-xl font-semibold">Hourly Rate</h3>
+        <div>
+          <label htmlFor="hourly-rate" className="text-sm text-muted-foreground">Set Your Hourly Rate</label>
+          <div className="flex items-center gap-4 mt-2">
+            <input
+              type="range"
+              id="hourly-rate"
+              min="10"
+              max="200"
+              value={hourlyRate}
+              onChange={handleSliderChange}
+              className="slider w-full"
+            />
+            <span className="font-semibold">{hourlyRate} USD</span>
+          </div>
         </div>
       </div>
 
@@ -225,14 +251,12 @@ export default function ExperienceSection({ profileId, data, onUpdate }: Experie
               value={newExperience.startDate}
               onChange={(e) => setNewExperience(prev => ({ ...prev, startDate: e.target.value }))}
               placeholder="Start Date"
-              className="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500"
             />
             <Input
               type="date"
               value={newExperience.endDate}
               onChange={(e) => setNewExperience(prev => ({ ...prev, endDate: e.target.value }))}
               placeholder="End Date"
-              className="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500"
             />
           </div>
           <Textarea

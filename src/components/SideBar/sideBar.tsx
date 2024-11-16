@@ -13,6 +13,7 @@ interface SidebarProps {
   setSidebarOpen: (open: boolean) => void;
   isPaidUser: boolean;
   sidebarOpen: boolean;
+  className:string;
 }
 
 function Sidebar({
