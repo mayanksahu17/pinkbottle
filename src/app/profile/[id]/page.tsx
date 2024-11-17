@@ -15,6 +15,8 @@ import DiversityInclusion from '../../../components/profileTest/diversity-inclus
 import SectionNavigation from './SectionNavigation';
 import ProfileStrength from './ProfileStrength';
 import { Section } from '@/types';
+import { X } from 'lucide-react';
+import { Menu } from 'lucide-react';
 
 const sections: Section[] = [
   {
@@ -177,7 +179,7 @@ export default function ProfilePage({ params }: { params: { id: string } }) {
 
   if (error) {
     return (
-      <div className="font-bebas flex items-center justify-center min-h-screen">
+      <div className="flex items-center justify-center min-h-screen">
         <div className="text-center">
           <AlertCircle className="h-10 w-10 text-destructive mx-auto mb-4" />
           <h2 className="text-lg font-semibold mb-2">Error Loading Profile</h2>
@@ -187,64 +189,112 @@ export default function ProfilePage({ params }: { params: { id: string } }) {
     );
   }
 
-  if (!profileData) {
-    return null;
-  }
+  if (!profileData) return null;
 
   const ActiveSection = sections.find((section) => section.id === activeSection);
-
   const sectionInfo = sections.map(({ id, label }) => ({ id, label }));
 
   return (
-    <div className="min-h-screen bg-background flex flex-col lg:flex-row">
-      {/* Sidebar: Hidden on mobile */}
-      <Sidebar
-        currentTab={currentTab}
-        setCurrentTab={setCurrentTab}
-        setSidebarOpen={setSidebarOpen}
-        isPaidUser={true}
-        sidebarOpen={sidebarOpen}
-        className="hidden lg:block"
-      />
-
-      <div className="flex-1 flex flex-col">
-        {/* Mobile Header */}
-        <header className="h-16 border-b bg-background z-10">
-          <div className="container mx-auto px-4 h-16 flex items-center justify-between">
-            <h1 className="text-2xl font-bold">Profile</h1>
+    <div className="min-h-screen bg-background">
+      {/* New Header Design */}
+      <header className="fixed top-0 left-0 right-0 h-16 border-b bg-white z-50">
+        <div className="container mx-auto px-4 h-16 flex items-center justify-between">
+          <div className="flex items-center gap-4">
             <Button
               variant="ghost"
-              className="lg:hidden"
-              onClick={() => setSidebarOpen((prev) => !prev)}
+              className="lg:hidden p-2"
+              onClick={() => setSidebarOpen(true)}
             >
-              ☰
+              <Menu className="h-5 w-5" />
             </Button>
+            <div className="flex items-center gap-2">
+              <span className="text-xl font-bold">Hire Eazy</span>
+            </div>
           </div>
-        </header>
+          
+          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2">
+              <div className="text-right hidden sm:block">
+                <div className="text-sm text-gray-600">Signed in as</div>
+                <div className="font-medium">{profileData?.personalInfo?.fullName || 'User'}</div>
+              </div>
+              <Avatar className="h-8 w-8">
+                <AvatarImage src={profileData?.personalInfo?.profilePhoto} />
+                <AvatarFallback>
+                  {profileData?.personalInfo?.fullName?.[0] || 'U'}
+                </AvatarFallback>
+              </Avatar>
+              <div className="bg-emerald-100 text-emerald-700 px-3 py-1 rounded-full text-sm hidden sm:flex items-center gap-1">
+                <span className="h-2 w-2 bg-emerald-500 rounded-full"></span>
+                Live
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
 
-        <div className="flex flex-col lg:flex-row gap-6 p-4 lg:p-8">
-          {/* Section Navigation: Stacked on mobile */}
-          <SectionNavigation
-            sections={sectionInfo}
-            activeSection={activeSection}
-            onSectionChange={setActiveSection}
-            className="lg:w-1/4"
+      {/* Mobile Sidebar Overlay */}
+      {sidebarOpen && (
+        <div
+          className="fixed inset-0 bg-white/50 z-40 lg:hidden"
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
+
+      {/* Main Layout */}
+      <div className="flex flex-col lg:flex-row pt-16">
+        {/* Sidebar */}
+        <div
+  className={`fixed lg:relative top-0 left-0 h-full w-64 bg-[#fffefe] z-40 transform transition-transform duration-300 ease-in-out lg:transform-none ${
+    sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
+  }`}
+>
+
+          <button
+            className="lg:hidden absolute top-4 right-4 p-2 text-white"
+            onClick={() => setSidebarOpen(false)}
+          >
+            <X className="h-6 w-6" />
+          </button>
+
+          <Sidebar
+            currentTab={currentTab}
+            setCurrentTab={setCurrentTab}
+            setSidebarOpen={setSidebarOpen}
+            isPaidUser={true}
+            sidebarOpen={sidebarOpen}
+            className=""
           />
+        </div>
 
-          {/* Active Section */}
-          <div className="flex-1 bg-white rounded-lg p-4 lg:p-6">
-            {ActiveSection && (
-              <ActiveSection.Component
-                id={ActiveSection.id}
-                data={profileData[ActiveSection.id as keyof ProfileData]}
-                onUpdate={(data: any) => handleUpdateProfile(ActiveSection.id, data)}
+        {/* Main Content Area */}
+        <div className="flex-1 flex flex-col min-h-screen">
+          <div className="p-6">
+            <h1 className="text-2xl font-bold mb-2">Profile</h1>
+            <p className="text-gray-600 mb-6">This is where you'll find all of the information about yourself</p>
+            
+            <div className="flex flex-col lg:flex-row gap-6">
+              <SectionNavigation
+                sections={sectionInfo}
+                activeSection={activeSection}
+                onSectionChange={setActiveSection}
+                className="lg:w-1/4"
               />
-            )}
-          </div>
 
-          {/* Profile Strength: Hidden on mobile */}
-          <div className="hidden lg:block lg:w-1/4">
-            <ProfileStrength profileData={profileData} />
+              <div className="flex-1 bg-white rounded-lg p-6 shadow-sm">
+                {ActiveSection && (
+                  <ActiveSection.Component
+                    id={ActiveSection.id}
+                    data={profileData[ActiveSection.id as keyof ProfileData]}
+                    onUpdate={(data: any) => handleUpdateProfile(ActiveSection.id, data)}
+                  />
+                )}
+              </div>
+
+              <div className="hidden lg:block lg:w-1/4">
+                <ProfileStrength profileData={profileData} />
+              </div>
+            </div>
           </div>
         </div>
       </div>

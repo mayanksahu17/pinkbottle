@@ -30,7 +30,7 @@ function Sidebar({
       className={`relative top-16 z-1 w-64 bg-white p-4 h-screen shadow-xl `}
       style={{ minHeight: '100vh' }} // Ensures the sidebar has the full viewport height
     >
-      <nav className="mt-16 flex flex-col space-y-4">
+      <nav className="mt-16 flex flex-col space-y-4 z-1">
         <Button
           className={`flex items-center justify-start text-base font-medium text-black rounded-lg py-2.5 transition-transform duration-300 ${
             currentTab === 'dashboard' && 'bg-gray-200 shadow-lg'

@@ -113,26 +113,6 @@ export default function ExperienceSection({ profileId, data, onUpdate }: Experie
         </div>
       </div>
 
-      {/* Add Hourly Rate Slider */}
-      <div className="space-y-4 mt-6">
-        <h3 className="text-xl font-semibold">Hourly Rate</h3>
-        <div>
-          <label htmlFor="hourly-rate" className="text-sm text-muted-foreground">Set Your Hourly Rate</label>
-          <div className="flex items-center gap-4 mt-2">
-            <input
-              type="range"
-              id="hourly-rate"
-              min="10"
-              max="200"
-              value={hourlyRate}
-              onChange={handleSliderChange}
-              className="slider w-full"
-            />
-            <span className="font-semibold">{hourlyRate} USD</span>
-          </div>
-        </div>
-      </div>
-
       {/* List of Experiences */}
       <div className="space-y-4">
         {experiences.map((exp) => (
