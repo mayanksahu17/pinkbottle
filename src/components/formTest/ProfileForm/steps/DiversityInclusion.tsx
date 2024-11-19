@@ -1,9 +1,13 @@
 import { Label } from "@/components/ui/label";
-import { Select,SelectTrigger,SelectValue,SelectContent,SelectItem } from "@/components/ui/select";
+import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
+import { UseFormReturn } from 'react-hook-form';
 
-export default function DiversityInclusion({ form }) {
-  const { register } = form;
+interface DiversityInclusionProps {
+  form: UseFormReturn<any>;
+  profileIndex: number;
+}
 
+export default function DiversityInclusion({ form, profileIndex }: DiversityInclusionProps) {
   const genderOptions = [
     'Male', 'Female', 'Non-binary', 'Prefer not to say', 'Other'
   ];
@@ -19,8 +23,8 @@ export default function DiversityInclusion({ form }) {
   return (
     <div className="space-y-6">
       <div>
-        <Label htmlFor="gender">Gender</Label>
-        <Select onValueChange={(value) => form.setValue('gender', value)}>
+        <Label htmlFor={`profiles.${profileIndex}.diversityInclusion.gender`}>Gender</Label>
+        <Select onValueChange={(value) => form.setValue(`profiles.${profileIndex}.diversityInclusion.gender`, value)}>
           <SelectTrigger>
             <SelectValue placeholder="Select gender" />
           </SelectTrigger>
@@ -35,8 +39,8 @@ export default function DiversityInclusion({ form }) {
       </div>
 
       <div>
-        <Label htmlFor="pronouns">Pronouns</Label>
-        <Select onValueChange={(value) => form.setValue('pronouns', value)}>
+        <Label htmlFor={`profiles.${profileIndex}.diversityInclusion.pronouns`}>Pronouns</Label>
+        <Select onValueChange={(value) => form.setValue(`profiles.${profileIndex}.diversityInclusion.pronouns`, value)}>
           <SelectTrigger>
             <SelectValue placeholder="Select pronouns" />
           </SelectTrigger>
@@ -51,8 +55,8 @@ export default function DiversityInclusion({ form }) {
       </div>
 
       <div>
-        <Label htmlFor="ethnicity">Ethnicity</Label>
-        <Select onValueChange={(value) => form.setValue('ethnicity', value)}>
+        <Label htmlFor={`profiles.${profileIndex}.diversityInclusion.ethnicity`}>Ethnicity</Label>
+        <Select onValueChange={(value) => form.setValue(`profiles.${profileIndex}.diversityInclusion.ethnicity`, value)}>
           <SelectTrigger>
             <SelectValue placeholder="Select ethnicity" />
           </SelectTrigger>

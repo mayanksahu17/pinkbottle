@@ -1,54 +1,57 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { auth } from '@clerk/nextjs';
+import { clerkClient } from '@clerk/nextjs/server';
+import { NextResponse } from 'next/server';
 import { dbConnect } from '@/lib/database/mongodb';
-import Profile from '@/lib/database/models/Profile/profile';
+import User from '@/lib/database/models/User/User';
 
-// Connect to the database when the module is loaded
-dbConnect(); 
-
-export async function POST(request: Request) {
+export async function POST(req: Request) {
   try {
-    const formData = await request.json();
+    const { userId } = auth();
+    if (!userId) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
 
-    // Transform the flat form data into the required schema structure
-    const profileData = {
-      personalInfo: {
-        fullName: formData.fullName,
-        email: formData.email,
-        location: formData.location,
-        phone: formData.phone,
-        profilePhoto: formData.profilePhoto
-      },
-      rolesSkills: {
-        primaryRole: formData.primaryRole,
-        skills: formData.skills,
-        title: formData.title
-      },
-      expectations: {
-        hourlyRate: formData.hourlyRate,
-        availability: formData.availability,
-        workPreference: formData.workPreference
-      },
-      experience: formData.experiences,
-      cv: formData.resume,
-      diversityInclusion: {
-        gender: formData.gender,
-        pronouns: formData.pronouns,
-        ethnicity: formData.ethnicity
-      }
-    };
+    const clerkUser = await clerkClient.users.getUser(userId);
+    if (!clerkUser) {
+      return NextResponse.json({ error: 'Clerk User Not Found' }, { status: 404 });
+    }
 
-    const profile = new Profile(profileData);
-    await profile.save();
+    const { profiles, profileIndex } = await req.json();
+
+    await dbConnect();
+
+    // Find or create user by clerkId
+    let user = await User.findOne({ clerkId: userId });
+    if (!user) {
+      user = new User({ 
+        clerkId: userId,
+        email: clerkUser.emailAddresses[0]?.emailAddress,
+        firstName: clerkUser.firstName,
+        lastName: clerkUser.lastName,
+        profiles: []
+      });
+    }
+
+    // Update or add profile
+    if (profileIndex !== undefined && 
+        profileIndex >= 0 && 
+        profileIndex < user.profiles.length) {
+      user.profiles[profileIndex] = profiles[0];
+    } else {
+      user.profiles.push(profiles[0]);
+    }
+
+    await user.save();
 
     return NextResponse.json({ 
-      message: 'Profile saved successfully',
-      profile 
-    }, { status: 201 });
+      message: 'Profile updated successfully',
+      profileIndex: profileIndex ?? user.profiles.length - 1
+    }, { status: 200 });
 
   } catch (error) {
-    console.error('Error saving profile:', error);
+    console.error('Profile Update Error:', error);
     return NextResponse.json({ 
-      error: 'Failed to save profile',
+      error: 'Internal Server Error', 
       details: error instanceof Error ? error.message : 'Unknown error'
     }, { status: 500 });
   }

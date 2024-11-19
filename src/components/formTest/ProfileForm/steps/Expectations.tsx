@@ -1,8 +1,14 @@
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
+import { UseFormReturn } from 'react-hook-form';
 import { useEffect } from "react";
 
-export default function Expectations({ form }) {
+interface ExpectationsProps {
+  form: UseFormReturn<any>;
+  profileIndex: number;
+}
+
+export default function Expectations({ form, profileIndex }: ExpectationsProps) {
   const { register, setValue, formState: { errors }, watch } = form;
 
   const availabilityOptions = [
@@ -23,30 +29,27 @@ export default function Expectations({ form }) {
   const workPreferences = ["Remote", "Hybrid", "On-site", "Flexible"];
 
   // Watch form fields for changes
-  const formData = watch();
+  const formData = watch(`profiles.${profileIndex}.expectations`);
 
   // Automatically trigger save when form data changes
   useEffect(() => {
     const saveFormData = () => {
-      // Here, you can send 'formData' to your backend API to save in the database
       console.log("Saving form data:", formData);
       // Example: make an API request to save form data
       // api.saveExpectations(formData);
     };
 
-    // Trigger the save function whenever the form data changes
     saveFormData();
-
-  }, [formData]); // This effect runs every time formData changes
+  }, [formData]);
 
   return (
     <div className="space-y-6 p-4 sm:p-6 lg:p-8">
       {/* Expected Hourly Rate */}
       <div className="flex flex-col">
-        <Label htmlFor="hourlyRate" className="mb-2">Expected Hourly Rate</Label>
+        <Label htmlFor={`profiles.${profileIndex}.expectations.hourlyRate`} className="mb-2">Expected Hourly Rate</Label>
         <Input
-          id="hourlyRate"
-          {...register("hourlyRate", {
+          id={`profiles.${profileIndex}.expectations.hourlyRate`}
+          {...register(`profiles.${profileIndex}.expectations.hourlyRate`, {
             required: "Hourly rate is required",
             pattern: {
               value: /^\$\d{2,3}-\d{2,3}\/hour$|^\$\d{2,3}\+\/hour$/,
@@ -61,19 +64,19 @@ export default function Expectations({ form }) {
             <option key={rate} value={rate} />
           ))}
         </datalist>
-        {errors.hourlyRate && (
+        {errors.profiles?.[profileIndex]?.expectations?.hourlyRate && (
           <span className="text-sm text-red-500 mt-1">
-            {errors.hourlyRate.message}
+            {errors.profiles[profileIndex].expectations.hourlyRate.message}
           </span>
         )}
       </div>
 
       {/* Availability */}
       <div className="flex flex-col">
-        <Label htmlFor="availability" className="mb-2">Availability</Label>
+        <Label htmlFor={`profiles.${profileIndex}.expectations.availability`} className="mb-2">Availability</Label>
         <select
-          id="availability"
-          {...register("availability", {
+          id={`profiles.${profileIndex}.expectations.availability`}
+          {...register(`profiles.${profileIndex}.expectations.availability`, {
             required: "Availability is required",
           })}
           className="w-full rounded border-gray-300 p-2"
@@ -87,9 +90,9 @@ export default function Expectations({ form }) {
             </option>
           ))}
         </select>
-        {errors.availability && (
+        {errors.profiles?.[profileIndex]?.expectations?.availability && (
           <span className="text-sm text-red-500 mt-1">
-            {errors.availability.message}
+            {errors.profiles[profileIndex].expectations.availability.message}
           </span>
         )}
       </div>
@@ -106,7 +109,7 @@ export default function Expectations({ form }) {
               <input
                 type="checkbox"
                 value={preference}
-                {...register("workPreference")}
+                {...register(`profiles.${profileIndex}.expectations.workPreference`)}
                 className="rounded border-gray-300"
               />
               <span>{preference}</span>
@@ -117,10 +120,10 @@ export default function Expectations({ form }) {
 
       {/* Right to Work */}
       <div className="flex flex-col">
-        <Label htmlFor="rightToWork" className="mb-2">Right to Work</Label>
+        <Label htmlFor={`profiles.${profileIndex}.expectations.rightToWork`} className="mb-2">Right to Work</Label>
         <Input
-          id="rightToWork"
-          {...register("rightToWork", {
+          id={`profiles.${profileIndex}.expectations.rightToWork`}
+          {...register(`profiles.${profileIndex}.expectations.rightToWork`, {
             required: "Right to work information is required",
             pattern: {
               value: /^[\w\s-]+$/,
@@ -130,19 +133,19 @@ export default function Expectations({ form }) {
           placeholder="e.g., Citizen, Work Permit, H1-B"
           className="w-full"
         />
-        {errors.rightToWork && (
+        {errors.profiles?.[profileIndex]?.expectations?.rightToWork && (
           <span className="text-sm text-red-500 mt-1">
-            {errors.rightToWork.message}
+            {errors.profiles[profileIndex].expectations.rightToWork.message}
           </span>
         )}
       </div>
 
       {/* Security Clearance */}
       <div className="flex flex-col">
-        <Label htmlFor="securityClearance" className="mb-2">Security Clearance</Label>
+        <Label htmlFor={`profiles.${profileIndex}.expectations.securityClearance`} className="mb-2">Security Clearance</Label>
         <Input
-          id="securityClearance"
-          {...register("securityClearance", {
+          id={`profiles.${profileIndex}.expectations.securityClearance`}
+          {...register(`profiles.${profileIndex}.expectations.securityClearance`, {
             required: "Security clearance is required",
             pattern: {
               value: /^[\w\s]+$/,
@@ -152,9 +155,9 @@ export default function Expectations({ form }) {
           placeholder="e.g., None, Confidential, Top Secret"
           className="w-full"
         />
-        {errors.securityClearance && (
+        {errors.profiles?.[profileIndex]?.expectations?.securityClearance && (
           <span className="text-sm text-red-500 mt-1">
-            {errors.securityClearance.message}
+            {errors.profiles[profileIndex].expectations.securityClearance.message}
           </span>
         )}
       </div>

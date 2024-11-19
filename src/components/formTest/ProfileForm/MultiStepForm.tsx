@@ -10,7 +10,7 @@ import Expectations from './steps/Expectations';
 import ExperienceSection from './steps/Experience';
 import CVSection from './steps/CV';
 import DiversityInclusion from './steps/DiversityInclusion';
-import type { FormData } from './types';
+import type { FormData } from '@/lib/database/models/User/types';
 
 const steps = [
   { id: 'personal', title: 'Personal Information', component: PersonalInfo },
@@ -18,36 +18,50 @@ const steps = [
   { id: 'expectations', title: 'Expectations', component: Expectations },
   { id: 'experience', title: 'Experience', component: ExperienceSection },
   { id: 'cv', title: 'CV', component: CVSection },
-  { id: 'diversity', title: 'Diversity & Inclusion', component: DiversityInclusion }
+  { id: 'diversity', title: 'Diversity & Inclusion', component: DiversityInclusion },
 ];
 
-export default function MultiStepForm({ onClose }: { onClose: () => void }) {
+interface MultiStepFormProps {
+  onClose: () => void;
+  profileIndex: number;
+}
+
+export default function MultiStepForm({ onClose, profileIndex }: MultiStepFormProps) {
   const [currentStep, setCurrentStep] = useState(0);
-  const [formData, setFormData] = useState<Partial<FormData>>({}); // Maintain central form data
+  const [formData, setFormData] = useState<Partial<FormData>>({});
   const form = useForm<FormData>();
-  const { handleSubmit } = form;
+  const { handleSubmit, getValues } = form;
+
+  // Log data after each step
+  const handleNext = (stepData: Partial<FormData>) => {
+    setFormData((prev) => {
+      const updatedData = { ...prev, ...stepData };
+      console.log('Data after step', currentStep + 1, updatedData); // Log the updated data after each step
+      return updatedData;
+    });
+    setCurrentStep((prev) => prev + 1); // Move to the next step
+  };
+
+  // Log data on final submission
+  const handleFinalSubmit = handleSubmit(async (data: FormData) => {
+    console.log('Final form data:', data); // Log all data before submitting
+    await onSubmit(data); // Submit the entire form data
+  });
 
   const onSubmit = async (data: FormData) => {
     try {
+      const updatedProfiles = { ...formData, ...data }; // Combine current form data with submitted data
+      console.log('Submitting form data to API:', updatedProfiles); // Log data before sending to the backend
       await fetch('/api/ProfileForm', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
+        body: JSON.stringify({ profiles: [updatedProfiles], profileIndex }),
       });
       onClose();
     } catch (error) {
       console.error('Error saving profile:', error);
     }
   };
-
-  const handleNext = (stepData: Partial<FormData>) => {
-    setFormData(prev => ({ ...prev, ...stepData })); // Merge new step data with existing data
-    setCurrentStep(prev => prev + 1);
-  };
-
-  const handleFinalSubmit = handleSubmit(async (data: FormData) => {
-    await onSubmit({ ...formData, ...data }); // Include accumulated formData in final submit
-  });
 
   const CurrentStepComponent = steps[currentStep].component;
 
@@ -60,13 +74,15 @@ export default function MultiStepForm({ onClose }: { onClose: () => void }) {
 
       <form onSubmit={currentStep === steps.length - 1 ? handleFinalSubmit : undefined}>
         <Card className="p-6 sm:p-8 md:p-10">
-          <CurrentStepComponent form={form} />
+          {/* Render the current step component */}
+          <CurrentStepComponent form={form} profileIndex={profileIndex} />
 
+          {/* Navigation Buttons */}
           <div className="flex flex-col sm:flex-row justify-between items-center mt-6 space-y-4 sm:space-y-0 sm:space-x-4">
             <Button
               type="button"
               variant="outline"
-              onClick={() => setCurrentStep(prev => prev - 1)}
+              onClick={() => setCurrentStep((prev) => prev - 1)}
               disabled={currentStep === 0}
               className="w-full sm:w-auto"
             >
@@ -81,7 +97,7 @@ export default function MultiStepForm({ onClose }: { onClose: () => void }) {
             ) : (
               <Button
                 type="button"
-                onClick={handleSubmit(handleNext)}
+                onClick={handleSubmit((data) => handleNext(data))}
                 className="w-full sm:w-auto"
               >
                 Next

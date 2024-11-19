@@ -72,7 +72,7 @@ export default function Expectations({ data, onUpdate }: ExpectationsProps) {
                   value={formData.workPreference}
                   onValueChange={(value) => handleChange('workPreference', value)}
                 >
-                  <SelectTrigger className="w-[200px]">
+                  <SelectTrigger>
                     <SelectValue placeholder="Select preference" />
                   </SelectTrigger>
                   <SelectContent>
@@ -101,8 +101,9 @@ export default function Expectations({ data, onUpdate }: ExpectationsProps) {
                 <Select
                   value={formData.availability}
                   onValueChange={(value) => handleChange('availability', value)}
+                 
                 >
-                  <SelectTrigger className="w-[200px]">
+                  <SelectTrigger>
                     <SelectValue placeholder="Select availability" />
                   </SelectTrigger>
                   <SelectContent>
@@ -134,7 +135,7 @@ export default function Expectations({ data, onUpdate }: ExpectationsProps) {
                   min={10}
                   max={100}
                   step={1}
-                  className="w-[200px]"
+                  className="w-full max-w-xs"
                 />
               ) : (
                 <span className="bg-gray-50 rounded-full px-4 py-2 text-sm">
@@ -155,7 +156,7 @@ export default function Expectations({ data, onUpdate }: ExpectationsProps) {
                 <Input
                   value={formData.rightToWork}
                   onChange={(e) => handleChange('rightToWork', e.target.value)}
-                  className="w-[200px]"
+                  className="w-full max-w-xs"
                   placeholder="e.g., Citizen, Work Permit"
                 />
               ) : (
@@ -177,7 +178,7 @@ export default function Expectations({ data, onUpdate }: ExpectationsProps) {
                 <Input
                   value={formData.securityClearance}
                   onChange={(e) => handleChange('securityClearance', e.target.value)}
-                  className="w-[200px]"
+                  className="w-full max-w-xs"
                   placeholder="e.g., None, Confidential, Top Secret"
                 />
               ) : (

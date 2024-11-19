@@ -24,32 +24,32 @@ export default function PersonalInfo({ data, onUpdate }) {
   }
 
   const handleUploadComplete = (res) => {
-    setIsUploading(false);
-  
+    setIsUploading(false)
+
     if (res && res.length > 0) {
-      const newPhotoUrl = res[0].url; 
-      console.log("New photo URL received:", newPhotoUrl);
-  
-      const updatedData = { ...formData, profilePhoto: newPhotoUrl };
-      console.log("Updated formData with profilePhoto:", updatedData);
-  
-      setFormData(updatedData);
-  
-      onUpdate(updatedData);
+      const newPhotoUrl = res[0].url
+      console.log("New photo URL received:", newPhotoUrl)
+
+      const updatedData = { ...formData, profilePhoto: newPhotoUrl }
+      console.log("Updated formData with profilePhoto:", updatedData)
+
+      setFormData(updatedData)
+
+      onUpdate(updatedData)
     }
-  };
-  
+  }
+
   const handleRemovePhoto = () => {
-    setFormData(prev => ({ ...prev, profilePhoto: null })) 
-    onUpdate({ ...formData, profilePhoto: null }) 
+    setFormData(prev => ({ ...prev, profilePhoto: null }))
+    onUpdate({ ...formData, profilePhoto: null })
   }
 
   return (
-    <div className="max-w-3xl mx-auto p-6 space-y-6">
+    <div className="max-w-3xl mx-auto p-4 sm:p-6 space-y-6">
       <div className="flex justify-between items-center mb-6">
-        <div>
+        <div className="space-y-1">
           <h2 className="text-2xl font-semibold text-neutral-900">Profile set up</h2>
-          <p className="text-neutral-600 mt-1">
+          <p className="text-sm text-neutral-600">
             This section includes the information you shared when first setting up your HiredEasy profile.
           </p>
         </div>
@@ -70,18 +70,18 @@ export default function PersonalInfo({ data, onUpdate }) {
       </div>
 
       <Card className="rounded-xl border border-neutral-200">
-        <CardContent className="p-6">
+        <CardContent className="p-4 sm:p-6">
           <div className="space-y-6">
             {/* Avatar Section */}
             <div className="pb-6 border-b border-neutral-200">
               <h3 className="text-lg font-semibold mb-4">Avatar</h3>
-              <div className="flex items-center gap-4">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
                 <Avatar className="h-16 w-16">
                   <AvatarImage src={formData.profilePhoto || "/placeholder.svg"} />
                   <AvatarFallback>{formData.fullName?.split(' ').map(n => n[0]).join('')}</AvatarFallback>
                 </Avatar>
-                <div className="space-y-2">
-                  <div className="flex gap-2">
+                <div className="space-y-2 w-full sm:w-auto">
+                  <div className="flex flex-wrap gap-2">
                     <Button 
                       variant="outline" 
                       className="text-red-500 border-red-500 hover:bg-red-50"
@@ -116,8 +116,8 @@ export default function PersonalInfo({ data, onUpdate }) {
                   { label: 'Postcode', name: 'postcode' },
                   { label: 'Phone number', name: 'phone' }
                 ].map((field) => (
-                  <div key={field.name} className="flex items-center py-2">
-                    <div className="w-1/3">
+                  <div key={field.name} className="flex flex-col sm:flex-row items-start sm:items-center py-2">
+                    <div className="w-full sm:w-1/3">
                       <span className="text-neutral-700 font-medium">{field.label}:</span>
                     </div>
                     {isEditing ? (
@@ -125,19 +125,19 @@ export default function PersonalInfo({ data, onUpdate }) {
                         name={field.name}
                         value={formData[field.name] || ''}
                         onChange={handleChange}
-                        className="w-2/3"
+                        className="w-full sm:w-2/3 mt-2 sm:mt-0"
                       />
                     ) : (
-                      <span className="text-neutral-600 w-2/3">{formData[field.name]}</span>
+                      <span className="text-neutral-600 w-full sm:w-2/3 mt-2 sm:mt-0">{formData[field.name]}</span>
                     )}
                   </div>
                 ))}
 
-                <div className="flex items-center py-2">
-                  <div className="w-1/3">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center py-2">
+                  <div className="w-full sm:w-1/3">
                     <span className="text-neutral-700 font-medium">English level:</span>
                   </div>
-                  <div className="w-2/3">
+                  <div className="w-full sm:w-2/3 mt-2 sm:mt-0">
                     {isEditing ? (
                       <Select
                         value={formData.englishLevel}
@@ -155,7 +155,7 @@ export default function PersonalInfo({ data, onUpdate }) {
                         </SelectContent>
                       </Select>
                     ) : (
-                      <span className="text-neutral-600 w-2/3">{formData.englishLevel}</span>
+                      <span className="text-neutral-600 w-full">{formData.englishLevel}</span>
                     )}
                   </div>
                 </div>

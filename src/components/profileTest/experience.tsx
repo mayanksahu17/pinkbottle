@@ -170,15 +170,15 @@ export default function ExperienceSection({ profileId, data, onUpdate }: Experie
                       value={exp.title}
                       onChange={(e) => handleUpdateExperience(exp.id, 'title', e.target.value)}
                       placeholder="Position"
-                      className="mt-4"
+                      className="mt-4 w-full max-w-md"
                     />
                     <Input
                       value={exp.company}
                       onChange={(e) => handleUpdateExperience(exp.id, 'company', e.target.value)}
                       placeholder="Company"
-                      className="mt-2"
+                      className="mt-2 w-full max-w-md"
                     />
-                    <div className="grid grid-cols-2 gap-4 mt-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
                       <Input
                         type="date"
                         value={exp.startDate}
@@ -196,7 +196,7 @@ export default function ExperienceSection({ profileId, data, onUpdate }: Experie
                       value={exp.description}
                       onChange={(e) => handleUpdateExperience(exp.id, 'description', e.target.value)}
                       placeholder="Description"
-                      className="mt-2 min-h-[80px]"
+                      className="mt-2 min-h-[80px] w-full max-w-md"
                     />
                   </>
                 )}
@@ -217,15 +217,15 @@ export default function ExperienceSection({ profileId, data, onUpdate }: Experie
             value={newExperience.title}
             onChange={(e) => setNewExperience(prev => ({ ...prev, title: e.target.value }))}
             placeholder="Position"
-            className="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500"
+            className="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 w-full max-w-md"
           />
           <Input
             value={newExperience.company}
             onChange={(e) => setNewExperience(prev => ({ ...prev, company: e.target.value }))}
             placeholder="Company"
-            className="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500"
+            className="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 w-full max-w-md"
           />
-          <div className="grid grid-cols-2 gap-4 mt-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
             <Input
               type="date"
               value={newExperience.startDate}
@@ -243,7 +243,7 @@ export default function ExperienceSection({ profileId, data, onUpdate }: Experie
             value={newExperience.description}
             onChange={(e) => setNewExperience(prev => ({ ...prev, description: e.target.value }))}
             placeholder="Description"
-            className="mt-2 min-h-[80px] border-gray-300 focus:border-indigo-500 focus:ring-indigo-500"
+            className="mt-2 min-h-[80px] w-full max-w-md"
           />
           <div className="mt-4 flex justify-end">
             <Button onClick={handleAddExperience} variant="destructive" className="flex items-center gap-2">

@@ -13,6 +13,8 @@ async function checkProfileExists(id: string) {
 
 export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
   const id = params.id
+  console.log("params",params)
+  console.log("params ID",params.id);
 
   await dbConnect()
 

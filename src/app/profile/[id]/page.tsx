@@ -99,24 +99,29 @@ export default function ProfilePage({ params }: { params: { id: string } }) {
   const [activeSection, setActiveSection] = useState('personalInfo');
   const [profileData, setProfileData] = useState<ProfileData | null>(null);
   const [currentTab, setCurrentTab] = useState('profile');
-  const [sidebarOpen, setSidebarOpen] = useState(false); // Start with closed sidebar for mobile
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const { toast } = useToast();
 
   useEffect(() => {
-    if (!params.id) return;
+
+    if (!params?.id) {
+      setError('Profile ID is required');
+      setLoading(false);
+      return;
+    }
 
     const fetchProfile = async () => {
       setLoading(true);
       try {
         const response = await fetch(`/api/profile/${params.id}`);
         if (!response.ok) {
-          throw new Error('Failed to fetch profile');
+          throw new Error(`Failed to fetch profile: ${response.statusText}`);
         }
         const data = await response.json();
         setProfileData(data);
-      } catch (err) {
+      } catch (err: any) {
         console.error('Error fetching profile:', err);
         setError(err.message);
         toast({
@@ -130,12 +135,19 @@ export default function ProfilePage({ params }: { params: { id: string } }) {
     };
 
     fetchProfile();
-  }, [params.id, toast]);
+  }, [params?.id, toast]);
 
   const handleUpdateProfile = async (section: string, data: any) => {
-    try {
-      console.log("Updating section:", section);
+    if (!params?.id) {
+      toast({
+        title: "Error",
+        description: "Profile ID is required",
+        variant: "destructive",
+      });
+      return;
+    }
 
+    try {
       const response = await fetch(`/api/profile/${params.id}`, {
         method: 'PATCH',
         headers: {
@@ -147,7 +159,7 @@ export default function ProfilePage({ params }: { params: { id: string } }) {
       });
 
       if (!response.ok) {
-        throw new Error('Failed to update profile');
+        throw new Error(`Failed to update profile: ${response.statusText}`);
       }
 
       const updatedProfile = await response.json();
@@ -163,11 +175,11 @@ export default function ProfilePage({ params }: { params: { id: string } }) {
         title: "Success",
         description: "Profile updated successfully",
       });
-    } catch (err) {
+    } catch (err: any) {
       console.error('Error updating profile:', err);
       toast({
         title: "Error",
-        description: "Failed to update profile",
+        description: err.message || "Failed to update profile",
         variant: "destructive",
       });
     }
@@ -264,6 +276,7 @@ export default function ProfilePage({ params }: { params: { id: string } }) {
             isPaidUser={true}
             sidebarOpen={sidebarOpen}
             className=""
+            paramsId={params.id}
           />
         </div>
 

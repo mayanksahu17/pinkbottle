@@ -1,14 +1,18 @@
-import { useForm } from 'react-hook-form';
+import { UseFormReturn } from 'react-hook-form';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useState } from 'react';
-import { createUploadthing, type FileRouter } from "uploadthing/next";
 import UploadPhotoButton from '@/components/Buttons/upload-button';
 
-export default function PersonalInfo({ form }) {
+interface PersonalInfoProps {
+  form: UseFormReturn<any>;
+  profileIndex: number;
+}
+
+export default function PersonalInfo({ form, profileIndex }: PersonalInfoProps) {
   const { register, setValue, formState: { errors } } = form;
-  const [profilePhotoUrl, setProfilePhotoUrl] = useState<string | null>(null); // State for profile photo URL
-  const [uploadSuccess, setUploadSuccess] = useState<boolean>(false); // State for upload success notification
+  const [profilePhotoUrl, setProfilePhotoUrl] = useState<string | null>(null);
+  const [uploadSuccess, setUploadSuccess] = useState<boolean>(false);
 
   return (
     <div className="space-y-4">
@@ -18,17 +22,16 @@ export default function PersonalInfo({ form }) {
         <UploadPhotoButton
           onClientUploadComplete={(res) => {
             if (res?.[0]) {
-              setValue('profilePhoto', res[0].url); // Save the uploaded URL in form state
-              setProfilePhotoUrl(res[0].url); // Set the profile photo URL to show preview
-              setUploadSuccess(true); // Display upload success notification
+              setValue(`profiles.${profileIndex}.personalInfo.profilePhoto`, res[0].url);
+              setProfilePhotoUrl(res[0].url);
+              setUploadSuccess(true);
             }
           }}
           onUploadError={(error: Error) => {
             console.error(error);
-            setUploadSuccess(false); // Hide the success notification if there's an error
+            setUploadSuccess(false);
           }}
         />
-        {/* Photo Preview Section */}
         {profilePhotoUrl && (
           <div className="mt-2">
             <img
@@ -38,7 +41,6 @@ export default function PersonalInfo({ form }) {
             />
           </div>
         )}
-        {/* Upload Success Notification */}
         {uploadSuccess && (
           <p className="text-green-500 text-sm mt-2">Photo uploaded successfully!</p>
         )}
@@ -46,46 +48,50 @@ export default function PersonalInfo({ form }) {
 
       {/* Full Name Field */}
       <div>
-        <Label htmlFor="fullName">Full Name</Label>
+        <Label htmlFor={`profiles.${profileIndex}.personalInfo.fullName`}>Full Name</Label>
         <Input
-          id="fullName"
-          {...register('fullName', {
+          id={`profiles.${profileIndex}.personalInfo.fullName`}
+          {...register(`profiles.${profileIndex}.personalInfo.fullName`, {
             required: 'Full name is required',
             pattern: {
-              value: /^[a-zA-Z\s]+$/, // Regex to allow only letters and spaces
+              value: /^[a-zA-Z\s]+$/,
               message: 'Full name can only contain letters and spaces'
             }
           })}
         />
-        {errors.fullName && <p className="text-red-500 text-sm">{errors.fullName.message}</p>}
+        {errors.profiles?.[profileIndex]?.personalInfo?.fullName && (
+          <p className="text-red-500 text-sm">{errors.profiles[profileIndex].personalInfo.fullName.message}</p>
+        )}
       </div>
 
-      {/* Email Field with Enhanced Regex */}
+      {/* Email Field */}
       <div>
-        <Label htmlFor="email">Email</Label>
+        <Label htmlFor={`profiles.${profileIndex}.personalInfo.email`}>Email</Label>
         <Input
-          id="email"
+          id={`profiles.${profileIndex}.personalInfo.email`}
           type="email"
-          {...register('email', {
+          {...register(`profiles.${profileIndex}.personalInfo.email`, {
             required: 'Email is required',
             pattern: {
-              value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, // Updated regex for email validation
+              value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
               message: 'Please enter a valid email (e.g., user@example.com)'
             }
           })}
         />
-        {errors.email && <p className="text-red-500 text-sm">{errors.email.message}</p>}
+        {errors.profiles?.[profileIndex]?.personalInfo?.email && (
+          <p className="text-red-500 text-sm">{errors.profiles[profileIndex].personalInfo.email.message}</p>
+        )}
       </div>
 
       {/* Location Field */}
       <div>
-        <Label htmlFor="location">Location</Label>
+        <Label htmlFor={`profiles.${profileIndex}.personalInfo.location`}>Location</Label>
         <Input
-          id="location"
-          {...register('location', {
+          id={`profiles.${profileIndex}.personalInfo.location`}
+          {...register(`profiles.${profileIndex}.personalInfo.location`, {
             required: 'Location is required',
             pattern: {
-              value: /^[a-zA-Z\s]+$/, // Regex to allow letters and spaces only
+              value: /^[a-zA-Z\s]+$/,
               message: 'Location can only contain letters and spaces'
             }
           })}
@@ -98,23 +104,27 @@ export default function PersonalInfo({ form }) {
           <option value="Boston" />
           <option value="Chicago" />
         </datalist>
-        {errors.location && <p className="text-red-500 text-sm">{errors.location.message}</p>}
+        {errors.profiles?.[profileIndex]?.personalInfo?.location && (
+          <p className="text-red-500 text-sm">{errors.profiles[profileIndex].personalInfo.location.message}</p>
+        )}
       </div>
 
       {/* Phone Number Field */}
       <div>
-        <Label htmlFor="phone">Phone Number</Label>
+        <Label htmlFor={`profiles.${profileIndex}.personalInfo.phone`}>Phone Number</Label>
         <Input
-          id="phone"
-          {...register('phone', {
+          id={`profiles.${profileIndex}.personalInfo.phone`}
+          {...register(`profiles.${profileIndex}.personalInfo.phone`, {
             required: 'Phone number is required',
             pattern: {
-              value: /^[0-9]{10}$/, // Regex for a 10-digit phone number
+              value: /^[0-9]{10}$/,
               message: 'Please enter a valid 10-digit phone number'
             }
           })}
         />
-        {errors.phone && <p className="text-red-500 text-sm">{errors.phone.message}</p>}
+        {errors.profiles?.[profileIndex]?.personalInfo?.phone && (
+          <p className="text-red-500 text-sm">{errors.profiles[profileIndex].personalInfo.phone.message}</p>
+        )}
       </div>
     </div>
   );

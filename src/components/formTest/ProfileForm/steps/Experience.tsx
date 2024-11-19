@@ -1,14 +1,19 @@
 import { Button } from "@/components/ui/button";
-import { useFieldArray } from "react-hook-form";
+import { useFieldArray, UseFormReturn } from "react-hook-form";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { X } from "lucide-react";
+import { X } from 'lucide-react';
 
-export default function Experience({ form }) {
+interface ExperienceProps {
+  form: UseFormReturn<any>;
+  profileIndex: number;
+}
+
+export default function Experience({ form, profileIndex }: ExperienceProps) {
   const { control } = form;
   const { fields, append, remove } = useFieldArray({
     control,
-    name: "experiences"
+    name: `profiles.${profileIndex}.experiences`
   });
 
   return (
@@ -19,7 +24,7 @@ export default function Experience({ form }) {
           title: '',
           company: '',
           startDate: '',
-          endDate: '',
+          endDate: null, // Explicitly set to null to avoid issues with empty values
           current: false,
           description: ''
         })}
@@ -43,12 +48,12 @@ export default function Experience({ form }) {
           <div className="space-y-4">
             <div>
               <Label>Job Title</Label>
-              <Input {...form.register(`experiences.${index}.title`)} />
+              <Input {...form.register(`profiles.${profileIndex}.experiences.${index}.title`)} />
             </div>
 
             <div>
               <Label>Company</Label>
-              <Input {...form.register(`experiences.${index}.company`)} />
+              <Input {...form.register(`profiles.${profileIndex}.experiences.${index}.company`)} />
             </div>
 
             <div className="grid grid-cols-2 gap-4">
@@ -56,15 +61,15 @@ export default function Experience({ form }) {
                 <Label>Start Date</Label>
                 <Input 
                   type="date" 
-                  {...form.register(`experiences.${index}.startDate`)} 
+                  {...form.register(`profiles.${profileIndex}.experiences.${index}.startDate`)} 
                 />
               </div>
               <div>
                 <Label>End Date</Label>
                 <Input 
                   type="date" 
-                  {...form.register(`experiences.${index}.endDate`)}
-                  disabled={form.watch(`experiences.${index}.current`)}
+                  {...form.register(`profiles.${profileIndex}.experiences.${index}.endDate`)}
+                  disabled={form.watch(`profiles.${profileIndex}.experiences.${index}.current`)}
                 />
               </div>
             </div>
@@ -72,7 +77,7 @@ export default function Experience({ form }) {
             <label className="flex items-center space-x-2">
               <input
                 type="checkbox"
-                {...form.register(`experiences.${index}.current`)}
+                {...form.register(`profiles.${profileIndex}.experiences.${index}.current`)}
                 className="rounded border-gray-300"
               />
               <span>I currently work here</span>
@@ -81,7 +86,7 @@ export default function Experience({ form }) {
             <div>
               <Label>Description</Label>
               <textarea
-                {...form.register(`experiences.${index}.description`)}
+                {...form.register(`profiles.${profileIndex}.experiences.${index}.description`)}
                 className="w-full p-2 border rounded-md"
                 rows={4}
               />

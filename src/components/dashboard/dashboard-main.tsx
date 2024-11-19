@@ -9,6 +9,7 @@ import FormModal from '../formTest/ProfileForm/FormModal';
 const DashboardMain = ({ isPaidUser }: { isPaidUser: boolean }) => {
   const { user } = useUser();
   const [isProfileFormOpen, setIsProfileFormOpen] = useState(false);
+  const [profileIndex, setProfileIndex] = useState(0); // Track profile index if you have multiple profiles
 
   return (
     <main className="w-full p-4 sm:p-6 bg-white rounded-lg shadow-md mt-4 sm:mt-10 mx-auto max-w-7xl">
@@ -134,6 +135,7 @@ const DashboardMain = ({ isPaidUser }: { isPaidUser: boolean }) => {
       <FormModal
         isOpen={isProfileFormOpen}
         onClose={() => setIsProfileFormOpen(false)}
+        profileIndex={profileIndex}  // Ensure correct profileIndex is passed to the modal
       />
     </main>
   );

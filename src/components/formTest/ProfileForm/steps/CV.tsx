@@ -1,22 +1,21 @@
 import { Label } from "@/components/ui/label";
-import { UploadButton } from "@/utils/uploadthing";
 import { UseFormReturn } from 'react-hook-form';
-import { FormData } from "../types";
 import CVButton from "@/components/Buttons/cv-upload-button"
 
-interface CV {
-  form: UseFormReturn<FormData>;
+interface CVProps {
+  form: UseFormReturn<any>;
+  profileIndex: number;
 }
 
-export default function CV({ form }: CV) {
+export default function CV({ form, profileIndex }: CVProps) {
   return (
     <div className="space-y-6">
       <div>
-        <Label htmlFor="resume">Resume/CV</Label>
+        <Label htmlFor={`profiles.${profileIndex}.cv.resume`}>Resume/CV</Label>
         <CVButton
           onClientUploadComplete={(res) => {
             if (res?.[0]) {
-              form.setValue("resume", res[0].url);
+              form.setValue(`profiles.${profileIndex}.cv.resume`, res[0].url);
             }
           }}
           onUploadError={(error: Error) => {
