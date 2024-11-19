@@ -5,7 +5,6 @@ import { ISubscription } from '../Subscription/types';
 
 export type Skill = {
   name: string;
-  level: string;
 };
 
 export type Experience = {

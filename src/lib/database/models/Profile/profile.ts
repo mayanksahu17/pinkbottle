@@ -10,7 +10,7 @@ export interface ProfileDocument extends Document {
   };
   rolesSkills: {
     title: string;
-    skills: { name: string; level: string }[];
+    skills: { name: string}[];
     roles: string[];
   };
   expectations: {
@@ -51,7 +51,6 @@ const ProfileSchema = new Schema({
     skills: [
       {
         name: { type: String, required: true, default: '' },
-        level: { type: String, required: true, default: '' },
       },
     ],
     roles: { type: [String], required: true, default: [] },

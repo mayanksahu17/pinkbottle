@@ -51,7 +51,7 @@ export default function RolesSkills({ form, profileIndex }: RolesSkillsProps) {
 
   const handleSkillAdd = () => {
     if (skillInput && /^[a-zA-Z0-9.\s\-]+$/.test(skillInput)) {
-      appendSkill({ name: skillInput.trim(), level: 'Beginner' });
+      appendSkill({ name: skillInput.trim() });
       setSkillInput("");
     }
   };
@@ -178,19 +178,22 @@ export default function RolesSkills({ form, profileIndex }: RolesSkillsProps) {
         <div className="mt-4">
           <Label>Selected Skills</Label>
           <div className="mt-2 flex flex-wrap gap-2">
-            {skillFields.map((field, index) => (
-              <Badge key={field.id} variant="secondary" className="p-2">
-                {field.id}
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => removeSkill(index)}
-                  className="ml-2 h-4 w-4 p-0"
-                >
-                  <X className="h-3 w-3" />
-                </Button>
-              </Badge>
-            ))}
+            {skillFields.map((field, index) => {
+              const skillName = getValues(`profiles.${profileIndex}.rolesSkills.skills.${index}.name`);
+              return (
+                <Badge key={field.id} variant="secondary" className="p-2">
+                  {skillName} {/* Show the skill name */}
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => removeSkill(index)}
+                    className="ml-2 h-4 w-4 p-0"
+                  >
+                    <X className="h-3 w-3" />
+                  </Button>
+                </Badge>
+              );
+            })}
           </div>
         </div>
       </div>
