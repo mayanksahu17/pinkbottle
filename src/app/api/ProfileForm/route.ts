@@ -17,25 +17,86 @@ export async function POST(req: Request) {
     }
 
     const { profiles, profileIndex } = await req.json();
+    console.log('Profiles received:', profiles);
+    console.log('Profile to update at index:', profileIndex);
 
+    if (!profiles || !Array.isArray(profiles) || profiles.length === 0) {
+      return NextResponse.json({ error: 'Invalid profile data' }, { status: 400 });
+    }
+
+    const requiredFields = [
+      'personalInfo.fullName',
+      'personalInfo.profilePhoto',
+      'personalInfo.email',
+      'personalInfo.location',
+      'personalInfo.phone',
+      'rolesSkills.title',
+      'rolesSkills.skills[0].level', 
+      'expectations.hourlyRate',
+      'expectations.availability',
+      'expectations.rightToWork',
+      'expectations.securityClearance',
+      'cv.resume',
+      'diversityInclusion.gender',
+      'diversityInclusion.pronouns',
+      'diversityInclusion.ethnicity',
+    ];
+
+    console.log('Checking for rolesSkills.skills array:', profiles[0]?.rolesSkills?.skills);
+    console.log('Checking for rolesSkills.skills[0]:', profiles[0]?.rolesSkills?.skills?.[0]);
+    console.log(
+      'Checking for rolesSkills.skills[0].level:',
+      profiles[0]?.rolesSkills?.skills?.[0]?.level
+    );
+        
+    for (const field of requiredFields) {
+      const keys = field.split('.');
+      let value = profiles[0]; 
+      for (const key of keys) {
+        if (Array.isArray(value) && key.includes('[')) {
+          const [arrayKey, index] = key.replace(']', '').split('[');
+          value = value[arrayKey]?.[parseInt(index, 10)];
+        } else if (value && typeof value === 'object') {
+          value = value[key];
+        } else {
+          value = undefined;
+          break;
+        }
+      }
+    
+      console.log(`Validating field: ${field}, Current value:`, value);
+    
+      if (value === undefined || value === null) {
+        console.error(`Missing required field: ${field}`);
+        return NextResponse.json(
+          { error: `Field ${field} is required` },
+          { status: 400 }
+        );
+      }
+    }
+            
     await dbConnect();
 
-    // Find or create user by clerkId
     let user = await User.findOne({ clerkId: userId });
     if (!user) {
-      user = new User({ 
+      user = new User({
         clerkId: userId,
         email: clerkUser.emailAddresses[0]?.emailAddress,
         firstName: clerkUser.firstName,
         lastName: clerkUser.lastName,
-        profiles: []
+        profiles: [],
       });
     }
 
-    // Update or add profile
-    if (profileIndex !== undefined && 
-        profileIndex >= 0 && 
-        profileIndex < user.profiles.length) {
+    if (!Array.isArray(user.profiles)) {
+      user.profiles = [];
+    }
+
+    if (
+      profileIndex !== undefined &&
+      profileIndex >= 0 &&
+      profileIndex < user.profiles.length
+    ) {
       user.profiles[profileIndex] = profiles[0];
     } else {
       user.profiles.push(profiles[0]);
@@ -43,16 +104,21 @@ export async function POST(req: Request) {
 
     await user.save();
 
-    return NextResponse.json({ 
-      message: 'Profile updated successfully',
-      profileIndex: profileIndex ?? user.profiles.length - 1
-    }, { status: 200 });
-
+    return NextResponse.json(
+      {
+        message: 'Profile updated successfully',
+        profileIndex: profileIndex ?? user.profiles.length - 1,
+      },
+      { status: 200 }
+    );
   } catch (error) {
     console.error('Profile Update Error:', error);
-    return NextResponse.json({ 
-      error: 'Internal Server Error', 
-      details: error instanceof Error ? error.message : 'Unknown error'
-    }, { status: 500 });
+    return NextResponse.json(
+      {
+        error: 'Internal Server Error',
+        details: error instanceof Error ? error.message : 'Unknown error',
+      },
+      { status: 500 }
+    );
   }
 }

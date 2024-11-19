@@ -51,7 +51,7 @@ export default function RolesSkills({ form, profileIndex }: RolesSkillsProps) {
 
   const handleSkillAdd = () => {
     if (skillInput && /^[a-zA-Z0-9.\s\-]+$/.test(skillInput)) {
-      appendSkill({ name: skillInput.trim() });
+      appendSkill({ name: skillInput.trim(), level: 'Beginner' });
       setSkillInput("");
     }
   };

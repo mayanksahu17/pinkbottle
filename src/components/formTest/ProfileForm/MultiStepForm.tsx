@@ -55,7 +55,7 @@ export default function MultiStepForm({ onClose, profileIndex }: MultiStepFormPr
       await fetch('/api/ProfileForm', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ profiles: [updatedProfiles], profileIndex }),
+        body: JSON.stringify({ ...updatedProfiles, profileIndex }),
       });
       onClose();
     } catch (error) {
