@@ -31,7 +31,6 @@ export async function POST(req: Request) {
       'personalInfo.location',
       'personalInfo.phone',
       'rolesSkills.title',
-      'rolesSkills.skills[0].level', 
       'expectations.hourlyRate',
       'expectations.availability',
       'expectations.rightToWork',
