@@ -4,8 +4,10 @@ export interface ProfileDocument extends Document {
   personalInfo: {
     fullName: string;
     profilePhoto: string;
+    englishLevel:string;
     email: string;
     location: string;
+    postcode:string;
     phone: string;
   };
   rolesSkills: {
@@ -43,8 +45,11 @@ const ProfileSchema = new Schema({
     fullName: { type: String, required: true, default: '' },
     profilePhoto: { type: String, required: true, default: '' },
     email: { type: String, required: true, default: '' },
+    postcode:{type:String , require:true,default:''},
+    englishLevel:{type:String , required:true,default:''},
     location: { type: String, required: true, default: '' },
     phone: { type: String, required: true, default: '' },
+
   },
   rolesSkills: {
     title: { type: String, required: true, default: '' },

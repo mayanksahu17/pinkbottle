@@ -1,5 +1,3 @@
-// File: lib/database/models/User/types.ts
-
 import { Document } from 'mongoose';
 import { ISubscription } from '../Subscription/types';
 

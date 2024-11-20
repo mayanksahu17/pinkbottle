@@ -8,13 +8,15 @@ import { Pencil, Save, X, FileText, Upload } from 'lucide-react'
 import { UploadButton } from "@/utils/uploadthing"
 
 interface CVProps {
-  data: string | null
-  onUpdate: (data: { cv: string | null }) => Promise<void>
+  data: {
+    resume: string;
+  }
+  onUpdate: (data: { cv: { resume: string } }) => Promise<void>
 }
 
 export default function CV({ data, onUpdate }: CVProps) {
   const [isEditing, setIsEditing] = useState(false)
-  const [cv, setCV] = useState<string | null>(data)
+  const [cv, setCV] = useState<string>(data.resume)
 
   const handleUploadComplete = (res: { url: string }[]) => {
     if (res?.[0]) {
@@ -29,7 +31,7 @@ export default function CV({ data, onUpdate }: CVProps) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    await onUpdate({ cv })
+    await onUpdate({ cv: { resume: cv } })
     setIsEditing(false)
   }
 
@@ -64,7 +66,7 @@ export default function CV({ data, onUpdate }: CVProps) {
                 </a>
               </div>
               {isEditing && (
-                <Button variant="ghost" size="icon" onClick={() => setCV(null)}>
+                <Button variant="ghost" size="icon" onClick={() => setCV('')}>
                   <X className="h-5 w-5 text-red-500" />
                 </Button>
               )}

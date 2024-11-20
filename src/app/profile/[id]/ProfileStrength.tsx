@@ -41,14 +41,14 @@ const sections: SectionConfig[] = [
     requiredFields: ["hourlyRate", "availability", "workPreference", "rightToWork", "securityClearance"],
   },
   {
-    id: "experience",
+    id: "experiences",
     label: "Experience",
     requiredFields: ["title", "company", "startDate", "endDate", "current", "description"],
   },
   {
     id: "cv",
     label: "CV",
-    requiredFields: ["cv"],
+    requiredFields: ["resume"],
   },
   {
     id: "diversityInclusion",

@@ -54,7 +54,7 @@ const sections: Section[] = [
     Component: Expectations,
   },
   {
-    id: 'experience',
+    id: 'experiences',
     label: 'Experience',
     fields: [
       { id: 'title', required: true },

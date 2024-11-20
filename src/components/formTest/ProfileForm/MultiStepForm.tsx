@@ -16,7 +16,7 @@ const steps = [
   { id: 'personal', title: 'Personal Information', component: PersonalInfo },
   { id: 'roles', title: 'Roles & Skills', component: RolesSkills },
   { id: 'expectations', title: 'Expectations', component: Expectations },
-  { id: 'experience', title: 'Experience', component: ExperienceSection },
+  { id: 'experiences', title: 'Experience', component: ExperienceSection },
   { id: 'cv', title: 'CV', component: CVSection },
   { id: 'diversity', title: 'Diversity & Inclusion', component: DiversityInclusion },
 ];
@@ -36,7 +36,7 @@ export default function MultiStepForm({ onClose, profileIndex }: MultiStepFormPr
   const handleNext = (stepData: Partial<FormData>) => {
     setFormData((prev) => {
       const updatedData = { ...prev, ...stepData };
-      console.log('Data after step', currentStep + 1, updatedData); // Log the updated data after each step
+      //console.log('Data after step', currentStep + 1, updatedData); // Log the updated data after each step
       return updatedData;
     });
     setCurrentStep((prev) => prev + 1); // Move to the next step
@@ -91,7 +91,7 @@ export default function MultiStepForm({ onClose, profileIndex }: MultiStepFormPr
             </Button>
 
             {currentStep === steps.length - 1 ? (
-              <Button type="submit" className="w-full sm:w-auto">
+              <Button type="submit" className="w-full border border-black sm:w-auto">
                 Complete Profile
               </Button>
             ) : (

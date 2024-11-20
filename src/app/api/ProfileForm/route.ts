@@ -40,17 +40,19 @@ export async function POST(req: Request) {
       'diversityInclusion.pronouns',
       'diversityInclusion.ethnicity',
     ];
-
-    // console.log('Checking for rolesSkills.skills array:', profiles[0]?.rolesSkills?.skills);
-    // console.log('Checking for rolesSkills.skills[0]:', profiles[0]?.rolesSkills?.skills?.[0]);
-    // console.log(
-    //   'Checking for rolesSkills.skills[0].level:',
-    //   profiles[0]?.rolesSkills?.skills?.[0]?.level
-    // );
-        
+    
     for (const field of requiredFields) {
       const keys = field.split('.');
-      let value = profiles[0]; 
+      let value = profiles[0];
+      
+      // Special handling for experiences array
+      if (field === 'experiences') {
+        if (!Array.isArray(value.experiences)) {
+          value.experiences = [];
+        }
+        continue; // Skip further validation for experiences array
+      }
+      
       for (const key of keys) {
         if (Array.isArray(value) && key.includes('[')) {
           const [arrayKey, index] = key.replace(']', '').split('[');
@@ -91,11 +93,20 @@ export async function POST(req: Request) {
       user.profiles = [];
     }
 
+    // Ensure experiences array exists and is properly structured
+    if (!Array.isArray(profiles[0].experiences)) {
+      profiles[0].experiences = [];
+    }
+
     if (
       profileIndex !== undefined &&
       profileIndex >= 0 &&
       profileIndex < user.profiles.length
     ) {
+      // Preserve existing experiences if none provided in update
+      if (!profiles[0].experiences.length && user.profiles[profileIndex].experiences) {
+        profiles[0].experiences = user.profiles[profileIndex].experiences;
+      }
       user.profiles[profileIndex] = profiles[0];
     } else {
       user.profiles.push(profiles[0]);
