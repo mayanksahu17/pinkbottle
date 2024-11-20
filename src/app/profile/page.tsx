@@ -5,18 +5,19 @@ import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { useToast } from '@/hooks/use-toast';
 import { AlertCircle } from 'lucide-react';
-import Sidebar from '../../../components/SideBar/sideBar';
-import PersonalInfo from '../../../components/profileTest/personal-info';
-import RolesSkills from '../../../components/profileTest/roles-skills';
-import Expectations from '../../../components/profileTest/expectations';
-import Experience from '../../../components/profileTest/experience';
-import CV from '../../../components/profileTest/cv';
-import DiversityInclusion from '../../../components/profileTest/diversity-inclusion';
+import Sidebar from '../../components/SideBar/sideBar';
+import PersonalInfo from '../../components/profileTest/personal-info';
+import RolesSkills from '../../components/profileTest/roles-skills';
+import Expectations from '../../components/profileTest/expectations';
+import Experience from '../../components/profileTest/experience';
+import CV from '../../components/profileTest/cv';
+import DiversityInclusion from '../../components/profileTest/diversity-inclusion';
 import SectionNavigation from './SectionNavigation';
 import ProfileStrength from './ProfileStrength';
 import { Section } from '@/types';
 import { X } from 'lucide-react';
 import { Menu } from 'lucide-react';
+import { useAuth } from '@clerk/nextjs';  // Import Clerk's auth
 
 const sections: Section[] = [
   {
@@ -85,7 +86,6 @@ const sections: Section[] = [
     Component: DiversityInclusion,
   },
 ];
-
 interface ProfileData {
   personalInfo?: any;
   rolesSkills?: any;
@@ -95,7 +95,7 @@ interface ProfileData {
   diversityInclusion?: any;
 }
 
-export default function ProfilePage({ params }: { params: { id: string } }) {
+export default function ProfilePage() {
   const [activeSection, setActiveSection] = useState('personalInfo');
   const [profileData, setProfileData] = useState<ProfileData | null>(null);
   const [currentTab, setCurrentTab] = useState('profile');
@@ -104,9 +104,12 @@ export default function ProfilePage({ params }: { params: { id: string } }) {
   const [error, setError] = useState<string | null>(null);
   const { toast } = useToast();
 
+  // Use useAuth hook to get authentication data
+  const { isLoaded, userId, sessionId, getToken } = useAuth();
+
   useEffect(() => {
-    if (!params?.id) {
-      setError('Profile ID is required');
+    if (!isLoaded || !userId) {
+      setError('User is not authenticated');
       setLoading(false);
       return;
     }
@@ -114,17 +117,17 @@ export default function ProfilePage({ params }: { params: { id: string } }) {
     const fetchProfile = async () => {
       setLoading(true);
       try {
-        console.log('Fetching profile with URL:', `/api/profile/${params.id}`);
-        const response = await fetch(`/api/profile/${params.id}`);
-        console.log('API response:', response);
+        console.log('Fetching profile for userId:', userId);
+        const response = await fetch(`/api/profile`, {
+          method: 'GET',
+          headers: { 'Authorization': `Bearer ${userId}` }, // Pass userId in headers
+        });
 
         if (!response.ok) {
           throw new Error(`Failed to fetch profile: ${response.statusText}`);
         }
 
         const data = await response.json();
-        console.log('Fetched profile data:', data);
-
         if (!data?.profiles || !data.profiles[0]) {
           throw new Error('No profile data available');
         }
@@ -144,37 +147,33 @@ export default function ProfilePage({ params }: { params: { id: string } }) {
     };
 
     fetchProfile();
-  }, [params?.id, toast]);
+  }, [isLoaded, userId, toast]);  // Ensure fetch is triggered once user is loaded
 
   const handleUpdateProfile = async (section: string, data: any) => {
-    if (!params?.id) {
+    if (!userId) {
       toast({
         title: 'Error',
-        description: 'Profile ID is required',
+        description: 'User is not authenticated',
         variant: 'destructive',
       });
       return;
     }
 
     try {
-      console.log('Updating section:', section);
-      console.log('Data to update:', data);
-
-      const response = await fetch(`/api/profile/${params.id}`, {
+      const response = await fetch(`/api/profile`, {
         method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${userId}`,  // Send the userId in the headers
+        },
         body: JSON.stringify({ [section]: data }),
       });
-
-      console.log('API response:', response);
 
       if (!response.ok) {
         throw new Error(`Failed to update profile: ${response.statusText}`);
       }
 
       const updatedProfile = await response.json();
-      console.log('Updated profile data:', updatedProfile);
-
       setProfileData((prevProfile) => ({
         ...prevProfile,
         [section]: updatedProfile,
@@ -223,7 +222,7 @@ export default function ProfilePage({ params }: { params: { id: string } }) {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* New Header Design */}
+      {/* Header and layout */}
       <header className="fixed top-0 left-0 right-0 h-16 border-b bg-white z-50">
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
           <div className="flex items-center gap-4">
@@ -262,47 +261,23 @@ export default function ProfilePage({ params }: { params: { id: string } }) {
         </div>
       </header>
 
-      {/* Mobile Sidebar Overlay */}
-      {sidebarOpen && (
-        <div
-          className="fixed inset-0 bg-white/50 z-40 lg:hidden"
-          onClick={() => setSidebarOpen(false)}
-        />
-      )}
-
       {/* Main Layout */}
       <div className="flex flex-col lg:flex-row pt-16">
         {/* Sidebar */}
-        <div
-          className={`fixed lg:relative top-0 left-0 h-full w-64 bg-[#fffefe] z-40 transform transition-transform duration-300 ease-in-out lg:transform-none ${
-            sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
-          }`}
-        >
-          <button
-            className="lg:hidden absolute top-4 right-4 p-2 text-white"
-            onClick={() => setSidebarOpen(false)}
-          >
-            <X className="h-6 w-6" />
-          </button>
-
-          <Sidebar
-            currentTab={currentTab}
-            setCurrentTab={setCurrentTab}
-            setSidebarOpen={setSidebarOpen}
-            isPaidUser={true}
-            sidebarOpen={sidebarOpen}
-            className=""
-            paramsId={params.id}
-          />
-        </div>
+        <Sidebar
+          currentTab={currentTab}
+          setCurrentTab={setCurrentTab}
+          setSidebarOpen={setSidebarOpen}
+          isPaidUser={true}
+          sidebarOpen={sidebarOpen}
+          className="w-64"
+        />
 
         {/* Main Content Area */}
         <div className="flex-1 flex flex-col min-h-screen">
           <div className="p-6">
             <h1 className="text-2xl font-bold mb-2">Profile</h1>
-            <p className="text-gray-600 mb-6">
-              This is where you'll find all of the information about yourself
-            </p>
+            <p className="text-gray-600 mb-6">This is where you'll find all of the information about yourself.</p>
 
             <div className="flex flex-col lg:flex-row gap-6">
               <SectionNavigation
@@ -311,21 +286,17 @@ export default function ProfilePage({ params }: { params: { id: string } }) {
                 onSectionChange={(section) => {
                   console.log('Active section changed to:', section);
                   setActiveSection(section);
-                }}
-                className={''}
-              />
+                } } className={''}              />
 
               <div className="flex-1 bg-white rounded-lg p-6 shadow-sm">
                 {ActiveSection && (
-                  <>
-                    <ActiveSection.Component
-                      id={ActiveSection.id}
-                      data={profileData[ActiveSection.id as keyof ProfileData]}
-                      onUpdate={(data: any) =>
-                        handleUpdateProfile(ActiveSection.id, data)
-                      }
-                    />
-                  </>
+                  <ActiveSection.Component
+                    id={ActiveSection.id}
+                    data={profileData[ActiveSection.id as keyof ProfileData]}
+                    onUpdate={(data: any) =>
+                      handleUpdateProfile(ActiveSection.id, data)
+                    }
+                  />
                 )}
               </div>
 

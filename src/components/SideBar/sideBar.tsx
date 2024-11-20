@@ -5,8 +5,6 @@ import { Button } from '@/components/ui/button';
 import { CiLock } from 'react-icons/ci';
 import { FaHome, FaCalendarAlt, FaLaptopCode, FaBriefcase, FaFileAlt } from 'react-icons/fa';
 import { AiOutlineChrome } from 'react-icons/ai';
-import { useRouter } from 'next/navigation';
-import toast from 'react-hot-toast';
 
 interface SidebarProps {
   currentTab: string;
@@ -15,7 +13,6 @@ interface SidebarProps {
   isPaidUser: boolean;
   sidebarOpen: boolean;
   className: string;
-  paramsId?: string; 
 }
 
 function Sidebar({
@@ -25,40 +22,7 @@ function Sidebar({
   isPaidUser,
   sidebarOpen,
   className,
-  paramsId = "" ,
 }: SidebarProps) {
-  const router = useRouter();
-
-  // Profile navigation handler with improved error checking
-  const handleProfileClick = () => {
-    if (!isPaidUser) {
-      toast.error('Please upgrade to access your profile');
-      return;
-    }
-    
-    if (!paramsId?.trim()) {
-      toast.error('Unable to access profile. Please try logging in again');
-      return;
-    }
-
-    try {
-      router.push(`/profile/${paramsId}`);
-      setSidebarOpen(false);
-    } catch (error) {
-      console.error('Navigation error:', error);
-      toast.error('Failed to navigate to profile. Please try again');
-    }
-  };
-
-  const handleExternalNavigation = (url: string) => {
-    try {
-      router.push(url);
-      setSidebarOpen(false);
-    } catch (error) {
-      console.error('External navigation error:', error);
-      toast.error('Failed to open external link. Please try again');
-    }
-  };
 
   const navigationItems = [
     {
@@ -76,7 +40,11 @@ function Sidebar({
       label: 'Call with Founders',
       icon: <FaCalendarAlt className="text-xl mr-2" />,
       requiresPaid: false,
-      onClick: () => handleExternalNavigation('https://apply.neetocal.com/meeting-with-nikhil-jain')
+      onClick: () => {
+        // Navigate to external link (unchanged)
+        window.open('https://apply.neetocal.com/meeting-with-nikhil-jain', '_blank');
+        setSidebarOpen(false);
+      }
     },
     {
       id: 'interview',
@@ -103,15 +71,16 @@ function Sidebar({
       label: 'Profile',
       icon: <FaFileAlt className="text-xl mr-2" />,
       requiresPaid: true,
-      onClick: handleProfileClick
+      onClick: () => {
+        setCurrentTab('profile');  // Directly set profile tab as current
+        setSidebarOpen(false);
+      }
     }
   ];
 
   return (
     <aside
-      className={`relative top-16 z-1 w-64 bg-white p-4 h-screen shadow-xl ${
-        sidebarOpen ? 'block' : 'hidden'
-      } lg:block ${className}`}
+      className={`relative top-16 z-1 w-64 bg-white p-4 h-screen shadow-xl ${sidebarOpen ? 'block' : 'hidden'} lg:block ${className}`}
       style={{ minHeight: '100vh' }}
     >
       <nav className="mt-16 flex flex-col space-y-4 z-1">
@@ -134,7 +103,7 @@ function Sidebar({
 
         <Button
           className="flex items-center justify-center text-base font-medium text-black rounded-lg py-2.5 border border-gray-300 hover:bg-gray-100 transition-all duration-300"
-          onClick={() => handleExternalNavigation('https://chromewebstore.google.com/detail/hiredeasy/lklnlahilalmcnhgdkghjkcjiokggnkp')}
+          onClick={() => window.open('https://chromewebstore.google.com/detail/hiredeasy/lklnlahilalmcnhgdkghjkcjiokggnkp', '_blank')}
         >
           <AiOutlineChrome className="text-xl mr-2" />
           Add to Chrome

@@ -20,6 +20,7 @@ export default function Experience({ form, profileIndex }: ExperienceProps) {
     <div className="space-y-6">
       <Button
         type="button"
+        className="border border-black"
         onClick={() => append({
           title: '',
           company: '',
