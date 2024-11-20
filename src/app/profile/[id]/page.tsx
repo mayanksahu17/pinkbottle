@@ -1,9 +1,9 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Button } from "@/components/ui/button";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { useToast } from "@/hooks/use-toast";
+import { Button } from '@/components/ui/button';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { useToast } from '@/hooks/use-toast';
 import { AlertCircle } from 'lucide-react';
 import Sidebar from '../../../components/SideBar/sideBar';
 import PersonalInfo from '../../../components/profileTest/personal-info';
@@ -105,7 +105,6 @@ export default function ProfilePage({ params }: { params: { id: string } }) {
   const { toast } = useToast();
 
   useEffect(() => {
-
     if (!params?.id) {
       setError('Profile ID is required');
       setLoading(false);
@@ -115,19 +114,29 @@ export default function ProfilePage({ params }: { params: { id: string } }) {
     const fetchProfile = async () => {
       setLoading(true);
       try {
+        console.log('Fetching profile with URL:', `/api/profile/${params.id}`);
         const response = await fetch(`/api/profile/${params.id}`);
+        console.log('API response:', response);
+
         if (!response.ok) {
           throw new Error(`Failed to fetch profile: ${response.statusText}`);
         }
+
         const data = await response.json();
-        setProfileData(data);
+        console.log('Fetched profile data:', data);
+
+        if (!data?.profiles || !data.profiles[0]) {
+          throw new Error('No profile data available');
+        }
+
+        setProfileData(data.profiles[0]);
       } catch (err: any) {
         console.error('Error fetching profile:', err);
         setError(err.message);
         toast({
-          title: "Error",
-          description: "Failed to load profile data",
-          variant: "destructive",
+          title: 'Error',
+          description: 'Failed to load profile data',
+          variant: 'destructive',
         });
       } finally {
         setLoading(false);
@@ -140,53 +149,57 @@ export default function ProfilePage({ params }: { params: { id: string } }) {
   const handleUpdateProfile = async (section: string, data: any) => {
     if (!params?.id) {
       toast({
-        title: "Error",
-        description: "Profile ID is required",
-        variant: "destructive",
+        title: 'Error',
+        description: 'Profile ID is required',
+        variant: 'destructive',
       });
       return;
     }
 
     try {
+      console.log('Updating section:', section);
+      console.log('Data to update:', data);
+
       const response = await fetch(`/api/profile/${params.id}`, {
         method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          [section]: data,
-        }),
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ [section]: data }),
       });
+
+      console.log('API response:', response);
 
       if (!response.ok) {
         throw new Error(`Failed to update profile: ${response.statusText}`);
       }
 
       const updatedProfile = await response.json();
+      console.log('Updated profile data:', updatedProfile);
 
       setProfileData((prevProfile) => ({
         ...prevProfile,
-        [section]: section === 'experience'
-          ? [...(prevProfile?.experience || []), ...data]
-          : updatedProfile[section],
+        [section]: updatedProfile,
       }));
 
       toast({
-        title: "Success",
-        description: "Profile updated successfully",
+        title: 'Success',
+        description: 'Profile updated successfully',
       });
     } catch (err: any) {
       console.error('Error updating profile:', err);
       toast({
-        title: "Error",
-        description: err.message || "Failed to update profile",
-        variant: "destructive",
+        title: 'Error',
+        description: err.message || 'Failed to update profile',
+        variant: 'destructive',
       });
     }
   };
 
   if (loading) {
-    return <div className="flex items-center justify-center min-h-screen">Loading...</div>;
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        Loading...
+      </div>
+    );
   }
 
   if (error) {
@@ -203,7 +216,9 @@ export default function ProfilePage({ params }: { params: { id: string } }) {
 
   if (!profileData) return null;
 
-  const ActiveSection = sections.find((section) => section.id === activeSection);
+  const ActiveSection = sections.find(
+    (section) => section.id === activeSection
+  );
   const sectionInfo = sections.map(({ id, label }) => ({ id, label }));
 
   return (
@@ -223,12 +238,14 @@ export default function ProfilePage({ params }: { params: { id: string } }) {
               <span className="text-xl font-bold">Hire Eazy</span>
             </div>
           </div>
-          
+
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-2">
               <div className="text-right hidden sm:block">
                 <div className="text-sm text-gray-600">Signed in as</div>
-                <div className="font-medium">{profileData?.personalInfo?.fullName || 'User'}</div>
+                <div className="font-medium">
+                  {profileData?.personalInfo?.fullName || 'User'}
+                </div>
               </div>
               <Avatar className="h-8 w-8">
                 <AvatarImage src={profileData?.personalInfo?.profilePhoto} />
@@ -257,11 +274,10 @@ export default function ProfilePage({ params }: { params: { id: string } }) {
       <div className="flex flex-col lg:flex-row pt-16">
         {/* Sidebar */}
         <div
-  className={`fixed lg:relative top-0 left-0 h-full w-64 bg-[#fffefe] z-40 transform transition-transform duration-300 ease-in-out lg:transform-none ${
-    sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
-  }`}
->
-
+          className={`fixed lg:relative top-0 left-0 h-full w-64 bg-[#fffefe] z-40 transform transition-transform duration-300 ease-in-out lg:transform-none ${
+            sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
+          }`}
+        >
           <button
             className="lg:hidden absolute top-4 right-4 p-2 text-white"
             onClick={() => setSidebarOpen(false)}
@@ -284,23 +300,32 @@ export default function ProfilePage({ params }: { params: { id: string } }) {
         <div className="flex-1 flex flex-col min-h-screen">
           <div className="p-6">
             <h1 className="text-2xl font-bold mb-2">Profile</h1>
-            <p className="text-gray-600 mb-6">This is where you'll find all of the information about yourself</p>
-            
+            <p className="text-gray-600 mb-6">
+              This is where you'll find all of the information about yourself
+            </p>
+
             <div className="flex flex-col lg:flex-row gap-6">
               <SectionNavigation
-                sections={sectionInfo}
+                sections={sections}
                 activeSection={activeSection}
-                onSectionChange={setActiveSection}
-                className="lg:w-1/4"
+                onSectionChange={(section) => {
+                  console.log('Active section changed to:', section);
+                  setActiveSection(section);
+                }}
+                className={''}
               />
 
               <div className="flex-1 bg-white rounded-lg p-6 shadow-sm">
                 {ActiveSection && (
-                  <ActiveSection.Component
-                    id={ActiveSection.id}
-                    data={profileData[ActiveSection.id as keyof ProfileData]}
-                    onUpdate={(data: any) => handleUpdateProfile(ActiveSection.id, data)}
-                  />
+                  <>
+                    <ActiveSection.Component
+                      id={ActiveSection.id}
+                      data={profileData[ActiveSection.id as keyof ProfileData]}
+                      onUpdate={(data: any) =>
+                        handleUpdateProfile(ActiveSection.id, data)
+                      }
+                    />
+                  </>
                 )}
               </div>
 

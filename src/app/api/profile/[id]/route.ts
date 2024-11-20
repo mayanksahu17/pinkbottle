@@ -12,16 +12,17 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
     const user = await User.findOne({ clerkId: id });
 
     if (!user) {
+      console.error(`No user found with Clerk ID: ${id}`);
       return NextResponse.json({ error: 'User not found' }, { status: 404 });
     }
 
+    console.log("User profiles fetched:", user.profiles);
     return NextResponse.json({ profiles: user.profiles }, { status: 200 });
   } catch (error) {
     console.error('Error fetching profile:', error);
     return NextResponse.json({ error: 'Failed to fetch profile', details: error.message }, { status: 500 });
   }
 }
-
 
 export async function PATCH(request: NextRequest, { params }: { params: { id: string } }) {
   const { id } = params; 

@@ -41,12 +41,12 @@ export async function POST(req: Request) {
       'diversityInclusion.ethnicity',
     ];
 
-    console.log('Checking for rolesSkills.skills array:', profiles[0]?.rolesSkills?.skills);
-    console.log('Checking for rolesSkills.skills[0]:', profiles[0]?.rolesSkills?.skills?.[0]);
-    console.log(
-      'Checking for rolesSkills.skills[0].level:',
-      profiles[0]?.rolesSkills?.skills?.[0]?.level
-    );
+    // console.log('Checking for rolesSkills.skills array:', profiles[0]?.rolesSkills?.skills);
+    // console.log('Checking for rolesSkills.skills[0]:', profiles[0]?.rolesSkills?.skills?.[0]);
+    // console.log(
+    //   'Checking for rolesSkills.skills[0].level:',
+    //   profiles[0]?.rolesSkills?.skills?.[0]?.level
+    // );
         
     for (const field of requiredFields) {
       const keys = field.split('.');

@@ -78,7 +78,7 @@ export default function PersonalInfo({ data, onUpdate }) {
               <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
                 <Avatar className="h-16 w-16">
                   <AvatarImage src={formData.profilePhoto || "/placeholder.svg"} />
-                  <AvatarFallback>{formData.fullName?.split(' ').map(n => n[0]).join('')}</AvatarFallback>
+                  <AvatarFallback>{formData.fullName?.split(' ').map((n: any[]) => n[0]).join('')}</AvatarFallback>
                 </Avatar>
                 <div className="space-y-2 w-full sm:w-auto">
                   <div className="flex flex-wrap gap-2">
