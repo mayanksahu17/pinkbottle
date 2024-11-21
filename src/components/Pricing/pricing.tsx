@@ -252,14 +252,13 @@ const PricingUser = () => {
               </ul>
 
               <button
-                key={plan.priceId}
-                onClick={() =>
-                  handleStripeCheckout({ id: userId, checkOutDetails: plan })
-                }
-                className="mt-6 inline-block w-full text-center text-black font-bold py-3 px-6 rounded-lg border border-transparent hover:border-gray-300 bg-[#dedede] shadow-sm transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-md"
-              >
-                Get Started
-              </button>
+  key={plan.priceId}
+  onClick={() => handleStripeCheckout({ id: userId, checkOutDetails: plan })}
+  className="mt-6 inline-block w-full text-center text-black font-bold py-3 px-6 rounded-lg border border-transparent bg-[linear-gradient(135deg,#a8e6cf,#dcedc1)] shadow-sm transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg hover:bg-[linear-gradient(135deg,#81c784,#aed581)] focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 focus:ring-offset-white"
+>
+  Get Started
+</button>
+
             </div>
           ))}
         </div>
