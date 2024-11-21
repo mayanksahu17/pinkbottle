@@ -6,6 +6,9 @@ import colors from 'tailwindcss/colors';
 const config: Config = {
   darkMode: 'class', // Use dark mode based on class
   content: [
+    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
     './pages/**/*.{ts,tsx}',
     './components/**/*.{ts,tsx}',
     './app/**/*.{ts,tsx}',
@@ -21,12 +24,20 @@ const config: Config = {
     },
     extend: {
       animation: {
-        scroll:
-          'scroll var(--animation-duration, 40s) var(--animation-direction, forwards) linear infinite',
-        'accordion-down': 'accordion-down 0.2s ease-out',
-        'accordion-up': 'accordion-up 0.2s ease-out',
+        shimmer: 'shimmer 2s linear infinite', // Shimmer animation
+        scroll: 'scroll var(--animation-duration, 40s) var(--animation-direction, forwards) linear infinite', // Scroll animation
+        'accordion-down': 'accordion-down 0.2s ease-out', // Accordion down animation
+        'accordion-up': 'accordion-up 0.2s ease-out', // Accordion up animation
       },
       keyframes: {
+        shimmer: {
+          from: {
+            backgroundPosition: '0 0',
+          },
+          to: {
+            backgroundPosition: '-200% 0',
+          },
+        },
         scroll: {
           to: {
             transform: 'translate(calc(-50% - 0.5rem))',
@@ -44,11 +55,12 @@ const config: Config = {
     },
   },
   plugins: [
-    require('tailwindcss-animate'),
-    addVariablesForColors,
+    require('tailwindcss-animate'), // Tailwind CSS Animate plugin
+    addVariablesForColors, // Custom plugin to add CSS variables for colors
   ],
 };
 
+// Custom plugin to convert Tailwind color palette to CSS variables
 function addVariablesForColors({ addBase, theme }: any) {
   let allColors = flattenColorPalette(theme('colors'));
   let newVars = Object.fromEntries(
