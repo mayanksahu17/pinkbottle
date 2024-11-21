@@ -11,6 +11,8 @@ import IncreaseResult from './IncreaseInCalls';
 import WorksFor from './worksfor';
 import Universities from './Universities';
 import Message from './Message';
+import HeroScrollDemo from './HeroScrollDemo';
+import Features from './Features';
 
 // Dynamic imports with SSR disabled for non-critical components
 const Help = dynamic(() => import('../GetInTouch/Help'), { ssr: false });
@@ -240,8 +242,10 @@ const HomePage = () => {
         <FrontMain />
         <Sponsor />
         <IncreaseResult />
+        <HeroScrollDemo />
         <WorksFor />
         <Universities />
+        <Features />
         <Sidekick />
         <Testimonial />
         <FAQSection />

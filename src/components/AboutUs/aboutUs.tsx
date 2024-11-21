@@ -3,6 +3,8 @@ import React, { SVGProps } from 'react';
 import Navbar from '../navbar/navbar';
 import Footer from '../footer/footer';
 import { Metadata } from 'next';
+import { InfiniteMovingCardsDemo } from '../Home/InfiniteMovingCardsDemo';
+
 
 export const metadata: Metadata = {
   title: 'HiredEasy - About Us | Simplifying Job Applications',
@@ -210,6 +212,7 @@ const Aboutus = () => {
           </div>
         </section>
       </main>
+      <InfiniteMovingCardsDemo/>
       <Footer />
     </div>
   );

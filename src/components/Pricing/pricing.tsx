@@ -6,6 +6,7 @@ import { Stripe, loadStripe } from '@stripe/stripe-js';
 import Navbar from '../navbar/navbar';
 import Footer from '../footer/footer';
 import { Metadata } from 'next';
+import CostTimeline from './cost-timeline';
 
 export const metadata: Metadata = {
   title: 'HiredEasy - Pricing Plans | Affordable Job Application Services',
@@ -298,46 +299,7 @@ const PricingUser = () => {
         </div>
       </div>
 
-      <section className="bg-white">
-        <div className="max-w-4xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl font-extrabold text-center text-black mb-6">
-            Let's do a Cost-Benefit Analysis
-          </h2>
-          <p className="text-center text-sm font-light text-black mb-8">
-            We know that you want to evaluate the value we bring to the table
-            for the investment you make. Discover how productively you can use
-            that time and how we compare with the standard plan.
-          </p>
-
-          <div className="relative mt-4">
-            {/* Vertical line to connect items */}
-
-            {/* Roadmap items container */}
-            <div className="space-y-4">
-              {/* Individual roadmap items */}
-              {[
-                "You're paying us $0.05/hour",
-                'Increase in interviews 5x',
-                'Advantage in interviews 3x',
-                'Full-time Pay Range $50 - $150/hour',
-                'You can make $12-20/hour on part-time',
-                'Time saved for Interview Prep 80 hours/10 Days',
-              ].map((item, index) => (
-                <div key={index} className="flex flex-col items-center">
-                  <div className="px-6 py-4 bg-white rounded-lg shadow text-center w-72">
-                    <p className="text-sm font-semibold text-gray-800">
-                      {item}
-                    </p>
-                  </div>
-                  {index < 5 && <div className="w-1 h-6 bg-gray-300"></div>}{' '}
-                  {/* Small connectors */}
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
+      <CostTimeline/>
       <Footer />
     </div>
   );
