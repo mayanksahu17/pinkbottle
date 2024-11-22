@@ -12,6 +12,7 @@ const myMiddleware = authMiddleware({
     '/api/uploadthing',
     '/api/delegatedjobs',
     '/api/deletejobs',
+    '/api/profile',
     '/api/savedjobs',
     '/Wall',
     '/career',

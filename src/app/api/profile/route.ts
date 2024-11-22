@@ -5,13 +5,13 @@ import { auth } from '@clerk/nextjs';
 
 export async function GET(request: NextRequest) {
   // Use the authenticated user ID from Clerk's auth method
-  const { userId } = auth(); // This gives you the authenticated user's ID
+  const userId = request.headers.get('X-User-Id'); 
   console.log("Fetching profiles for Clerk User ID:", userId);
 
   await dbConnect();
 
   try {
-    // Search for the user using the userId from Clerk
+
     const user = await User.findOne({ clerkId: userId }); // Use the authenticated user's ID
 
     if (!user) {
@@ -28,12 +28,14 @@ export async function GET(request: NextRequest) {
 }
 
 export async function PATCH(request: NextRequest) {
-  const { userId } = auth(); // Get the authenticated user's ID
+  const userId = request.headers.get('X-User-Id'); // Get user ID from headers
 
-  // Log the authenticated user ID
   console.log("Authenticated User ID from Clerk:", userId);
 
   const updateData = await request.json();
+
+
+  console.log("Update Data Received:", updateData);
 
   if (!updateData || typeof updateData !== 'object') {
     return NextResponse.json({ error: 'Invalid update data' }, { status: 400 });
@@ -42,7 +44,6 @@ export async function PATCH(request: NextRequest) {
   try {
     await dbConnect();
 
-    // Find the user by the Clerk ID (using the authenticated user's ID)
     const user = await User.findOne({ clerkId: userId });
 
     console.log("Fetched User from Mongo:", user);
@@ -57,72 +58,87 @@ export async function PATCH(request: NextRequest) {
       return NextResponse.json({ error: 'Profile not found' }, { status: 404 });
     }
 
-    // Handle experience updates separately
     let updatedExperiences = profile.experiences || [];
 
-    if (updateData.experiences) {
-      // Loop over the new experiences
-      updateData.experiences.forEach((newExperience: any) => {
+    if (updateData.experiences && updateData.experiences.experiences) {
+      const incomingExperiences = updateData.experiences.experiences; // Extract nested array
+
+      if (Array.isArray(incomingExperiences)) {
+        incomingExperiences.forEach((newExperience) => {
+          const existingExperienceIndex = updatedExperiences.findIndex(
+            (exp) => exp._id.toString() === newExperience._id 
+          );
+
+          if (existingExperienceIndex >= 0) {
+            // Update existing experience
+            updatedExperiences[existingExperienceIndex] = {
+              ...updatedExperiences[existingExperienceIndex],
+              ...newExperience, 
+            };
+          } else {
+
+            updatedExperiences.push(newExperience);
+          }
+        });
+      } else {
+        console.warn("Invalid nested experiences data. Expected an array.");
+      }
+    } else if (Array.isArray(updateData.experiences)) {
+      updateData.experiences.forEach((newExperience) => {
         const existingExperienceIndex = updatedExperiences.findIndex(
-          (exp) => exp._id === newExperience._id
+          (exp) => exp._id.toString() === newExperience._id 
         );
 
         if (existingExperienceIndex >= 0) {
-          // Update the existing experience if _id matches
           updatedExperiences[existingExperienceIndex] = {
             ...updatedExperiences[existingExperienceIndex],
-            ...newExperience, // Update fields with new data
+            ...newExperience, 
           };
         } else {
-          // Append the new experience if no match
           updatedExperiences.push(newExperience);
         }
       });
+    } else {
+      console.warn("Invalid experiences data. Expected a nested or flat array.");
     }
 
-    // Merge the incoming updateData with the existing profile data
     const updatedProfile = {
       ...profile,
-      ...updateData, // This will only update the provided sections, leaving the rest intact
+      experiences: updatedExperiences,
       personalInfo: {
         ...profile.personalInfo,
-        ...updateData.personalInfo, // Only update the personalInfo section
+        ...(updateData.personalInfo || {}),
       },
       rolesSkills: {
         ...profile.rolesSkills,
-        ...updateData.rolesSkills, // Only update the rolesSkills section
+        ...(updateData.rolesSkills || {}),
       },
       expectations: {
         ...profile.expectations,
-        ...updateData.expectations, // Only update the expectations section
+        ...(updateData.expectations || {}),
       },
-      experiences: updatedExperiences, // Use the updated experiences array
       cv: {
         ...profile.cv,
-        ...updateData.cv, // Only update the cv section
+        ...(updateData.cv || {}),
       },
       diversityInclusion: {
         ...profile.diversityInclusion,
-        ...updateData.diversityInclusion, // Only update the diversityInclusion section
+        ...(updateData.diversityInclusion || {}),
       },
     };
 
-    // Replace the old profile data with the updated data
     user.profiles[0] = updatedProfile;
-
-    // Save the updated user document
     const updatedUser = await user.save();
 
-    // Log the updated profiles array
     console.log("Updated Profiles:", updatedUser.profiles);
 
-    // Return the updated profiles array
     return NextResponse.json({ profiles: updatedUser.profiles }, { status: 200 });
   } catch (error) {
-    // Log any errors that occur during the update
     console.error("Error updating profiles:", error);
-
-    // Return a 500 status with the error message
-    return NextResponse.json({ error: 'Failed to update profiles', details: error.message }, { status: 500 });
+    return NextResponse.json(
+      { error: 'Failed to update profiles', details: error.message },
+      { status: 500 }
+    );
   }
 }
+

@@ -2,7 +2,6 @@ import Link from 'next/link';
 import { Button } from '../../components/ui/button';
 import Navbar from '../navbar/navbar';
 import Resume from './resume';
-import ProfileSidebar from './sidebar';
 import { getStudentById } from '../../lib/actions/users/user.actions';
 import { auth } from '@clerk/nextjs';
 import usePaymentStatus from '../../hooks/usePaymentStatus';
@@ -37,7 +36,6 @@ const Profile = async () => {
       <div className="bg-white min-h-screen">
         <Navbar />
         <div className="flex">
-          <ProfileSidebar />
           <Resume resume={data.resume} />
         </div>
       </div>
