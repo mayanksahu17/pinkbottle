@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { PlaceholdersAndVanishInput } from "../ui/placeholders-and-vanish-input";
 
 const FAQSection = () => {
   const faqs = [
@@ -50,33 +51,45 @@ const FAQSection = () => {
   ];
 
   const [searchQuery, setSearchQuery] = useState('');
+
+  // Placeholder suggestions for the input field
+  const placeholders = ['Search FAQs...', 'Find answers to your questions', 'What can we help you with today?'];
+
+  // Handle the input change
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(e.target.value);
+  };
+
+  // Filter the FAQs based on the search query
   const filteredFaqs = faqs.filter(faq =>
     faq.question.toLowerCase().includes(searchQuery.toLowerCase())
   );
+
+  // Handle the form submit
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    // The submit can be extended to trigger other actions if needed
+  };
 
   return (
     <section className="py-16 bg-white">
       <div className="max-w-4xl mx-auto px-1">
         <h2 className="text-5xl font-bold text-center mb-8" style={{ fontFamily: 'Calibri, sans-serif' }}>
-            Frequently Asked Questions
+          Frequently Asked Questions
         </h2>
         <p className="text-center mb-6 text-gray-700 text-lg leading-relaxed" style={{ fontFamily: 'Calibri, sans-serif' }}>
-            95% of questions are answered here. Can't find <br />
-            what you're looking for? Feel free to reach out!
+          95% of questions are answered here. Can't find <br />
+          what you're looking for? Feel free to reach out!
         </p>
 
-        <div className="mb-10">
-          <div className="relative">
-            <input
-              type="text"
-              placeholder="Search FAQs..."
-              value={searchQuery}
-              onChange={e => setSearchQuery(e.target.value)}
-              className="w-full pl-4 pr-4 py-2 border border-gray-500 rounded-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300 ease-in-out"
-              style={{ fontFamily: 'Calibri, sans-serif' }}
-            />
-          </div>
+        <div className="mb-10 max-w-full">
+          <PlaceholdersAndVanishInput
+            placeholders={placeholders}
+            onChange={handleSearchChange}
+            onSubmit={handleSubmit}
+          />
         </div>
+
         <div>
           {filteredFaqs.map((faq, index) => (
             <details key={index} className="group py-4">

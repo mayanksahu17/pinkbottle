@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 const Testimonial = () => {
   return (
     <div className="bg-gray-50 py-32">
-      <h2 className="text-5xl font-bold text-center text-gray-800 mb-6">
+      <h2 className="text-[3rem] font-bold text-center text-gray-800 mb-6">
         Our clients <span className="text-red-500">❤️</span> us
       </h2>
       <p className="text-center text-gray-600 mb-10">

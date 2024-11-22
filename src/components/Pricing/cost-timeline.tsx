@@ -9,7 +9,7 @@ export default function CostTimeline() {
       title: "Cost",
       content: (
         <div>
-          <p className="text-neutral-800 dark:text-neutral-200 text-sm font-normal mb-4">
+          <p className="text-neutral-800 dark:text-neutral-200 text-[2rem] font-normal mb-4">
             You're paying us $0.05/hour
           </p>
         </div>
@@ -19,10 +19,10 @@ export default function CostTimeline() {
       title: "Interview Performance",
       content: (
         <div>
-          <p className="text-neutral-800 dark:text-neutral-200 text-sm font-normal mb-4">
+          <p className="text-neutral-800 dark:text-neutral-200 text-[2rem] font-normal mb-4">
             Increase in interviews 5x
           </p>
-          <p className="text-neutral-800 dark:text-neutral-200 text-sm font-normal mb-4">
+          <p className="text-neutral-800 dark:text-neutral-200 text-[2rem] font-normal mb-4">
             Advantage in interviews 3x
           </p>
         </div>
@@ -32,10 +32,10 @@ export default function CostTimeline() {
       title: "Potential Earnings",
       content: (
         <div>
-          <p className="text-neutral-800 dark:text-neutral-200 text-sm font-normal mb-4">
+          <p className="text-neutral-800 dark:text-neutral-200 text-[2rem] font-normal mb-4">
             Full-time Pay Range $50 - $150/hour
           </p>
-          <p className="text-neutral-800 dark:text-neutral-200 text-sm font-normal mb-4">
+          <p className="text-neutral-800 dark:text-neutral-200 text-[2rem] font-normal mb-4">
             You can make $12-20/hour on part-time
           </p>
         </div>
@@ -45,7 +45,7 @@ export default function CostTimeline() {
       title: "Time Saved",
       content: (
         <div>
-          <p className="text-neutral-800 dark:text-neutral-200 text-sm font-normal mb-4">
+          <p className="text-neutral-800 dark:text-neutral-200 text-[2rem] font-normal mb-4">
             Time saved for Interview Prep 80 hours/10 Days
           </p>
         </div>
