@@ -6,7 +6,7 @@ import { auth } from '@clerk/nextjs';
 export async function GET(request: NextRequest) {
   // Use the authenticated user ID from Clerk's auth method
   const userId = request.headers.get('X-User-Id'); 
-  console.log("Fetching profiles for Clerk User ID:", userId);
+  //console.log("Fetching profiles for Clerk User ID:", userId);
 
   await dbConnect();
 
@@ -15,11 +15,11 @@ export async function GET(request: NextRequest) {
     const user = await User.findOne({ clerkId: userId }); // Use the authenticated user's ID
 
     if (!user) {
-      console.error(`No user found with Clerk ID: ${userId}`);
+    //  console.error(`No user found with Clerk ID: ${userId}`);
       return NextResponse.json({ error: 'User not found' }, { status: 404 });
     }
 
-    console.log("User profiles fetched:", user.profiles);
+    //console.log("User profiles fetched:", user.profiles);
     return NextResponse.json({ profiles: user.profiles }, { status: 200 });
   } catch (error) {
     console.error('Error fetching profile:', error);
@@ -30,12 +30,11 @@ export async function GET(request: NextRequest) {
 export async function PATCH(request: NextRequest) {
   const userId = request.headers.get('X-User-Id'); // Get user ID from headers
 
-  console.log("Authenticated User ID from Clerk:", userId);
+  //console.log("Authenticated User ID from Clerk:", userId);
 
   const updateData = await request.json();
 
-
-  console.log("Update Data Received:", updateData);
+// console.log("Update Data Received:", updateData);
 
   if (!updateData || typeof updateData !== 'object') {
     return NextResponse.json({ error: 'Invalid update data' }, { status: 400 });
@@ -46,7 +45,7 @@ export async function PATCH(request: NextRequest) {
 
     const user = await User.findOne({ clerkId: userId });
 
-    console.log("Fetched User from Mongo:", user);
+    //console.log("Fetched User from Mongo:", user);
 
     if (!user) {
       return NextResponse.json({ error: 'User not found' }, { status: 404 });
@@ -130,7 +129,7 @@ export async function PATCH(request: NextRequest) {
     user.profiles[0] = updatedProfile;
     const updatedUser = await user.save();
 
-    console.log("Updated Profiles:", updatedUser.profiles);
+   // console.log("Updated Profiles:", updatedUser.profiles);
 
     return NextResponse.json({ profiles: updatedUser.profiles }, { status: 200 });
   } catch (error) {

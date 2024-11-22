@@ -9,10 +9,18 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 
+interface ExpectationItem {
+  hourlyRate?: number;
+  availability?: string;
+  workPreference?: string;
+  rightToWork?: boolean;
+  securityClearance?: string;
+}
+
 interface ProfileData {
   personalInfo?: any;
   rolesSkills?: any;
-  expectations?: any;
+  expectations?: ExpectationItem[];
   experience?: any;
   cv?: any;
   diversityInclusion?: any;
@@ -43,7 +51,7 @@ const sections: SectionConfig[] = [
   {
     id: "experiences",
     label: "Experience",
-    requiredFields: ["title", "company", "startDate", "endDate", "current", "description"],
+    requiredFields: ["title", "company", "startDate", "description"],
   },
   {
     id: "cv",
@@ -74,9 +82,11 @@ const ProfileStrength = ({ profileData, onSectionClick ,className}: ProfileStren
   const isFieldComplete = (sectionId: string, field: string, data: any) => {
     if (!data) return false;
 
-    // Special handling for the 'experience' array
-    if (sectionId === "experience") {
-      return Array.isArray(data) && data.every((entry: any) => entry[field]); // All objects must have the field
+    //Special handling for nested array in expectations
+    if (sectionId === "experiences") {
+      return Array.isArray(data) && 
+             data.length > 0 && 
+             data.every((entry: any) => entry[field]);
     }
 
     // Special handling for 'cv' (URL directly)

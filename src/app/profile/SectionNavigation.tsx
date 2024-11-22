@@ -34,3 +34,4 @@ const SectionNavigation = ({ sections, activeSection, onSectionChange,className 
 };
 
 export default SectionNavigation;
+

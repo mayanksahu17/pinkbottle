@@ -37,6 +37,8 @@ export interface ProfileDocument extends Document {
     gender: string;
     pronouns: string;
     ethnicity: string;
+    disability:string;
+    veteranStatus:string;
   };
 }
 
@@ -45,8 +47,8 @@ const ProfileSchema = new Schema({
     fullName: { type: String, required: true, default: '' },
     profilePhoto: { type: String, required: true, default: '' },
     email: { type: String, required: true, default: '' },
-    postcode:{type:String , require:true,default:''},
-    englishLevel:{type:String , required:true,default:''},
+    postcode:{type:String , require:false,default:''},
+    englishLevel:{type:String , required:false,default:''},
     location: { type: String, required: true, default: '' },
     phone: { type: String, required: true, default: '' },
 
@@ -72,9 +74,9 @@ const ProfileSchema = new Schema({
       title: { type: String, required: true, default: '' },
       company: { type: String, required: true, default: '' },
       startDate: { type: String, required: true, default: '' },
-      endDate: { type: String, required: true, default: '' },
-      current: { type: Boolean, required: true, default: false },
-      description: { type: String, required: true, default: '' },
+      endDate: { type: String, required: false, default: '' },
+      current: { type: Boolean, required: false, default: false },
+      description: { type: String, required: false, default: '' },
     },
   ],
   cv: {
@@ -84,6 +86,8 @@ const ProfileSchema = new Schema({
     gender: { type: String, required: true, default: '' },
     pronouns: { type: String, required: true, default: '' },
     ethnicity: { type: String, required: true, default: '' },
+    disability: { type: String, required: false, default: '' },
+    veteranStatus: { type: String, required: false, default: '' },
   },
 });
 

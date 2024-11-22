@@ -44,14 +44,14 @@ export default function MultiStepForm({ onClose, profileIndex }: MultiStepFormPr
 
   // Log data on final submission
   const handleFinalSubmit = handleSubmit(async (data: FormData) => {
-    console.log('Final form data:', data); // Log all data before submitting
+   // console.log('Final form data:', data); // Log all data before submitting
     await onSubmit(data); // Submit the entire form data
   });
 
   const onSubmit = async (data: FormData) => {
     try {
       const updatedProfiles = { ...formData, ...data }; // Combine current form data with submitted data
-      console.log('Submitting form data to API:', updatedProfiles); // Log data before sending to the backend
+     // console.log('Submitting form data to API:', updatedProfiles); // Log data before sending to the backend
       await fetch('/api/ProfileForm', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
