@@ -212,7 +212,7 @@ export default function ExperienceSection({ data, onUpdate }: ExperienceProps) {
             Outline your professional experience to help employers understand your background.
           </p>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-4">
           {!isEditing ? (
             <Button onClick={() => setIsEditing(true)} variant="default" className="flex items-center gap-2">
               Edit
@@ -230,9 +230,26 @@ export default function ExperienceSection({ data, onUpdate }: ExperienceProps) {
                 <X className="h-4 w-4" />
                 Cancel
               </Button>
-              <Button onClick={() => setShowAddExperienceForm(true)} variant="outline" className="flex items-center gap-2">
+              <Button
+                onClick={() => setShowAddExperienceForm(true)}
+                variant="outline"
+                className="flex items-center gap-2"
+              >
                 <Plus className="h-4 w-4" />
                 Add Experience
+              </Button>
+              <Button
+                onClick={async () => {
+                  try {
+                    await onUpdate({ experiences });
+                    setIsEditing(false);
+                  } catch (err) {
+                    console.error("Error saving experiences:", err);
+                  }
+                }}
+                className="bg-blue-500 hover:bg-blue-600 text-white"
+              >
+                Save All
               </Button>
             </>
           )}
@@ -245,32 +262,44 @@ export default function ExperienceSection({ data, onUpdate }: ExperienceProps) {
             <Plus className="h-5 w-5" />
             Add New Experience
           </h3>
-          <Input
-            value={newExperience.title}
-            onChange={(e) => setNewExperience({ ...newExperience, title: e.target.value })}
-            placeholder="Position"
-            className="mt-4 w-full max-w-md"
-          />
-          <Input
-            value={newExperience.company}
-            onChange={(e) => setNewExperience({ ...newExperience, company: e.target.value })}
-            placeholder="Company"
-            className="mt-2 w-full max-w-md"
-          />
+          <div>
+            <span className="font-medium text-sm">Position</span>
+            <Input
+              value={newExperience.title}
+              onChange={(e) => setNewExperience({ ...newExperience, title: e.target.value })}
+              placeholder="Position"
+              className="mt-4 w-full max-w-md"
+            />
+          </div>
+          <div>
+            <span className="font-medium text-sm">Company</span>
+            <Input
+              value={newExperience.company}
+              onChange={(e) => setNewExperience({ ...newExperience, company: e.target.value })}
+              placeholder="Company"
+              className="mt-2 w-full max-w-md"
+            />
+          </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
-            <Input
-              type="date"
-              value={newExperience.startDate}
-              onChange={(e) => setNewExperience({ ...newExperience, startDate: e.target.value })}
-              placeholder="Start Date"
-            />
-            <Input
-              type="date"
-              value={newExperience.endDate}
-              onChange={(e) => setNewExperience({ ...newExperience, endDate: e.target.value })}
-              placeholder="End Date"
-              disabled={newExperience.current}
-            />
+            <div>
+              <span className="font-medium text-sm">Start Date</span>
+              <Input
+                type="date"
+                value={newExperience.startDate}
+                onChange={(e) => setNewExperience({ ...newExperience, startDate: e.target.value })}
+                placeholder="Start Date"
+              />
+            </div>
+            <div>
+              <span className="font-medium text-sm">End Date</span>
+              <Input
+                type="date"
+                value={newExperience.endDate}
+                onChange={(e) => setNewExperience({ ...newExperience, endDate: e.target.value })}
+                placeholder="End Date"
+                disabled={newExperience.current}
+              />
+            </div>
           </div>
           <div className="flex items-center mt-2">
             <input
@@ -282,15 +311,18 @@ export default function ExperienceSection({ data, onUpdate }: ExperienceProps) {
             />
             <label htmlFor="current-checkbox">Current position</label>
           </div>
-          <Textarea
-            value={newExperience.description}
-            onChange={(e) => setNewExperience({ ...newExperience, description: e.target.value })}
-            placeholder="Description"
-            className="mt-2 min-h-[80px] w-full max-w-md"
-          />
+          <div>
+            <span className="font-medium text-sm">Description</span>
+            <Textarea
+              value={newExperience.description}
+              onChange={(e) => setNewExperience({ ...newExperience, description: e.target.value })}
+              placeholder="Description"
+              className="mt-2 min-h-[80px] w-full max-w-md"
+            />
+          </div>
           <div className="flex gap-4 mt-4">
             <Button onClick={handleAddExperience} className="bg-blue-500 hover:bg-blue-600 text-white">
-              Add
+              Save
             </Button>
             <Button
               onClick={() => setShowAddExperienceForm(false)}

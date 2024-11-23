@@ -1,71 +1,72 @@
-'use client'
+'use client';
 
-import { useState } from 'react'
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Card, CardContent } from "@/components/ui/card"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Pencil, Camera, X, Save } from 'lucide-react'
-import ChangePhotoButton from "@/components/Buttons/change-photo-button"
+import { useState } from 'react';
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Card, CardContent } from "@/components/ui/card";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Pencil, Camera, X, Save } from 'lucide-react';
+import ChangePhotoButton from "@/components/Buttons/change-photo-button";
 
 export default function PersonalInfo({ data, onUpdate }) {
-  const [isEditing, setIsEditing] = useState(false)
-  const [formData, setFormData] = useState(data || {})
-  const [isUploading, setIsUploading] = useState(false)
-  const [errors, setErrors] = useState({})
+  const [isEditing, setIsEditing] = useState(false);
+  const [formData, setFormData] = useState(data || {});
+  const [isUploading, setIsUploading] = useState(false);
+  const [errors, setErrors] = useState({});
 
   const handleChange = (e) => {
-    const { name, value } = e.target
-    setFormData(prev => ({ ...prev, [name]: value }))
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+
     // Clear error when user starts typing
     if (errors[name]) {
-      setErrors(prev => ({ ...prev, [name]: '' }))
+      setErrors(prev => ({ ...prev, [name]: '' }));
     }
-  }
+  };
 
   const validateForm = () => {
-    const newErrors = {}
-    const requiredFields = ['fullName', 'location', 'phone', 'streetAddress']
+    const newErrors = {};
+    const requiredFields = ['fullName', 'location', 'phone', 'address'];
 
     requiredFields.forEach(field => {
       if (!formData[field]) {
-        newErrors[field] = `${field.charAt(0).toUpperCase() + field.slice(1).replace(/([A-Z])/g, ' $1').trim()} is required`
+        newErrors[field] = `${field.charAt(0).toUpperCase() + field.slice(1).replace(/([A-Z])/g, ' $1').trim()} is required`;
       }
-    })
+    });
 
-    setErrors(newErrors)
-    return Object.keys(newErrors).length === 0
-  }
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
 
   const handleSubmit = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     if (validateForm()) {
-      onUpdate(formData)
-      setIsEditing(false)
+      onUpdate(formData);
+      setIsEditing(false);
     }
-  }
+  };
 
   const handleUploadComplete = (res) => {
-    setIsUploading(false)
+    setIsUploading(false);
 
     if (res && res.length > 0) {
-      const newPhotoUrl = res[0].url
-      console.log("New photo URL received:", newPhotoUrl)
+      const newPhotoUrl = res[0].url;
+      console.log("New photo URL received:", newPhotoUrl);
 
-      const updatedData = { ...formData, profilePhoto: newPhotoUrl }
-      console.log("Updated formData with profilePhoto:", updatedData)
+      const updatedData = { ...formData, profilePhoto: newPhotoUrl };
+      console.log("Updated formData with profilePhoto:", updatedData);
 
-      setFormData(updatedData)
+      setFormData(updatedData);
 
-      onUpdate(updatedData)
+      onUpdate(updatedData);
     }
-  }
+  };
 
   const handleRemovePhoto = () => {
-    setFormData(prev => ({ ...prev, profilePhoto: null }))
-    onUpdate({ ...formData, profilePhoto: null })
-  }
+    setFormData(prev => ({ ...prev, profilePhoto: null }));
+    onUpdate({ ...formData, profilePhoto: null });
+  };
 
   return (
     <div className="max-w-3xl mx-auto p-4 sm:p-6 space-y-6">
@@ -135,10 +136,10 @@ export default function PersonalInfo({ data, onUpdate }) {
               </div>
 
               <div className="space-y-4">
-                {[
+                {[ 
                   { label: 'Full name', name: 'fullName' },
                   { label: 'Location', name: 'location' },
-                  { label: 'Street address', name: 'streetAddress' },
+                  { label: 'Street address', name: 'address' },
                   { label: 'Postcode', name: 'postcode' },
                   { label: 'Phone number', name: 'phone' }
                 ].map((field) => (
@@ -200,6 +201,5 @@ export default function PersonalInfo({ data, onUpdate }) {
         </CardContent>
       </Card>
     </div>
-  )
+  );
 }
-

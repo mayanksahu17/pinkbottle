@@ -3,14 +3,13 @@ import { dbConnect } from '@/lib/database/mongodb';
 import User from '@/lib/database/models/User/User';
 
 export async function GET(request: NextRequest) {
-  // Use the authenticated user ID from Clerk's auth method
   const userId = request.headers.get('X-User-Id'); 
   //console.log("Fetching profiles for Clerk User ID:", userId);
 
   await dbConnect();
 
   try {
-
+    
     const user = await User.findOne({ clerkId: userId }); // Use the authenticated user's ID
 
     if (!user) {

@@ -1,17 +1,26 @@
 import { NextRequest, NextResponse } from 'next/server';
 import User from "@/lib/database/models/User/User"; 
 import { dbConnect } from '@/lib/database/mongodb';
+import { currentUser, auth } from '@clerk/nextjs/server'
 
-export default async function DELETE(request: NextRequest, response: NextResponse) {
+export async function DELETE(request: NextRequest) {
+
+  await dbConnect();  
+
+  const {userId} = await auth()
+  console.log("user ID :",userId)
+
+  if (!userId) {
+    return new NextResponse('Unauthorized', { status: 401 })
+  }
+  
   try {
-    // Get the Clerk User ID from the request headers
-    const userId = request.headers.get('X-User-Id');  
 
-    if (!userId) {
-      return NextResponse.json({ error: 'User ID is required' }, { status: 400 });
+    const user = await User.findOne({ clerkId: userId });
+
+    if (!user) {
+      return NextResponse.json({ error: 'User not found' }, { status: 404 });
     }
-
-    await dbConnect();  // Ensure the database is connected
 
     // Extract experienceId from the request query parameters (or JSON body)
     const { searchParams } = new URL(request.url);
@@ -19,13 +28,6 @@ export default async function DELETE(request: NextRequest, response: NextRespons
 
     if (!experienceId) {
       return NextResponse.json({ error: 'Experience ID is required' }, { status: 400 });
-    }
-
-    // Find the user by their Clerk ID
-    const user = await User.findOne({ clerkId: userId });
-
-    if (!user) {
-      return NextResponse.json({ error: 'User not found' }, { status: 404 });
     }
 
     // Iterate through the user's profiles to find the experience

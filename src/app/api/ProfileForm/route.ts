@@ -29,6 +29,7 @@ export async function POST(req: Request) {
       'personalInfo.profilePhoto',
       'personalInfo.email',
       'personalInfo.location',
+      'personalInfo.address',
       'personalInfo.phone',
       'rolesSkills.title',
       'expectations.hourlyRate',
