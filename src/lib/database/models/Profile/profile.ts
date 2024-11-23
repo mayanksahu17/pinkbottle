@@ -7,6 +7,7 @@ export interface ProfileDocument extends Document {
     englishLevel:string;
     email: string;
     location: string;
+    address : string;
     postcode:string;
     phone: string;
   };
@@ -50,6 +51,7 @@ const ProfileSchema = new Schema({
     postcode:{type:String , require:false,default:''},
     englishLevel:{type:String , required:false,default:''},
     location: { type: String, required: true, default: '' },
+    address: { type: String, required: true, default: '' },
     phone: { type: String, required: true, default: '' },
 
   },

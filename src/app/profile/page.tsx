@@ -3,12 +3,12 @@
 import React, { useState, useEffect } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { AlertCircle } from 'lucide-react';
-import PersonalInfo from '../../components/profileTest/personal-info';
-import RolesSkills from '../../components/profileTest/roles-skills';
-import Expectations from '../../components/profileTest/expectations';
-import Experience from '../../components/profileTest/experience';
-import CV from '../../components/profileTest/cv';
-import DiversityInclusion from '../../components/profileTest/diversity-inclusion';
+import PersonalInfo from '../../components/profile/personal-info';
+import RolesSkills from '../../components/profile/roles-skills';
+import Expectations from '../../components/profile/expectations';
+import Experience from '../../components/profile/experience';
+import CV from '../../components/profile/cv';
+import DiversityInclusion from '../../components/profile/diversity-inclusion';
 import SectionNavigation from './SectionNavigation';
 import ProfileStrength from './ProfileStrength';
 import { Section } from '@/types';
@@ -346,7 +346,7 @@ export default function ProfilePage() {
                 onSectionChange={(section) => {
                   console.log('Active section changed to:', section);
                   setActiveSection(section);
-                } } className={''}              />
+                } }/>
 
               <div className="flex-1 bg-white rounded-lg p-6 shadow-sm">
                 {ActiveSection && (

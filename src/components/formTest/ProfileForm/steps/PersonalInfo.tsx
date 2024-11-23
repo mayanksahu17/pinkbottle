@@ -1,8 +1,22 @@
 import { UseFormReturn } from 'react-hook-form';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import UploadPhotoButton from '@/components/Buttons/upload-button';
+import { Schema } from 'mongoose';
+
+const ProfileSchema = new Schema({
+  personalInfo: {
+    fullName: { type: String, required: true, default: '' },
+    profilePhoto: { type: String, required: true, default: '' },
+    email: { type: String, required: true, default: '' },
+    postcode: { type: String, required: false, default: '' },
+    englishLevel: { type: String, required: false, default: '' },
+    location: { type: String, required: true, default: '' },
+    address: { type: String, required: true, default: '' },
+    phone: { type: String, required: true, default: '' },
+  }
+});
 
 interface PersonalInfoProps {
   form: UseFormReturn<any>;
@@ -10,9 +24,22 @@ interface PersonalInfoProps {
 }
 
 export default function PersonalInfo({ form, profileIndex }: PersonalInfoProps) {
-  const { register, setValue, formState: { errors } } = form;
+  const { register, setValue, formState: { errors }, trigger } = form;
   const [profilePhotoUrl, setProfilePhotoUrl] = useState<string | null>(null);
   const [uploadSuccess, setUploadSuccess] = useState<boolean>(false);
+
+  useEffect(() => {
+    register(`profiles.${profileIndex}.personalInfo.profilePhoto`, { 
+      required: 'Profile photo is required' 
+    });
+  }, [register, profileIndex]);
+
+  useEffect(() => {
+    if (profilePhotoUrl) {
+      setValue(`profiles.${profileIndex}.personalInfo.profilePhoto`, profilePhotoUrl);
+      trigger(`profiles.${profileIndex}.personalInfo.profilePhoto`);
+    }
+  }, [profilePhotoUrl, setValue, trigger, profileIndex]);
 
   return (
     <div className="space-y-4">
@@ -22,7 +49,6 @@ export default function PersonalInfo({ form, profileIndex }: PersonalInfoProps) 
         <UploadPhotoButton
           onClientUploadComplete={(res) => {
             if (res?.[0]) {
-              setValue(`profiles.${profileIndex}.personalInfo.profilePhoto`, res[0].url);
               setProfilePhotoUrl(res[0].url);
               setUploadSuccess(true);
             }
@@ -41,8 +67,10 @@ export default function PersonalInfo({ form, profileIndex }: PersonalInfoProps) 
             />
           </div>
         )}
-        {uploadSuccess && (
-          <p className="text-green-500 text-sm mt-2">Photo uploaded successfully!</p>
+        {errors.profiles?.[profileIndex]?.personalInfo?.profilePhoto && (
+          <p className="text-red-500 text-sm mt-2">
+            {errors.profiles[profileIndex].personalInfo.profilePhoto.message}
+          </p>
         )}
       </div>
 
@@ -109,6 +137,25 @@ export default function PersonalInfo({ form, profileIndex }: PersonalInfoProps) 
         )}
       </div>
 
+      {/* Street Address Field */}
+      <div>
+        <Label htmlFor={`profiles.${profileIndex}.personalInfo.address`}>Street Address</Label>
+        <Input
+          id={`profiles.${profileIndex}.personalInfo.address`}
+          {...register(`profiles.${profileIndex}.personalInfo.address`, {
+            required: 'Street address is required',
+            pattern: {
+              value: /^[0-9a-zA-Z\s,.-]+$/,
+              message: 'Please enter a valid street address (e.g., 123 Main St, Apt 4)'
+            }
+          })}
+          placeholder="e.g., 123 Main Street, Apt 4"
+        />
+        {errors.profiles?.[profileIndex]?.personalInfo?.address && (
+          <p className="text-red-500 text-sm">{errors.profiles[profileIndex].personalInfo.address.message}</p>
+        )}
+      </div>
+
       {/* Phone Number Field */}
       <div>
         <Label htmlFor={`profiles.${profileIndex}.personalInfo.phone`}>Phone Number</Label>
@@ -129,3 +176,4 @@ export default function PersonalInfo({ form, profileIndex }: PersonalInfoProps) 
     </div>
   );
 }
+

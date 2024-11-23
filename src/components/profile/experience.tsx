@@ -1,11 +1,11 @@
 "use client";
 
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Pencil, Plus, Trash, ChevronDown, ChevronUp, Check, X } from 'lucide-react';
-import { Card } from '@/components/ui/card';
+import { Pencil, Plus, Trash, ChevronDown, ChevronUp, X } from "lucide-react";
+import { Card } from "@/components/ui/card";
 
 interface Experience {
   _id?: string;
@@ -26,19 +26,20 @@ export default function ExperienceSection({ data, onUpdate }: ExperienceProps) {
   const [isEditing, setIsEditing] = useState(false);
   const [experiences, setExperiences] = useState<Experience[]>([]);
   const [newExperience, setNewExperience] = useState<Experience>({
-    title: '',
-    company: '',
-    startDate: '',
-    endDate: '',
+    title: "",
+    company: "",
+    startDate: "",
+    endDate: "",
     current: false,
-    description: '',
+    description: "",
   });
   const [expandedExperience, setExpandedExperience] = useState<string | null>(null);
   const [showAddExperienceForm, setShowAddExperienceForm] = useState(false);
 
   useEffect(() => {
-    let experiencesArray: Experience[] = Array.isArray(data) ? data : 
-      (data.experiences || (data as any).profiles?.[0]?.experiences || []);
+    const experiencesArray: Experience[] = Array.isArray(data)
+      ? data
+      : data.experiences || (data as any).profiles?.[0]?.experiences || [];
     setExperiences(experiencesArray);
   }, [data]);
 
@@ -48,18 +49,18 @@ export default function ExperienceSection({ data, onUpdate }: ExperienceProps) {
 
   const handleAddExperience = async () => {
     if (newExperience.title && newExperience.company && newExperience.startDate) {
-      const newExp = { ...newExperience, _id: Date.now().toString() };
+      const newExp = { ...newExperience, _id: String(Date.now()) };
       const updatedExperiences = [...experiences, newExp];
       setExperiences(updatedExperiences);
       try {
         await onUpdate({ experiences: updatedExperiences });
         setNewExperience({
-          title: '',
-          company: '',
-          startDate: '',
-          endDate: '',
+          title: "",
+          company: "",
+          startDate: "",
+          endDate: "",
           current: false,
-          description: '',
+          description: "",
         });
       } catch (err) {
         console.error("Error adding new experience:", err);
@@ -70,27 +71,39 @@ export default function ExperienceSection({ data, onUpdate }: ExperienceProps) {
     }
   };
 
-  const handleRemoveExperience = async (id: string) => {
-    const updatedExperiences = experiences.filter((exp) => exp._id !== id);
-    setExperiences(updatedExperiences);
+  const handleRemoveExperience = useCallback(async (id: string) => {
     try {
+      const response = await fetch(`/api/deleteExperience?experienceId=${id}`, {
+        method: "DELETE",
+      });
+      if (!response.ok) {
+        const errorMessage = await response.text();
+        throw new Error(errorMessage || "Failed to delete experience");
+      }
+      const updatedExperiences = experiences.filter((exp) => exp._id !== id);
+      setExperiences(updatedExperiences);
       await onUpdate({ experiences: updatedExperiences });
     } catch (err) {
       console.error("Error removing experience:", err);
-      setExperiences(experiences);
     }
-  };
+  }, [experiences, onUpdate]);
 
   const handleUpdateExperience = async (id: string, field: keyof Experience, value: string | boolean) => {
-    const updatedExperiences = experiences.map((exp) =>
-      exp._id === id ? { ...exp, [field]: value } : exp
-    );
+    const updatedExperiences = experiences.map((exp) => {
+      if (exp._id === id) {
+        const updatedExp = { ...exp, [field]: value };
+        if (field === "current" && value) {
+          updatedExp.endDate = ""; // Clear endDate if current is checked
+        }
+        return updatedExp;
+      }
+      return exp;
+    });
     setExperiences(updatedExperiences);
     try {
       await onUpdate({ experiences: updatedExperiences });
     } catch (err) {
       console.error("Error updating experience:", err);
-      setExperiences(experiences);
     }
   };
 
@@ -108,11 +121,7 @@ export default function ExperienceSection({ data, onUpdate }: ExperienceProps) {
             className="hover:bg-gray-100 transition-colors duration-300"
             onClick={() => toggleExpand(exp._id!)}
           >
-            {expandedExperience === exp._id ? (
-              <ChevronUp className="h-5 w-5" />
-            ) : (
-              <ChevronDown className="h-5 w-5" />
-            )}
+            {expandedExperience === exp._id ? <ChevronUp className="h-5 w-5" /> : <ChevronDown className="h-5 w-5" />}
           </Button>
           {isEditing && (
             <Button
@@ -206,23 +215,22 @@ export default function ExperienceSection({ data, onUpdate }: ExperienceProps) {
         <div className="flex items-center gap-2">
           {!isEditing ? (
             <Button onClick={() => setIsEditing(true)} variant="default" className="flex items-center gap-2">
-              <Pencil className="h-4 w-4" />
               Edit
             </Button>
           ) : (
             <>
-              <Button onClick={() => {
-                setIsEditing(false);
-                setShowAddExperienceForm(false);
-              }} variant="destructive" className="flex items-center gap-2">
+              <Button
+                onClick={() => {
+                  setIsEditing(false);
+                  setShowAddExperienceForm(false);
+                }}
+                variant="destructive"
+                className="flex items-center gap-2"
+              >
                 <X className="h-4 w-4" />
                 Cancel
               </Button>
-              <Button 
-                onClick={() => setShowAddExperienceForm(true)} 
-                variant="outline" 
-                className="flex items-center gap-2"
-              >
+              <Button onClick={() => setShowAddExperienceForm(true)} variant="outline" className="flex items-center gap-2">
                 <Plus className="h-4 w-4" />
                 Add Experience
               </Button>
@@ -239,27 +247,27 @@ export default function ExperienceSection({ data, onUpdate }: ExperienceProps) {
           </h3>
           <Input
             value={newExperience.title}
-            onChange={(e) => setNewExperience((prev) => ({ ...prev, title: e.target.value }))}
+            onChange={(e) => setNewExperience({ ...newExperience, title: e.target.value })}
             placeholder="Position"
-            className="mt-4 border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 w-full max-w-md"
+            className="mt-4 w-full max-w-md"
           />
           <Input
             value={newExperience.company}
-            onChange={(e) => setNewExperience((prev) => ({ ...prev, company: e.target.value }))}
+            onChange={(e) => setNewExperience({ ...newExperience, company: e.target.value })}
             placeholder="Company"
-            className="mt-2 border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 w-full max-w-md"
+            className="mt-2 w-full max-w-md"
           />
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
             <Input
               type="date"
               value={newExperience.startDate}
-              onChange={(e) => setNewExperience((prev) => ({ ...prev, startDate: e.target.value }))}
+              onChange={(e) => setNewExperience({ ...newExperience, startDate: e.target.value })}
               placeholder="Start Date"
             />
             <Input
               type="date"
               value={newExperience.endDate}
-              onChange={(e) => setNewExperience((prev) => ({ ...prev, endDate: e.target.value }))}
+              onChange={(e) => setNewExperience({ ...newExperience, endDate: e.target.value })}
               placeholder="End Date"
               disabled={newExperience.current}
             />
@@ -267,50 +275,39 @@ export default function ExperienceSection({ data, onUpdate }: ExperienceProps) {
           <div className="flex items-center mt-2">
             <input
               type="checkbox"
-              id="new-current"
+              id="current-checkbox"
               checked={newExperience.current}
-              onChange={(e) => setNewExperience((prev) => ({ ...prev, current: e.target.checked }))}
+              onChange={(e) => setNewExperience({ ...newExperience, current: e.target.checked })}
               className="mr-2"
             />
-            <label htmlFor="new-current">Current position</label>
+            <label htmlFor="current-checkbox">Current position</label>
           </div>
           <Textarea
             value={newExperience.description}
-            onChange={(e) => setNewExperience((prev) => ({ ...prev, description: e.target.value }))}
+            onChange={(e) => setNewExperience({ ...newExperience, description: e.target.value })}
             placeholder="Description"
             className="mt-2 min-h-[80px] w-full max-w-md"
           />
-          <div className="mt-4 flex justify-end gap-2">
-            <Button 
-              onClick={() => setShowAddExperienceForm(false)} 
-              variant="outline"
+          <div className="flex gap-4 mt-4">
+            <Button onClick={handleAddExperience} className="bg-blue-500 hover:bg-blue-600 text-white">
+              Add
+            </Button>
+            <Button
+              onClick={() => setShowAddExperienceForm(false)}
+              variant="ghost"
+              className="hover:bg-gray-100 text-black"
             >
               Cancel
-            </Button>
-            <Button 
-              onClick={() => handleAddExperience()} 
-              variant="destructive" 
-              className="flex items-center gap-2"
-            >
-              <Plus className="h-4 w-4" />
-              Add Experience
             </Button>
           </div>
         </div>
       )}
 
       <div className="space-y-4">
-        {experiences.length > 0 ? (
-          experiences.map((exp) => (
-            <ExperienceCard key={exp._id} exp={exp} />
-          ))
-        ) : (
-          <div className="text-center py-8 text-muted-foreground">
-            No experience entries yet. Click Edit to add your first experience.
-          </div>
-        )}
+        {experiences.map((exp) => (
+          <ExperienceCard key={exp._id} exp={exp} />
+        ))}
       </div>
     </div>
   );
 }
-

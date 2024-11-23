@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { dbConnect } from '@/lib/database/mongodb';
 import User from '@/lib/database/models/User/User';
-import { auth } from '@clerk/nextjs';
 
 export async function GET(request: NextRequest) {
   // Use the authenticated user ID from Clerk's auth method

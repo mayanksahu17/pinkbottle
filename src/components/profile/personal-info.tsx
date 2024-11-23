@@ -1,3 +1,5 @@
+'use client'
+
 import { useState } from 'react'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -11,16 +13,37 @@ export default function PersonalInfo({ data, onUpdate }) {
   const [isEditing, setIsEditing] = useState(false)
   const [formData, setFormData] = useState(data || {})
   const [isUploading, setIsUploading] = useState(false)
+  const [errors, setErrors] = useState({})
 
   const handleChange = (e) => {
     const { name, value } = e.target
     setFormData(prev => ({ ...prev, [name]: value }))
+    // Clear error when user starts typing
+    if (errors[name]) {
+      setErrors(prev => ({ ...prev, [name]: '' }))
+    }
+  }
+
+  const validateForm = () => {
+    const newErrors = {}
+    const requiredFields = ['fullName', 'location', 'phone', 'streetAddress']
+
+    requiredFields.forEach(field => {
+      if (!formData[field]) {
+        newErrors[field] = `${field.charAt(0).toUpperCase() + field.slice(1).replace(/([A-Z])/g, ' $1').trim()} is required`
+      }
+    })
+
+    setErrors(newErrors)
+    return Object.keys(newErrors).length === 0
   }
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    onUpdate(formData)
-    setIsEditing(false)
+    if (validateForm()) {
+      onUpdate(formData)
+      setIsEditing(false)
+    }
   }
 
   const handleUploadComplete = (res) => {
@@ -56,14 +79,17 @@ export default function PersonalInfo({ data, onUpdate }) {
         {!isEditing ? (
           <Button variant="ghost" size="icon" onClick={() => setIsEditing(true)}>
             <Pencil className="h-4 w-4" />
+            <span className="sr-only">Edit profile</span>
           </Button>
         ) : (
           <div className="flex gap-2">
             <Button variant="ghost" size="icon" onClick={() => setIsEditing(false)}>
               <X className="h-4 w-4" />
+              <span className="sr-only">Cancel editing</span>
             </Button>
             <Button variant="ghost" size="icon" onClick={handleSubmit}>
               <Save className="h-4 w-4" />
+              <span className="sr-only">Save changes</span>
             </Button>
           </div>
         )}
@@ -77,14 +103,13 @@ export default function PersonalInfo({ data, onUpdate }) {
               <h3 className="text-lg font-semibold mb-4">Avatar</h3>
               <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
                 <Avatar className="h-16 w-16">
-                  <AvatarImage src={formData.profilePhoto || "/placeholder.svg"} />
-                  <AvatarFallback>{formData.fullName?.split(' ').map((n: any[]) => n[0]).join('')}</AvatarFallback>
+                  <AvatarImage src={formData.profilePhoto || "/placeholder.svg"} alt="Profile photo" />
+                  <AvatarFallback>{formData.fullName?.split(' ').map((n) => n[0]).join('')}</AvatarFallback>
                 </Avatar>
                 <div className="space-y-2 w-full sm:w-auto">
-                  <div className="flex flex-wrap gap-2">
+                  <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2">
                     <Button 
-                      variant="outline" 
-                      className="text-red-500 border-red-500 hover:bg-red-50"
+                      className="w-auto px-3 py-2 text-sm font-medium rounded-md text-red-500 hover:bg-red-50 border border-red-200"
                       onClick={handleRemovePhoto}
                       disabled={!formData.profilePhoto}
                     >
@@ -113,6 +138,7 @@ export default function PersonalInfo({ data, onUpdate }) {
                 {[
                   { label: 'Full name', name: 'fullName' },
                   { label: 'Location', name: 'location' },
+                  { label: 'Street address', name: 'streetAddress' },
                   { label: 'Postcode', name: 'postcode' },
                   { label: 'Phone number', name: 'phone' }
                 ].map((field) => (
@@ -121,12 +147,21 @@ export default function PersonalInfo({ data, onUpdate }) {
                       <span className="text-neutral-700 font-medium">{field.label}:</span>
                     </div>
                     {isEditing ? (
-                      <Input
-                        name={field.name}
-                        value={formData[field.name] || ''}
-                        onChange={handleChange}
-                        className="w-full sm:w-2/3 mt-2 sm:mt-0"
-                      />
+                      <div className="w-full sm:w-2/3 mt-2 sm:mt-0">
+                        <Input
+                          name={field.name}
+                          value={formData[field.name] || ''}
+                          onChange={handleChange}
+                          className={`w-full ${errors[field.name] ? 'border-red-500' : ''}`}
+                          aria-invalid={errors[field.name] ? 'true' : 'false'}
+                          aria-describedby={`${field.name}-error`}
+                        />
+                        {errors[field.name] && (
+                          <p id={`${field.name}-error`} className="text-red-500 text-sm mt-1">
+                            {errors[field.name]}
+                          </p>
+                        )}
+                      </div>
                     ) : (
                       <span className="text-neutral-600 w-full sm:w-2/3 mt-2 sm:mt-0">{formData[field.name]}</span>
                     )}
@@ -167,3 +202,4 @@ export default function PersonalInfo({ data, onUpdate }) {
     </div>
   )
 }
+

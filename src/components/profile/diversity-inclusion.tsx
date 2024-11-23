@@ -22,15 +22,38 @@ interface DiversityInclusionProps {
 export default function DiversityInclusion({ data, onUpdate }: DiversityInclusionProps) {
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState<DiversityInclusionData>(data || {});
+  const [errors, setErrors] = useState<Partial<Record<keyof DiversityInclusionData, string>>>({});
 
   const handleChange = (field: keyof DiversityInclusionData, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
+    // Clear error when user makes a selection
+    if (errors[field]) {
+      setErrors((prev) => ({ ...prev, [field]: '' }));
+    }
+  };
+
+  const validateForm = (): boolean => {
+    const newErrors: Partial<Record<keyof DiversityInclusionData, string>> = {};
+    let isValid = true;
+
+    Object.keys(formData).forEach((key) => {
+      const field = key as keyof DiversityInclusionData;
+      if (!formData[field]) {
+        newErrors[field] = `Please select a ${field}`;
+        isValid = false;
+      }
+    });
+
+    setErrors(newErrors);
+    return isValid;
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    await onUpdate(formData);
-    setIsEditing(false);
+    if (validateForm()) {
+      await onUpdate(formData);
+      setIsEditing(false);
+    }
   };
 
   const renderField = (label: string, value: string | undefined, field: keyof DiversityInclusionData) => (
@@ -39,17 +62,20 @@ export default function DiversityInclusion({ data, onUpdate }: DiversityInclusio
         {label}
       </Label>
       {isEditing ? (
-        <Select
-          value={formData[field]}
-          onValueChange={(value) => handleChange(field, value)}
-        >
-          <SelectTrigger id={field} className="w-full border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-indigo-500">
-            <SelectValue placeholder={`Select ${label.toLowerCase()}`} />
-          </SelectTrigger>
-          <SelectContent className="bg-white border border-gray-300 rounded-md shadow-lg">
-            {getOptionsForField(field)}
-          </SelectContent>
-        </Select>
+        <div>
+          <Select
+            value={formData[field]}
+            onValueChange={(value) => handleChange(field, value)}
+          >
+            <SelectTrigger id={field} className={`w-full border rounded-md shadow-sm focus:ring-2 focus:ring-indigo-500 ${errors[field] ? 'border-red-500' : 'border-gray-300'}`}>
+              <SelectValue placeholder={`Select ${label.toLowerCase()}`} />
+            </SelectTrigger>
+            <SelectContent className="bg-white border border-gray-300 rounded-md shadow-lg">
+              {getOptionsForField(field)}
+            </SelectContent>
+          </Select>
+          {errors[field] && <p className="text-red-500 text-sm mt-1">{errors[field]}</p>}
+        </div>
       ) : (
         <p className="text-sm text-muted-foreground">{value || 'Not specified'}</p>
       )}
@@ -109,14 +135,17 @@ export default function DiversityInclusion({ data, onUpdate }: DiversityInclusio
             {!isEditing ? (
               <Button variant="ghost" size="icon" onClick={() => setIsEditing(true)}>
                 <Pencil className="h-4 w-4" />
+                <span className="sr-only">Edit diversity and inclusion information</span>
               </Button>
             ) : (
               <>
                 <Button variant="ghost" size="icon" onClick={() => setIsEditing(false)}>
                   <X className="h-4 w-4" />
+                  <span className="sr-only">Cancel editing</span>
                 </Button>
                 <Button variant="ghost" size="icon" onClick={handleSubmit}>
                   <Save className="h-4 w-4" />
+                  <span className="sr-only">Save changes</span>
                 </Button>
               </>
             )}
@@ -144,3 +173,4 @@ export default function DiversityInclusion({ data, onUpdate }: DiversityInclusio
     </div>
   );
 }
+
