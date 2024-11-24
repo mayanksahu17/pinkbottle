@@ -8,6 +8,32 @@ import Footer from '../footer/footer';
 import { Metadata } from 'next';
 import CostTimeline from './cost-timeline';
 import { Perspective } from './perspective';
+import { AnimatedTooltip } from "../ui/animated-tooltip";
+
+
+const people = [
+  {
+    id: 1,
+    name: "John Doe",
+    designation: "Software Engineer",
+    image:
+      "https://images.unsplash.com/photo-1599566150163-29194dcaad36?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=3387&q=80",
+  },
+  {
+    id: 2,
+    name: "Robert Johnson",
+    designation: "Product Manager",
+    image:
+      "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YXZhdGFyfGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60",
+  },
+  {
+    id: 3,
+    name: "Jane Smith",
+    designation: "Data Scientist",
+    image:
+      "https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8YXZhdGFyfGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60",
+  },
+];
 
 export const metadata: Metadata = {
   title: 'HiredEasy - Pricing Plans | Affordable Job Application Services',
@@ -204,9 +230,16 @@ const PricingUser = () => {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbData) }} />
       </head>
       <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
-        <h2 className="text-3xl font-extrabold text-center mb-10">
-          Pricing Plans
-        </h2>
+      <h2 className="text-3xl font-extrabold text-center mb-10 flex items-center justify-center">
+  <span>Pricing Plans</span>
+  <div className="flex items-center ml-4">
+    <AnimatedTooltip items={people} />
+  </div>
+</h2>
+
+          
+        
+        
 
         <div className="mt-6 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
           {plans.map((plan) => (

@@ -68,6 +68,14 @@ const Footer = () => {
           <p className="text-gray-600 text-sm">
             © 2023 HiredEasy.com. All rights reserved.
           </p>
+          <a 
+              href="https://www.freeprivacypolicy.com/live/82686a7c-687b-4f0f-b60f-90e0075f7c6b" 
+              className="text-gray-600 hover:text-gray-800 text-sm mt-4 md:mt-0"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Privacy Policy
+            </a>
           <div className="flex space-x-4 mt-4 md:mt-0">
             {/* <a href="#" className="text-gray-600 hover:text-gray-800">Privacy Policy</a>
             <a href="#" className="text-gray-600 hover:text-gray-800">Terms of Service</a> */}
