@@ -5,7 +5,7 @@ import { SVGProps } from 'react';
 const Footer = () => {
   return (
     <footer className="bg-[#f7fafc] py-16 shadow-lg w-full md:px-4" style={{ fontFamily: 'Calibri, sans-serif', boxShadow: '0 -2px 10px rgba(0, 0, 0, 0.1)', position: 'relative', zIndex: '1000' }}>
-      <div className="max-w-7xl mx-auto px-2     sm:px-6 lg:px-4">
+      <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-4">
         <div className="flex flex-col md:flex-row justify-between items-center text-center md:text-left space-y-8 md:space-y-0">
           <div className="flex flex-col items-center md:items-start md:w-1/3 space-y-4">
             <img src="Hiredeasy.png" alt="HiredEasy Logo" className="h-20" />
@@ -13,13 +13,13 @@ const Footer = () => {
               Empowering job seekers with smart and efficient tools<br />  to land their dream job.
             </p>
             <div className="flex space-x-4">
-              <a href="https://www.instagram.com/hiredeasy/" target="_blank" className="text-gray-600 hover:text-blue-500 transition-colors duration-300">
+              <a href="https://www.instagram.com/hiredeasy/" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-blue-500 transition-colors duration-300">
                 <InstagramIcon className="h-6 w-6" />
               </a>
-              <a href="#" target="_blank" className="text-gray-600 hover:text-blue-700 transition-colors duration-300">
+              <a href="#" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-blue-700 transition-colors duration-300">
                 <LinkedinIcon className="h-6 w-6" />
               </a>
-              <a href="#" target="_blank" className="text-gray-600 hover:text-red-500 transition-colors duration-300">
+              <a href="#" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-red-500 transition-colors duration-300">
                 <YouTubeIcon className="h-6 w-6" />
               </a>
             </div>
@@ -64,7 +64,8 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="w-full flex flex-col md:flex-row justify-between items-center">
+        <div className="border-t border-gray-200 mt-8 pt-8">
+          <div className="w-full flex flex-col md:flex-row justify-between items-center">
             <p className="text-gray-600 text-sm">
               © 2023 HiredEasy.com. All rights reserved.
             </p>
@@ -77,6 +78,7 @@ const Footer = () => {
               Privacy Policy
             </a>
           </div>
+        </div>
       </div>
     </footer>
   );
@@ -101,25 +103,6 @@ function InstagramIcon(props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>)
       <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
       <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
       <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
-    </svg>
-  );
-}
-
-function HeartIcon(props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
     </svg>
   );
 }
@@ -164,3 +147,4 @@ function YouTubeIcon(props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) {
     </svg>
   );
 }
+
