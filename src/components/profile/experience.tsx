@@ -4,7 +4,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Pencil, Plus, Trash, ChevronDown, ChevronUp, X } from "lucide-react";
+import { Pencil, Plus, Trash, ChevronDown, ChevronUp, X } from 'lucide-react';
 import { Card } from "@/components/ui/card";
 
 interface Experience {
@@ -35,6 +35,7 @@ export default function ExperienceSection({ data, onUpdate }: ExperienceProps) {
   });
   const [expandedExperience, setExpandedExperience] = useState<string | null>(null);
   const [showAddExperienceForm, setShowAddExperienceForm] = useState(false);
+  const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
   useEffect(() => {
     const experiencesArray: Experience[] = Array.isArray(data)
@@ -47,8 +48,31 @@ export default function ExperienceSection({ data, onUpdate }: ExperienceProps) {
     setExpandedExperience((prev) => (prev === id ? null : id));
   }, []);
 
+  const validateExperience = (experience: Experience): boolean => {
+    const newErrors: { [key: string]: string } = {};
+
+    if (!experience.title.trim()) {
+      newErrors.title = "Title is required";
+    }
+    if (!experience.company.trim()) {
+      newErrors.company = "Company is required";
+    }
+    if (!experience.startDate) {
+      newErrors.startDate = "Start date is required";
+    }
+    if (!experience.current && !experience.endDate) {
+      newErrors.endDate = "End date is required for non-current positions";
+    }
+    if (experience.startDate && experience.endDate && new Date(experience.startDate) > new Date(experience.endDate)) {
+      newErrors.endDate = "End date cannot be earlier than start date";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
   const handleAddExperience = async () => {
-    if (newExperience.title && newExperience.company && newExperience.startDate) {
+    if (validateExperience(newExperience)) {
       const newExp = { ...newExperience, _id: String(Date.now()) };
       const updatedExperiences = [...experiences, newExp];
       setExperiences(updatedExperiences);
@@ -62,12 +86,11 @@ export default function ExperienceSection({ data, onUpdate }: ExperienceProps) {
           current: false,
           description: "",
         });
+        setShowAddExperienceForm(false);
       } catch (err) {
         console.error("Error adding new experience:", err);
         setExperiences(experiences);
       }
-    } else {
-      console.error("All required fields must be filled to add a new experience.");
     }
   };
 
@@ -100,11 +123,7 @@ export default function ExperienceSection({ data, onUpdate }: ExperienceProps) {
       return exp;
     });
     setExperiences(updatedExperiences);
-    try {
-      await onUpdate({ experiences: updatedExperiences });
-    } catch (err) {
-      console.error("Error updating experience:", err);
-    }
+    setErrors({});
   };
 
   const ExperienceCard = React.memo(({ exp }: { exp: Experience }) => (
@@ -157,28 +176,38 @@ export default function ExperienceSection({ data, onUpdate }: ExperienceProps) {
                 value={exp.title}
                 onChange={(e) => handleUpdateExperience(exp._id!, "title", e.target.value)}
                 placeholder="Position"
-                className="mt-4 w-full max-w-md"
+                className={`mt-4 w-full max-w-md ${errors.title ? 'border-red-500' : ''}`}
               />
+              {errors.title && <p className="text-red-500 text-sm mt-1">{errors.title}</p>}
               <Input
                 value={exp.company}
                 onChange={(e) => handleUpdateExperience(exp._id!, "company", e.target.value)}
                 placeholder="Company"
-                className="mt-2 w-full max-w-md"
+                className={`mt-2 w-full max-w-md ${errors.company ? 'border-red-500' : ''}`}
               />
+              {errors.company && <p className="text-red-500 text-sm mt-1">{errors.company}</p>}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
-                <Input
-                  type="date"
-                  value={exp.startDate}
-                  onChange={(e) => handleUpdateExperience(exp._id!, "startDate", e.target.value)}
-                  placeholder="Start Date"
-                />
-                <Input
-                  type="date"
-                  value={exp.endDate}
-                  onChange={(e) => handleUpdateExperience(exp._id!, "endDate", e.target.value)}
-                  placeholder="End Date"
-                  disabled={exp.current}
-                />
+                <div>
+                  <Input
+                    type="date"
+                    value={exp.startDate}
+                    onChange={(e) => handleUpdateExperience(exp._id!, "startDate", e.target.value)}
+                    placeholder="Start Date"
+                    className={errors.startDate ? 'border-red-500' : ''}
+                  />
+                  {errors.startDate && <p className="text-red-500 text-sm mt-1">{errors.startDate}</p>}
+                </div>
+                <div>
+                  <Input
+                    type="date"
+                    value={exp.endDate}
+                    onChange={(e) => handleUpdateExperience(exp._id!, "endDate", e.target.value)}
+                    placeholder="End Date"
+                    disabled={exp.current}
+                    className={errors.endDate ? 'border-red-500' : ''}
+                  />
+                  {errors.endDate && <p className="text-red-500 text-sm mt-1">{errors.endDate}</p>}
+                </div>
               </div>
               <div className="flex items-center mt-2">
                 <input
@@ -223,6 +252,7 @@ export default function ExperienceSection({ data, onUpdate }: ExperienceProps) {
                 onClick={() => {
                   setIsEditing(false);
                   setShowAddExperienceForm(false);
+                  setErrors({});
                 }}
                 variant="destructive"
                 className="flex items-center gap-2"
@@ -240,11 +270,21 @@ export default function ExperienceSection({ data, onUpdate }: ExperienceProps) {
               </Button>
               <Button
                 onClick={async () => {
-                  try {
-                    await onUpdate({ experiences });
-                    setIsEditing(false);
-                  } catch (err) {
-                    console.error("Error saving experiences:", err);
+                  let isValid = true;
+                  const updatedExperiences = experiences.map(exp => {
+                    if (!validateExperience(exp)) {
+                      isValid = false;
+                    }
+                    return exp;
+                  });
+                  if (isValid) {
+                    try {
+                      await onUpdate({ experiences: updatedExperiences });
+                      setIsEditing(false);
+                      setErrors({});
+                    } catch (err) {
+                      console.error("Error saving experiences:", err);
+                    }
                   }
                 }}
                 className="bg-blue-500 hover:bg-blue-600 text-white"
@@ -268,8 +308,9 @@ export default function ExperienceSection({ data, onUpdate }: ExperienceProps) {
               value={newExperience.title}
               onChange={(e) => setNewExperience({ ...newExperience, title: e.target.value })}
               placeholder="Position"
-              className="mt-4 w-full max-w-md"
+              className={`mt-4 w-full max-w-md ${errors.title ? 'border-red-500' : ''}`}
             />
+            {errors.title && <p className="text-red-500 text-sm mt-1">{errors.title}</p>}
           </div>
           <div>
             <span className="font-medium text-sm">Company</span>
@@ -277,8 +318,9 @@ export default function ExperienceSection({ data, onUpdate }: ExperienceProps) {
               value={newExperience.company}
               onChange={(e) => setNewExperience({ ...newExperience, company: e.target.value })}
               placeholder="Company"
-              className="mt-2 w-full max-w-md"
+              className={`mt-2 w-full max-w-md ${errors.company ? 'border-red-500' : ''}`}
             />
+            {errors.company && <p className="text-red-500 text-sm mt-1">{errors.company}</p>}
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
             <div>
@@ -288,7 +330,9 @@ export default function ExperienceSection({ data, onUpdate }: ExperienceProps) {
                 value={newExperience.startDate}
                 onChange={(e) => setNewExperience({ ...newExperience, startDate: e.target.value })}
                 placeholder="Start Date"
+                className={errors.startDate ? 'border-red-500' : ''}
               />
+              {errors.startDate && <p className="text-red-500 text-sm mt-1">{errors.startDate}</p>}
             </div>
             <div>
               <span className="font-medium text-sm">End Date</span>
@@ -298,7 +342,9 @@ export default function ExperienceSection({ data, onUpdate }: ExperienceProps) {
                 onChange={(e) => setNewExperience({ ...newExperience, endDate: e.target.value })}
                 placeholder="End Date"
                 disabled={newExperience.current}
+                className={errors.endDate ? 'border-red-500' : ''}
               />
+              {errors.endDate && <p className="text-red-500 text-sm mt-1">{errors.endDate}</p>}
             </div>
           </div>
           <div className="flex items-center mt-2">
@@ -312,7 +358,8 @@ export default function ExperienceSection({ data, onUpdate }: ExperienceProps) {
             <label htmlFor="current-checkbox">Current position</label>
           </div>
           <div>
-            <span className="font-medium text-sm">Description</span>
+            <span className="font
+-medium text-sm">Description</span>
             <Textarea
               value={newExperience.description}
               onChange={(e) => setNewExperience({ ...newExperience, description: e.target.value })}
@@ -325,7 +372,10 @@ export default function ExperienceSection({ data, onUpdate }: ExperienceProps) {
               Save
             </Button>
             <Button
-              onClick={() => setShowAddExperienceForm(false)}
+              onClick={() => {
+                setShowAddExperienceForm(false);
+                setErrors({});
+              }}
               variant="ghost"
               className="hover:bg-gray-100 text-black"
             >
@@ -343,3 +393,4 @@ export default function ExperienceSection({ data, onUpdate }: ExperienceProps) {
     </div>
   );
 }
+
