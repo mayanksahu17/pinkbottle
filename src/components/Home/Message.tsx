@@ -34,7 +34,7 @@ const Message = () => {
         </h2>
 
         <p
-          className="text-gray-700 mb-6 text-sm"
+          className="text-gray-700 mb-6"
           style={{
             fontFamily: 'Calibri, sans-serif',
             lineHeight: '1.8',
