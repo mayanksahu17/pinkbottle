@@ -7,6 +7,7 @@ import Navbar from '../navbar/navbar';
 import Footer from '../footer/footer';
 import { Metadata } from 'next';
 import CostTimeline from './cost-timeline';
+import { Perspective } from './perspective';
 
 export const metadata: Metadata = {
   title: 'HiredEasy - Pricing Plans | Affordable Job Application Services',
@@ -264,40 +265,8 @@ const PricingUser = () => {
         </div>
       </div>
 
-      <div className="bg-gray-100">
-        <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-extrabold text-center mb-8">
-            To put things into perspective
-          </h2>
-          <div className="mt-6 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-            <div className="flex flex-col items-center space-y-4 p-4 text-center rounded-lg shadow-lg bg-white">
-              <DocumentIcon className="h-12 w-12 text-blue-500" />
-              <p className="text-sm font-medium text-gray-900">
-                Resume consultation costs you $500/hour
-              </p>
-            </div>
-            <div className="flex flex-col items-center space-y-4 p-4 text-center rounded-lg shadow-lg bg-white">
-              <MusicIcon className="h-12 w-12 text-black-100" />
-              <p className="text-sm font-medium text-gray-900">
-                Concerts will cost you $500
-              </p>
-            </div>
-            <div className="flex flex-col items-center space-y-4 p-4 text-center rounded-lg shadow-lg bg-white">
-              <BriefcaseIcon className="h-12 w-12 text-black-500" />
-              <p className="text-sm font-medium text-gray-900">
-                A Long Weekend Trip costs you $300
-              </p>
-            </div>
-            <div className="flex flex-col items-center space-y-4 p-4 text-center rounded-lg shadow-lg bg-white">
-              <GraduationCapIcon className="h-12 w-12 text-black-500" />
-              <p className="text-sm font-medium text-gray-900">
-                A Univ Lecture costs $300/hour
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-
+      
+      <Perspective/>
       <CostTimeline/>
       <Footer />
     </div>

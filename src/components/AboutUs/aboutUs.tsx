@@ -4,6 +4,7 @@ import Navbar from '../navbar/navbar';
 import Footer from '../footer/footer';
 import { Metadata } from 'next';
 import { InfiniteMovingCardsDemo } from '../Home/InfiniteMovingCardsDemo';
+import { FlipWords } from '../ui/flip-words'
 
 
 export const metadata: Metadata = {
@@ -73,6 +74,7 @@ const structuredData = {
 };
 
 const Aboutus = () => {
+  const words = ["better", "cute", "beautiful", "modern"]
   return (
     <div
       className="min-h-screen text-black py-12"
@@ -91,9 +93,11 @@ const Aboutus = () => {
       </head>
       <main className="max-w-6xl mx-auto px-6 py-12">
         <section className="text-center mb-12">
-          <h1 className="text-4xl font-bold mb-4">
-            We understand you better than anyone
-          </h1>
+        <div className="text-4xl mx-auto font-normal text-neutral-600 dark:text-neutral-400">
+            We understand you
+            <FlipWords words={words} /> 
+            than anyone
+          </div>
           <p className="text-lg text-gray-600 mb-6">
             We have been in your shoes and understand the challenges of job
             hunting. Our mission is to help job seekers find their dream jobs.
