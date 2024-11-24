@@ -12,7 +12,7 @@ import DiversityInclusion from '../../components/profile/diversity-inclusion';
 import SectionNavigation from './SectionNavigation';
 import ProfileStrength from './ProfileStrength';
 import { Section } from '@/types';
-import { useAuth } from '@clerk/nextjs';  // Import Clerk's auth
+import { useAuth } from '@clerk/nextjs';
 
 const sections: Section[] = [
   {
@@ -90,114 +90,6 @@ interface ProfileData {
   diversityInclusion?: any;
 }
 
-/*export default function ProfilePage() {
-  const [activeSection, setActiveSection] = useState('personalInfo');
-  const [profileData, setProfileData] = useState<ProfileData | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const { toast } = useToast();
-
-  const { isLoaded, userId } = useAuth();
-
-  useEffect(() => {
-    if (!isLoaded || !userId) {
-      setError('User is not authenticated');
-      setLoading(false);
-      return;
-    }
-
-    const fetchProfile = async () => {
-      setLoading(true);
-      try {
-        const response = await fetch(`/api/profile`, {
-          method: 'GET',
-          headers: { 'X-User-Id': userId },
-        });
-
-        if (!response.ok) {
-          const errorText = await response.text();
-          throw new Error(`Failed to update profile: ${response.statusText}. ${errorText}`);
-        }
-
-        const data = await response.json();
-        if (!data?.profiles || !data.profiles[0]) {
-          throw new Error('No profile data available');
-        }
-
-        setProfileData(data.profiles[0]);
-      } catch (err: any) {
-        console.error('Error fetching profile:', err);
-        setError(err.message);
-        toast({
-          title: 'Error',
-          description: 'Failed to load profile data',
-          variant: 'destructive',
-        });
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchProfile();
-  }, [isLoaded, userId, toast]);
-
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">Loading...</div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="text-center">
-          <AlertCircle className="h-10 w-10 text-destructive mx-auto mb-4" />
-          <h2 className="text-lg font-semibold mb-2">Error Loading Profile</h2>
-          <p className="text-muted-foreground">{error}</p>
-        </div>
-      </div>
-    );
-  }
-
-  if (!profileData) return null;
-
-  const ActiveSection = sections.find(
-    (section) => section.id === activeSection
-  );
-
-  return (
-    <div className="min-h-screen bg-background">
-      <div className="flex flex-col lg:flex-row pt-16 gap-4">
-
-        <div className="flex w-full lg:w-1/4 order-1">
-          <SectionNavigation
-            sections={sections}
-            activeSection={activeSection}
-            onSectionChange={setActiveSection}
-            className="flex-row lg:flex-col"
-          />
-        </div>
-
-        <div className="flex-1 bg-white rounded-lg p-6 shadow-sm order-2">
-          {ActiveSection && (
-            <ActiveSection.Component
-              id={ActiveSection.id}
-              data={profileData[ActiveSection.id as keyof ProfileData]}
-              onUpdate={(data: any) => {
-                console.log(`Updating ${ActiveSection.id} with data`, data);
-              }}
-            />
-          )}
-        </div>
-
-        <div className="hidden lg:block lg:w-1/4 order-3">
-          <ProfileStrength profileData={profileData} />
-        </div>
-      </div>
-    </div>
-  );
-}
-*/
 export default function ProfilePage() {
   const [activeSection, setActiveSection] = useState('personalInfo');
   const [profileData, setProfileData] = useState<ProfileData | null>(null);

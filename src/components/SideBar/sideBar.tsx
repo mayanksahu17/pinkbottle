@@ -80,8 +80,7 @@ function Sidebar({
 
   return (
     <aside
-      className={`relative top-16 z-1 w-64 bg-white p-4 h-screen shadow-xl ${sidebarOpen ? 'block' : 'hidden'} lg:block ${className}`}
-      style={{ minHeight: '100vh' }}
+      className={`relative top-16 z-1 w-64 bg-white p-4 overflow-y-auto ${sidebarOpen ? 'block' : 'hidden'} lg:block ${className}`}
     >
       <nav className="mt-16 flex flex-col space-y-4 z-1">
         {navigationItems.map((item) => (
@@ -114,3 +113,4 @@ function Sidebar({
 }
 
 export default Sidebar;
+

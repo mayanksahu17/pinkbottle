@@ -6,7 +6,7 @@ import Link from 'next/link';
 
 const Footer = () => {
   return (
-    <footer className="w-full bg-[#f7fafc] py-8 shadow-[0_-2px_10px_rgba(0,0,0,0.1)] relative z-50 font-[Calibri,sans-serif]">
+    <footer className="w-full bg-[#f7fafc] py-8 shadow-[0_-2px_10px_rgba(0,0,0,0.1)] relative z-[50] font-[Calibri,sans-serif]">
       <div className="container mx-auto px-4 md:px-6 lg:max-w-7xl lg:px-8">
         {/* Top Section */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">

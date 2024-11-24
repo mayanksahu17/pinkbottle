@@ -8,8 +8,7 @@ import Sidebar from '../SideBar/sideBar';
 import DashboardMain from './dashboard-main';
 import Warmup from '../Interview/warmup';
 import JobsMain from '../jobs/jobs-main';
-import Resume from '../profile/resume';  // Profile component
-import { RxHamburgerMenu } from 'react-icons/rx';
+import { RxHamburgerMenu, RxCross2 } from 'react-icons/rx';
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from '@clerk/nextjs';
 import ProfilePage from '@/app/profile/page';
@@ -50,37 +49,44 @@ export default function DashboardPage() {
     }
   };
 
+  const toggleSidebar = () => {
+    setSidebarOpen(!sidebarOpen);
+  };
+
   return (
     <div className="flex flex-col min-h-screen bg-gray-50">
       <Navbar />
 
       <div className="flex flex-1 relative">
         <button
-          className="lg:hidden fixed top-20 left-4 z-50 p-2 rounded-md hover:bg-gray-100 focus:outline-none"
-          onClick={() => setSidebarOpen(!sidebarOpen)}
-          aria-label="Toggle menu"
-          disabled={isLoading}
+          className="lg:hidden fixed top-20 left-4 z-[80] p-2 rounded-md hover:bg-gray-100 focus:outline-none"
+          onClick={toggleSidebar}
+          aria-label={sidebarOpen ? "Close menu" : "Open menu"}
         >
-          <RxHamburgerMenu className="text-2xl" />
+          {sidebarOpen ? (
+            <RxCross2 className="text-2xl" />
+          ) : (
+            <RxHamburgerMenu className="text-2xl" />
+          )}
         </button>
 
         {sidebarOpen && (
           <div
-            className="fixed inset-0 bg-black bg-opacity-50 z-30 lg:hidden"
+            className="fixed inset-0 bg-black bg-opacity-50 z-[55] lg:hidden"
             onClick={() => setSidebarOpen(false)}
           />
         )}
 
         <aside
-          className={`fixed lg:sticky top-16 z-40 h-[calc(100vh-4rem)] transition-transform duration-300 ease-in-out ${
+          className={`fixed lg:static top-16 z-[70] h-[calc(100dvh-4rem)] overflow-y-auto transition-transform duration-300 ease-in-out ${
             sidebarOpen ? 'translate-x-0' : '-translate-x-full'
-          } lg:translate-x-0 w-64 bg-white shadow-xl`}
+          } lg:translate-x-0 w-64 bg-white shadow-xl lg:h-auto`}
         >
           <Sidebar
             currentTab={currentTab}
             setCurrentTab={handleTabChange}
             setSidebarOpen={setSidebarOpen}
-            isPaidUser={true} // Use actual paid user logic
+            isPaidUser={true}
             sidebarOpen={sidebarOpen}
             className="h-full"
           />
@@ -88,7 +94,7 @@ export default function DashboardPage() {
 
         <main className="flex-1 flex flex-col min-h-0">
           {isLoading && (
-            <div className="absolute inset-0 bg-white bg-opacity-50 z-50 flex items-center justify-center">
+            <div className="absolute inset-0 bg-white bg-opacity-50 z-[65] flex items-center justify-center">
               <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>
             </div>
           )}
@@ -108,3 +114,4 @@ export default function DashboardPage() {
     </div>
   );
 }
+
