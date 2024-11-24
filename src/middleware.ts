@@ -19,11 +19,13 @@ const myMiddleware = authMiddleware({
     '/sitemap.xml',
     '/robots.txt',
     '/Home/',
+
   ],
   ignoredRoutes: [
     '/api/uploadthing',
     '/api/webhooks/stripe',
     '/api/webhooks/users',
+    '/api/testimonials/testimonials',
   ],
 });
 

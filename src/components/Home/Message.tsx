@@ -1,27 +1,46 @@
 import Link from 'next/link';
 import React, { useState } from 'react';
+import { TextGenerateEffect } from "../ui/text-generate-effect";
+
+
+const words = ` Job searching has become one of the most stressful phases of our
+          lives, especially for those of us who graduated without a job offer or 
+          were laid off due to circumstances beyond our control.`;
+
+const words2 = `Engaging in extensive networking and submitting applications to
+          countless jobs has become the norm. The most frustrating aspect is
+          repeatedly inputting the same information into lengthy applications,
+          only to receive no response. This lack of feedback can be incredibly
+          disheartening, making it difficult to maintain motivation.`
+const words3 = `Unfortunately, this is the reality we face, and it seems unavoidable.
+          While we cannot change the system, we can find ways to navigate it
+          more effectively. I've tried everything from using auto-fill
+          extensions to AI auto-apply services without success. Eventually, I
+          hired a college student from India to apply to jobs on my behalf,
+          securing a job within 60 days.`
+
+const words4 = `This experience was eye-opening, prompting me to start a service to
+          assist others who are struggling through the job hunt ordeal.`
 
 const Message = () => {
   return (
     <section className="bg-[#ffffff] py-8 mb-10">
       <div className="max-w-2xl mx-auto px-6 text-justify bg-white shadow-lg rounded-lg p-8 bg-gradient-to-r from-gray-100 via-gray-50 to-gray-100">
         <h2
-          className="text-3xl font-bold mb-8 text-gray-800"
+          className="text-4xl font-bold mb-8 text-gray-800"
           style={{ fontFamily: 'Calibri, sans-serif' }}
         >
           Dear Fellow Job Seeker,
         </h2>
 
         <p
-          className="text-gray-700 mb-6 text-lg"
+          className="text-gray-700 mb-6 text-sm"
           style={{
             fontFamily: 'Calibri, sans-serif',
             lineHeight: '1.8',
           }}
         >
-          Job searching has become one of the most stressful phases of our
-          lives, especially for those of us who graduated without a job offer or
-          were laid off due to circumstances beyond our control.
+         <TextGenerateEffect words={words} duration={2}/>
         </p>
         <p
           className="text-gray-700 mb-6 text-lg"
@@ -30,11 +49,7 @@ const Message = () => {
             lineHeight: '1.8',
           }}
         >
-          Engaging in extensive networking and submitting applications to
-          countless jobs has become the norm. The most frustrating aspect is
-          repeatedly inputting the same information into lengthy applications,
-          only to receive no response. This lack of feedback can be incredibly
-          disheartening, making it difficult to maintain motivation.
+          <TextGenerateEffect words={words2} />
         </p>
         <p
           className="text-gray-700 mb-6 text-lg"
@@ -43,12 +58,7 @@ const Message = () => {
             lineHeight: '1.8',
           }}
         >
-          Unfortunately, this is the reality we face, and it seems unavoidable.
-          While we cannot change the system, we can find ways to navigate it
-          more effectively. I've tried everything from using auto-fill
-          extensions to AI auto-apply services without success. Eventually, I
-          hired a college student from India to apply to jobs on my behalf,
-          securing a job within 60 days.
+          <TextGenerateEffect words={words3} />
         </p>
         <p
           className="text-gray-700 mb-6 text-lg"
@@ -57,8 +67,7 @@ const Message = () => {
             lineHeight: '1.8',
           }}
         >
-          This experience was eye-opening, prompting me to start a service to
-          assist others who are struggling through the job hunt ordeal.
+          <TextGenerateEffect words={words4} />
         </p>
         <div className="flex items-center mb-8">
           <div className="w-24 h-24 border border-gray-300 rounded-lg mr-4 overflow-hidden">
