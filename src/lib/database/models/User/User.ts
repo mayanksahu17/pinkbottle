@@ -34,12 +34,6 @@ const userSchema = new mongoose.Schema({
       location: String,
     },
   ],
-  resume: {
-    type: String,
-  },
-  coverLetter: {
-    type: String,
-  },
   profiles: [ProfileSchema], // Use the centralized ProfileSchema
 });
 

@@ -24,12 +24,21 @@ const SectionNavigation: React.FC<SectionNavigationProps> = ({
     setIsSidebarOpen(false);
   };
 
+  React.useEffect(() => {
+    // Prevent scrolling on the body when sidebar is open
+    if (isSidebarOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+  }, [isSidebarOpen]);
+
   return (
     <>
       {/* Mobile Toggle Button */}
       <button 
         onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-        className="md:hidden fixed z-50 top-1/2 left-4 transform -translate-y-1/2 bg-white shadow-lg rounded-full p-2"
+        className="md:hidden fixed z-[60] top-1/2 left-4 transform -translate-y-1/2 bg-white shadow-lg rounded-full p-2"
       >
         {isSidebarOpen ? <X size={24} /> : <Menu size={24} />}
       </button>
@@ -37,13 +46,12 @@ const SectionNavigation: React.FC<SectionNavigationProps> = ({
       {/* Sidebar */}
       <nav 
         className={`
-          fixed top-0 left-0 h-full w-64 bg-white shadow-lg transform transition-transform duration-300 z-40
-          md:static md:w-1/4 md:block
+          fixed top-0 left-0 h-full w-64 bg-white shadow-lg transform transition-transform duration-300 z-[55]
           ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'}
-          md:translate-x-0
+          md:translate-x-0 md:static md:w-1/4
         `}
       >
-        <div className="p-4 space-y-2 h-full">
+        <div className="p-4 space-y-2 h-full overflow-y-auto">
           <h3 className="text-lg font-semibold text-gray-800 mb-4">Sections</h3>
           {sections.map((section) => (
             <button
@@ -65,7 +73,7 @@ const SectionNavigation: React.FC<SectionNavigationProps> = ({
       {isSidebarOpen && (
         <div 
           onClick={() => setIsSidebarOpen(false)}
-          className="fixed inset-0 bg-black/50 z-30 md:hidden"
+          className="fixed inset-0 bg-black/50 z-[50] md:hidden"
         />
       )}
     </>

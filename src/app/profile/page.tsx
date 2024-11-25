@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { useToast } from '@/hooks/use-toast';
+import { useToast } from '@/components/ui/use-toast';
 import { AlertCircle } from 'lucide-react';
 import PersonalInfo from '../../components/profile/personal-info';
 import RolesSkills from '../../components/profile/roles-skills';

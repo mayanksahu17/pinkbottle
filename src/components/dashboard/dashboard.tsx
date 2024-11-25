@@ -9,7 +9,7 @@ import DashboardMain from './dashboard-main';
 import Warmup from '../Interview/warmup';
 import JobsMain from '../jobs/jobs-main';
 import { RxHamburgerMenu } from 'react-icons/rx';
-import { useToast } from "@/hooks/use-toast";
+import { useToast } from "@/components/ui/use-toast";
 import { useAuth } from '@clerk/nextjs';
 import ProfilePage from '@/app/profile/page';
 
@@ -31,6 +31,15 @@ export default function DashboardPage() {
       });
     }
   }, [userId, toast]);
+
+  useEffect(() => {
+    // Prevent scrolling behind the sidebar
+    if (sidebarOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+  }, [sidebarOpen]);
 
   const handleTabChange = async (tab: string) => {
     setIsLoading(true);
@@ -54,8 +63,9 @@ export default function DashboardPage() {
       <Navbar />
 
       <div className="flex flex-1 relative">
+        {/* Hamburger Menu */}
         <button
-          className="lg:hidden fixed top-20 left-4 z-50 p-2 rounded-md hover:bg-gray-100 focus:outline-none"
+          className="lg:hidden fixed top-20 left-4 z-[60] p-2 rounded-md hover:bg-gray-100 focus:outline-none"
           onClick={() => setSidebarOpen(!sidebarOpen)}
           aria-label="Toggle menu"
           disabled={isLoading}
@@ -63,17 +73,19 @@ export default function DashboardPage() {
           <RxHamburgerMenu className="text-2xl" />
         </button>
 
+        {/* Background overlay for mobile */}
         {sidebarOpen && (
           <div
-            className="fixed inset-0 bg-black bg-opacity-50 z-30 lg:hidden"
+            className="fixed inset-0 bg-black bg-opacity-50 z-[50] lg:hidden"
             onClick={() => setSidebarOpen(false)}
           />
         )}
 
+        {/* Sidebar */}
         <aside
-          className={`fixed lg:sticky top-16 z-40 h-[calc(100vh-4rem)] overflow-y-auto transition-transform duration-300 ease-in-out ${
+          className={`fixed lg:sticky top-16 z-[55] h-[calc(100vh-4rem)] transition-transform duration-300 ease-in-out ${
             sidebarOpen ? 'translate-x-0' : '-translate-x-full'
-          } lg:translate-x-0 w-64 bg-white shadow-xl lg:h-[calc(100vh-4rem-64px)]`}
+          } lg:translate-x-0 w-64 bg-white shadow-xl`}
         >
           <Sidebar
             currentTab={currentTab}
@@ -85,9 +97,10 @@ export default function DashboardPage() {
           />
         </aside>
 
+        {/* Main Content */}
         <main className="flex-1 flex flex-col min-h-0">
           {isLoading && (
-            <div className="absolute inset-0 bg-white bg-opacity-50 z-50 flex items-center justify-center">
+            <div className="absolute inset-0 bg-white bg-opacity-50 z-[70] flex items-center justify-center">
               <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>
             </div>
           )}
@@ -95,7 +108,7 @@ export default function DashboardPage() {
           <div className="flex-1 overflow-y-auto">
             <div className="p-4 md:p-6 lg:p-8 max-w-7xl mx-auto">
               {currentTab === 'dashboard' && <DashboardMain isPaidUser={false} />}
-              {currentTab === 'profile' && <ProfilePage/>}
+              {currentTab === 'profile' && <ProfilePage />}
               {currentTab === 'jobs' && <JobsMain />}
               {currentTab === 'interview' && <Warmup />}
             </div>
@@ -107,4 +120,3 @@ export default function DashboardPage() {
     </div>
   );
 }
-

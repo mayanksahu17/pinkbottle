@@ -20,13 +20,7 @@ export default async function Dashboard() {
   return (
     <main>
       <DashboardPage
-        cover={cover}
-        resume={resume}
-        firstName={user?.firstName!}
-        jobs={jobs}
-        isPaidUser={isPaidUser}
       />{' '}
-      {/* Correct component usage */}
     </main>
   );
 }
