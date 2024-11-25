@@ -5,6 +5,7 @@ import Footer from '../footer/footer';
 import { Metadata } from 'next';
 import { InfiniteMovingCardsDemo } from '../Home/InfiniteMovingCardsDemo';
 import { FlipWords } from '../ui/flip-words'
+import  Head from './head';
 
 
 export const metadata: Metadata = {
@@ -216,6 +217,7 @@ const Aboutus = () => {
           </div>
         </section>
       </main>
+      <Head/>
       <InfiniteMovingCardsDemo/>
       <Footer />
     </div>
