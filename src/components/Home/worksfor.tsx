@@ -4,7 +4,7 @@ const WorksFor = () => {
     return (
         <div className="bg-white -py-16 mb-32">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-[4rem] text-3xl relative bg-clip-text text-transparent bg-no-repeat bg-gradient-to-r from-purple-500 via-violet-500 to-pink-500 py-4">
+          <h2 className="text-[4rem] text-3xl relative bg-clip-text text-transparent bg-no-repeat bg-gradient-to-r from-purple-500 via-violet-500 to-pink-500 py-8">
               We Proudly say, Our clients now works at{' '}
             </h2>
             <p className=" text-lg text-gray-600">

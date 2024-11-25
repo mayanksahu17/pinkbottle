@@ -14,7 +14,7 @@ const FAQSection = () => {
     },
     {
       question: 'Why should I also shortlist the jobs when I am paying? Why not the HiredEasy Assistants do that?',
-      answer: `Having assisted over 1300+ job seekers in landing full-time positions, we've identified several compelling reasons for you to take an active role in shortlisting jobs: Personal Expertise: No one understands the nuances of the jobs and roles you’re aiming for better than you. Your insights and preferences are invaluable in identifying the best opportunities. Improved Outcomes: Our experience shows that final outcomes are significantly better when you stay engaged and involved in the process. Rather than us randomly applying to hundreds of positions, your input ensures we target the most suitable roles. Avoiding Bias: For instance, on Day 10 of our collaboration, you might notice we’ve shortlisted roles on platforms like Greenhouse and Lever but seemingly neglected Workday and iCIMS. By staying involved, you can prevent any perceived biases and ensure a balanced approach. Geographic Limitations: LinkedIn often restricts the visibility of US job listings from Indian profiles, making your participation crucial in finding the best matches. Unique Requirements: Each client has distinct needs. For example, one client wanted SDE roles with a focus on JavaScript. We initially shortlisted Node.js roles, but the client specifically preferred React.js. Another client desired Product Manager positions based on location, industry, and posting date but was dissatisfied because some roles required more experience than they had. Given the diverse and specific nature of our clients’ needs, it’s clear that keeping you in the driver’s seat for job shortlisting is beneficial. That said, we also accommodate clients who prefer to delegate completely. Some clients share their LinkedIn credentials and set up job alerts, asking us to apply for all jobs that come through those alerts. In these instances, we are more than happy to handle the shortlisting. Otherwise, we recommend you take the lead.`,
+      answer: `Having assisted over 1300+ job seekers in landing full-time positions, we've identified several compelling reasons for you to take an active role in shortlisting jobs: Personal Expertise: No one understands the nuances of the jobs and roles you're aiming for better than you. Your insights and preferences are invaluable in identifying the best opportunities. Improved Outcomes: Our experience shows that final outcomes are significantly better when you stay engaged and involved in the process. Rather than us randomly applying to hundreds of positions, your input ensures we target the most suitable roles. Avoiding Bias: For instance, on Day 10 of our collaboration, you might notice we've shortlisted roles on platforms like Greenhouse and Lever but seemingly neglected Workday and iCIMS. By staying involved, you can prevent any perceived biases and ensure a balanced approach. Geographic Limitations: LinkedIn often restricts the visibility of US job listings from Indian profiles, making your participation crucial in finding the best matches. Unique Requirements: Each client has distinct needs. For example, one client wanted SDE roles with a focus on JavaScript. We initially shortlisted Node.js roles, but the client specifically preferred React.js. Another client desired Product Manager positions based on location, industry, and posting date but was dissatisfied because some roles required more experience than they had. Given the diverse and specific nature of our clients' needs, it's clear that keeping you in the driver's seat for job shortlisting is beneficial. That said, we also accommodate clients who prefer to delegate completely. Some clients share their LinkedIn credentials and set up job alerts, asking us to apply for all jobs that come through those alerts. In these instances, we are more than happy to handle the shortlisting. Otherwise, we recommend you take the lead.`,
     },
     {
       question: 'How long will my assistant take to apply for the shortlisted job?',
@@ -73,7 +73,7 @@ const FAQSection = () => {
 
   return (
     <section className="py-16 bg-white">
-      <div className="max-w-4xl mx-auto px-1">
+      <div className="max-w-6xl mx-auto px-4">
         <h2 className="text-5xl font-bold text-center mb-8" style={{ fontFamily: 'Calibri, sans-serif' }}>
           Frequently Asked Questions
         </h2>
@@ -82,7 +82,7 @@ const FAQSection = () => {
           what you're looking for? Feel free to reach out!
         </p>
 
-        <div className="mb-10 max-w-full">
+        <div className="mb-10 w-full">
           <PlaceholdersAndVanishInput
             placeholders={placeholders}
             onChange={handleSearchChange}
@@ -90,18 +90,20 @@ const FAQSection = () => {
           />
         </div>
 
-        <div>
+        <div className="grid gap-6">
           {filteredFaqs.map((faq, index) => (
-            <details key={index} className="group py-4">
+            <details key={index} className="group">
               <summary className="text-lg font-semibold cursor-pointer bg-white p-4 rounded-lg shadow-md hover:bg-blue-50 hover:shadow-lg transition duration-300 ease-in-out flex justify-between items-center" style={{ fontFamily: 'Calibri, sans-serif', color: '#333' }}>
-                <span>{faq.question}</span>
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <span className="flex-1 pr-4">{faq.question}</span>
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-blue-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
                 </svg>
               </summary>
-              <p className="mt-4 leading-relaxed text-sm text-gray-700">
-                {faq.answer}
-              </p>
+              <div className="mt-4 bg-gray-50 p-4 rounded-lg">
+                <p className="leading-relaxed text-sm text-gray-700">
+                  {faq.answer}
+                </p>
+              </div>
             </details>
           ))}
         </div>
@@ -111,3 +113,4 @@ const FAQSection = () => {
 };
 
 export default FAQSection;
+

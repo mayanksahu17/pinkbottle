@@ -1,6 +1,6 @@
 import React from 'react'
 import { Card, CardContent } from "@/components/ui/card"
-import { ScrollArea } from "@/components/ui/scroll-area"
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area"
 
 const Testimonial = () => {
   const testimonials = [
@@ -41,7 +41,7 @@ const Testimonial = () => {
         </p>
         <div className="flex flex-col md:flex-row justify-center items-stretch gap-8">
           {testimonials.map((testimonial, index) => (
-            <Card key={index} className="w-full md:w-[400px] h-[400px] flex flex-col">
+            <Card key={index} className="w-full md:w-[400px] h-[350px] flex flex-col">
               <CardContent className="p-6 flex flex-col h-full">
                 <div className="flex flex-col items-start mb-4">
                   <img
@@ -63,8 +63,9 @@ const Testimonial = () => {
                     </div>
                   </div>
                 </div>
-                <ScrollArea className="flex-grow pr-4">
+                <ScrollArea className="flex-grow pr-4 h-[150px]">
                   <p className="text-gray-600 font-calibri">{testimonial.content}</p>
+                  <ScrollBar className='bg-slate-300' />
                 </ScrollArea>
               </CardContent>
             </Card>

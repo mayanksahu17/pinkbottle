@@ -7,7 +7,7 @@ export function InfiniteMovingCardsDemo() {
   return (
     <div className="h-[40rem] rounded-md flex flex-col antialiased bg-white dark:bg-black dark:bg-grid-white/[0.05] items-center justify-center relative overflow-hidden">
       <div className="w-full max-w-7xl mx-auto px-4 md:px-6 py-12">
-
+      
         <InfiniteMovingCards
           items={testimonials}
           direction="right"

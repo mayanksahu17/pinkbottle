@@ -217,7 +217,7 @@ const Aboutus = () => {
           </div>
         </section>
       </main>
-      <Head/>
+      
       <InfiniteMovingCardsDemo/>
       <Footer />
     </div>

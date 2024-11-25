@@ -14,13 +14,16 @@ export function PlaceholdersAndVanishInput({
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
 }) {
   const [currentPlaceholder, setCurrentPlaceholder] = useState(0);
-
+  const [hasResults, setHasResults] = useState(true); // Track search result state
+  const [resultsToShow, setResultsToShow] = useState<string[]>(placeholders); // Store results to display
+  
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const startAnimation = () => {
     intervalRef.current = setInterval(() => {
       setCurrentPlaceholder((prev) => (prev + 1) % placeholders.length);
     }, 3000);
   };
+
   const handleVisibilityChange = () => {
     if (document.visibilityState !== "visible" && intervalRef.current) {
       clearInterval(intervalRef.current); // Clear the interval when the tab is not visible
@@ -152,6 +155,8 @@ export function PlaceholdersAndVanishInput({
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter" && !animating) {
       vanishAndSubmit();
+    } else if (e.key === "Backspace" && !animating) {
+      vanishAndSubmit(); // Trigger the vanish effect on backspace
     }
   };
 
@@ -174,6 +179,19 @@ export function PlaceholdersAndVanishInput({
     vanishAndSubmit();
     onSubmit && onSubmit(e);
   };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setValue(e.target.value);
+    onChange && onChange(e);
+
+    // Filter results based on the input value
+    const filteredResults = placeholders.filter((placeholder) =>
+      placeholder.toLowerCase().includes(e.target.value.toLowerCase())
+    );
+    
+    setResultsToShow(filteredResults.length ? filteredResults : placeholders); // Show all results if no matches
+  };
+
   return (
     <form
       className={cn(
@@ -184,18 +202,13 @@ export function PlaceholdersAndVanishInput({
     >
       <canvas
         className={cn(
-          "absolute pointer-events-none  text-base transform scale-50 top-[20%] left-2 sm:left-8 origin-top-left filter invert dark:invert-0 pr-20",
+          "absolute pointer-events-none text-base transform scale-50 top-[20%] left-2 sm:left-8 origin-top-left filter invert dark:invert-0 pr-20",
           !animating ? "opacity-0" : "opacity-100"
         )}
         ref={canvasRef}
       />
       <input
-        onChange={(e) => {
-          if (!animating) {
-            setValue(e.target.value);
-            onChange && onChange(e);
-          }
-        }}
+        onChange={handleChange}
         onKeyDown={handleKeyDown}
         ref={inputRef}
         value={value}
@@ -267,6 +280,30 @@ export function PlaceholdersAndVanishInput({
               className="dark:text-zinc-500 text-sm sm:text-base font-normal text-neutral-500 pl-4 sm:pl-12 text-left w-[calc(100%-2rem)] truncate"
             >
               {placeholders[currentPlaceholder]}
+            </motion.p>
+          )}
+          {value && !hasResults && (
+            <motion.p
+              initial={{
+                y: 5,
+                opacity: 0,
+              }}
+              key="no-results-placeholder"
+              animate={{
+                y: 0,
+                opacity: 1,
+              }}
+              exit={{
+                y: -15,
+                opacity: 0,
+              }}
+              transition={{
+                duration: 0.3,
+                ease: "linear",
+              }}
+              className="dark:text-red-500 text-sm sm:text-base font-normal text-neutral-500 pl-4 sm:pl-12 text-left w-[calc(100%-2rem)] truncate"
+            >
+              No results found
             </motion.p>
           )}
         </AnimatePresence>
