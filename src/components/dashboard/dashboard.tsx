@@ -32,12 +32,12 @@ export default function DashboardPage() {
     }
   }, [userId, toast]);
 
+  // Prevent background scrolling when sidebar is open
   useEffect(() => {
-    // Prevent scrolling behind the sidebar
     if (sidebarOpen) {
       document.body.style.overflow = 'hidden';
     } else {
-      document.body.style.overflow = '';
+      document.body.style.overflow = ''; // Restore scroll when sidebar is closed
     }
   }, [sidebarOpen]);
 
@@ -83,7 +83,9 @@ export default function DashboardPage() {
 
         {/* Sidebar */}
         <aside
-          className={`fixed lg:sticky top-16 z-[55] h-[calc(100vh-4rem)] transition-transform duration-300 ease-in-out ${
+          className={`fixed lg:sticky top-16 ${
+            sidebarOpen ? 'z-[55]' : 'z-[10]'
+          } lg:z-[5] h-[calc(100vh-4rem)] transition-transform duration-300 ease-in-out ${
             sidebarOpen ? 'translate-x-0' : '-translate-x-full'
           } lg:translate-x-0 w-64 bg-white shadow-xl`}
         >

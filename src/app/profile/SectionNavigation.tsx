@@ -39,17 +39,16 @@ const SectionNavigation: React.FC<SectionNavigationProps> = ({
       <button 
         onClick={() => setIsSidebarOpen(!isSidebarOpen)}
         className="md:hidden fixed z-[60] top-1/2 left-4 transform -translate-y-1/2 bg-white shadow-lg rounded-full p-2"
+        aria-label="Toggle Sidebar"
       >
         {isSidebarOpen ? <X size={24} /> : <Menu size={24} />}
       </button>
 
       {/* Sidebar */}
       <nav 
-        className={`
-          fixed top-0 left-0 h-full w-64 bg-white shadow-lg transform transition-transform duration-300 z-[55]
-          ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'}
-          md:translate-x-0 md:static md:w-1/4
-        `}
+        className={`fixed top-0 left-0 h-full w-64 bg-white shadow-lg transform transition-transform duration-300
+        ${isSidebarOpen ? 'translate-x-0 z-[55]' : '-translate-x-full z-[10]'}
+        md:translate-x-0 md:static md:w-1/4 md:z-[5]`}
       >
         <div className="p-4 space-y-2 h-full overflow-y-auto">
           <h3 className="text-lg font-semibold text-gray-800 mb-4">Sections</h3>
