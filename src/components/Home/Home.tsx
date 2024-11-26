@@ -72,6 +72,20 @@ const HomePage = () => {
         style={{ backgroundColor: '#FFFFFF' }}
       >
         <Navbar />
+        <div className="bg-[#bafff1] py-2 shadow-md mt-16">
+          <div className="max-w-xl mx-auto text-center px-4">
+            <p className="text-base font-medium text-gray-800 animate-bounce">
+              Ready to get a Job
+              <a
+                href="#"
+                onClick={() => setShowForm(true)}
+                className="text-blue-600 hover:text-blue-700 underline pl-1 transition duration-300 ease-in-out"
+              >
+                Talk to Us!
+              </a>
+            </p>
+          </div>
+        </div>
 
         {/* Main Content */}
         <FrontMain />
