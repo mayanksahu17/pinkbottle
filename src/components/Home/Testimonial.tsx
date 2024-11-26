@@ -63,15 +63,45 @@ const Testimonial = () => {
                     </div>
                   </div>
                 </div>
-                <ScrollArea className="flex-grow pr-4 h-[150px]">
+                <ScrollArea className="flex-grow h-[150px] custom-scrollbar transition-all duration-300 ease-in-out">
                   <p className="text-gray-600 font-calibri">{testimonial.content}</p>
-                  <ScrollBar className='bg-slate-300' />
+                  <ScrollBar className="custom-scrollbar-thumb" />
                 </ScrollArea>
               </CardContent>
             </Card>
           ))}
         </div>
       </div>
+      <style jsx global>{`
+        .custom-scrollbar {
+          overflow: auto;
+          scrollbar-width: thin;
+          scrollbar-color: rgba(59, 130, 246, 0.5) transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+          width: 8px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+          background: rgba(229, 231, 235, 0.5);
+          border-radius: 20px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+          background-color: rgba(59, 130, 246, 0.5);
+          border-radius: 20px;
+          border: 2px solid rgba(229, 231, 235, 0.5);
+          background-clip: padding-box;
+        }
+        .custom-scrollbar-thumb {
+          background-color: rgba(59, 130, 246, 0.5) !important;
+          border-radius: 20px !important;
+          border: 2px solid rgba(229, 231, 235, 0.5) !important;
+          background-clip: padding-box !important;
+        }
+        .custom-scrollbar:hover::-webkit-scrollbar-thumb,
+        .custom-scrollbar:hover .custom-scrollbar-thumb {
+          background-color: rgba(59, 130, 246, 0.8) !important;
+        }
+      `}</style>
     </section>
   )
 }
