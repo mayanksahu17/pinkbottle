@@ -232,6 +232,8 @@ export default function ExperienceSection({ data, onUpdate }: ExperienceProps) {
     </Card>
   ));
 
+  ExperienceCard.displayName = "ExperienceCard";
+
   return (
     <div className="space-y-8">
       <div className="bg-white shadow-sm rounded-lg p-5 border-b-2 border-gray-300 flex justify-between items-center">
