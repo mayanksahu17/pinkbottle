@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { AlertCircle } from 'lucide-react';
 import PersonalInfo from '../../components/profile/personal-info';
 import RolesSkills from '../../components/profile/roles-skills';
@@ -80,6 +80,7 @@ const sections: Section[] = [
     Component: DiversityInclusion,
   },
 ];
+
 interface ProfileData {
   personalInfo?: any;
   rolesSkills?: any;
@@ -92,12 +93,13 @@ interface ProfileData {
 export default function ProfilePage() {
   const [activeSection, setActiveSection] = useState('personalInfo');
   const [profileData, setProfileData] = useState<ProfileData | null>(null);
-  const [currentTab, setCurrentTab] = useState('profile');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  // Use useAuth hook to get authentication data
-  const { isLoaded, userId, sessionId, getToken } = useAuth();
+  // Track if an update is already in progress
+  const isUpdating = useRef(false);
+
+  const { isLoaded, userId } = useAuth();
 
   useEffect(() => {
     if (!isLoaded || !userId) {
@@ -109,10 +111,9 @@ export default function ProfilePage() {
     const fetchProfile = async () => {
       setLoading(true);
       try {
-      //  console.log('Fetching profile for userId:', userId);
         const response = await fetch(`/api/profile`, {
           method: 'GET',
-          headers: { 'X-User-Id': userId }, // Pass userId in headers
+          headers: { 'X-User-Id': userId }, 
         });
 
         if (!response.ok) {
@@ -127,7 +128,6 @@ export default function ProfilePage() {
 
         setProfileData(data.profiles[0]);
       } catch (err: any) {
-        console.error('Error fetching profile:', err);
         setError(err.message);
       } finally {
         setLoading(false);
@@ -138,23 +138,27 @@ export default function ProfilePage() {
   }, [isLoaded, userId]);
 
   const handleUpdateProfile = async (section: string, data: any) => {
-    if (!userId) {
-      console.error('User is not authenticated');
+    if (!userId || isUpdating.current) {
       return;
     }
 
-    const payload = section === 'experiences' ? { experiences: data } : { [section]: data };
+    // Check if the data has actually changed before making an API call
+    if (JSON.stringify(profileData?.[section]) === JSON.stringify(data)) {
+      return;
+    }
 
-    console.log('Payload being sent to backend:', payload);
+    isUpdating.current = true;
+
+    const payload = section === 'experiences' ? { experiences: data } : { [section]: data };
 
     try {
       const response = await fetch(`/api/profile`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
-          'X-User-Id': userId, // Pass userId in the header
+          'X-User-Id': userId, 
         },
-        body: JSON.stringify(payload), // Send corrected payload
+        body: JSON.stringify(payload),
       });
 
       if (!response.ok) {
@@ -162,7 +166,6 @@ export default function ProfilePage() {
       }
 
       const updatedProfile = await response.json();
-      console.log('Updated profile from backend:', updatedProfile);
 
       setProfileData((prevProfile) => ({
         ...prevProfile,
@@ -170,15 +173,13 @@ export default function ProfilePage() {
       }));
     } catch (err: any) {
       console.error('Error updating profile:', err);
+    } finally {
+      isUpdating.current = false;
     }
   };
 
   if (loading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        Loading...
-      </div>
-    );
+    return <div className="flex items-center justify-center min-h-screen">Loading...</div>;
   }
 
   if (error) {
@@ -196,8 +197,7 @@ export default function ProfilePage() {
   if (!profileData) return null;
 
   const ActiveSection = sections.find((section) => section.id === activeSection);
-  const sectionInfo = sections.map(({ id, label }) => ({ id, label }));
-
+  
   return (
     <div className="min-h-screen bg-background">
       <div className="flex flex-col lg:flex-row pt-16">
@@ -210,10 +210,7 @@ export default function ProfilePage() {
               <SectionNavigation
                 sections={sections}
                 activeSection={activeSection}
-                onSectionChange={(section) => {
-                  //console.log('Active section changed to:', section);
-                  setActiveSection(section);
-                }}
+                onSectionChange={(section) => setActiveSection(section)}
               />
 
               <div className="flex-1 bg-white rounded-lg p-6 shadow-sm">
