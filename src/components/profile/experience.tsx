@@ -234,20 +234,24 @@ export default function ExperienceSection({ data, onUpdate }: ExperienceProps) {
 
   return (
     <div className="space-y-8">
-      <div className="bg-white shadow-sm rounded-lg p-5 border-b-2 border-gray-300 flex justify-between items-center">
-        <div>
+      <div className="bg-white shadow-sm rounded-lg p-5 border-b-2 border-gray-300 
+        flex flex-col sm:flex-row 
+        justify-between 
+        items-start sm:items-center 
+        gap-4 sm:gap-0">
+        <div className="flex-grow">
           <h2 className="text-2xl font-bold">Experience</h2>
           <p className="text-muted-foreground text-sm">
             Outline your professional experience to help employers understand your background.
           </p>
         </div>
-        <div className="flex items-center gap-4">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 w-full sm:w-auto">
           {!isEditing ? (
-            <Button onClick={() => setIsEditing(true)} variant="default" className="flex items-center gap-2">
+            <Button onClick={() => setIsEditing(true)} variant="default" className="w-full sm:w-auto">
               Edit
             </Button>
           ) : (
-            <>
+            <div className="flex flex-col sm:flex-row gap-4 w-full">
               <Button
                 onClick={() => {
                   setIsEditing(false);
@@ -255,7 +259,7 @@ export default function ExperienceSection({ data, onUpdate }: ExperienceProps) {
                   setErrors({});
                 }}
                 variant="destructive"
-                className="flex items-center gap-2"
+                className="flex items-center gap-2 w-full sm:w-auto"
               >
                 <X className="h-4 w-4" />
                 Cancel
@@ -263,7 +267,7 @@ export default function ExperienceSection({ data, onUpdate }: ExperienceProps) {
               <Button
                 onClick={() => setShowAddExperienceForm(true)}
                 variant="outline"
-                className="flex items-center gap-2"
+                className="flex items-center gap-2 w-full sm:w-auto"
               >
                 <Plus className="h-4 w-4" />
                 Add Experience
@@ -287,11 +291,11 @@ export default function ExperienceSection({ data, onUpdate }: ExperienceProps) {
                     }
                   }
                 }}
-                className="bg-blue-500 hover:bg-blue-600 text-white"
+                className="bg-blue-500 hover:bg-blue-600 text-white w-full sm:w-auto"
               >
                 Save All
               </Button>
-            </>
+            </div>
           )}
         </div>
       </div>

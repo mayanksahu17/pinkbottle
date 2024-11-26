@@ -15,7 +15,7 @@ export default function ChangePhotoButton({
   disabled,
 }: ChangePhotoButtonProps) {
   const handleButtonClick = () => {
-    console.log("ChangePhotoButton clicked! Waiting for upload...");
+   // console.log("ChangePhotoButton clicked! Waiting for upload...");
   };
 
   return (
@@ -41,7 +41,7 @@ export default function ChangePhotoButton({
           }}
           content={{
             button({ ready }) {
-              console.log("Button is rendering, ready state:", ready); // Debug log
+             // console.log("Button is rendering, ready state:", ready); // Debug log
               return (
                 <>
                   <Camera className="w-3 h-3 mr-1" />

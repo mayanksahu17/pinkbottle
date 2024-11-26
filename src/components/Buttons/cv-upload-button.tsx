@@ -11,7 +11,7 @@ export default function CVButton({ onClientUploadComplete, onUploadError }: CVBu
     <UploadButton
       endpoint="cvUploader"
       onClientUploadComplete={(res) => {
-        console.log("Files: ", res);
+       // console.log("Files: ", res);
         alert("CV Uploaded");
         if (onClientUploadComplete) onClientUploadComplete(res);
       }}

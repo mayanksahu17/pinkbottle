@@ -109,7 +109,7 @@ export default function ProfilePage() {
     const fetchProfile = async () => {
       setLoading(true);
       try {
-        console.log('Fetching profile for userId:', userId);
+      //  console.log('Fetching profile for userId:', userId);
         const response = await fetch(`/api/profile`, {
           method: 'GET',
           headers: { 'X-User-Id': userId }, // Pass userId in headers
@@ -211,7 +211,7 @@ export default function ProfilePage() {
                 sections={sections}
                 activeSection={activeSection}
                 onSectionChange={(section) => {
-                  console.log('Active section changed to:', section);
+                  //console.log('Active section changed to:', section);
                   setActiveSection(section);
                 }}
               />
