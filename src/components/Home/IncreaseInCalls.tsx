@@ -25,8 +25,8 @@ const resultHome = () => {
             {/* <h1 className="md:text-xl text-xl lg:text-5xl font-bold text-center text-black relative z-20 mt-10">
             
             </h1> */}
-            <h1 className="relative z-10 text-lg md:text-7xl pt-11  bg-clip-text text-transparent bg-gradient-to-b from-neutral-100 to-neutral-800  text-center font-sans font-bold">
-            <Cover>91% Increase</Cover> in Calls with HiredEasy
+            <h1 className="relative z-10 text-lg md:text-7xl pt-11 from-neutral-100 to-neutral-800  text-center font-sans font-bold">
+            <Cover>91% Increase in Calls with HiredEasy </Cover>
         </h1>
             <div className="w-[4rem] h-4 relative">
               
@@ -52,10 +52,11 @@ const resultHome = () => {
           <div className="hidden md:grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {/* Aadvik */}
             <div className="text-center">
-              <h3 className="text-white font-bold text-lg">Aadvik</h3>
-              <p className="text-white font-semibold">Student to Full-time</p>
-              <p className="text-white mb-4">
-                Aadvik received offer letter from FAANG and ready for next round
+              <h3 className="dark:text-white font-bold text-lg text-green-600 ">Aadvik</h3>
+              <p className="dark:text-white font-semibold">Student to Full-time</p>
+              <p className="dark:text-white mb-4">
+                Aadvik received offer letter from FAANG <br/>
+                and ready for next round
                 at Spotify{' '}
               </p>
               <img
@@ -67,9 +68,9 @@ const resultHome = () => {
 
             {/* Surabhi */}
             <div className="text-center">
-              <h3 className="text-white font-bold text-lg">Sadia</h3>
-              <p className="text-white font-semibold">Interview with Wex</p>
-              <p className="text-white mb-4">
+              <h3 className="dark:text-white text-green-600 font-bold text-lg">Sadia</h3>
+              <p className="dark:text-white font-semibold">Interview with Wex</p>
+              <p className="dark:text-white mb-4">
                 Sadia received Interview from Wex
               </p>
               <img
@@ -274,62 +275,42 @@ const resultHome = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mt-10">
             <div>
               <BackgroundGradient className="rounded-[22px] max-w-sm p-4 sm:p-10 bg-white dark:bg-zinc-900">
-                <p className="text-base sm:text-xl text-black mt-4 mb-2 dark:text-neutral-200">
-                  Air Jordan 4 Retro Reimagined
+                <p className="text-base sm:text-[2.5rem] font-bold text-black mt-4 mb-2 dark:text-neutral-200">
+                1300+
                 </p>
-
+                <h2 className='font-semibold'>
+                Landed Full-Time Roles
+                </h2>
                 <p className="text-sm text-neutral-600 dark:text-neutral-400">
-                  The Air Jordan 4 Retro Reimagined Bred will release on
-                  Saturday, February 17, 2024. Your best opportunity to get
-                  these right now is by entering raffles and waiting for the
-                  official releases.
+                Our clients achieve remarkable results, with 72% securing full-time positions in USA. Impressively, 47% of these roles are obtained through our strategic applications, while the remaining 44% come from leveraging personal networks and individual efforts.
                 </p>
-                <button className="rounded-full pl-4 pr-1 py-1 text-white flex items-center space-x-1 bg-black mt-4 text-xs font-bold dark:bg-zinc-800">
-                  <span>Buy now </span>
-                  <span className="bg-zinc-700 rounded-full text-[0.6rem] px-2 py-0 text-white">
-                    $100
-                  </span>
-                </button>
               </BackgroundGradient>
             </div>
             <div>
               <BackgroundGradient className="rounded-[22px] max-w-sm p-4 sm:p-10 bg-white dark:bg-zinc-900">
-                <p className="text-base sm:text-xl text-black mt-4 mb-2 dark:text-neutral-200">
-                  Air Jordan 4 Retro Reimagined
+                <p className="text-base sm:text-[2.5rem] font-bold text-black mt-4 mb-2 dark:text-neutral-200">
+                  80x
                 </p>
-
+                <h2 className='font-semibold'>
+                Less time spent in job search
+                </h2>
                 <p className="text-sm text-neutral-600 dark:text-neutral-400">
-                  The Air Jordan 4 Retro Reimagined Bred will release on
-                  Saturday, February 17, 2024. Your best opportunity to get
-                  these right now is by entering raffles and waiting for the
-                  official releases.
+                  Our clients achieve remarkable results, with 72% securing full-time positions in just three months. Impressively, 47% of these roles are obtained through our strategic applications, while the remaining 44% come from leveraging personal networks and individual efforts.
                 </p>
-                <button className="rounded-full pl-4 pr-1 py-1 text-white flex items-center space-x-1 bg-black mt-4 text-xs font-bold dark:bg-zinc-800">
-                  <span>Buy now </span>
-                  <span className="bg-zinc-700 rounded-full text-[0.6rem] px-2 py-0 text-white">
-                    $100
-                  </span>
-                </button>
               </BackgroundGradient>
             </div>
             <div>
               <BackgroundGradient className="rounded-[22px] max-w-sm p-4 sm:p-10 bg-white dark:bg-zinc-900">
-                <p className="text-base sm:text-xl text-black mt-4 mb-2 dark:text-neutral-200">
-                  Air Jordan 4 Retro Reimagined
+                <p className="text-base sm:text-[2.5rem] font-bold text-black mt-4 mb-2 dark:text-neutral-200">
+                  600x
                 </p>
+                <h2 className='font-semibold'>
+                Return on Investment
+                </h2>
 
                 <p className="text-sm text-neutral-600 dark:text-neutral-400">
-                  The Air Jordan 4 Retro Reimagined Bred will release on
-                  Saturday, February 17, 2024. Your best opportunity to get
-                  these right now is by entering raffles and waiting for the
-                  official releases.
+                By cutting weeks off the job search, we help clients gain an extra $20K in earnings. Additionally, receiving multiple offers can boost salaries by an average of $30K, leading to a substantial increase in overall compensation.
                 </p>
-                <button className="rounded-full pl-4 pr-1 py-1 text-white flex items-center space-x-1 bg-black mt-4 text-xs font-bold dark:bg-zinc-800">
-                  <span>Buy now </span>
-                  <span className="bg-zinc-700 rounded-full text-[0.6rem] px-2 py-0 text-white">
-                    $100
-                  </span>
-                </button>
               </BackgroundGradient>
             </div>
           </div>
