@@ -52,14 +52,14 @@ const Testimonial = () => {
                   />
                   <div className="flex items-center">
                     <img
-                      className="w-16 h-16 rounded-full border-4 border-blue-500 mr-4"
+                      className="w-16 h-16 rounded-full object-cover mr-4"
                       src={testimonial.image}
                       alt={testimonial.name}
                       loading="lazy"
                     />
                     <div>
-                      <h3 className="text-gray-800 text-2xl font-semibold font-calibri">{testimonial.name}</h3>
-                      <p className="text-base text-green-600 font-medium font-calibri">{testimonial.role}</p>
+                      <h3 className="text-gray-800 text-xl font-semibold font-calibri">{testimonial.name}</h3>
+                      <p className="text-sm text-green-600 font-medium font-calibri">{testimonial.role}</p>
                     </div>
                   </div>
                 </div>
