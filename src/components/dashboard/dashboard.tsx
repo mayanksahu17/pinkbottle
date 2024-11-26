@@ -9,7 +9,6 @@ import DashboardMain from './dashboard-main';
 import Warmup from '../Interview/warmup';
 import JobsMain from '../jobs/jobs-main';
 import { RxHamburgerMenu } from 'react-icons/rx';
-import { useToast } from "@/components/ui/use-toast";
 import { useAuth } from '@clerk/nextjs';
 import ProfilePage from '@/app/profile/page';
 
@@ -18,19 +17,13 @@ export default function DashboardPage() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  const { toast } = useToast();
   const { isLoaded, userId, sessionId, getToken } = useAuth();
 
   useEffect(() => {
     if (!userId) {
-      console.warn('No user ID provided to DashboardPage');
-      toast({
-        title: "Warning",
-        description: "User ID is missing. Some features may be limited.",
-        variant: "destructive",
-      });
+      console.warn('No user ID provided to DashboardPage')
     }
-  }, [userId, toast]);
+  }, [userId]);
 
   // Prevent background scrolling when sidebar is open
   useEffect(() => {
@@ -48,11 +41,6 @@ export default function DashboardPage() {
       setSidebarOpen(false);
     } catch (error) {
       console.error('Error while changing tab:', error);
-      toast({
-        title: "Error",
-        description: "Failed to change tab.",
-        variant: "destructive",
-      });
     } finally {
       setIsLoading(false);
     }

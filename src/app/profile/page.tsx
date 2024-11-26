@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { useToast } from '@/components/ui/use-toast';
 import { AlertCircle } from 'lucide-react';
 import PersonalInfo from '../../components/profile/personal-info';
 import RolesSkills from '../../components/profile/roles-skills';
@@ -96,7 +95,6 @@ export default function ProfilePage() {
   const [currentTab, setCurrentTab] = useState('profile');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const { toast } = useToast();
 
   // Use useAuth hook to get authentication data
   const { isLoaded, userId, sessionId, getToken } = useAuth();
@@ -114,11 +112,11 @@ export default function ProfilePage() {
         console.log('Fetching profile for userId:', userId);
         const response = await fetch(`/api/profile`, {
           method: 'GET',
-          headers: { 'X-User-Id': userId }// Pass userId in headers
+          headers: { 'X-User-Id': userId }, // Pass userId in headers
         });
 
         if (!response.ok) {
-          const errorText = await response.text(); 
+          const errorText = await response.text();
           throw new Error(`Failed to update profile: ${response.statusText}. ${errorText}`);
         }
 
@@ -131,33 +129,24 @@ export default function ProfilePage() {
       } catch (err: any) {
         console.error('Error fetching profile:', err);
         setError(err.message);
-        toast({
-          title: 'Error',
-          description: 'Failed to load profile data',
-          variant: 'destructive',
-        });
       } finally {
         setLoading(false);
       }
     };
 
     fetchProfile();
-  }, [isLoaded, userId, toast]); 
+  }, [isLoaded, userId]);
 
   const handleUpdateProfile = async (section: string, data: any) => {
     if (!userId) {
-      toast({
-        title: 'Error',
-        description: 'User is not authenticated',
-        variant: 'destructive',
-      });
+      console.error('User is not authenticated');
       return;
     }
-  
-    const payload = section === "experiences" ? { experiences: data } : { [section]: data };
-  
-    console.log("Payload being sent to backend:", payload);
-  
+
+    const payload = section === 'experiences' ? { experiences: data } : { [section]: data };
+
+    console.log('Payload being sent to backend:', payload);
+
     try {
       const response = await fetch(`/api/profile`, {
         method: 'PATCH',
@@ -167,33 +156,23 @@ export default function ProfilePage() {
         },
         body: JSON.stringify(payload), // Send corrected payload
       });
-  
+
       if (!response.ok) {
         throw new Error(`Failed to update profile: ${response.statusText}`);
       }
-  
+
       const updatedProfile = await response.json();
-      console.log("Updated profile from backend:", updatedProfile);
-  
+      console.log('Updated profile from backend:', updatedProfile);
+
       setProfileData((prevProfile) => ({
         ...prevProfile,
-        [section]: updatedProfile.profiles[0][section], 
+        [section]: updatedProfile.profiles[0][section],
       }));
-  
-      toast({
-        title: 'Success',
-        description: 'Profile updated successfully',
-      });
     } catch (err: any) {
       console.error('Error updating profile:', err);
-      toast({
-        title: 'Error',
-        description: err.message || 'Failed to update profile',
-        variant: 'destructive',
-      });
     }
   };
-    
+
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
@@ -216,16 +195,12 @@ export default function ProfilePage() {
 
   if (!profileData) return null;
 
-  const ActiveSection = sections.find(
-    (section) => section.id === activeSection
-  );
+  const ActiveSection = sections.find((section) => section.id === activeSection);
   const sectionInfo = sections.map(({ id, label }) => ({ id, label }));
 
   return (
     <div className="min-h-screen bg-background">
-
       <div className="flex flex-col lg:flex-row pt-16">
-
         <div className="flex-1 flex flex-col min-h-screen">
           <div className="p-6">
             <h1 className="text-2xl font-bold mb-2">Profile</h1>
@@ -238,16 +213,15 @@ export default function ProfilePage() {
                 onSectionChange={(section) => {
                   console.log('Active section changed to:', section);
                   setActiveSection(section);
-                } }/>
+                }}
+              />
 
               <div className="flex-1 bg-white rounded-lg p-6 shadow-sm">
                 {ActiveSection && (
                   <ActiveSection.Component
                     id={ActiveSection.id}
                     data={profileData[ActiveSection.id as keyof ProfileData]}
-                    onUpdate={(data: any) =>
-                      handleUpdateProfile(ActiveSection.id, data)
-                    }
+                    onUpdate={(data: any) => handleUpdateProfile(ActiveSection.id, data)}
                   />
                 )}
               </div>
