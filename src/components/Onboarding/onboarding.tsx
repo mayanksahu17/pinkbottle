@@ -9,6 +9,7 @@ import Navbar from '../navbar/navbar';
 import Banner from './FullPageImage';
 import Modal from './Call'; // Import the modal component
 import Footer from "../footer/footer"
+import  ParallaxBanner  from "./Scroll";
 
 export function Onboarding() {
 
@@ -337,7 +338,8 @@ export function Onboarding() {
                 )}
               </div>
             </div>
-            <Banner />
+            {/* <Banner /> */}
+            <ParallaxBanner/>
           </form>
         </div>
       </div>

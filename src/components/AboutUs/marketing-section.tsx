@@ -82,10 +82,10 @@ export default function MarketingSection() {
           </div>
 
           {/* CTA Button */}
-          <div className="flex items-center justify-center md:justify-end w-full md:w-auto mt-8 md:mt-0">
+          <div className="flex items-center justify-end md:justify-end w-full md:w-auto mt-8 md:mt-0">
             <Link 
               href="http://localhost:3000/pricing"
-              className="inline-block bg-[#40E0D0] hover:bg-[#3CC8BA] text-black font-semibold px-8 py-4 rounded-lg transition-colors duration-200 text-lg"
+              className="inline-block bg-[#40E0D0]  hover:bg-[#3CC8BA] text-black font-semibold px-8 py-4 rounded-lg transition-colors duration-200 text-lg"
             >
               Book a demo →
             </Link>
