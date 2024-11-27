@@ -23,7 +23,6 @@ function Sidebar({
   sidebarOpen,
   className,
 }: SidebarProps) {
-
   const navigationItems = [
     {
       id: 'dashboard',
@@ -33,18 +32,19 @@ function Sidebar({
       onClick: () => {
         setCurrentTab('dashboard');
         setSidebarOpen(false);
-      }
+      },
     },
     {
       id: 'call',
       label: 'Call with Founders',
       icon: <FaCalendarAlt className="text-xl mr-2" />,
-      requiresPaid: false,
+      requiresPaid: true,
       onClick: () => {
-        // Navigate to external link (unchanged)
-        window.open('https://apply.neetocal.com/meeting-with-nikhil-jain', '_blank');
-        setSidebarOpen(false);
-      }
+        if (isPaidUser) {
+          window.open('https://apply.neetocal.com/meeting-with-nikhil-jain', '_blank');
+          setSidebarOpen(false);
+        }
+      },
     },
     {
       id: 'interview',
@@ -54,7 +54,7 @@ function Sidebar({
       onClick: () => {
         setCurrentTab('interview');
         setSidebarOpen(false);
-      }
+      },
     },
     {
       id: 'jobs',
@@ -62,9 +62,11 @@ function Sidebar({
       icon: <FaBriefcase className="text-xl mr-2" />,
       requiresPaid: true,
       onClick: () => {
-        setCurrentTab('jobs');
-        setSidebarOpen(false);
-      }
+        if (isPaidUser) {
+          setCurrentTab('jobs');
+          setSidebarOpen(false);
+        }
+      },
     },
     {
       id: 'profile',
@@ -72,10 +74,12 @@ function Sidebar({
       icon: <FaFileAlt className="text-xl mr-2" />,
       requiresPaid: true,
       onClick: () => {
-        setCurrentTab('profile');  // Directly set profile tab as current
-        setSidebarOpen(false);
-      }
-    }
+        if (isPaidUser) {
+          setCurrentTab('profile');
+          setSidebarOpen(false);
+        }
+      },
+    },
   ];
 
   return (
@@ -103,7 +107,12 @@ function Sidebar({
 
         <Button
           className="flex items-center justify-center text-base font-medium text-black rounded-lg py-2.5 border border-gray-300 hover:bg-gray-100 transition-all duration-300"
-          onClick={() => window.open('https://chromewebstore.google.com/detail/hiredeasy/lklnlahilalmcnhgdkghjkcjiokggnkp', '_blank')}
+          onClick={() =>
+            window.open(
+              'https://chromewebstore.google.com/detail/hiredeasy/lklnlahilalmcnhgdkghjkcjiokggnkp',
+              '_blank'
+            )
+          }
         >
           <AiOutlineChrome className="text-xl mr-2" />
           Add to Chrome

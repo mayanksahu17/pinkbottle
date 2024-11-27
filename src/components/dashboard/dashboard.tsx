@@ -1,6 +1,5 @@
 'use client';
 
-import { Button } from '@/components/ui/button';
 import React, { useState, useEffect } from 'react';
 import Navbar from '../navbar/navbar';
 import Footer from '../footer/footer';
@@ -8,24 +7,44 @@ import Sidebar from '../SideBar/sideBar';
 import DashboardMain from './dashboard-main';
 import Warmup from '../Interview/warmup';
 import JobsMain from '../jobs/jobs-main';
+import ProfilePage from '@/app/profile/page';
 import { RxHamburgerMenu } from 'react-icons/rx';
 import { useAuth } from '@clerk/nextjs';
-import ProfilePage from '@/app/profile/page';
 
 export default function DashboardPage() {
   const [currentTab, setCurrentTab] = useState('dashboard');
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [isPaidUser, setIsPaidUser] = useState(false); // Paid user state
 
   const { isLoaded, userId, sessionId, getToken } = useAuth();
 
   useEffect(() => {
     if (!userId) {
-      console.warn('No user ID provided to DashboardPage')
+      console.warn('No user ID provided to DashboardPage');
+      return;
     }
-  }, [userId]);
 
-  // Prevent background scrolling when sidebar is open
+    const fetchPaymentStatus = async () => {
+      try {
+        const token = await getToken();
+        const response = await fetch('/api/checkPaid', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'X-User-Id': userId,
+          },
+        });
+
+        const data = await response.json();
+        setIsPaidUser(data.paidstatus === 'Paid'); // Update paid status
+      } catch (error) {
+        console.error('Failed to fetch payment status:', error);
+      }
+    };
+
+    fetchPaymentStatus();
+  }, [userId, getToken]);
+
   useEffect(() => {
     if (sidebarOpen) {
       document.body.style.overflow = 'hidden';
@@ -81,7 +100,7 @@ export default function DashboardPage() {
             currentTab={currentTab}
             setCurrentTab={handleTabChange}
             setSidebarOpen={setSidebarOpen}
-            isPaidUser={true} // Use actual paid user logic
+            isPaidUser={isPaidUser} // Use paid user state
             sidebarOpen={sidebarOpen}
             className="h-full"
           />
@@ -97,7 +116,7 @@ export default function DashboardPage() {
 
           <div className="flex-1 overflow-y-auto">
             <div className="p-4 md:p-6 lg:p-8 max-w-7xl mx-auto">
-              {currentTab === 'dashboard' && <DashboardMain isPaidUser={false} />}
+              {currentTab === 'dashboard' && <DashboardMain isPaidUser={isPaidUser} />}
               {currentTab === 'profile' && <ProfilePage />}
               {currentTab === 'jobs' && <JobsMain />}
               {currentTab === 'interview' && <Warmup />}
