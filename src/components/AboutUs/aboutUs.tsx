@@ -6,6 +6,7 @@ import { Metadata } from 'next';
 import { InfiniteMovingCardsDemo } from '../Home/InfiniteMovingCardsDemo';
 import { FlipWords } from '../ui/flip-words'
 import  Head from './head';
+import  MarketingSection  from './marketing-section';
 
 
 export const metadata: Metadata = {
@@ -217,7 +218,7 @@ const Aboutus = () => {
           </div>
         </section>
       </main>
-      
+      <MarketingSection/>
       <InfiniteMovingCardsDemo/>
       <Footer />
     </div>
