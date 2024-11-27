@@ -95,7 +95,7 @@ export default function ParallaxBanner() {
       </div>
 
       {/* Gradient Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-t from-white/10 to-transparent pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-t from-white/40 to-transparent pointer-events-none" />
     </div>
   )
 }

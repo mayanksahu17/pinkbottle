@@ -9,6 +9,8 @@ import { Metadata } from 'next';
 import CostTimeline from './cost-timeline';
 import { Perspective } from './perspective';
 import { AnimatedTooltip } from "../ui/animated-tooltip";
+import { FloatingNav } from '../ui/floating-navbar';
+import { FloatingNavDemo } from '../navbar/floatingNavbar';
 
 
 const people = [
@@ -222,6 +224,7 @@ const PricingUser = () => {
   return (
     <div className="min-h-screen text-black" style={{ backgroundColor: '#FAF6F6', paddingTop: '4rem' }}>
       <Navbar />
+      <FloatingNavDemo/>
       <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
         <h2 className="text-3xl font-extrabold text-center mb-10 flex items-center justify-center">
           <span>Pricing Plans</span>

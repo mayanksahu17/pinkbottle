@@ -122,39 +122,39 @@ const Navbar = () => {
         <div className="hidden md:flex md:items-center md:justify-between md:flex-grow">
           {/* Desktop Menu Links */}
           <nav className="hidden md:flex md:items-center md:justify-center md:flex-grow">
-            <Link href="/about" passHref>
+            {/* <Link href="/about" passHref>
               <span className="text-sm font-medium text-gray-500 hover:text-green-600 cursor-pointer mx-2">
                 About Us
               </span>
-            </Link>
+            </Link> */}
             {/* <Link href="/works" passHref>
               <span className="text-sm font-medium text-gray-500 hover:text-green-600 cursor-pointer mx-2">
                 How it works
               </span>
             </Link> */}
-              <Link href="/Wall" passHref>
+              {/* <Link href="/Wall" passHref>
               <span className="text-sm font-medium text-gray-500 hover:text-green-600 cursor-pointer mx-2">
                 Wall of Love
               </span>
-            </Link> 
-            <Link href="/pricing" passHref>
+            </Link>  */}
+            {/* <Link href="/pricing" passHref>
               <span className="text-sm font-medium text-gray-500 hover:text-green-600 cursor-pointer mx-2">
                 Pricing
               </span>
-            </Link>
+            </Link> */}
             {/* <Link href="/career" passHref>
               <span className="text-sm font-medium text-gray-500 hover:text-green-600 cursor-pointer mx-2">
                 Career
               </span>
             </Link> */}
-            <Link href="#" passHref>
+            {/* <Link href="#" passHref>
               <span className="text-sm bg-green-600 text-white py-2 px-4 rounded-full hover:bg-green-700 cursor-not-allowed relative group mx-2">
                 Try the Copilot Free
                 <span className="absolute left-1/2 transform -translate-x-1/2 top-full mt-2 w-max bg-gray-800 text-white text-xs rounded-md px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
                   Coming Soon.
                 </span>
               </span>
-            </Link>
+            </Link> */}
           </nav>
           <div>
             {user ? (

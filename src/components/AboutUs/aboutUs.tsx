@@ -7,6 +7,7 @@ import { InfiniteMovingCardsDemo } from '../Home/InfiniteMovingCardsDemo';
 import { FlipWords } from '../ui/flip-words'
 import  Head from './head';
 import  MarketingSection  from './marketing-section';
+import { FloatingNavDemo } from '../navbar/floatingNavbar';
 
 
 export const metadata: Metadata = {
@@ -83,6 +84,7 @@ const Aboutus = () => {
       style={{ backgroundColor: '#FAF6F6'}}
     >
       <Navbar />
+      <FloatingNavDemo/>
       <head>
         <script
           type="application/ld+json"
