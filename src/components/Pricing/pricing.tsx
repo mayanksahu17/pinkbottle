@@ -223,84 +223,77 @@ const PricingUser = () => {
 
   return (
     <div className="min-h-screen text-black" style={{ backgroundColor: '#FAF6F6', paddingTop: '4rem' }}>
-      <Navbar />
-      <FloatingNavDemo/>
-      <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
-        <h2 className="text-3xl font-extrabold text-center mb-10 flex items-center justify-center">
-          <span>Pricing Plans</span>
-          <div className="flex items-center ml-4">
-            <AnimatedTooltip items={people} />
-          </div>
-        </h2>
-        <div className="mt-6 grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
-          {plans.map((plan) => (
-            <div
-              key={plan.name}
-              className={`border ${
-                plan.name === 'Ultimate Bundle' ? 'border-[#4a4a4a] bg-[#1a1a1a]' : 'border-gray-200 bg-white'
-              } shadow-lg rounded-lg p-6 hover:shadow-xl transition-all duration-300 ease-in-out relative overflow-hidden group`}
-            >
-              <div className={`absolute inset-0 ${
-                plan.name === 'Ultimate Bundle' ? 'bg-gradient-to-r from-purple-600 to-pink-600' : 'bg-gradient-to-r from-blue-400 to-indigo-500'
-              } opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-0`}></div>
-              <div className="relative z-10">
-                <div className="flex justify-between items-center">
-                  <h3 className={`text-lg leading-6 font-medium ${plan.name === 'Ultimate Bundle' ? 'text-white' : 'text-gray-900'}`}>
-                    {plan.name}
-                  </h3>
-                  {plan.savings && (
-                    <span className="text-sm font-semibold text-green-400">
-                      Save ${plan.savings}
-                    </span>
-                  )}
-                </div>
-                <div className="flex items-baseline mt-4">
-                  <p className={`text-4xl font-extrabold ${plan.name === 'Ultimate Bundle' ? 'text-white' : 'text-gray-900'} mr-2`}>
-                    ${plan.price}
-                  </p>
-                  {plan.originalPrice && (
-                    <p className="text-lg text-gray-400 line-through">
-                      ${plan.originalPrice}
-                    </p>
-                  )}
-                </div>
-                <ul className="mt-6 space-y-4 text-sm">
-                  {plan.features.map((feature, index) => (
-                    <li key={index} className={`flex items-center ${plan.name === 'Ultimate Bundle' ? 'text-gray-300' : 'text-gray-700'}`}>
-                      {feature.enabled ? (
-                        <>
-                          <span className="text-green-400 mr-2">✓</span>
-                          {feature.name}
-                        </>
-                      ) : (
-                        <>
-                          <span className="text-red-400 mr-2">✕</span>
-                          {feature.name}
-                        </>
-                      )}
-                    </li>
-                  ))}
-                </ul>
-                <button
-                  onClick={() => handleStripeCheckout({ id: userId, checkOutDetails: plan })}
-                  className={`mt-8 w-full ${
-                    plan.name === 'Ultimate Bundle'
-                      ? 'text-black font-bold py-3 px-6 rounded-lg border border-transparent bg-gradient-to-r from-purple-400 to-pink-500'
-                      : 'text-white font-bold py-3 px-6 rounded-lg border border-transparent bg-gradient-to-r from-blue-500 to-indigo-600'
-                  } shadow-sm transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-blue-500`}
-                >
-                  Get Started
-                </button>
-              </div>
-            </div>
-          ))}
+    <Navbar />
+    <FloatingNavDemo/>
+    <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+      <h2 className="text-3xl font-extrabold text-center mb-10 flex items-center justify-center">
+        <span>Pricing Plans</span>
+        <div className="flex items-center ml-4">
+          <AnimatedTooltip items={people} />
         </div>
+      </h2>
+      <div className="mt-6 grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
+        {plans.map((plan) => (
+          <div
+            key={plan.name}
+            className={`border ${
+              plan.name === 'Ultimate Bundle' ? 'border-[#4a4a4a] bg-[#1a1a1a]' : 'border-gray-200 bg-white'
+            } shadow-lg rounded-lg p-6`}
+          >
+            <div className="relative z-10">
+              <div className="flex justify-between items-center">
+                <h3 className={`text-lg leading-6 font-medium ${plan.name === 'Ultimate Bundle' ? 'text-white' : 'text-gray-900'}`}>
+                  {plan.name}
+                </h3>
+                {plan.savings && (
+                  <span className="text-sm font-semibold text-green-400">
+                    Save ${plan.savings}
+                  </span>
+                )}
+              </div>
+              <div className="flex items-baseline mt-4">
+                <p className={`text-4xl font-extrabold ${plan.name === 'Ultimate Bundle' ? 'text-white' : 'text-gray-900'} mr-2`}>
+                  ${plan.price}
+                </p>
+                {plan.originalPrice && (
+                  <p className="text-lg text-gray-400 line-through">
+                    ${plan.originalPrice}
+                  </p>
+                )}
+              </div>
+              <ul className="mt-6 space-y-4 text-sm">
+                {plan.features.map((feature, index) => (
+                  <li key={index} className={`flex items-center ${plan.name === 'Ultimate Bundle' ? 'text-gray-300' : 'text-gray-700'}`}>
+                    {feature.enabled ? (
+                      <>
+                        <span className="text-green-400 mr-2">✓</span>
+                        {feature.name}
+                      </>
+                    ) : (
+                      <>
+                        <span className="text-red-400 mr-2">✕</span>
+                        {feature.name}
+                      </>
+                    )}
+                  </li>
+                ))}
+              </ul>
+              <button
+                onClick={() => handleStripeCheckout({ id: userId, checkOutDetails: plan })}
+                className={`mt-6 inline-block w-full text-center text-black font-bold py-3 px-6 rounded-lg border border-transparent bg-[#dedede] shadow-sm`}
+              >
+                Get Started
+              </button>
+            </div>
+          </div>
+        ))}
       </div>
-      <CostTimeline />
-      <Perspective />
-      <Footer />
     </div>
-  );
+    <CostTimeline />
+    <Perspective />
+    <Footer />
+  </div>
+);
 };
 
 export default PricingUser;
