@@ -15,6 +15,8 @@ const myMiddleware = authMiddleware({
     '/api/profile',
     '/api/savedjobs',
     '/Wall',
+    '/api/profile',
+    '/api/ProfileForm',
     '/career',
     '/onboarding',
     '/sitemap.xml',

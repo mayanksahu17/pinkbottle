@@ -38,7 +38,7 @@ function Sidebar({
       id: 'call',
       label: 'Call with Founders',
       icon: <FaCalendarAlt className="text-xl mr-2" />,
-      requiresPaid: true,
+      requiresPaid: false,
       onClick: () => {
         if (isPaidUser) {
           window.open('https://apply.neetocal.com/meeting-with-nikhil-jain', '_blank');

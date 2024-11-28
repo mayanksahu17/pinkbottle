@@ -34,34 +34,16 @@ const DashboardMain = ({ isPaidUser }: { isPaidUser: boolean }) => {
       </div>
 
       {/* Explore Button Section */}
-      <div className="mt-4 sm:mt-6">
-        <Link href="/" className="inline-block w-full sm:w-auto">
-          <Button className="w-full sm:w-auto bg-blue-600 text-white hover:bg-blue-700 shadow-md rounded-lg px-4 sm:px-6 py-2 sm:py-3">
-            Explore Platform
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="ml-2 h-4 w-4 sm:h-5 sm:w-5"
-            >
-              <path d="m9 18 6-6-6-6"></path>
-            </svg>
-          </Button>
-        </Link>
-      </div>
+
 
       {/* Steps Grid */}
       <div className="grid gap-6 mt-6 sm:mt-8">
         {/* Step 1 */}
         <div className="bg-gray-50 p-4 sm:p-6 rounded-lg">
           <div className="flex items-center mb-4">
-            <span className="text-2xl sm:text-3xl font-bold text-blue-600">1</span>
+            <span className="text-2xl sm:text-3xl font-bold text-blue-600">
+              1
+            </span>
             <div className="flex-1 ml-4 border-t-2 border-dashed border-gray-300"></div>
           </div>
           <h2 className="text-lg sm:text-xl font-semibold text-gray-900">
@@ -81,7 +63,9 @@ const DashboardMain = ({ isPaidUser }: { isPaidUser: boolean }) => {
         {/* Step 2 */}
         <div className="bg-gray-50 p-4 sm:p-6 rounded-lg">
           <div className="flex items-center mb-4">
-            <span className="text-2xl sm:text-3xl font-bold text-blue-600">2</span>
+            <span className="text-2xl sm:text-3xl font-bold text-blue-600">
+              2
+            </span>
             <div className="flex-1 ml-4 border-t-2 border-dashed border-gray-300"></div>
           </div>
           <h2 className="text-lg sm:text-xl font-semibold text-gray-900">
@@ -113,20 +97,29 @@ const DashboardMain = ({ isPaidUser }: { isPaidUser: boolean }) => {
         {/* Step 3 */}
         <div className="bg-gray-50 p-4 sm:p-6 rounded-lg">
           <div className="flex items-center mb-4">
-            <span className="text-2xl sm:text-3xl font-bold text-blue-600">3</span>
+            <span className="text-2xl sm:text-3xl font-bold text-blue-600">
+              3
+            </span>
             <div className="flex-1 ml-4 border-t-2 border-dashed border-gray-300"></div>
           </div>
           <h2 className="text-lg sm:text-xl font-semibold text-gray-900">
             Complete Your Profile
           </h2>
           <p className="mt-1 text-sm text-gray-600">
-            Make sure your profile is complete to get the most out of our platform.
+            Make sure your profile is complete to get the most out of our
+            platform.
           </p>
           <Button
             onClick={() => setIsProfileFormOpen(true)}
-            className="mt-4 w-full sm:w-auto bg-blue-600 text-white hover:bg-blue-700 shadow-md rounded-lg px-4 sm:px-6 py-2 sm:py-3"
+            disabled={!isPaidUser}
+            className={`mt-4 w-full sm:w-auto ${
+              !isPaidUser
+                ? 'bg-gray-200 text-gray-500 border-gray-300'
+                : 'bg-blue-600 text-white hover:bg-blue-700'
+            } shadow-md rounded-lg px-4 sm:px-6 py-2 sm:py-3 flex items-center justify-center`}
           >
             Complete Profile
+            {!isPaidUser && <CiLock className="ml-2" />}
           </Button>
         </div>
       </div>
@@ -135,7 +128,7 @@ const DashboardMain = ({ isPaidUser }: { isPaidUser: boolean }) => {
       <FormModal
         isOpen={isProfileFormOpen}
         onClose={() => setIsProfileFormOpen(false)}
-        profileIndex={profileIndex}  // Ensure correct profileIndex is passed to the modal
+        profileIndex={profileIndex} // Ensure correct profileIndex is passed to the modal
       />
     </main>
   );
