@@ -177,7 +177,7 @@ export default function FrontMain() {
               <button className="relative flex items-center justify-center gap-2 px-4 py-1.5 text-sm md:text-base font-medium text-primary-foreground bg-white rounded-full hover:bg-gray-100 transition-all shadow-md border border-gray-300 w-full md:w-auto group">
                 <span className="rounded-full bg-white p-1.5">
                   <img
-                    src="/placeholder.svg?height=20&width=20"
+                    src="/Ashwin_jain.png"
                     alt="Profile"
                     className="h-5 w-5 rounded-full"
                     width={20}
