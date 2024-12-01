@@ -1,186 +1,112 @@
 'use client';
+
 import { UserButton, useUser } from '@clerk/nextjs';
 import Link from 'next/link';
 import React, { useState } from 'react';
+import { Menu, X } from 'lucide-react';
+
+const NavLink = ({ href, children }: { href: string; children: React.ReactNode }) => (
+  <Link href={href} passHref>
+    <span className="text-sm font-medium text-gray-700 hover:text-green-500 cursor-pointer">
+      {children}
+    </span>
+  </Link>
+);
 
 const Navbar = () => {
   const { isSignedIn, user } = useUser();
-
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const toggleMenu = () => {
-    setIsMenuOpen((prev) => !prev);
-  };
+  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
   return (
-    <header className="top-0 left-0 w-full bg-green-50 z-50 fixed">
-      <div className="flex items-center justify-between p-2 border-b border-gray-200">
-        <Link href="/">
-          <img
-            alt="Your Logo"
-            className="cursor-pointer h-10 md:h-12 transform scale-125 ml-4 md:ml-6"
-            src="/Hiredeasy.png"
-            style={{ transform: 'scale(2.1)' }}
-          />
-        </Link>
+    <header className="fixed top-2 left-0 right-0 z-50 px-4">
+      <div className="max-w-2xl mx-auto">
+        <div className="flex items-center justify-between p-2 bg-green-400 border border-gray-200 rounded-full shadow-lg">
+          <Link href="/">
+            <img
+              alt="Hiredeasy Logo"
+              className="h-9 w-auto cursor-pointer"
+              src="/Hiredeasy.png"
+            />
+          </Link>
 
-        {/* Hamburger Icon for Mobile */}
-        <button
-          className="md:hidden text-gray-600 focus:outline-none"
-          onClick={toggleMenu}
-        >
-          <svg
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            className="w-6 h-6"
+          {/* Mobile menu button */}
+          <button
+            onClick={toggleMenu}
+            className="md:hidden text-gray-500 hover:text-gray-600 focus:outline-none focus:text-gray-600"
           >
-            {isMenuOpen ? (
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M6 18L18 6M6 6l12 12"
-              />
-            ) : (
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M4 6h16M4 12h16m-7 6h7"
-              />
-            )}
-          </svg>
-        </button>
+            {isMenuOpen ? <X size={20} /> : <Menu size={20} />}
+          </button>
 
-        {/* Mobile Menu Items */}
-        <div
-          className={`fixed inset-x-0 top-16 z-10 bg-white p-4 transform transition-transform duration-300 ease-in-out ${
-            isMenuOpen ? 'block' : 'hidden'
-          } md:hidden`}
-        >
-          <nav className="flex flex-col space-y-2 bg-white p-4">
-            <Link href="/about" passHref>
-              <span className="text-sm font-medium text-gray-700 hover:text-green-500 cursor-pointer block py-2">
-                About Us
-              </span>
-            </Link>
-            {/* <Link href="/works" passHref>
-              <span className="text-sm font-medium text-gray-700 hover:text-green-500 cursor-pointer block py-2">
-                How it works
-              </span>
-            </Link> */}
-            <Link href="/Wall" passHref>
-              <span className="text-sm font-medium text-gray-700 hover:text-green-500 cursor-pointer block py-2">
-                Wall of Love
-              </span>
-            </Link> 
-            <Link href="/pricing" passHref>
-              <span className="text-sm font-medium text-gray-700 hover:text-green-500 cursor-pointer block py-2">
-                Pricing
-              </span>
-            </Link>
-            {/* <Link href="/career" passHref>
-              <span className="text-sm font-medium text-gray-700 hover:text-green-500 cursor-pointer block py-2">
-                Career
-              </span>
-            </Link> */}
+          {/* Desktop Navigation */}
+          <nav className="hidden md:flex items-center space-x-4">
+            <NavLink href="/about">About Us</NavLink>
+            <NavLink href="/Wall">Wall of Love</NavLink>
+            <NavLink href="/pricing">Pricing</NavLink>
             <Link href="/" passHref>
-              <span className="text-sm font-medium text-gray-700 hover:text-green-500 cursor-pointer block py-2">
-                Try the Copilot Free
+              <span className="text-sm font-medium bg-green-600 text-white py-1 px-3 rounded-full hover:bg-green-700 cursor-pointer transition-colors duration-200">
+                Try Copilot Free
               </span>
             </Link>
-            {user ? (
-              <div className="flex flex-col space-y-2">
-                <Link href="/dashboard" passHref>
-                  <span className="text-sm font-medium text-gray-700 hover:text-green-500 cursor-pointer block py-2">
-                    Dashboard
-                  </span>
-                </Link>
-                <div className="pt-2">
-                  <UserButton afterSignOutUrl="/" />
-                </div>
-              </div>
-            ) : (
-              <div className="flex flex-col space-y-2">
-                <Link href="/sign-in" passHref>
-                  <span className="text-sm font-medium text-gray-700 hover:text-green-500 cursor-pointer block py-2">
-                    Login
-                  </span>
-                </Link>
-                <Link href="/sign-up" passHref>
-                  <span className="text-sm font-medium text-gray-700 hover:text-green-500 cursor-pointer block py-2">
-                    Sign Up
-                  </span>
-                </Link>
-              </div>
-            )}
           </nav>
-        </div>
 
-        {/* Desktop Menu and Auth Links */}
-        <div className="hidden md:flex md:items-center md:justify-between md:flex-grow">
-          {/* Desktop Menu Links */}
-          <nav className="hidden md:flex md:items-center md:justify-center md:flex-grow">
-            {/* <Link href="/about" passHref>
-              <span className="text-sm font-medium text-gray-500 hover:text-green-600 cursor-pointer mx-2">
-                About Us
-              </span>
-            </Link> */}
-            {/* <Link href="/works" passHref>
-              <span className="text-sm font-medium text-gray-500 hover:text-green-600 cursor-pointer mx-2">
-                How it works
-              </span>
-            </Link> */}
-              {/* <Link href="/Wall" passHref>
-              <span className="text-sm font-medium text-gray-500 hover:text-green-600 cursor-pointer mx-2">
-                Wall of Love
-              </span>
-            </Link>  */}
-            {/* <Link href="/pricing" passHref>
-              <span className="text-sm font-medium text-gray-500 hover:text-green-600 cursor-pointer mx-2">
-                Pricing
-              </span>
-            </Link> */}
-            {/* <Link href="/career" passHref>
-              <span className="text-sm font-medium text-gray-500 hover:text-green-600 cursor-pointer mx-2">
-                Career
-              </span>
-            </Link> */}
-            {/* <Link href="#" passHref>
-              <span className="text-sm bg-green-600 text-white py-2 px-4 rounded-full hover:bg-green-700 cursor-not-allowed relative group mx-2">
-                Try the Copilot Free
-                <span className="absolute left-1/2 transform -translate-x-1/2 top-full mt-2 w-max bg-gray-800 text-white text-xs rounded-md px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
-                  Coming Soon.
-                </span>
-              </span>
-            </Link> */}
-          </nav>
-          <div>
+          {/* User Controls */}
+          <div className="hidden md:flex items-center space-x-2">
             {user ? (
-              <div className="flex gap-4 items-center">
+              <>
                 <Link href="/dashboard" passHref>
-                  <span className="text-sm font-medium text-gray-700 bg-white border border-gray-300 hover:border-green-500 rounded-md py-2 px-4 cursor-pointer shadow-sm hover:shadow transition-all duration-150 ease-in-out transform hover:-translate-y-0.5">
+                  <span className="text-sm font-medium text-gray-700 bg-white border border-gray-300 hover:border-green-500 rounded-md py-1 px-3 cursor-pointer shadow-sm hover:shadow transition-all duration-150 ease-in-out transform hover:-translate-y-0.5">
                     Dashboard
                   </span>
                 </Link>
                 <UserButton afterSignOutUrl="/" />
-              </div>
+              </>
             ) : (
-              <div className="space-x-4">
-                <Link href="/sign-in" passHref>
-                  <span className="text-sm cursor-pointer">Login</span>
-                </Link>
-                <Link href="/sign-up" passHref>
-                  <span className="text-sm cursor-pointer">Sign Up</span>
-                </Link>
-              </div>
+              <>
+                <NavLink href="/sign-in">Login</NavLink>
+                <NavLink href="/sign-up">Sign Up</NavLink>
+              </>
             )}
           </div>
         </div>
+
+        {/* Mobile Navigation */}
+        {isMenuOpen && (
+          <div className="md:hidden mt-2 bg-white border border-gray-200 rounded-lg shadow-lg p-4">
+            <nav className="flex flex-col space-y-4">
+              <NavLink href="/about">About Us</NavLink>
+              <NavLink href="/Wall">Wall of Love</NavLink>
+              <NavLink href="/pricing">Pricing</NavLink>
+              <Link href="/" passHref>
+                <span className="text-sm font-medium bg-green-600 text-white py-2 px-4 rounded-full hover:bg-green-700 cursor-pointer transition-colors duration-200 text-center block">
+                  Try Copilot Free
+                </span>
+              </Link>
+              {user ? (
+                <>
+                  <Link href="/dashboard" passHref>
+                    <span className="text-sm font-medium text-gray-700 bg-white border border-gray-300 hover:border-green-500 rounded-md py-2 px-4 cursor-pointer shadow-sm hover:shadow transition-all duration-150 ease-in-out transform hover:-translate-y-0.5 text-center block">
+                      Dashboard
+                    </span>
+                  </Link>
+                  <div className="flex justify-center">
+                    <UserButton afterSignOutUrl="/" />
+                  </div>
+                </>
+              ) : (
+                <>
+                  <NavLink href="/sign-in">Login</NavLink>
+                  <NavLink href="/sign-up">Sign Up</NavLink>
+                </>
+              )}
+            </nav>
+          </div>
+        )}
       </div>
     </header>
   );
 };
 
 export default Navbar;
+
