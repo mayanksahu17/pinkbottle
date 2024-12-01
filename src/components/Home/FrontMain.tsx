@@ -37,22 +37,7 @@ export default function Home() {
           <div className="flex flex-col lg:flex-row items-start">
             {/* Left content section */}
             <div className="lg:w-[45%] lg:pr-8 mb-12 lg:mb-0 lg:pt-20">
-              {/* Decorative Elements */}
-              <FloatingElement 
-                size="lg" 
-                color="#1a1a1a"
-                className="-left-20 -top-20" 
-              />
-              <FloatingElement 
-                size="md" 
-                color="#262626"
-                className="right-0 top-40" 
-              />
-              <FloatingElement 
-                size="sm" 
-                color="#333333"
-                className="-left-10 bottom-0" 
-              />
+              
 
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
