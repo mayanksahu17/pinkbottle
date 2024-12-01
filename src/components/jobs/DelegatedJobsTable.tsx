@@ -146,21 +146,21 @@ const DelegatedJobsTable: React.FC<DelegatedJobsTableProps> = ({ jobData , onDel
       </div>
 
       <div className="overflow-x-auto relative shadow-md sm:rounded-lg">
-        <table className="w-full text-sm text-left text-gray-500">
+        <table className="w-full text-sm text-left text-gray-500 table-fixed">
           <thead className="text-xs text-gray-700 uppercase bg-gray-50">
             <tr>
-              <th scope="col" className="py-3 px-6">
+              <th scope="col" className="py-3 px-6 w-10">
                 <input
                   type="checkbox"
                   checked={selectedJobs.length === currentJobs.length && currentJobs.length > 0}
                   onChange={handleSelectAll}
                 />
               </th>
-              <th scope="col" className="py-3 px-6">Title</th>
-              <th scope="col" className="py-3 px-6">Company</th>
-              <th scope="col" className="py-3 px-6">Location</th>
-              <th scope="col" className="py-3 px-6">Date</th>
-              <th scope="col" className="py-3 px-6">Link</th>
+              <th scope="col" className="py-3 px-6w-40 truncate">Title</th>
+              <th scope="col" className="py-3 px-6w-40 truncate">Company</th>
+              <th scope="col" className="py-3 px-6w-40 truncate">Location</th>
+              <th scope="col" className="py-3 px-6w-24 truncate">Date</th>
+              <th scope="col" className="py-3 px-6w-20 truncate">Link</th>
             </tr>
           </thead>
           <tbody>
@@ -178,11 +178,11 @@ const DelegatedJobsTable: React.FC<DelegatedJobsTableProps> = ({ jobData , onDel
                       onChange={(e) => handleSelectRow(e, job)}
                     />
                   </td>
-                  <td className="py-4 px-6">{job.title}</td>
-                  <td className="py-4 px-6">{job.company}</td>
-                  <td className="py-4 px-6">{job.location}</td>
-                  <td className="py-4 px-6">{formatDate(job.date)}</td>
-                  <td className="py-4 px-6">
+                  <td className="py-4 px-6 w-40 truncate">{job.title}</td>
+                  <td className="py-4 px-6 w-40 truncate">{job.company}</td>
+                  <td className="py-4 px-6 w-40 truncate">{job.location}</td>
+                  <td className="py-4 px-6 w-24 truncate">{formatDate(job.date)}</td>
+                  <td className="py-4 px-6 w-20 truncate">
                     <a href={job.applyLink} target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">
                       Apply
                     </a>
