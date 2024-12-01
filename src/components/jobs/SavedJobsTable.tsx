@@ -89,56 +89,49 @@ const SavedJobsTable: React.FC<JobTableProps> = ({ jobData = [] }) => {
 
   return (
     <>
+      {/* Search Bar */}
       <div className="flex flex-col items-center w-full mb-4">
         <input
           type="text"
           placeholder="Search jobs..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="p-2 w-full max-w-md border rounded shadow mt-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="p-2 w-full max-w-md border rounded shadow mt-4 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
         />
       </div>
-
-      <div className="overflow-x-auto relative shadow-md sm:rounded-lg">
-        <table className="w-full text-sm text-left text-gray-500">
-          <thead className="text-xs text-gray-700 uppercase bg-gray-50">
+  
+      {/* Table */}
+      <div className="overflow-x-auto relative shadow-md sm:rounded-lg bg-white">
+        <table className="w-full text-sm text-left text-gray-500 bg-white">
+          <thead className="text-xs text-gray-700 uppercase bg-gray-100">
             <tr>
-              <th scope="col" className="py-3 px-6">
+              <th className="py-3 px-6">
                 <input type="checkbox" />
               </th>
-              <th scope="col" className="py-3 px-6">
-                Title
-              </th>
-              <th scope="col" className="py-3 px-6">
-                Company
-              </th>
-              <th scope="col" className="py-3 px-6">
-                Location
-              </th>
+              <th className="py-3 px-6">Title</th>
+              <th className="py-3 px-6">Position</th>
+              <th className="py-3 px-6">Location</th>
               <th
-                scope="col"
                 className="py-3 px-6 cursor-pointer"
                 onClick={() => setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc')}
               >
-                Date <span className="ml-1">{sortOrder === 'asc' ? '⇅' : '⇅'}</span>
+                Date <span>{sortOrder === 'asc' ? '⇅' : '⇅'}</span>
               </th>
-              <th scope="col" className="py-3 px-6">
-                Actions
-              </th>
+              <th className="py-3 px-6">Status</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className="bg-white">
             {currentJobs.length > 0 ? (
               currentJobs.map((job) => (
-                <tr key={job._id}>
-                  <td className="py-4 px-6">
+                <tr key={job._id} className="border-b hover:bg-gray-100">
+                  <td className="py-4 px-6 bg-white">
                     <input type="checkbox" />
                   </td>
-                  <td className="py-4 px-6">{job.title}</td>
-                  <td className="py-4 px-6">{job.position}</td>
-                  <td className="py-4 px-6">{job.location}</td>
-                  <td className="py-4 px-6">{formatDate(job.date)}</td>
-                  <td className="py-4 px-6">
+                  <td className="py-4 px-6 bg-white">{job.title}</td>
+                  <td className="py-4 px-6 bg-white">{job.position}</td>
+                  <td className="py-4 px-6 bg-white">{job.location}</td>
+                  <td className="py-4 px-6 bg-white">{formatDate(job.date)}</td>
+                  <td className="py-4 px-6 bg-white">
                     <select
                       value={job.status}
                       onChange={async (e) => {
@@ -155,7 +148,9 @@ const SavedJobsTable: React.FC<JobTableProps> = ({ jobData = [] }) => {
                           if (response.ok) {
                             setJobs((prevJobs) =>
                               prevJobs.map((j) =>
-                                j._id === job._id ? { ...j, status: newStatus } : j
+                                j._id === job._id
+                                  ? { ...j, status: newStatus }
+                                  : j
                               )
                             );
                           } else {
@@ -165,19 +160,19 @@ const SavedJobsTable: React.FC<JobTableProps> = ({ jobData = [] }) => {
                           console.error('Error updating job status:', error);
                         }
                       }}
-                      className="px-2 py-1 bg-gray-100 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                      className="px-2 py-1 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                     >
-                      <option className="text-gray-700 bg-white hover:bg-gray-100" value="Applied">Applied</option>
-                      <option className="text-gray-700 bg-white hover:bg-gray-100" value="Interviewed">Interviewed</option>
-                      <option className="text-gray-700 bg-white hover:bg-gray-100" value="Offer">Offer</option>
-                      <option className="text-gray-700 bg-white hover:bg-gray-100" value="Rejected">Rejected</option>
+                      <option value="Applied">Applied</option>
+                      <option value="Interviewed">Interviewed</option>
+                      <option value="Offer">Offer</option>
+                      <option value="Rejected">Rejected</option>
                     </select>
                   </td>
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan={6} className="text-center py-4">
+                <td colSpan={6} className="text-center py-4 bg-white">
                   No results.
                 </td>
               </tr>
@@ -185,8 +180,9 @@ const SavedJobsTable: React.FC<JobTableProps> = ({ jobData = [] }) => {
           </tbody>
         </table>
       </div>
-
-      <div className="flex justify-between items-center mt-4 flex-col sm:flex-row">
+  
+      {/* Pagination & Options */}
+      <div className="flex justify-between items-center mt-4 flex-col sm:flex-row bg-white p-4 rounded shadow-md">
         <div className="text-sm text-gray-500">
           {filteredJobs.length} result(s) found.
         </div>
@@ -199,7 +195,7 @@ const SavedJobsTable: React.FC<JobTableProps> = ({ jobData = [] }) => {
                 setJobsPerPage(Number(e.target.value));
                 setCurrentPage(1); // Reset to first page on change
               }}
-              className="ml-2 p-1 border rounded"
+              className="ml-2 p-1 border rounded bg-white"
             >
               <option value={5}>5</option>
               <option value={10}>10</option>
@@ -210,7 +206,11 @@ const SavedJobsTable: React.FC<JobTableProps> = ({ jobData = [] }) => {
             <button
               disabled={currentPage === 1}
               onClick={() => setCurrentPage(currentPage - 1)}
-              className={`px-3 py-2 border rounded ${currentPage === 1 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-100'}`}
+              className={`px-3 py-2 border rounded ${
+                currentPage === 1
+                  ? 'opacity-50 cursor-not-allowed'
+                  : 'hover:bg-gray-100'
+              } bg-white`}
             >
               &laquo;
             </button>
@@ -220,7 +220,11 @@ const SavedJobsTable: React.FC<JobTableProps> = ({ jobData = [] }) => {
             <button
               disabled={currentPage === pageCount}
               onClick={() => setCurrentPage(currentPage + 1)}
-              className={`px-3 py-2 border rounded ${currentPage === pageCount ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-100'}`}
+              className={`px-3 py-2 border rounded ${
+                currentPage === pageCount
+                  ? 'opacity-50 cursor-not-allowed'
+                  : 'hover:bg-gray-100'
+              } bg-white`}
             >
               &raquo;
             </button>
@@ -228,7 +232,7 @@ const SavedJobsTable: React.FC<JobTableProps> = ({ jobData = [] }) => {
         </div>
       </div>
     </>
-  );
+  );  
 };
 
 export default SavedJobsTable;

@@ -134,22 +134,24 @@ const DelegatedJobsTable: React.FC<DelegatedJobsTableProps> = ({ jobData , onDel
   }, [selectedJobs, onDeleteJobs]);
 
   return (
-    <>
-      <div className="flex flex-col items-center w-full mb-4">
+    <div className="flex flex-col w-full space-y-6">
+      {/* Search Bar */}
+      <div className="flex justify-center w-full">
         <input
           type="text"
           placeholder="Search jobs..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="p-2 w-full max-w-md border rounded shadow mt-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="p-3 w-full max-w-md border rounded shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
       </div>
-
-      <div className="overflow-x-auto">
-      <table className="w-full text-sm text-left text-gray-500 border-collapse table-fixed">
-      <thead className="bg-gray-100 text-xs text-gray-700 uppercase">
+  
+      {/* Jobs Table */}
+      <div className="overflow-x-auto bg-white rounded-md shadow-lg">
+        <table className="w-full text-sm text-left text-gray-500">
+          <thead className="bg-gray-100 text-xs uppercase text-gray-700">
             <tr>
-            <th className="p-4 w-12">
+              <th className="p-4 w-12">
                 <input
                   type="checkbox"
                   checked={selectedJobs.length === currentJobs.length && currentJobs.length > 0}
@@ -166,12 +168,17 @@ const DelegatedJobsTable: React.FC<DelegatedJobsTableProps> = ({ jobData , onDel
           <tbody>
             {isLoading ? (
               <tr>
-                <td colSpan={6} className="text-center py-4">Loading...</td>
+                <td colSpan={6} className="text-center py-6 text-gray-600">
+                  Loading...
+                </td>
               </tr>
             ) : currentJobs.length > 0 ? (
               currentJobs.map((job) => (
-                <tr key={job._id || `${job.title}-${job.company}`}className="border-b">
-                  <td className="py-4">
+                <tr
+                  key={job._id || `${job.title}-${job.company}`}
+                  className="border-b hover:bg-gray-50 transition duration-200"
+                >
+                  <td className="py-4 px-4">
                     <input
                       type="checkbox"
                       checked={selectedJobs.includes(job._id || `${job.title}-${job.company}`)}
@@ -183,7 +190,12 @@ const DelegatedJobsTable: React.FC<DelegatedJobsTableProps> = ({ jobData , onDel
                   <td className="p-4 truncate">{job.location}</td>
                   <td className="p-4">{formatDate(job.date)}</td>
                   <td className="p-4">
-                    <a href={job.applyLink} target="_blank" rel="noopener noreferrer" className="text-blue-600">
+                    <a
+                      href={job.applyLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-blue-500 hover:underline"
+                    >
                       Apply
                     </a>
                   </td>
@@ -191,36 +203,40 @@ const DelegatedJobsTable: React.FC<DelegatedJobsTableProps> = ({ jobData , onDel
               ))
             ) : (
               <tr>
-                <td colSpan={6} className="text-center py-4">No results.</td>
+                <td colSpan={6} className="text-center py-6 text-gray-600">
+                  No results found.
+                </td>
               </tr>
             )}
           </tbody>
         </table>
       </div>
-
-      <div className="flex flex-col space-y-4 sm:flex-row sm:space-y-0 sm:space-x-4 mt-4 items-center justify-between">
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between w-full sm:w-auto space-y-4 sm:space-y-0 sm:space-x-4">
-          <div className="text-sm text-gray-500 text-center sm:text-left">
+  
+      {/* Footer Controls: Rows Per Page, Delete Button, and Pagination */}
+      <div className="flex flex-col sm:flex-row justify-between items-center w-full space-y-4 sm:space-y-0 sm:space-x-4">
+        {/* Info and Delete Button */}
+        <div className="flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-4">
+          <span className="text-sm text-gray-600">
             {filteredJobs.length} result(s) found.
-          </div>
-
+          </span>
           <button
             onClick={handleDelete}
             disabled={selectedJobs.length === 0}
-            className="bg-red-500 text-white px-6 py-2 rounded-full shadow-md hover:bg-red-600 transition duration-300 ease-in-out disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
+            className="bg-red-500 text-white px-6 py-2 rounded shadow-md hover:bg-red-600 disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            🗑️ Trash
+            🗑️ Delete Selected
           </button>
         </div>
-
-        <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-4 w-full sm:w-auto justify-center sm:justify-end space-y-4 sm:space-y-0">
-          <div className="flex items-center justify-center sm:justify-start">
-            <span className="mr-2 text-sm">Rows per page:</span>
+  
+        {/* Pagination Controls */}
+        <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-2">
+            <span className="text-sm">Rows per page:</span>
             <select
               value={jobsPerPage}
               onChange={(e) => {
                 setJobsPerPage(Number(e.target.value));
-                setCurrentPage(1);
+                setCurrentPage(1); // Reset to first page on change
               }}
               className="p-2 border rounded"
             >
@@ -229,31 +245,33 @@ const DelegatedJobsTable: React.FC<DelegatedJobsTableProps> = ({ jobData , onDel
               <option value={50}>50</option>
             </select>
           </div>
-
-          <div className="flex items-center justify-center sm:justify-end space-x-2">
+          <div className="flex items-center space-x-2">
             <button
               disabled={currentPage === 1}
               onClick={() => setCurrentPage(currentPage - 1)}
-              className={`px-3 py-2 border rounded ${currentPage === 1 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-100'}`}
+              className={`px-3 py-2 border rounded ${
+                currentPage === 1 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-100'
+              }`}
             >
               &laquo;
             </button>
-            <div className="px-4 py-2 border rounded bg-gray-200 text-center">
+            <span className="px-4 py-2 border rounded bg-gray-100">
               Page {currentPage} of {pageCount}
-            </div>
+            </span>
             <button
               disabled={currentPage === pageCount}
               onClick={() => setCurrentPage(currentPage + 1)}
-              className={`px-3 py-2 border rounded ${currentPage === pageCount ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-100'}`}
+              className={`px-3 py-2 border rounded ${
+                currentPage === pageCount ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-100'
+              }`}
             >
               &raquo;
             </button>
           </div>
         </div>
       </div>
-
-    </>
+    </div>
   );
-};
+  };
 
 export default DelegatedJobsTable;
