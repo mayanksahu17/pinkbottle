@@ -145,22 +145,22 @@ const DelegatedJobsTable: React.FC<DelegatedJobsTableProps> = ({ jobData , onDel
         />
       </div>
 
-      <div className="overflow-x-auto relative shadow-md sm:rounded-lg">
-        <table className="w-full text-sm text-left text-gray-500 table-fixed">
-          <thead className="text-xs text-gray-700 uppercase bg-gray-50">
+      <div className="overflow-x-auto">
+      <table className="w-full text-sm text-left text-gray-500 border-collapse table-fixed">
+      <thead className="bg-gray-100 text-xs text-gray-700 uppercase">
             <tr>
-              <th scope="col" className="py-3 px-6 w-10">
+            <th className="p-4 w-12">
                 <input
                   type="checkbox"
                   checked={selectedJobs.length === currentJobs.length && currentJobs.length > 0}
                   onChange={handleSelectAll}
                 />
               </th>
-              <th scope="col" className="py-3 px-6w-40 truncate">Title</th>
-              <th scope="col" className="py-3 px-6w-40 truncate">Company</th>
-              <th scope="col" className="py-3 px-6w-40 truncate">Location</th>
-              <th scope="col" className="py-3 px-6w-24 truncate">Date</th>
-              <th scope="col" className="py-3 px-6w-20 truncate">Link</th>
+              <th className="p-4 w-1/4">Title</th>
+              <th className="p-4 w-1/4">Company</th>
+              <th className="p-4 w-1/4">Location</th>
+              <th className="p-4 w-1/6">Date</th>
+              <th className="p-4 w-1/6">Link</th>
             </tr>
           </thead>
           <tbody>
@@ -170,20 +170,20 @@ const DelegatedJobsTable: React.FC<DelegatedJobsTableProps> = ({ jobData , onDel
               </tr>
             ) : currentJobs.length > 0 ? (
               currentJobs.map((job) => (
-                <tr key={job._id || `${job.title}-${job.company}`}>
-                  <td className="py-4 px-6">
+                <tr key={job._id || `${job.title}-${job.company}`}className="border-b">
+                  <td className="py-4">
                     <input
                       type="checkbox"
                       checked={selectedJobs.includes(job._id || `${job.title}-${job.company}`)}
                       onChange={(e) => handleSelectRow(e, job)}
                     />
                   </td>
-                  <td className="py-4 px-6 w-40 truncate">{job.title}</td>
-                  <td className="py-4 px-6 w-40 truncate">{job.company}</td>
-                  <td className="py-4 px-6 w-40 truncate">{job.location}</td>
-                  <td className="py-4 px-6 w-24 truncate">{formatDate(job.date)}</td>
-                  <td className="py-4 px-6 w-20 truncate">
-                    <a href={job.applyLink} target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">
+                  <td className="p-4 truncate">{job.title}</td>
+                  <td className="p-4 truncate">{job.company}</td>
+                  <td className="p-4 truncate">{job.location}</td>
+                  <td className="p-4">{formatDate(job.date)}</td>
+                  <td className="p-4">
+                    <a href={job.applyLink} target="_blank" rel="noopener noreferrer" className="text-blue-600">
                       Apply
                     </a>
                   </td>
