@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import SavedJobsTable from './SavedJobsTable';
 import DelegatedJobsTable from './DelegatedJobsTable';
 import FAQTable from './FAQTable';
@@ -21,55 +21,74 @@ const JobsMain: React.FC = () => {
   const [currentTable, setCurrentTable] = useState<'jobs1' | 'jobs2' | 'faqs'>('jobs1');
   const [showNotification, setShowNotification] = useState(false);
 
-  useEffect(() => {
-    async function fetchSavedJobs() {
-      try {
-        const response = await fetch('/api/savedjobs', {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            'Cache-Control': 'no-cache', // Ensure no caching
-          },
-        });
-        const data = await response.json();
-        console.log('Fetched Saved Jobs:', data);
-        setSavedJobs(data);
-      } catch (error) {
-        console.error('Failed to fetch saved jobs:', error);
-      }
+  const fetchSavedJobs = useCallback(async () => {
+    try {
+      const response = await fetch('/api/savedjobs', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Cache-Control': 'no-cache',
+        },
+      });
+      const data = await response.json();
+      console.log('Fetched Saved Jobs:', data);
+      setSavedJobs(data);
+    } catch (error) {
+      console.error('Failed to fetch saved jobs:', error);
     }
-    fetchSavedJobs();
-  }, []); // Only runs once when the component mounts
+  }, []);
+
+  const fetchDelegatedJobs = useCallback(async () => {
+    try {
+      const response = await fetch('/api/delegatedjobs', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Cache-Control': 'no-cache',
+        },
+      });
+      const data = await response.json();
+      console.log('Fetched Delegated Jobs:', data);
+      setDelegatedJobs(Array.isArray(data) ? data : []);
+    } catch (error) {
+      console.error('Failed to fetch delegated jobs:', error);
+      setDelegatedJobs([]);
+    }
+  }, []);
 
   useEffect(() => {
-    async function fetchDelegatedJobs() {
-      try {
-        const response = await fetch('/api/delegatedjobs', {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            'Cache-Control': 'no-cache', // Ensure no caching
-          },
-        });
-        const data = await response.json();
-        console.log('Fetched Delegated Jobs:', data);
-        setDelegatedJobs(Array.isArray(data) ? data : []); // Ensures data is an array
-      } catch (error) {
-        console.error('Failed to fetch delegated jobs:', error);
-        setDelegatedJobs([]); // Handle the case where the fetch fails
-      }
-    }
+    fetchSavedJobs();
     fetchDelegatedJobs();
-  }, []); // Only runs once when the component mounts
+  }, []); 
 
   useEffect(() => {
     const totalJobs = savedJobs.length + delegatedJobs.length;
-    if (totalJobs > 1200) {
-      setShowNotification(true);
-    } else {
-      setShowNotification(false);
+    setShowNotification(totalJobs > 1200);
+  }, [savedJobs, delegatedJobs]);
+
+  const handleDeleteDelegatedJobs = useCallback(async (jobsToDelete: string[]) => {
+    try {
+      const response = await fetch('/api/deletejobs', {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ jobIds: jobsToDelete }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to delete jobs');
+      }
+
+      // Immediately update the delegated jobs state
+      const updatedDelegatedJobs = delegatedJobs.filter(
+        (job) => !jobsToDelete.includes(job._id || `${job.title}-${job.company}`)
+      );
+      setDelegatedJobs(updatedDelegatedJobs);
+    } catch (error) {
+      console.error('Error deleting jobs:', error);
     }
-  }, [savedJobs, delegatedJobs]); // Runs whenever savedJobs or delegatedJobs changes
+  }, [delegatedJobs]);
 
   return (
     <main className="flex flex-col w-full p-4 sm:p-6 pt-16 bg-gray-50">
@@ -148,7 +167,12 @@ const JobsMain: React.FC = () => {
 
       <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6">
         {currentTable === 'jobs1' && <SavedJobsTable jobData={savedJobs} />}
-        {currentTable === 'jobs2' && <DelegatedJobsTable jobData={delegatedJobs} />}
+        {currentTable === 'jobs2' && (
+          <DelegatedJobsTable 
+            jobData={delegatedJobs} 
+            onDeleteJobs={handleDeleteDelegatedJobs} 
+          />
+        )}
         {currentTable === 'faqs' && <FAQTable />}
       </div>
     </main>

@@ -11,9 +11,10 @@ interface Job {
 
 interface DelegatedJobsTableProps {
   jobData: Job[];
+  onDeleteJobs?: (jobIds: string[]) => void;
 }
 
-const DelegatedJobsTable: React.FC<DelegatedJobsTableProps> = ({ jobData }) => {
+const DelegatedJobsTable: React.FC<DelegatedJobsTableProps> = ({ jobData , onDeleteJobs }) => {
   const [jobs, setJobs] = useState<Job[]>([]);
   const [selectedJobs, setSelectedJobs] = useState<string[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -101,25 +102,36 @@ const DelegatedJobsTable: React.FC<DelegatedJobsTableProps> = ({ jobData }) => {
   }, []);
 
   const handleDelete = useCallback(async () => {
-    try {
-      const response = await fetch('/api/deletejobs', {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ jobIds: selectedJobs }),
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to delete jobs');
-      }
-
-      setJobs((prevJobs) => prevJobs.filter((job) => !selectedJobs.includes(`${job.title}-${job.company}`)));
+    if (onDeleteJobs) {
+      // If onDeleteJobs prop is provided, use it
+      onDeleteJobs(selectedJobs);
       setSelectedJobs([]);
-    } catch (error) {
-      console.error('Error deleting jobs:', error);
+    } else {
+      // Fallback to original delete method if prop is not provided
+      try {
+        const response = await fetch('/api/deletejobs', {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ jobIds: selectedJobs }),
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to delete jobs');
+        }
+
+        setJobs((prevJobs) => 
+          prevJobs.filter((job) => 
+            !selectedJobs.includes(job._id || `${job.title}-${job.company}`)
+          )
+        );
+        setSelectedJobs([]);
+      } catch (error) {
+        console.error('Error deleting jobs:', error);
+      }
     }
-  }, [selectedJobs]);
+  }, [selectedJobs, onDeleteJobs]);
 
   return (
     <>
