@@ -24,7 +24,13 @@ const JobsMain: React.FC = () => {
   useEffect(() => {
     async function fetchSavedJobs() {
       try {
-        const response = await fetch('/api/savedjobs');
+        const response = await fetch('/api/savedjobs', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Cache-Control': 'no-cache', // Ensure no caching
+          },
+        });
         const data = await response.json();
         console.log('Fetched Saved Jobs:', data);
         setSavedJobs(data);
@@ -38,7 +44,13 @@ const JobsMain: React.FC = () => {
   useEffect(() => {
     async function fetchDelegatedJobs() {
       try {
-        const response = await fetch('/api/delegatedjobs');
+        const response = await fetch('/api/delegatedjobs', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Cache-Control': 'no-cache', // Ensure no caching
+          },
+        });
         const data = await response.json();
         console.log('Fetched Delegated Jobs:', data);
         setDelegatedJobs(Array.isArray(data) ? data : []); // Ensures data is an array

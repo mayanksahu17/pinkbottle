@@ -1,7 +1,6 @@
 import { NextResponse, NextRequest } from 'next/server';
 import { linkedinDbConnect } from '@/lib/database/linkedinmongo';
 import { getAuth } from '@clerk/nextjs/server';
-import { cache } from 'react';
 
 export const dynamic = 'force-dynamic';
 
@@ -31,17 +30,13 @@ export async function DELETE(req: NextRequest) {
       const jobIdentifier = `${job.title}-${job.company}`;
       return !jobIds.includes(jobIdentifier);
     });
-        
+
     await linkedinConn.collection('users').updateOne(
       { clerkId: userId },
       { $set: { jobs: updatedJobs } }
     );
 
-    // Invalidate the cache for this user
-    if (cache[userId]) {
-      cache[userId] = { jobs: updatedJobs, timestamp: Date.now() };
-    }
-
+    console.log('Jobs deleted successfully for userId:', userId);
     return NextResponse.json({ success: true, message: 'Jobs deleted successfully' }, { status: 200 });
   } catch (error) {
     console.error('Error deleting jobs:', error);

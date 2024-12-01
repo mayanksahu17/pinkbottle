@@ -15,13 +15,14 @@ interface JobTableProps {
 }
 
 const SavedJobsTable: React.FC<JobTableProps> = ({ jobData = [] }) => {
-  const [jobs, setJobs] = useState<Job[]>(jobData);
+  //const [jobs, setJobs] = useState<Job[]>(jobData);//use this later
+  const [jobs, setJobs] = useState<Job[]>(Array.isArray(jobData) ? jobData : []);//
   const [currentPage, setCurrentPage] = useState(1);
   const [jobsPerPage, setJobsPerPage] = useState(10);
   const [searchTerm, setSearchTerm] = useState('');
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
 
-  useEffect(() => {
+  /*useEffect(() => {
     // Fetch jobs only if jobData is not passed or is empty
     if (jobData.length === 0) {
       async function fetchJobs() {
@@ -36,7 +37,27 @@ const SavedJobsTable: React.FC<JobTableProps> = ({ jobData = [] }) => {
 
       fetchJobs();
     }
-  }, [jobData]);
+  }, [jobData]);*/ // also use this later 
+
+  useEffect(() => {
+    async function fetchJobs() {
+      try {
+        const response = await fetch('/api/savedjobs');
+        const data = await response.json();
+        if (Array.isArray(data)) {
+          setJobs(data);
+        } else {
+          console.error('Unexpected response format:', data);
+          setJobs([]);
+        }
+      } catch (error) {
+        console.error('Failed to fetch jobs:', error);
+        setJobs([]);
+      }
+    }
+
+    fetchJobs();
+  }, []); // Fetch jobs on initial render only
 
   const filteredJobs = useMemo(
     () =>
@@ -109,51 +130,50 @@ const SavedJobsTable: React.FC<JobTableProps> = ({ jobData = [] }) => {
           <tbody>
             {currentJobs.length > 0 ? (
               currentJobs.map((job) => (
-<tr key={job._id}>
-  <td className="py-4 px-6">
-    <input type="checkbox" />
-  </td>
-  <td className="py-4 px-6">{job.title}</td>
-  <td className="py-4 px-6">{job.position}</td>
-  <td className="py-4 px-6">{job.location}</td>
-  <td className="py-4 px-6">{formatDate(job.date)}</td>
-  <td className="py-4 px-6">
-    <select
-      value={job.status}
-      onChange={async (e) => {
-        const newStatus = e.target.value;
-        try {
-          const response = await fetch(`/api/updatejobstatus`, {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              id: job._id,
-              status: newStatus,
-            }),
-          });
-          if (response.ok) {
-            setJobs((prevJobs) =>
-              prevJobs.map((j) =>
-                j._id === job._id ? { ...j, status: newStatus } : j
-              )
-            );
-          } else {
-            console.error('Failed to update job status');
-          }
-        } catch (error) {
-          console.error('Error updating job status:', error);
-        }
-      }}
-      className="px-2 py-1 bg-gray-100 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-    >
-      <option className="text-gray-700 bg-white hover:bg-gray-100" value="Applied">Applied</option>
-      <option className="text-gray-700 bg-white hover:bg-gray-100" value="Interviewed">Interviewed</option>
-      <option className="text-gray-700 bg-white hover:bg-gray-100" value="Offer">Offer</option>
-      <option className="text-gray-700 bg-white hover:bg-gray-100" value="Rejected">Rejected</option>
-    </select>
-  </td>
-</tr>
-
+                <tr key={job._id}>
+                  <td className="py-4 px-6">
+                    <input type="checkbox" />
+                  </td>
+                  <td className="py-4 px-6">{job.title}</td>
+                  <td className="py-4 px-6">{job.position}</td>
+                  <td className="py-4 px-6">{job.location}</td>
+                  <td className="py-4 px-6">{formatDate(job.date)}</td>
+                  <td className="py-4 px-6">
+                    <select
+                      value={job.status}
+                      onChange={async (e) => {
+                        const newStatus = e.target.value;
+                        try {
+                          const response = await fetch(`/api/updatejobstatus`, {
+                            method: 'PUT',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                              id: job._id,
+                              status: newStatus,
+                            }),
+                          });
+                          if (response.ok) {
+                            setJobs((prevJobs) =>
+                              prevJobs.map((j) =>
+                                j._id === job._id ? { ...j, status: newStatus } : j
+                              )
+                            );
+                          } else {
+                            console.error('Failed to update job status');
+                          }
+                        } catch (error) {
+                          console.error('Error updating job status:', error);
+                        }
+                      }}
+                      className="px-2 py-1 bg-gray-100 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    >
+                      <option className="text-gray-700 bg-white hover:bg-gray-100" value="Applied">Applied</option>
+                      <option className="text-gray-700 bg-white hover:bg-gray-100" value="Interviewed">Interviewed</option>
+                      <option className="text-gray-700 bg-white hover:bg-gray-100" value="Offer">Offer</option>
+                      <option className="text-gray-700 bg-white hover:bg-gray-100" value="Rejected">Rejected</option>
+                    </select>
+                  </td>
+                </tr>
               ))
             ) : (
               <tr>

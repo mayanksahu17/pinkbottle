@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 
 interface Job {
   _id?: string;
@@ -14,7 +14,7 @@ interface DelegatedJobsTableProps {
 }
 
 const DelegatedJobsTable: React.FC<DelegatedJobsTableProps> = ({ jobData }) => {
-  const [jobs, setJobs] = useState<Job[]>(jobData);
+  const [jobs, setJobs] = useState<Job[]>([]);
   const [selectedJobs, setSelectedJobs] = useState<string[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [jobsPerPage, setJobsPerPage] = useState(10);
@@ -28,24 +28,35 @@ const DelegatedJobsTable: React.FC<DelegatedJobsTableProps> = ({ jobData }) => {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          'Cache-Control': 'no-cache', // Disable caching
+          'Cache-Control': 'no-cache',
         },
       });
       const data = await response.json();
-      setJobs(data);
+      if (Array.isArray(data)) {
+        setJobs(data);
+      } else {
+        console.error('Received data is not an array:', data);
+        setJobs([]);
+      }
     } catch (error) {
       console.error('Error fetching jobs:', error);
+      setJobs([]);
     } finally {
       setIsLoading(false);
     }
   }, []);
 
   useEffect(() => {
-    fetchData(); // Fetch latest jobs when component mounts
+    fetchData(); // Fetch jobs when the component mounts
   }, [fetchData]);
 
   useEffect(() => {
-    setJobs(jobData); // Sync jobs with prop updates
+    if (Array.isArray(jobData)) {
+      setJobs(jobData);
+    } else {
+      console.error('Invalid jobData prop:', jobData);
+      setJobs([]);
+    }
   }, [jobData]);
 
   const filteredJobs = useMemo(() => {
