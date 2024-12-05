@@ -16,7 +16,6 @@ import HeroScrollDemo from './HeroScrollDemo';
 import Features from './Features';
 import LazyLoad from './LazyLoad'; // Import the LazyLoad component
 import { FloatingNav } from '../ui/floating-navbar';
-import { FloatingNavDemo } from '../navbar/floatingNavbar';
 import LogoShowcase from './logo-showcase';
 import Testimonials from './newtestimonials';
 import { EnterpriseShowcase } from '../ui/enterprise-showcase';
@@ -78,7 +77,6 @@ const HomePage = () => {
         style={{ backgroundColor: '#FFFFFF' }}
       >
         <Navbar />
-        {/* <FloatingNavDemo/> */}
         <div className="bg-[#bafff1] py-2 shadow-md mt-16">
           <div className="max-w-xl mx-auto text-center px-4">
             <p className="text-base font-medium text-gray-800 animate-bounce">

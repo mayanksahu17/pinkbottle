@@ -8,7 +8,6 @@ import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/h
 import Footer from "../footer/footer";
 import Navbar from "../navbar/navbar";
 import Testimonials from "./review";
-import { FloatingNavDemo } from "../navbar/floatingNavbar";
 
 interface Testimonial {
   _id: string;
@@ -59,7 +58,6 @@ export default function PremiumWallOfLove() {
   return (
     <div className="min-h-screen bg-gray-50 p-8 sm:p-12 md:p-16">
       <Navbar />
-      <FloatingNavDemo />
       <h1 className="text-[5rem] font-bold text-center text-gray-800 mt-5">
         Our clients <span className="text-red-500 ">❤️</span> us
       </h1>

@@ -7,7 +7,6 @@ import { Button } from "../ui/button"
 import Navbar from '../navbar/navbar';
 import ParallaxBanner from "./Scroll";
 import Footer from "../footer/footer"
-import { FloatingNavDemo } from "../navbar/floatingNavbar"
 import Modal from './Call'; // Import the modal component
 
 export function Onboarding() {
@@ -142,7 +141,6 @@ export function Onboarding() {
   return (
     <>
       <Navbar />
-      <FloatingNavDemo />
       <div style={{ filter: isModalOpen ? "blur(5px)" : "none" }} className="min-h-screen w-full bg-gray-100 py-16">
         {/* Timeline Steps */}
         <div className="flex justify-between px-6 mb-6">
