@@ -22,7 +22,7 @@ const Navbar = () => {
   return (
     <header className="fixed top-2 left-0 right-0 z-50 px-4">
       <div className="max-w-2xl mx-auto">
-        <div className="flex items-center justify-between p-2 bg-green-400 border border-gray-200 rounded-full shadow-lg">
+        <div className="flex items-center justify-between p-2 bg-green-100 border border-gray-200 rounded-full shadow-lg">
           <Link href="/">
             <img
               alt="Hiredeasy Logo"

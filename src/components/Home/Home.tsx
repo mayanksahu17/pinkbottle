@@ -19,6 +19,8 @@ import { FloatingNav } from '../ui/floating-navbar';
 import { FloatingNavDemo } from '../navbar/floatingNavbar';
 import LogoShowcase from './logo-showcase';
 import Testimonials from './newtestimonials';
+import { EnterpriseShowcase } from '../ui/enterprise-showcase';
+import ModularSolutions from '../ui/dynamicLogos';
 
 // Dynamic imports with SSR disabled for non-critical components
 const Help = dynamic(() => import('../GetInTouch/Help'), { ssr: false });
@@ -94,14 +96,17 @@ const HomePage = () => {
 
         {/* Main Content */}
         <FrontMain />
-        <Testimonials/>
-        <LogoShowcase/>
+        <Testimonials />
+        <LogoShowcase />
         <Sponsor />
         <IncreaseResult />
+        
 
-        <HeroScrollDemo />
-        <WorksFor />
-        <Universities />
+        <HeroScrollDemo /> 
+        {/* <EnterpriseShowcase /> //newone not needed */}
+        <WorksFor />  {/* //remove  Done */}
+        <Universities />   {/* //remove  Done */}
+        {/* <ModularSolutions />  //newone not need */}
         <Features />
 
         {/* Lazy-loaded components */}

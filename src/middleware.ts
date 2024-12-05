@@ -13,6 +13,7 @@ const myMiddleware = authMiddleware({
     '/api/delegatedjobs',
     '/api/deletejobs',
     '/api/savedjobs',
+    "/api/testimonials",
     '/Wall',
     '/career',
     '/onboarding',
@@ -25,7 +26,6 @@ const myMiddleware = authMiddleware({
     '/api/uploadthing',
     '/api/webhooks/stripe',
     '/api/webhooks/users',
-    '/api/testimonials/testimonials',
   ],
 });
 
