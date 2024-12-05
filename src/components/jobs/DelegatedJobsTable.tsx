@@ -134,7 +134,7 @@ const DelegatedJobsTable: React.FC<DelegatedJobsTableProps> = ({ jobData , onDel
   }, [selectedJobs, onDeleteJobs]);
 
   return (
-    <div className="flex flex-col w-full space-y-6">
+    <div className="flex flex-col w-full space-y-6 bg-white border border-gray-200 rounded-lg p-6 shadow-lg">
       {/* Search Bar */}
       <div className="flex justify-center w-full">
         <input

@@ -17,12 +17,13 @@ export async function GET(req: NextRequest) {
     }
 
     const user = await User.findOne({ clerkId: userId });
+    console.log("User fetched for saved jobs",user )
 
     if (!user) {
       return NextResponse.json({ error: 'User not found' }, { status: 404 });
     }
 
-    return NextResponse.json(user.jobs, { status: 200 });
+    return NextResponse.json({ jobs: user.jobs }, { status: 200 });
   } catch (error) {
     console.error('Error fetching jobs:', error);
     return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });

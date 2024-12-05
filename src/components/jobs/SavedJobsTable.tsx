@@ -22,7 +22,7 @@ const SavedJobsTable: React.FC<JobTableProps> = ({ jobData = [] }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
 
-  /*useEffect(() => {
+ /* useEffect(() => {
     // Fetch jobs only if jobData is not passed or is empty
     if (jobData.length === 0) {
       async function fetchJobs() {
@@ -30,6 +30,8 @@ const SavedJobsTable: React.FC<JobTableProps> = ({ jobData = [] }) => {
           const response = await fetch('/api/savedjobs'); // This will default to GET method
           const data = await response.json();
           setJobs(data);
+          console.log("data of saved jobs :",data)
+          console.log("data of saved jobs data:",jobData)
         } catch (error) {
           console.error('Failed to fetch jobs:', error);
         }
@@ -37,13 +39,14 @@ const SavedJobsTable: React.FC<JobTableProps> = ({ jobData = [] }) => {
 
       fetchJobs();
     }
-  }, [jobData]);*/ // also use this later 
+  }, [jobData]);*/
 
   useEffect(() => {
     async function fetchJobs() {
       try {
         const response = await fetch('/api/savedjobs');
         const data = await response.json();
+        console.log('API Response Data:', data);
         if (Array.isArray(data)) {
           setJobs(data);
         } else {
@@ -88,7 +91,7 @@ const SavedJobsTable: React.FC<JobTableProps> = ({ jobData = [] }) => {
     new Date(dateString).toLocaleDateString();
 
   return (
-    <>
+    <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-lg">
       {/* Search Bar */}
       <div className="flex flex-col items-center w-full mb-4">
         <input
@@ -231,7 +234,7 @@ const SavedJobsTable: React.FC<JobTableProps> = ({ jobData = [] }) => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );  
 };
 
