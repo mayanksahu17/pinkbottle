@@ -3,28 +3,26 @@
 import { motion } from "framer-motion"
 import Link from "next/link"
 import Image from "next/image"
+import { Briefcase, Search, FileText, Award, Users, Laptop, Coffee, BarChartIcon as ChartBar, Mail } from 'lucide-react'
 
-const FloatingElement = ({ size, color, className }: { size?: 'sm' | 'md' | 'lg'; color?: string; className?: string }) => {
-  const sizeMap = {
-    sm: 'w-3 h-3',
-    md: 'w-6 h-6',
-    lg: 'w-10 h-10',
-  }
-  
+const FloatingElement = ({ icon: Icon, className, size = 24  }: { icon: React.ElementType; className?: string; size?: number }) => {
   return (
     <motion.div
-      className={`absolute rounded-full ${sizeMap[size || 'sm']} ${className}`}
-      style={{ backgroundColor: color }}
+      className={`absolute text-gray-400 ${className}`}
       animate={{
-        y: [0, -5, 0],
-        opacity: [0.3, 0.6, 0.3],
+        y: [0, -10, 0],
+        x: [0, 5, 0],
+        rotate: [0, 5, -5, 0],
+        scale: [1, 1.05, 1],
       }}
       transition={{
-        duration: 3,
+        duration: 5,
         repeat: Infinity,
         repeatType: "reverse",
       }}
-    />
+    >
+      <Icon size={size} />
+    </motion.div>
   )
 }
 
@@ -33,23 +31,37 @@ export default function Home() {
     <div className="min-h-screen bg-white text-black overflow-hidden">
       <section className="pt-20 pb-16">
         <div className="container px-4 mx-auto relative">
+          <FloatingElement icon={Briefcase} className="top-10 left-[10%]" size={32} />
+          <FloatingElement icon={Search} className="top-1/4 left-[5%]" size={28} />
+          <FloatingElement icon={FileText} className="bottom-1/4 left-[15%]" size={36} />
+          <FloatingElement icon={Award} className="top-20 right-[10%]" size={40} />
+          <FloatingElement icon={Users} className="top-1/3 right-[5%]" size={32} />
+          <FloatingElement icon={Laptop} className="bottom-1/3 right-[15%]" size={36} />
+          <FloatingElement icon={Coffee} className="bottom-20 left-[20%]" size={28} />
+          <FloatingElement icon={ChartBar} className="top-1/2 left-[25%]" size={32} />
+          <FloatingElement icon={Mail} className="bottom-1/2 right-[20%]" size={36} />
+          <FloatingElement icon={Briefcase} className="top-1/4 right-[30%]" size={40} />
+          <FloatingElement icon={Search} className="bottom-1/3 left-[30%]" size={32} />
+          <FloatingElement icon={FileText} className="top-2/3 right-[25%]" size={28} />
+          <FloatingElement icon={Award} className="bottom-1/4 right-[35%]" size={36} />
+          <FloatingElement icon={Users} className="top-1/2 right-[40%]" size={32} />
           <div className="flex flex-col items-center">
             <div className="w-full lg:w-[45%] mb-12 lg:mb-0 text-center">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
               >
-                <motion.h1 
+                <motion.h1
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.2 }}
                   className="text-4xl md:text-6xl font-bold mb-8 leading-[1.1] pr-6"
                 >
-                  Land Your
-                  <br /> Dream Job
+                  Land Your<br />
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-green-500">Dream Job</span>
                 </motion.h1>
 
-                <motion.p 
+                <motion.p
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.3 }}
@@ -58,7 +70,7 @@ export default function Home() {
                   Our assistants help you get more interviews and ace them for top companies like Google, Amazon, McKinsey and more.
                 </motion.p>
 
-                <motion.div 
+                <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.4 }}
@@ -141,9 +153,9 @@ export default function Home() {
               transition={{ delay: 0.6 }}
               className="w-full lg:w-[65%] mt-12 lg:mt-16 relative"
             >
-              <div 
+              <div
                 className="relative rounded-xl overflow-hidden border border-gray-200"
-                style={{ 
+                style={{
                   transform: 'perspective(700px) rotateY(-20deg) rotateX(20deg)',
                   boxShadow: '0 10px 40px rgba(0,0,0,0.1)',
                 }}
@@ -159,7 +171,7 @@ export default function Home() {
                   width={1270}
                   height={300}
                   className="w-full"
-                  style={{ 
+                  style={{
                     marginTop: '28px',
                     borderRadius: '10px',
                   }}
@@ -172,4 +184,3 @@ export default function Home() {
     </div>
   )
 }
-
