@@ -59,7 +59,7 @@ const JobsMain: React.FC = () => {
   useEffect(() => {
     fetchSavedJobs();
     fetchDelegatedJobs();
-  }, []);
+  }, [fetchSavedJobs, fetchDelegatedJobs]);
 
   useEffect(() => {
     const totalJobs = savedJobs.length + delegatedJobs.length;
@@ -81,16 +81,22 @@ const JobsMain: React.FC = () => {
           throw new Error("Failed to delete jobs");
         }
 
-        const updatedDelegatedJobs = delegatedJobs.filter(
-          (job) => !jobsToDelete.includes(job._id || `${job.title}-${job.company}`)
+        // Update delegatedJobs state after successful deletion
+        setDelegatedJobs((prevJobs) =>
+          prevJobs.filter(
+            (job) => !jobsToDelete.includes(job._id || `${job.title}-${job.company}`)
+          )
         );
-        setDelegatedJobs(updatedDelegatedJobs);
       } catch (error) {
         console.error("Error deleting jobs:", error);
       }
     },
-    [delegatedJobs]
+    []
   );
+
+  const handleJobsUpdated = useCallback(() => {
+    fetchDelegatedJobs();
+  }, [fetchDelegatedJobs]);
 
   const tabs = [
     {
@@ -105,6 +111,7 @@ const JobsMain: React.FC = () => {
         <DelegatedJobsTable
           jobData={delegatedJobs}
           onDeleteJobs={handleDeleteDelegatedJobs}
+          onJobsUpdated={handleJobsUpdated}
         />
       ),
     },
@@ -154,3 +161,4 @@ const JobsMain: React.FC = () => {
 };
 
 export default JobsMain;
+

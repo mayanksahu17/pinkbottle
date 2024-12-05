@@ -11,10 +11,11 @@ interface Job {
 
 interface DelegatedJobsTableProps {
   jobData: Job[];
-  onDeleteJobs?: (jobIds: string[]) => void;
+  onDeleteJobs: (jobIds: string[]) => void;
+  onJobsUpdated: () => void;
 }
 
-const DelegatedJobsTable: React.FC<DelegatedJobsTableProps> = ({ jobData , onDeleteJobs }) => {
+const DelegatedJobsTable: React.FC<DelegatedJobsTableProps> = ({ jobData, onDeleteJobs, onJobsUpdated }) => {
   const [jobs, setJobs] = useState<Job[]>([]);
   const [selectedJobs, setSelectedJobs] = useState<string[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -22,42 +23,8 @@ const DelegatedJobsTable: React.FC<DelegatedJobsTableProps> = ({ jobData , onDel
   const [searchTerm, setSearchTerm] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
-  const fetchData = useCallback(async () => {
-    setIsLoading(true);
-    try {
-      const response = await fetch('/api/delegatedjobs', {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          'Cache-Control': 'no-cache',
-        },
-      });
-      const data = await response.json();
-      if (Array.isArray(data)) {
-        setJobs(data);
-      } else {
-        console.error('Received data is not an array:', data);
-        setJobs([]);
-      }
-    } catch (error) {
-      console.error('Error fetching jobs:', error);
-      setJobs([]);
-    } finally {
-      setIsLoading(false);
-    }
-  }, []);
-
   useEffect(() => {
-    fetchData(); // Fetch jobs when the component mounts
-  }, [fetchData]);
-
-  useEffect(() => {
-    if (Array.isArray(jobData)) {
-      setJobs(jobData);
-    } else {
-      console.error('Invalid jobData prop:', jobData);
-      setJobs([]);
-    }
+    setJobs(jobData);
   }, [jobData]);
 
   const filteredJobs = useMemo(() => {
@@ -93,7 +60,7 @@ const DelegatedJobsTable: React.FC<DelegatedJobsTableProps> = ({ jobData , onDel
   }, [currentJobs]);
 
   const handleSelectRow = useCallback((e: React.ChangeEvent<HTMLInputElement>, job: Job) => {
-    const jobId = `${job.title}-${job.company}`;
+    const jobId = job._id || `${job.title}-${job.company}`;
     if (e.target.checked) {
       setSelectedJobs((prevSelectedJobs) => [...prevSelectedJobs, jobId]);
     } else {
@@ -102,36 +69,30 @@ const DelegatedJobsTable: React.FC<DelegatedJobsTableProps> = ({ jobData , onDel
   }, []);
 
   const handleDelete = useCallback(async () => {
-    if (onDeleteJobs) {
-      // If onDeleteJobs prop is provided, use it
-      onDeleteJobs(selectedJobs);
+    try {
+      await onDeleteJobs(selectedJobs);
+      setJobs((prevJobs) => 
+        prevJobs.filter((job) => 
+          !selectedJobs.includes(job._id || `${job.title}-${job.company}`)
+        )
+      );
       setSelectedJobs([]);
-    } else {
-      // Fallback to original delete method if prop is not provided
-      try {
-        const response = await fetch('/api/deletejobs', {
-          method: 'DELETE',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ jobIds: selectedJobs }),
-        });
+      onJobsUpdated();
 
-        if (!response.ok) {
-          throw new Error('Failed to delete jobs');
-        }
-
-        setJobs((prevJobs) => 
-          prevJobs.filter((job) => 
-            !selectedJobs.includes(job._id || `${job.title}-${job.company}`)
-          )
-        );
-        setSelectedJobs([]);
-      } catch (error) {
-        console.error('Error deleting jobs:', error);
+      // Adjust current page if necessary
+      const newPageCount = Math.ceil((filteredJobs.length - selectedJobs.length) / jobsPerPage);
+      if (currentPage > newPageCount) {
+        setCurrentPage(Math.max(1, newPageCount));
       }
+    } catch (error) {
+      console.error('Error deleting jobs:', error);
     }
-  }, [selectedJobs, onDeleteJobs]);
+  }, [selectedJobs, onDeleteJobs, onJobsUpdated, filteredJobs.length, jobsPerPage, currentPage]);
+
+  useEffect(() => {
+    // Reset to first page when search term changes
+    setCurrentPage(1);
+  }, [searchTerm]);
 
   return (
     <div className="flex flex-col w-full space-y-6 bg-white border border-gray-200 rounded-lg p-6 shadow-lg">
@@ -275,6 +236,6 @@ const DelegatedJobsTable: React.FC<DelegatedJobsTableProps> = ({ jobData , onDel
       </div>
     </div>
   );
-    };
+};
 
 export default DelegatedJobsTable;
