@@ -7,45 +7,45 @@ import { AnimatedTooltip } from "../ui/animated-tooltip"
 const people = [
   {
     id: 1,
-    name: "John Doe",
-    designation: "Software Engineer",
+    name: "Anjali Singh",
+    designation: "Senior at KIIT",
     image:
-      "https://images.unsplash.com/photo-1599566150163-29194dcaad36?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=3387&q=80",
+      "/Anjali.png",
   },
   {
     id: 2,
-    name: "Robert Johnson",
-    designation: "Product Manager",
+    name: "Radhika Gupta",
+    designation: "Freshman at IIT Indore",
     image:
-      "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YXZhdGFyfGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60",
+      "/Radhika.png",
   },
   {
     id: 3,
-    name: "Jane Smith",
-    designation: "Data Scientist",
+    name: "Aradhy Agrawal",
+    designation: "Senior at SVVV",
     image:
-      "https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8YXZhdGFyfGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60",
+      "/Siddharth.png",
   },
   {
     id: 4,
-    name: "Emily Davis",
-    designation: "UX Designer",
+    name: "Kuldeep Vyas",
+    designation: "Senior at KIIT",
     image:
-      "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fGF2YXRhcnxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=800&q=60",
+      "/Kuldeep.jpeg",
   },
   {
     id: 5,
-    name: "Tyler Durden",
-    designation: "Soap Developer",
+    name: "Yash Jaiswal",
+    designation: "Junior at IIT Indore",
     image:
-      "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=3540&q=80",
+      "/Anil.jpg",
   },
   {
     id: 6,
-    name: "Dora",
-    designation: "The Explorer",
+    name: "Deepesh Gupta",
+    designation: "Sophomore at Jawaharlal Nehru University",
     image:
-      "https://images.unsplash.com/photo-1544725176-7c40e5a71c5e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=3534&q=80",
+      "/Depeesh.png",
   },
 ]
 
@@ -58,10 +58,10 @@ export default function MarketingSection() {
             {/* Heading Section */}
             <div className="space-y-4">
               <h1 className="text-4xl md:text-5xl font-bold leading-tight">
-                Get started today with Proactiv to kickstart your marketing efforts
+                Get started today with Us
               </h1>
               <p className="text-gray-400 text-lg">
-                Proactiv houses the best in class software tools to kickstart your marketing journey. Join 127,000+ other users to get started.
+              HiredEasy offers the best-in-class job opportunities to jumpstart your career. Join 27+ other professionals to get started!.
               </p>
             </div>
 
@@ -77,7 +77,7 @@ export default function MarketingSection() {
                   ))}
                 </div>
               </div>
-              <p className="text-gray-400">Trusted by 22,000+ creations</p>
+              <p className="text-gray-400">Trusted by 2,000+ students</p>
             </div>
           </div>
 
