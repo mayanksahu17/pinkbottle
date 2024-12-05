@@ -5,45 +5,45 @@ export default function Testimonials() {
   const testimonials = [
     {
       stars: 5,
-      quote: "\"This is the survival kit I wish I had when I was starting out building apps.\"",
-      author: "Shagun Sodhani",
-      role: "Founder of SavvyCal",
-      image: "/Shagun.jpg"
+      quote: "\"Connecting talent with opportunities makes my day.\"",
+      author: "Radhika Gupta",
+      role: "Freshman at IIT Indorel",
+      image: "/Radhika.png"
     },
     {
       stars: 5,
-      quote: "\"This book is fantastic for engineers learning how to design.\"",
-      author: "Riya Patel",
-      role: "Founder of Clearbit",
-      image: "/Riya_Patel.png"
-    },
-    {
-      stars: 5,
-      quote: "\"This book Refactoring UI is a no-brainer for anyone in the web industry.\"",
-      author: "Anjali Chakradhar",
-      role: "Co-founder of Transistor",
+      quote: "\"Every successful placement brings immense joy!.\"",
+      author: "Anjali Singh",
+      role: "Senior at KIIT",
       image: "/Anjali.png"
     },
     {
+      stars: 5,
+      quote: "\"Helping clients achieve their goals is my passion!\"",
+      author: "Deepesh Gupta",
+      role: "Sophomore at Jawaharlal Nehru University",
+      image: "/Depeesh.png"
+    },
+    {
       stars: 4,
-      quote: "\"A must-read for anyone looking to improve their design skills.\"",
-      author: "Amit Sharma",
-      role: "Product Designer at Facebook",
-      image: "/Amit_Sharma.jpg"
+      quote: "\"Seeing clients thrive in their careers is the best reward.\"",
+      author: "Yash Jaiswal",
+      role: "Junior at IIT Indore",
+      image: "/Anil.jpg"
     },
     {
       stars: 5,
-      quote: "\"An essential resource for developers and designers alike.\"",
-      author: "Priya Singh",
-      role: "UX Designer at Google",
-      image: "/Priya_Singh.jpg"
+      quote: "\"Ensuring client satisfaction is my top priority.\"",
+      author: "Shagun J",
+      role: "Sophomore at Vellore Institute of Technology",
+      image: "/Shagun.jpg"
     },
     {
       stars: 4,
-      quote: "\"This book has transformed the way I approach UI design.\"",
-      author: "Rahul Verma",
-      role: "Frontend Engineer at Amazon",
-      image: "/Rahul_Verma.jpg"
+      quote: "\"Each success story inspires me to do more.\"",
+      author: "Kuldeep Vyas",
+      role: "Senior at KIIT",
+      image: "/Kuldeep.jpeg"
     }
   ];
 
@@ -64,7 +64,7 @@ export default function Testimonials() {
 
         return testimonials.slice(nextIndex, nextIndex + 3);
       });
-    }, 3000); // Adjust the interval time to 3 seconds
+    }, 1000); // Adjust the interval time to 3 seconds
     
     return () => clearInterval(interval); // Clear interval on component unmount
   }, []); // Empty dependency array, runs only once when the component mounts
