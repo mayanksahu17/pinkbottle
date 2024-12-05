@@ -148,7 +148,10 @@ const DelegatedJobsTable: React.FC<DelegatedJobsTableProps> = ({ jobData , onDel
   
       {/* Jobs Table */}
       <div className="overflow-x-auto bg-white rounded-md shadow-lg">
-        <table className="w-full text-sm text-left text-gray-500">
+        <table
+          className="w-full text-sm text-left text-gray-500 table-fixed"
+          style={{ tableLayout: 'fixed' }}
+        >
           <thead className="bg-gray-100 text-xs uppercase text-gray-700">
             <tr>
               <th className="p-4 w-12">
@@ -272,6 +275,6 @@ const DelegatedJobsTable: React.FC<DelegatedJobsTableProps> = ({ jobData , onDel
       </div>
     </div>
   );
-  };
+    };
 
 export default DelegatedJobsTable;
