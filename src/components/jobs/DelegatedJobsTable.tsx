@@ -13,15 +13,15 @@ interface DelegatedJobsTableProps {
   jobData: Job[];
   onDeleteJobs: (jobIds: string[]) => void;
   onJobsUpdated: () => void;
+  isLoading: boolean;
 }
 
-const DelegatedJobsTable: React.FC<DelegatedJobsTableProps> = ({ jobData, onDeleteJobs, onJobsUpdated }) => {
+const DelegatedJobsTable: React.FC<DelegatedJobsTableProps> = ({ jobData, onDeleteJobs, onJobsUpdated, isLoading }) => {
   const [jobs, setJobs] = useState<Job[]>([]);
   const [selectedJobs, setSelectedJobs] = useState<string[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [jobsPerPage, setJobsPerPage] = useState(10);
   const [searchTerm, setSearchTerm] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     setJobs(jobData);
@@ -239,3 +239,4 @@ const DelegatedJobsTable: React.FC<DelegatedJobsTableProps> = ({ jobData, onDele
 };
 
 export default DelegatedJobsTable;
+

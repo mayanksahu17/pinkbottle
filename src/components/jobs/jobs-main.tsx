@@ -22,6 +22,7 @@ const JobsMain: React.FC = () => {
   const [savedJobs, setSavedJobs] = useState<Job[]>([]);
   const [delegatedJobs, setDelegatedJobs] = useState<Job[]>([]);
   const [showNotification, setShowNotification] = useState(false);
+  const [isLoadingDelegatedJobs, setIsLoadingDelegatedJobs] = useState(true);
 
   const fetchSavedJobs = useCallback(async () => {
     try {
@@ -40,6 +41,7 @@ const JobsMain: React.FC = () => {
   }, []);
 
   const fetchDelegatedJobs = useCallback(async () => {
+    setIsLoadingDelegatedJobs(true);
     try {
       const response = await fetch("/api/delegatedjobs", {
         method: "GET",
@@ -53,6 +55,8 @@ const JobsMain: React.FC = () => {
     } catch (error) {
       console.error("Failed to fetch delegated jobs:", error);
       setDelegatedJobs([]);
+    } finally {
+      setIsLoadingDelegatedJobs(false);
     }
   }, []);
 
@@ -112,6 +116,7 @@ const JobsMain: React.FC = () => {
           jobData={delegatedJobs}
           onDeleteJobs={handleDeleteDelegatedJobs}
           onJobsUpdated={handleJobsUpdated}
+          isLoading={isLoadingDelegatedJobs}
         />
       ),
     },
