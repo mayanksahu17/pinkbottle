@@ -19,7 +19,7 @@ interface Job {
 }
 
 const JobsMain: React.FC = () => {
-  const [savedJobs, setSavedJobs] = useState<Job[]>([]);
+  const [savedJobs, setSavedJobs] = useState<Job[]>([]); // Ensure savedJobs is always an array
   const [delegatedJobs, setDelegatedJobs] = useState<Job[]>([]);
   const [showNotification, setShowNotification] = useState(false);
   const [isLoadingDelegatedJobs, setIsLoadingDelegatedJobs] = useState(true);
@@ -34,9 +34,17 @@ const JobsMain: React.FC = () => {
         },
       });
       const data = await response.json();
-      setSavedJobs(data);
+      
+      // Validate the response to ensure it's an array
+      if (Array.isArray(data)) {
+        setSavedJobs(data);
+      } else {
+        console.error("Invalid saved jobs response:", data);
+        setSavedJobs([]); // Fallback to an empty array
+      }
     } catch (error) {
       console.error("Failed to fetch saved jobs:", error);
+      setSavedJobs([]); // Fallback to an empty array on error
     }
   }, []);
 
@@ -51,10 +59,12 @@ const JobsMain: React.FC = () => {
         },
       });
       const data = await response.json();
+
+      // Validate the response to ensure it's an array
       setDelegatedJobs(Array.isArray(data) ? data : []);
     } catch (error) {
       console.error("Failed to fetch delegated jobs:", error);
-      setDelegatedJobs([]);
+      setDelegatedJobs([]); // Fallback to an empty array on error
     } finally {
       setIsLoadingDelegatedJobs(false);
     }
@@ -104,12 +114,12 @@ const JobsMain: React.FC = () => {
 
   const tabs = [
     {
-      title: `Saved (${savedJobs.length})`,
+      title: `Saved (${savedJobs.length || 0})`, // Ensure savedJobs.length is never undefined
       value: "jobs1",
       content: <SavedJobsTable jobData={savedJobs} />,
     },
     {
-      title: `Delegated (${delegatedJobs.length})`,
+      title: `Delegated (${delegatedJobs.length || 0})`, // Ensure delegatedJobs.length is never undefined
       value: "jobs2",
       content: (
         <DelegatedJobsTable
@@ -166,4 +176,3 @@ const JobsMain: React.FC = () => {
 };
 
 export default JobsMain;
-
