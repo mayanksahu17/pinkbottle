@@ -12,7 +12,7 @@ import WorksFor from './worksfor';
 import Universities from './Universities';
 import Message from './Message';
 
-// Dynamic imports with SSR disabled for non-critical components
+
 const Help = dynamic(() => import('../GetInTouch/Help'), { ssr: false });
 const Model = dynamic(() => import('../GetInTouch/Model'), { ssr: false });
 const Sidekick = dynamic(() => import('./sidekick'), { ssr: false });

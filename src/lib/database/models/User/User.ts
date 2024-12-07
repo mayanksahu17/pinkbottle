@@ -1,11 +1,11 @@
-// models/Subscription.ts
 import mongoose from 'mongoose';
-import Subscription from '../Subscription/Subscription';
-import { IUser } from './types';
+import { ProfileSchema } from '../Profile/profile';
 
-const userSchema = new mongoose.Schema<IUser>({
+const userSchema = new mongoose.Schema({
   clerkId: {
     type: String,
+    required: true,
+    unique: true,
   },
   firstName: {
     type: String,
@@ -23,10 +23,6 @@ const userSchema = new mongoose.Schema<IUser>({
       enum: ['Paid', 'Unpaid'],
       default: 'Unpaid',
     },
-    // subscription: {
-    //   type: mongoose.Types.ObjectId,
-    //   ref: Subscription
-    // }
   },
   jobs: [
     {
@@ -38,14 +34,9 @@ const userSchema = new mongoose.Schema<IUser>({
       location: String,
     },
   ],
-  resume: {
-    type: String,
-  },
-  coverLetter: {
-    type: String,
-  },
+  profiles: [ProfileSchema], // Use the centralized ProfileSchema
 });
 
-const User =
-  mongoose.models?.User || mongoose.model<IUser>('User', userSchema, 'users');
+const User = mongoose.models?.User || mongoose.model('User', userSchema);
+
 export default User;

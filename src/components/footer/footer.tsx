@@ -1,76 +1,124 @@
 'use client';
 
 import { SVGProps } from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
 
 const Footer = () => {
   return (
-    <footer className="bg-[#f7fafc] py-16 shadow-lg w-full md:px-4" style={{ fontFamily: 'Calibri, sans-serif', boxShadow: '0 -2px 10px rgba(0, 0, 0, 0.1)', position: 'relative', zIndex: '1000' }}>
-      <div className="max-w-7xl mx-auto px-2     sm:px-6 lg:px-4">
-        <div className="flex flex-col md:flex-row justify-between items-center text-center md:text-left space-y-8 md:space-y-0">
-          <div className="flex flex-col items-center md:items-start md:w-1/3 space-y-4">
-            <img src="Hiredeasy.png" alt="HiredEasy Logo" className="h-20" />
-            <p className="text-gray-600 text-sm">
-              Empowering job seekers with smart and efficient tools<br />  to land their dream job.
+    <footer className="w-full bg-[#f7fafc] py-8 shadow-[0_-2px_10px_rgba(0,0,0,0.1)] relative z-[50] font-[Calibri,sans-serif]">
+      <div className="container mx-auto px-4 md:px-6 lg:max-w-7xl lg:px-8">
+        {/* Top Section */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
+          {/* Logo & Description */}
+          <div className="flex flex-col items-center lg:items-start space-y-4">
+            <Image
+              src="/Hiredeasy.png"
+              alt="Hiredeasy Logo"
+              width={160}
+              height={64}
+              className="h-16 w-auto"
+            />
+            <p className="text-gray-600 text-sm text-center lg:text-left">
+              Empowering job seekers with smart and efficient tools to land their dream job.
             </p>
+            {/* Social Media Links */}
             <div className="flex space-x-4">
-              <a href="https://www.instagram.com/hiredeasy/" target="_blank" className="text-gray-600 hover:text-blue-500 transition-colors duration-300">
+              <Link
+                href="https://www.instagram.com/hiredeasy/"
+                target="_blank"
+                className="text-gray-600 hover:text-blue-500 transition-colors duration-300"
+              >
                 <InstagramIcon className="h-6 w-6" />
-              </a>
-              <a href="#" target="_blank" className="text-gray-600 hover:text-blue-700 transition-colors duration-300">
+                <span className="sr-only">Instagram</span>
+              </Link>
+              <Link
+                href="#"
+                target="_blank"
+                className="text-gray-600 hover:text-blue-700 transition-colors duration-300"
+              >
                 <LinkedinIcon className="h-6 w-6" />
-              </a>
-              <a href="#" target="_blank" className="text-gray-600 hover:text-red-500 transition-colors duration-300">
+                <span className="sr-only">LinkedIn</span>
+              </Link>
+              <Link
+                href="#"
+                target="_blank"
+                className="text-gray-600 hover:text-red-500 transition-colors duration-300"
+              >
                 <YouTubeIcon className="h-6 w-6" />
-              </a>
+                <span className="sr-only">YouTube</span>
+              </Link>
             </div>
           </div>
 
-          <div className="flex flex-col md:flex-row space-y-8 md:space-y-0 md:space-x-12 md:w-1/3">
+          {/* Navigation Links */}
+          <div className="grid grid-cols-2 gap-8 text-center lg:text-left">
+            {/* Company Links */}
             <div>
               <h4 className="text-gray-800 text-lg font-semibold">COMPANY</h4>
               <ul className="mt-4 space-y-2">
                 <li>
-                  <a className="text-gray-600 hover:text-gray-800" href="/pricing">Pricing</a>
+                  <Link href="/pricing" className="text-gray-600 hover:text-gray-800">
+                    Pricing
+                  </Link>
                 </li>
                 <li>
-                  <a className="text-gray-600 hover:text-gray-800" href="/Wall">Wall of Love</a>
+                  <Link href="/Wall" className="text-gray-600 hover:text-gray-800">
+                    Wall of Love
+                  </Link>
                 </li>
                 <li>
-                  <a className="text-gray-600 hover:text-gray-800" href="https://hiredeasyco.trackdesk.com/sign-up">Join as an Affiliate</a>
+                  <Link
+                    href="https://hiredeasyco.trackdesk.com/sign-up"
+                    className="text-gray-600 hover:text-gray-800"
+                  >
+                    Join as an Affiliate
+                  </Link>
                 </li>
               </ul>
             </div>
+            {/* Resources Links */}
             <div>
               <h4 className="text-gray-800 text-lg font-semibold">RESOURCES</h4>
               <ul className="mt-4 space-y-2">
                 <li>
-                  {/* <a className="text-gray-600 hover:text-gray-800" href="/blog">Blog</a> */}
+                  <Link href="/blog" className="text-gray-600 hover:text-gray-800">
+                    Blog
+                  </Link>
                 </li>
               </ul>
             </div>
           </div>
 
-          <div className="md:w-1/3 text-center md:text-right">
+          {/* Our Story */}
+          <div className="text-center lg:text-left">
             <h4 className="text-gray-800 text-lg font-semibold">OUR STORY</h4>
             <p className="mt-4 text-gray-600 text-sm">
-              Created by a team of corporate professionals guys who understand the challenges of today's job market.
-              <br />
-                Made without a choice in 
-                  <span className="inline-flex items-center">
-                    <span className="fi fi-us mx-1" style={{ fontSize: '16px' }}>🇺🇸</span>
-                    <span className="fi fi-in mx-1" style={{ fontSize: '16px' }}>🇮🇳</span>
-                  </span>
+              Created by two corporate professionals who understand the challenges of today's job market.
+              <br className="hidden sm:inline" />
+              Made without a choice in{' '}
+              <span className="inline-flex items-center">
+                <span className="mx-1 text-base">🇺🇸</span>
+                <span className="mx-1 text-base">🇮🇳</span>
+              </span>
             </p>
           </div>
         </div>
 
-        <div className="border-t border-gray-200 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
-          <p className="text-gray-600 text-sm">
-            © 2023 HiredEasy.com. All rights reserved.
-          </p>
-          <div className="flex space-x-4 mt-4 md:mt-0">
-            {/* <a href="#" className="text-gray-600 hover:text-gray-800">Privacy Policy</a>
-            <a href="#" className="text-gray-600 hover:text-gray-800">Terms of Service</a> */}
+        {/* Bottom Section */}
+        <div className="border-t border-gray-200 mt-8 pt-8">
+          <div className="flex flex-col lg:flex-row justify-between items-center gap-4">
+            <p className="text-gray-600 text-sm text-center lg:text-left">
+              © {new Date().getFullYear()} HiredEasy.com. All rights reserved.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 sm:gap-8 text-center">
+              <Link href="/privacy" className="text-gray-600 hover:text-gray-800">
+                Privacy Policy
+              </Link>
+              <Link href="/terms" className="text-gray-600 hover:text-gray-800">
+                Terms of Service
+              </Link>
+            </div>
           </div>
         </div>
       </div>
@@ -80,14 +128,12 @@ const Footer = () => {
 
 export default Footer;
 
-function InstagramIcon(props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) {
+// SVG Components remain unchanged
+function InstagramIcon(props: SVGProps<SVGSVGElement>) {
   return (
     <svg
       {...props}
       xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
       strokeWidth="2"
@@ -101,33 +147,11 @@ function InstagramIcon(props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>)
   );
 }
 
-function HeartIcon(props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) {
+function LinkedinIcon(props: SVGProps<SVGSVGElement>) {
   return (
     <svg
       {...props}
       xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
-    </svg>
-  );
-}
-
-function LinkedinIcon(props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
       strokeWidth="2"
@@ -141,14 +165,11 @@ function LinkedinIcon(props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) 
   );
 }
 
-function YouTubeIcon(props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) {
+function YouTubeIcon(props: SVGProps<SVGSVGElement>) {
   return (
     <svg
       {...props}
       xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
       strokeWidth="2"
@@ -160,3 +181,4 @@ function YouTubeIcon(props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) {
     </svg>
   );
 }
+
