@@ -1,118 +1,155 @@
-"use client";
-import React, { useState, useEffect } from "react";
+"use client"
+
+import { useState, useEffect } from "react"
+import { Card, CardContent } from "@/components/ui/card"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Star } from 'lucide-react'
+
+const testimonials = [
+  {
+    stars: 5,
+    quote: "Connecting talent with opportunities makes my day.",
+    author: "Radhika Gupta",
+    role: "Freshman at IIT Indorel",
+    image: "/Radhika.png",
+    company: "TechRecruit India",
+    website: "techrecruit.in"
+  },
+  {
+    stars: 5,
+    quote: "Every successful placement brings immense joy!",
+    author: "Anjali Singh",
+    role: "Senior at KIIT",
+    image: "/Anjali.png",
+    company: "CareerBridge",
+    website: "careerbridge.co.in"
+  },
+  {
+    stars: 5,
+    quote: "Helping clients achieve their goals is my passion!",
+    author: "Deepesh Gupta",
+    role: "Sophomore at Jawaharlal Nehru University",
+    image: "/Depeesh.png",
+    company: "JobConnect",
+    website: "jobconnect.com"
+  },
+  {
+    stars: 4,
+    quote: "Seeing clients thrive in their careers is the best reward.",
+    author: "Yash Jaiswal",
+    role: "Junior at IIT Indore",
+    image: "/Anil.jpg",
+    company: "TalentSpot",
+    website: "talentspot.in"
+  },
+  {
+    stars: 5,
+    quote: "Ensuring client satisfaction is my top priority.",
+    author: "Shagun J",
+    role: "Sophomore at Vellore Institute of Technology",
+    image: "/Shagun.jpg",
+    company: "SkillMatch",
+    website: "skillmatch.co.in"
+  },
+  {
+    stars: 4,
+    quote: "Each success story inspires me to do more.",
+    author: "Kuldeep Vyas",
+    role: "Senior at KIIT",
+    image: "/Kuldeep.jpeg",
+    company: "CareerLaunch",
+    website: "careerlaunch.in"
+  }
+]
+
+const getStarColor = (rating: number) => {
+  switch(rating) {
+    case 1:
+      return "#FF424D" // Red
+    case 2:
+      return "#FF6B3D" // Light Orange
+    case 3:
+      return "#FFAA45" // Orange
+    case 4:
+    case 5:
+      return "#00B67A" // Green
+    default:
+      return "#DCDCE6" // Gray
+  }
+}
 
 export default function Testimonials() {
-  const testimonials = [
-    {
-      stars: 5,
-      quote: "\"Connecting talent with opportunities makes my day.\"",
-      author: "Radhika Gupta",
-      role: "Freshman at IIT Indorel",
-      image: "/Radhika.png"
-    },
-    {
-      stars: 5,
-      quote: "\"Every successful placement brings immense joy!.\"",
-      author: "Anjali Singh",
-      role: "Senior at KIIT",
-      image: "/Anjali.png"
-    },
-    {
-      stars: 5,
-      quote: "\"Helping clients achieve their goals is my passion!\"",
-      author: "Deepesh Gupta",
-      role: "Sophomore at Jawaharlal Nehru University",
-      image: "/Depeesh.png"
-    },
-    {
-      stars: 4,
-      quote: "\"Seeing clients thrive in their careers is the best reward.\"",
-      author: "Yash Jaiswal",
-      role: "Junior at IIT Indore",
-      image: "/Anil.jpg"
-    },
-    {
-      stars: 5,
-      quote: "\"Ensuring client satisfaction is my top priority.\"",
-      author: "Shagun J",
-      role: "Sophomore at Vellore Institute of Technology",
-      image: "/Shagun.jpg"
-    },
-    {
-      stars: 4,
-      quote: "\"Each success story inspires me to do more.\"",
-      author: "Kuldeep Vyas",
-      role: "Senior at KIIT",
-      image: "/Kuldeep.jpeg"
-    }
-  ];
-
-  // State to control the currently displayed testimonials
-  const [currentTestimonials, setCurrentTestimonials] = useState(testimonials.slice(0, 3));
+  const [currentTestimonials, setCurrentTestimonials] = useState(testimonials.slice(0, 3))
   
-  // Effect to rotate the testimonials every 5 seconds
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentTestimonials((prev) => {
-        const startIndex = testimonials.indexOf(prev[0]);
-        let nextIndex = startIndex + 3;
-
-        // Handle wrapping around if nextIndex exceeds the array length
+        const startIndex = testimonials.indexOf(prev[0])
+        let nextIndex = startIndex + 3
         if (nextIndex >= testimonials.length) {
-          nextIndex = 0;
+          nextIndex = 0
         }
-
-        return testimonials.slice(nextIndex, nextIndex + 3);
-      });
-    }, 1000); // Adjust the interval time to 3 seconds
+        return testimonials.slice(nextIndex, nextIndex + 3)
+      })
+    }, 3000)
     
-    return () => clearInterval(interval); // Clear interval on component unmount
-  }, []); // Empty dependency array, runs only once when the component mounts
+    return () => clearInterval(interval)
+  }, [])
 
   return (
-    <section className="bg-white py-20">
-      <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+    <section className="py-20 bg-gray-50">
+      <div className="container px-4 mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {currentTestimonials.map((testimonial, index) => (
-            <div key={index} className="flex flex-col items-center text-center">
-              {/* Render stars */}
-              <div className="flex space-x-1 mb-4">
-                {[...Array(testimonial.stars)].map((_, i) => (
-                  <svg
-                    key={i}
-                    className="w-5 h-5 text-yellow-500"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M10 15l-5.293 3.104 1.423-6.279L0 6.577l6.364-.545L10 0l3.636 5.987 6.364.545-4.13 5.248 1.423 6.279L10 15z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                ))}
-              </div>
+            <Card key={index} className="border border-gray-200 hover:shadow-lg transition-shadow duration-200">
+              <CardContent className="p-6">
+                <div className="flex items-center gap-4 mb-6">
+                  <Avatar className="h-12 w-12 border-2 border-white shadow-sm">
+                    <AvatarImage src={testimonial.image} alt={testimonial.author} />
+                    <AvatarFallback className="bg-gray-100 text-gray-600">
+                      {testimonial.author[0]}
+                    </AvatarFallback>
+                  </Avatar>
+                  <div className="flex flex-col">
+                    <div className="flex gap-0.5 mb-1">
+                      {Array.from({ length: 5 }).map((_, i) => (
+                        <Star
+                          key={i}
+                          className="w-5 h-5"
+                          style={{
+                            fill: i < testimonial.stars ? getStarColor(testimonial.stars) : '#DCDCE6',
+                            stroke: 'none'
+                          }}
+                        />
+                      ))}
+                    </div>
+                    <div className="text-sm text-muted-foreground">
+                      {testimonial.company}
+                    </div>
+                  </div>
+                </div>
 
-              {/* Testimonial Quote */}
-              <p className="text-black text-xl md:text-2xl mb-8 font-normal leading-relaxed">
-                {testimonial.quote}
-              </p>
+                <p className="text-base/relaxed mb-6 text-gray-700">
+                  {testimonial.quote}
+                </p>
 
-              {/* Author Details */}
-              <div className="mt-auto">
-                <img
-                  src={testimonial.image}
-                  alt={testimonial.author}
-                  className="w-16 h-16 rounded-full mx-auto mb-4"
-                />
-                <div className="text-black font-medium">{testimonial.author}</div>
-                <div className="text-gray-400 text-sm">{testimonial.role}</div>
-              </div>
-            </div>
+                <div className="flex items-center justify-between pt-4 border-t border-gray-100">
+                  <div>
+                    <div className="font-medium text-gray-900">{testimonial.author}</div>
+                    <div className="text-sm text-muted-foreground">
+                      {testimonial.role}
+                    </div>
+                  </div>
+                  <div className="text-sm text-muted-foreground">
+                    {testimonial.website}
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
           ))}
         </div>
       </div>
     </section>
-  );
+  )
 }
+
