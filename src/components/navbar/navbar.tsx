@@ -21,8 +21,8 @@ const Navbar = ({ onTalkToUsClick }: { onTalkToUsClick: () => void }) => {
 
   return (
     <header className="fixed top-2 left-0 right-0 z-50 px-4">
-      <div className="max-w-2xl mx-auto">
-        <div className="flex flex-col items-center justify-between p-2 bg-green-100 border border-gray-200 rounded-full shadow-lg">
+      <div className="max-w-5xl mx-auto"> {/* Increased max width */}
+        <div className="flex flex-col items-center justify-between p-4 bg-green-100 border border-gray-200 rounded-full shadow-lg">
           {/* Top Row: Logo and Navigation */}
           <div className="flex items-center justify-between w-full">
             <Link href="/">
@@ -42,23 +42,23 @@ const Navbar = ({ onTalkToUsClick }: { onTalkToUsClick: () => void }) => {
             </button>
 
             {/* Desktop Navigation */}
-            <nav className="hidden md:flex items-center space-x-4">
+            <nav className="hidden md:flex items-center space-x-6">
               <NavLink href="/about">About Us</NavLink>
               <NavLink href="/Wall">Wall of Love</NavLink>
               <NavLink href="/pricing">Pricing</NavLink>
               <Link href="/" passHref>
-                <span className="text-sm font-medium bg-green-600 text-white py-1 px-3 rounded-full hover:bg-green-700 cursor-pointer transition-colors duration-200">
+                <span className="text-sm font-medium bg-green-600 text-white py-1 px-4 rounded-full hover:bg-green-700 cursor-pointer transition-colors duration-200">
                   Try Copilot Free
                 </span>
               </Link>
             </nav>
 
             {/* User Controls */}
-            <div className="hidden md:flex items-center space-x-2">
+            <div className="hidden md:flex items-center space-x-4">
               {user ? (
                 <>
                   <Link href="/dashboard" passHref>
-                    <span className="text-sm font-medium text-gray-700 bg-white border border-gray-300 hover:border-green-500 rounded-md py-1 px-3 cursor-pointer shadow-sm hover:shadow transition-all duration-150 ease-in-out transform hover:-translate-y-0.5">
+                    <span className="text-sm font-medium text-gray-700 bg-white border border-gray-300 hover:border-green-500 rounded-md py-1 px-4 cursor-pointer shadow-sm hover:shadow transition-all duration-150 ease-in-out transform hover:-translate-y-0.5">
                       Dashboard
                     </span>
                   </Link>
@@ -74,7 +74,7 @@ const Navbar = ({ onTalkToUsClick }: { onTalkToUsClick: () => void }) => {
           </div>
 
           {/* Ready to get a job banner */}
-          <div className="mt-2">
+          <div className="mt-2 text-center">
             <p className="text-base font-medium text-gray-800 animate-bounce">
               Ready to get a Job?
               <a
