@@ -1,18 +1,29 @@
-"use client"
+"use client";
 
-import { motion } from "framer-motion"
-import Link from "next/link"
-import Image from "next/image"
-import { Briefcase, Search, FileText, Award, Users, Laptop, Coffee, BarChart, Mail, ChevronRight } from 'lucide-react'
+import { motion } from "framer-motion";
+import Link from "next/link";
+import Image from "next/image";
+import {
+  Briefcase,
+  Search,
+  FileText,
+  Award,
+  Users,
+  Laptop,
+  Coffee,
+  BarChart,
+  Mail,
+  ChevronRight,
+} from "lucide-react";
 
 const FloatingElement = ({
   icon: Icon,
   className,
   size = 24,
 }: {
-  icon: React.ElementType
-  className?: string
-  size?: number
+  icon: React.ElementType;
+  className?: string;
+  size?: number;
 }) => {
   return (
     <motion.div
@@ -31,12 +42,12 @@ const FloatingElement = ({
     >
       <Icon size={size} />
     </motion.div>
-  )
-}
+  );
+};
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-white text-black overflow-hidden">
+    <div className="min-h-screen bg-white text-black overflow-hidden pt-[80px]">
       <div className="container px-4 mx-auto">
         <section className="relative min-h-screen flex items-center">
           {/* Background floating elements */}
@@ -78,8 +89,8 @@ export default function Home() {
                 transition={{ duration: 0.8, delay: 0.4 }}
                 className="text-xl text-gray-600 mb-12"
               >
-                Our assistants help you get more interviews and ace them for top companies like Google,
-                Amazon, McKinsey and more.
+                Our assistants help you get more interviews and ace them for top companies like
+                Google, Amazon, McKinsey and more.
               </motion.p>
 
               <motion.div
@@ -151,6 +162,5 @@ export default function Home() {
         </section>
       </div>
     </div>
-  )
+  );
 }
-

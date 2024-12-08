@@ -21,14 +21,15 @@ const Navbar = ({ onTalkToUsClick }: { onTalkToUsClick: () => void }) => {
 
   return (
     <header className="fixed top-2 left-0 right-0 z-50 px-4">
-      <div className="max-w-5xl mx-auto"> {/* Increased max width */}
-        <div className="flex flex-col items-center justify-between p-4 bg-green-100 border border-gray-200 rounded-full shadow-lg">
+      <div className="max-w-5xl mx-auto">
+        {/* Container for top row with reduced padding */}
+        <div className="flex flex-col items-center justify-between py-2 bg-green-100 border border-gray-200 rounded-full shadow-lg">
           {/* Top Row: Logo and Navigation */}
           <div className="flex items-center justify-between w-full">
             <Link href="/">
               <img
                 alt="Hiredeasy Logo"
-                className="h-9 w-auto cursor-pointer"
+                className="h-7 w-auto cursor-pointer" // Adjusted height
                 src="/Hiredeasy.png"
               />
             </Link>
@@ -47,7 +48,7 @@ const Navbar = ({ onTalkToUsClick }: { onTalkToUsClick: () => void }) => {
               <NavLink href="/Wall">Wall of Love</NavLink>
               <NavLink href="/pricing">Pricing</NavLink>
               <Link href="/" passHref>
-                <span className="text-sm font-medium bg-green-600 text-white py-1 px-4 rounded-full hover:bg-green-700 cursor-pointer transition-colors duration-200">
+                <span className="text-sm font-medium bg-green-600 text-white py-1.5 px-4 rounded-full hover:bg-green-700 cursor-pointer transition-colors duration-200">
                   Try Copilot Free
                 </span>
               </Link>
@@ -58,7 +59,7 @@ const Navbar = ({ onTalkToUsClick }: { onTalkToUsClick: () => void }) => {
               {user ? (
                 <>
                   <Link href="/dashboard" passHref>
-                    <span className="text-sm font-medium text-gray-700 bg-white border border-gray-300 hover:border-green-500 rounded-md py-1 px-4 cursor-pointer shadow-sm hover:shadow transition-all duration-150 ease-in-out transform hover:-translate-y-0.5">
+                    <span className="text-sm font-medium text-gray-700 bg-white border border-gray-300 hover:border-green-500 rounded-md py-1.5 px-4 cursor-pointer shadow-sm hover:shadow transition-all duration-150 ease-in-out transform hover:-translate-y-0.5">
                       Dashboard
                     </span>
                   </Link>
