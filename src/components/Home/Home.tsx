@@ -79,7 +79,6 @@ const HomePage = () => {
     <Navbar onTalkToUsClick={() => setShowForm(true)} />
 
         <FrontMain />
-        <Testimonials />
         <Sponsor />
         <IncreaseResult />
         

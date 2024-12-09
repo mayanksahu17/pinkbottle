@@ -1,119 +1,118 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
-import AnimatedLogoGrid from '../ui/animated-logo-grid'
+import React, { useState, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { ArrowRight, GraduationCap, Building, Briefcase } from 'lucide-react'
+import { ArrowRight } from 'lucide-react'
+import { UniversityGrid } from '../../components/ui/animated-logo-grid'
 
 const stats = [
-  { icon: GraduationCap, label: "Universities", value: "25+" },
-  { icon: Building, label: "Partner Companies", value: "100+" },
-  { icon: Briefcase, label: "Jobs Secured", value: "600+" },
+  { label: "Universities", value: "25+" },
+  { label: "Partner Companies", value: "100+" },
+  { label: "Jobs Secured", value: "600+" },
 ]
 
-const Universities: React.FC = () => {
-  const [isExpanded, setIsExpanded] = useState(false)
-  const [activeStatIndex, setActiveStatIndex] = useState(0)
+const contentSections = [
+  {
+    title: "Transforming Education into Opportunity",
+    description: "Our program bridges the gap between academia and industry, helping students from prestigious universities launch successful careers."
+  },
+  {
+    title: "Empowering the Next Generation",
+    description: "Through strategic partnerships and comprehensive training, we've created a pathway to success for tomorrow's industry leaders."
+  },
+  {
+    title: "Connecting Talent with Opportunity",
+    description: "We match top university graduates with leading companies, fostering innovation and driving economic growth."
+  }
+]
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setActiveStatIndex((prev) => (prev + 1) % stats.length)
-    }, 3000)
-    return () => clearInterval(interval)
+export default function UniversitiesSection() {
+  const [activeContentIndex, setActiveContentIndex] = useState(0)
+
+  const handleLeftColumnChange = useCallback(() => {
+    setActiveContentIndex((prev) => (prev + 1) % contentSections.length)
   }, [])
 
   return (
-    <section className="relative overflow-hidden">
-      {/* Background decoration */}
-      <div className="absolute inset-0 bg-gradient-to-br from-[#faf8f2] to-white" />
-      <motion.div
-        className="absolute inset-0 opacity-20"
+    <section className="relative overflow-hidden bg-white">
+      <motion.div 
+        className="absolute inset-0 opacity-10"
         style={{
-          backgroundImage: 'radial-gradient(circle at 2px 2px, purple 1px, transparent 0)',
-          backgroundSize: '40px 40px',
+          backgroundImage: 'radial-gradient(circle at 2px 2px, #6b21a8 1px, transparent 0)',
+          backgroundSize: '32px 32px',
         }}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 0.2 }}
-        transition={{ duration: 1 }}
+        animate={{
+          backgroundPositionY: ["0%", "100%"],
+        }}
+        transition={{
+          duration: 20,
+          ease: "linear",
+          repeat: Infinity,
+        }}
       />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
             className="relative z-10"
           >
-            <motion.div
-              className="absolute -left-4 -top-4 w-20 h-20 bg-purple-200 rounded-full opacity-20"
-              animate={{
-                scale: [1, 1.2, 1],
-                rotate: [0, 90, 0],
-              }}
-              transition={{
-                duration: 4,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-            />
-
-            <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-8">
-              Transforming Education into Opportunity
-            </h2>
-
             <AnimatePresence mode="wait">
               <motion.div
-                key={activeStatIndex}
+                key={activeContentIndex}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
-                className="flex items-center space-x-4 mb-8"
+                transition={{ duration: 0.5 }}
               >
-                {React.createElement(stats[activeStatIndex].icon, {
-                  className: "w-8 h-8 text-purple-500",
-                })}
-                <div>
-                  <div className="text-3xl font-bold text-purple-600">
-                    {stats[activeStatIndex].value}
-                  </div>
-                  <div className="text-gray-600">
-                    {stats[activeStatIndex].label}
-                  </div>
+                <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-8">
+                  {contentSections[activeContentIndex].title}
+                </h2>
+                <p className="text-lg text-gray-600 mb-8">
+                  {contentSections[activeContentIndex].description}
+                </p>
+              </motion.div>
+            </AnimatePresence>
+
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={activeContentIndex}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.4 }}
+                className="mb-8"
+              >
+                <div className="text-4xl font-bold text-purple-600">
+                  {stats[activeContentIndex].value}
+                </div>
+                <div className="text-xl text-gray-600">
+                  {stats[activeContentIndex].label}
                 </div>
               </motion.div>
             </AnimatePresence>
 
-            <motion.div
-              initial={{ height: 0 }}
-              animate={{ height: isExpanded ? "auto" : 0 }}
-              transition={{ duration: 0.5 }}
-              className="overflow-hidden"
+            <motion.a
+              href="#learn-more"
+              className="inline-flex items-center space-x-2 text-purple-600 font-semibold hover:text-purple-700"
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
             >
-              <p className="text-lg text-gray-600 mb-8">
-                Our program bridges the gap between academia and industry, helping students from prestigious universities launch successful careers. Through strategic partnerships and comprehensive training, we've created a pathway to success for the next generation of professionals.
-              </p>
-            </motion.div>
-
-            <motion.button
-              className="group inline-flex items-center space-x-2 text-purple-600 font-semibold"
-              onClick={() => setIsExpanded(!isExpanded)}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <span>{isExpanded ? "Read less" : "Read more"}</span>
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </motion.button>
+              <span>Learn more</span>
+              <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />
+            </motion.a>
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
+            initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
             className="relative z-10"
           >
-            <div className="h-[600px] w-full">
-              <AnimatedLogoGrid />
+            <div className="aspect-square w-full">
+              <UniversityGrid onLeftColumnChange={handleLeftColumnChange} />
             </div>
           </motion.div>
         </div>
@@ -121,6 +120,4 @@ const Universities: React.FC = () => {
     </section>
   )
 }
-
-export default Universities
 

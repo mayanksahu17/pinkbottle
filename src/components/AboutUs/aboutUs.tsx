@@ -221,8 +221,8 @@ const Aboutus = () => {
         </section>
       </main>
       <ModularSolutions />
-      <InfiniteMovingCardsDemo/>
       <MarketingSection/>
+      <InfiniteMovingCardsDemo/>
       <Footer />
     </div>
   );

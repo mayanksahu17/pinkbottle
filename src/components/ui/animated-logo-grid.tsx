@@ -1,6 +1,7 @@
 'use client'
-import React, { useState, useEffect } from 'react'
-import { motion } from 'framer-motion'
+
+import React, { useState, useEffect, useCallback } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 
 const logos = [
   "CalState.jpeg", "UF.png", "BostonUniversity.gif", "USSA.png", "RIT.png",
@@ -9,62 +10,78 @@ const logos = [
   "Pacelogo.png"
 ]
 
-const AnimatedLogoGrid: React.FC = () => {
-  const [currentLogos, setCurrentLogos] = useState<string[]>(
-    Array(20).fill('').map(() => logos[Math.floor(Math.random() * logos.length)])
+const GRID_COLS = 4
+const GRID_ROWS = 4
+
+export function UniversityGrid({ onLeftColumnChange }: { onLeftColumnChange: () => void }) {
+  const [currentLogos, setCurrentLogos] = useState(() => 
+    Array(GRID_COLS * GRID_ROWS).fill('').map(() => ({
+      logo: logos[Math.floor(Math.random() * logos.length)],
+      key: Math.random(),
+    }))
   )
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      // Change 7-8 random logos at once
-      const logoIndicesToChange = new Set<number>()
-      while (logoIndicesToChange.size < 8) {
-        logoIndicesToChange.add(Math.floor(Math.random() * 20))
+  const updateLogos = useCallback(() => {
+    setCurrentLogos(prev => {
+      const newLogos = [...prev]
+      // Shift all logos one step to the left
+      for (let i = 0; i < GRID_ROWS; i++) {
+        const rowStart = i * GRID_COLS
+        const removedLogo = newLogos.splice(rowStart, 1)[0]
+        newLogos.splice(rowStart + GRID_COLS - 1, 0, removedLogo)
       }
+      // Replace the rightmost column with new logos
+      for (let i = GRID_COLS - 1; i < newLogos.length; i += GRID_COLS) {
+        newLogos[i] = {
+          logo: logos[Math.floor(Math.random() * logos.length)],
+          key: Math.random(),
+        }
+      }
+      return newLogos
+    })
+    onLeftColumnChange()
+  }, [onLeftColumnChange])
 
-      setCurrentLogos(prev => {
-        const newLogos = [...prev]
-        logoIndicesToChange.forEach(index => {
-          newLogos[index] = logos[Math.floor(Math.random() * logos.length)]
-        })
-        return newLogos
-      })
-    }, 500) // Reduced interval to 500ms for faster changes
-
+  useEffect(() => {
+    const interval = setInterval(updateLogos, 3000)
     return () => clearInterval(interval)
-  }, [])
+  }, [updateLogos])
 
   return (
-    <div className="relative w-full h-full bg-white/50 backdrop-blur-sm rounded-2xl p-8 shadow-xl">
-      <div className="grid grid-cols-4 grid-rows-5 gap-4 w-full h-full">
-        {currentLogos.map((logo, index) => (
-          <motion.div
-            key={`${index}-${logo}`}
-            className="relative bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow p-4"
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.8 }}
-            whileHover={{ scale: 1.05 }}
-            layoutId={`logo-${index}`}
-          >
+    <div className="relative w-full h-full bg-white/40 backdrop-blur-sm rounded-2xl p-6 shadow-xl overflow-hidden">
+      <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-purple-50/50 to-white/50" />
+      
+      <div className="grid grid-cols-4 grid-rows-4 gap-4 w-full h-full relative">
+        <AnimatePresence initial={false}>
+          {currentLogos.map(({ logo, key }, index) => (
             <motion.div
-              className="absolute inset-0 bg-gradient-to-br from-blue-50 to-purple-50 rounded-lg"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 0.5 }}
-            />
-            <motion.img
-              src={logo}
-              alt="University logo"
-              className="w-full h-full object-contain relative z-10"
-              initial={{ rotate: -10 }}
-              animate={{ rotate: 0 }}
-              transition={{ type: "spring", stiffness: 200 }}
-            />
-          </motion.div>
-        ))}
+              key={key}
+              initial={{ opacity: 0, rotateY: 90 }}
+              animate={{ opacity: 1, rotateY: 0 }}
+              exit={{ opacity: 0, rotateY: -90 }}
+              transition={{
+                type: "spring",
+                stiffness: 300,
+                damping: 30,
+                duration: 0.5,
+                delay: (index % GRID_COLS) * 0.1, // Stagger the animation based on column
+              }}
+              className="relative bg-white rounded-lg shadow-sm hover:shadow-md transition-all p-3 group"
+            >
+              <motion.div
+                className="absolute inset-0 bg-gradient-to-br from-purple-50 to-white rounded-lg opacity-0 group-hover:opacity-100 transition-opacity"
+                initial={false}
+                transition={{ duration: 0.2 }}
+              />
+              <motion.img
+                src={logo}
+                alt="University logo"
+                className="w-full h-full object-contain relative z-10"
+              />
+            </motion.div>
+          ))}
+        </AnimatePresence>
       </div>
     </div>
   )
 }
-
-export default AnimatedLogoGrid
