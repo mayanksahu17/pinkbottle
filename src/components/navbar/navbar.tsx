@@ -2,7 +2,7 @@
 
 import { UserButton, useUser } from '@clerk/nextjs';
 import Link from 'next/link';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
 
 const NavLink = ({ href, children }: { href: string; children: React.ReactNode }) => (
@@ -16,8 +16,28 @@ const NavLink = ({ href, children }: { href: string; children: React.ReactNode }
 const Navbar = ({ onTalkToUsClick }: { onTalkToUsClick: () => void }) => {
   const { isSignedIn, user } = useUser();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
+  const [lastScrollTop, setLastScrollTop] = useState(0);
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+      if (scrollTop > lastScrollTop && scrollTop > 50) {
+        // Scrolling down
+        setIsVisible(false);
+      } else if (scrollTop < lastScrollTop || scrollTop < 50) {
+        // Scrolling up
+        setIsVisible(true);
+      }
+      setLastScrollTop(scrollTop <= 0 ? 0 : scrollTop); // For Mobile or negative scrolling
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [lastScrollTop]);
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50">
@@ -74,18 +94,20 @@ const Navbar = ({ onTalkToUsClick }: { onTalkToUsClick: () => void }) => {
         </div>
 
         {/* "Ready to Get a Job?" Section */}
-        <div className="mt-2 px-4 py-2 bg-transparent text-black font-bold text-center">
-          <p className="text-base animate-bounce">
-            Ready to get a Job?{' '}
-            <a
-              href="#"
-              onClick={onTalkToUsClick}
-              className="text-blue-300 font-extrabold underline hover:text-blue-400 transition duration-300 ease-in-out"
-            >
-              Talk to Us!
-            </a>
-          </p>
-        </div>
+        {isVisible && (
+          <div className="mt-2 px-4 py-2 bg-transparent text-black font-bold text-center">
+            <p className="text-base animate-bounce">
+              Ready to get a Job?{' '}
+              <a
+                href="#"
+                onClick={onTalkToUsClick}
+                className="text-blue-300 font-extrabold underline hover:text-blue-400 transition duration-300 ease-in-out"
+              >
+                Talk to Us!
+              </a>
+            </p>
+          </div>
+        )}
 
         {/* Mobile Navigation */}
         {isMenuOpen && (
