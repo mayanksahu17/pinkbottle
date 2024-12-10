@@ -48,7 +48,7 @@ const FloatingElement = ({
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-white text-black flex flex-col justify-center items-center mt-12">
+    <div className="min-h-screen bg-white text-black overflow-x-hidden">
       <div className="container px-4 mx-auto mt-32">
         {/* Hero Section */}
         <section className="relative flex flex-col justify-center items-center text-center min-h-[90vh]">
