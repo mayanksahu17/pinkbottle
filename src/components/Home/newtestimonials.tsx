@@ -1,159 +1,100 @@
-import { useState, useEffect } from "react";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { FaStar } from "react-icons/fa";
+import React from "react";
 
 const testimonials = [
-  {
-    stars: 5,
-    quote: "Connecting talent with opportunities makes my day.",
-    author: "Radhika Gupta",
-    role: "Freshman at IIT Indore",
-    image: "/Radhika.png",
-    company: "TechRecruit India",
-    website: "techrecruit.in",
-  },
-  {
-    stars: 5,
-    quote: "Every successful placement brings immense joy!",
-    author: "Anjali Singh",
-    role: "Senior at KIIT",
-    image: "/Anjali.png",
-    company: "CareerBridge",
-    website: "careerbridge.co.in",
-  },
-  {
-    stars: 5,
-    quote: "Helping clients achieve their goals is my passion!",
-    author: "Deepesh Gupta",
-    role: "Sophomore at Jawaharlal Nehru University",
-    image: "/Depeesh.png",
-    company: "JobConnect",
-    website: "jobconnect.com",
-  },
-  {
-    stars: 4,
-    quote: "Seeing clients thrive in their careers is the best reward.",
-    author: "Yash Jaiswal",
-    role: "Junior at IIT Indore",
-    image: "/Anil.jpg",
-    company: "TalentSpot",
-    website: "talentspot.in",
-  },
-  {
-    stars: 5,
-    quote: "Ensuring client satisfaction is my top priority.",
-    author: "Shagun J",
-    role: "Sophomore at Vellore Institute of Technology",
-    image: "/Shagun.jpg",
-    company: "SkillMatch",
-    website: "skillmatch.co.in",
-  },
-  {
-    stars: 4,
-    quote: "Each success story inspires me to do more.",
-    author: "Kuldeep Vyas",
-    role: "Senior at KIIT",
-    image: "/Kuldeep.jpeg",
-    company: "CareerLaunch",
-    website: "careerlaunch.in",
-  },
+  [
+    {
+      text: "Absolutely revolutionary, a game-changer for our industry. It has streamlined our processes and enhanced our productivity dramatically.",
+      author: "Eva Green",
+      role: "Operations Director",
+    },
+    {
+      text: "It has saved us countless hours. Highly recommended for anyone looking to enhance their efficiency and productivity.",
+      author: "Henry Ford",
+      role: "Operations Analyst",
+    },
+    {
+      text: "It helps us achieve what was once thought impossible. The AI's capabilities are groundbreaking.",
+      author: "Kathy Adams",
+      role: "Innovation Lead",
+    },
+  ],
+  [
+    {
+      text: "I can't imagine going back to how things were before this AI. It has not only improved my work efficiency but also my daily life.",
+      author: "Cathy Lee",
+      role: "Product Manager",
+    },
+    {
+      text: "A robust solution that fits perfectly into our workflow. It has enhanced our team's capabilities and allowed us to tackle more complex projects.",
+      author: "Frank Moore",
+      role: "Project Manager",
+    },
+    {
+      text: "A must-have tool for any professional. It’s revolutionized the way we approach problem-solving and decision-making.",
+      author: "Ivy Wilson",
+      role: "Business Consultant",
+    },
+  ],
+  [
+    {
+      text: "It's incredibly intuitive and easy to use. Even those without technical expertise can leverage its power to improve their workflows.",
+      author: "Mia Turner",
+      role: "Systems Integrator",
+    },
+    {
+      text: "It's the future, now. Adopting this AI has put us years ahead of the competition in terms of operational efficiency and innovation.",
+      author: "Samuel Lee",
+      role: "Futurist",
+    },
+    {
+      text: "It's like having a superpower! This AI tool has given us the ability to do things we never thought possible.",
+      author: "David Wright",
+      role: "Research Scientist",
+    },
+  ],
 ];
 
-const getRandomTestimonial = () => {
-  return testimonials[Math.floor(Math.random() * testimonials.length)];
-};
-
-export default function Testimonials() {
-  const [currentTestimonials, setCurrentTestimonials] = useState([
-    getRandomTestimonial(),
-    getRandomTestimonial(),
-    getRandomTestimonial(),
-  ]);
-  
-  useEffect(() => {
-    const intervals = currentTestimonials.map((_, idx) =>
-      setInterval(() => {
-        setCurrentTestimonials((prev) => {
-          const updated = [...prev];
-          const randomIndex = Math.floor(Math.random() * testimonials.length);
-          updated[idx] = testimonials[randomIndex];
-          return updated;
-        });
-      }, Math.random() * 2000 + 3000) // Random interval between 3-5 seconds
-    );
-  
-    return () => intervals.forEach((interval) => clearInterval(interval));
-  }, []);
-  
-
+const ScrollingTestimonials = () => {
   return (
-    <section className="py-16">
-      <div className="container px-6 mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {currentTestimonials.map((testimonial, index) => (
-            <div
-              key={index}
-              className="p-8"
-            >
-              {/* Star Ratings */}
-              <div className="flex justify-center mb-4 space-x-1">
-                {Array.from({ length: 5 }).map((_, i) => (
-                  <FaStar
-                    key={i}
-                    className={`h-6 w-6 ${
-                      i < testimonial.stars ? "text-amber-400" : "text-gray-300"
-                    }`}
-                    aria-label={i < testimonial.stars ? "Filled star" : "Empty star"}
-                  />
-                ))}
-              </div>
-              {/* Quote */}
-              <p className="text-lg text-center italic text-gray-700 leading-relaxed">
-                "{testimonial.quote}"
-              </p>
+    <div className="bg-white py-16">
+      <h2 className="text-3xl font-bold text-center mb-8">
+        Loved by people all over the universe
+      </h2>
+      <p className="text-lg text-center text-gray-500 mb-12">
+        Every AI is used by millions of people around the globe. Our APIs have
+        fan bases and people fight for us over Twitter.
+      </p>
 
-              {/* Author Details */}
-              <div className="flex items-center justify-center mt-6 space-x-4">
-                <Avatar className="h-14 w-14">
-                  <AvatarImage
-                    src={testimonial.image}
-                    alt={testimonial.author}
-                    className="rounded-full"
-                  />
-                  <AvatarFallback className="bg-gray-100 text-gray-600">
-                    {testimonial.author[0]}
-                  </AvatarFallback>
-                </Avatar>
-                <div className="text-center">
-                  <div className="font-semibold text-gray-900">
+      <div className="grid grid-cols-3 gap-8">
+        {testimonials.map((column, columnIndex) => (
+          <div
+            key={columnIndex}
+            className="overflow-hidden h-72 relative"
+          >
+            <div
+              className={`flex flex-col absolute ${
+                columnIndex % 2 === 0 ? "animate-scroll-up" : "animate-scroll-down"
+              }`}
+            >
+              {/* Duplicate content for seamless scrolling */}
+              {column.concat(column).map((testimonial, index) => (
+                <div
+                  key={index}
+                  className="p-6 bg-white shadow-md rounded-lg space-y-2 mb-4"
+                >
+                  <p className="text-gray-700 italic">"{testimonial.text}"</p>
+                  <div className="text-sm text-gray-900 font-medium">
                     {testimonial.author}
                   </div>
-                  <div className="text-sm text-gray-500">{testimonial.role}</div>
+                  <div className="text-xs text-gray-500">{testimonial.role}</div>
                 </div>
-              </div>
-
-              {/* Company and Website */}
-              <div className="mt-4 text-sm text-center text-gray-500">
-                {testimonial.company}
-                {testimonial.website && (
-                  <span>
-                    {" "}
-                    ·{" "}
-                    <a
-                      href={`https://${testimonial.website}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-blue-500 hover:underline"
-                    >
-                      {testimonial.website}
-                    </a>
-                  </span>
-                )}
-              </div>
+              ))}
             </div>
-          ))}
-        </div>
+          </div>
+        ))}
       </div>
-    </section>
+    </div>
   );
-}
+};
+
+export default ScrollingTestimonials;

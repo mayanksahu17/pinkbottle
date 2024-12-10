@@ -28,8 +28,18 @@ const config: Config = {
         scroll: 'scroll var(--animation-duration, 40s) var(--animation-direction, forwards) linear infinite', // Scroll animation
         'accordion-down': 'accordion-down 0.2s ease-out', // Accordion down animation
         'accordion-up': 'accordion-up 0.2s ease-out', // Accordion up animation
+        // "scroll-up": "scroll-up 10s linear infinite", //added anshul
+        // "scroll-down": "scroll-down 12s linear infinite", //added anshul
       },
       keyframes: {
+        // "scroll-up": {
+        //   "0%": { transform: "translateY(0%)" }, 
+        //   "100%": { transform: "translateY(-100%)" },
+        // },
+        // "scroll-down": {
+        //   "0%": { transform: "translateY(0%)" },
+        //   "100%": { transform: "translateY(100%)" },
+        // },
         shimmer: {
           from: {
             backgroundPosition: '0 0',

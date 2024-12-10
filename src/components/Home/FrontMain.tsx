@@ -316,7 +316,7 @@ export default function Home() {
           transition={{ duration: 0.8, delay: 0.8 }}
           className="relative z-10 py-20"
         >
-          <Testimonials />
+          {/* <Testimonials /> */}
         </motion.div>
       </div>
     </div>
