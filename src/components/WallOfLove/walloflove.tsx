@@ -29,13 +29,13 @@ export default function PremiumWallOfLove() {
       try {
         setIsLoading(true);
         const response = await fetch("/api/testimonials");
-        
+
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
 
         const data: Testimonial[] = await response.json();
-        
+
         if (!data || data.length === 0) {
           setError("No testimonials found.");
         } else {
@@ -52,9 +52,6 @@ export default function PremiumWallOfLove() {
     fetchTestimonials();
   }, []);
 
-  if (isLoading) {
-    return <div className="text-center mt-20">Loading testimonials...</div>;
-  }
   return (
     <div className="min-h-screen bg-gray-50 p-8 sm:p-12 md:p-16">
       <Navbar />
@@ -66,10 +63,15 @@ export default function PremiumWallOfLove() {
         opportunities for professionals across various industries.
       </p>
 
-      {/* Display error message if available */}
-      {error && <p className="text-center text-red-500 mb-8">{error}</p>}
-
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-5 mx-7">
+        {isLoading && !testimonials.length && (
+          <div className="col-span-full text-center text-gray-500">Loading testimonials...</div>
+        )}
+
+        {!isLoading && testimonials.length === 0 && (
+          <div className="col-span-full text-center text-gray-500">No testimonials found.</div>
+        )}
+
         {testimonials.map((testimonial) => (
           <Card
             key={testimonial._id}
@@ -101,7 +103,9 @@ export default function PremiumWallOfLove() {
                         </div>
                       </HoverCardContent>
                     </HoverCard>
-                    <p className="text-xs text-gray-600 truncate">{testimonial.position_at_company_and_location}</p>
+                    <p className="text-xs text-gray-600 truncate">
+                      {testimonial.position_at_company_and_location}
+                    </p>
                   </div>
                 </div>
                 <a
@@ -121,7 +125,9 @@ export default function PremiumWallOfLove() {
             </CardHeader>
             <CardContent className="p-4">
               <ScrollArea className="h-48 pr-4">
-                <p className="text-sm text-gray-700 leading-relaxed">{testimonial.description}</p>
+                <p className="text-sm text-gray-700 leading-relaxed">
+                  {testimonial.description}
+                </p>
               </ScrollArea>
             </CardContent>
           </Card>

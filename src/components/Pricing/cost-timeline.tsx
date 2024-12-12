@@ -19,7 +19,7 @@ export default function CostTimeline() {
       title: "Interview Performance",
       content: (
         <div>
-          <p className="text-neutral-800 dark:text-neutral-200 text-[2rem] font-normal mb-4">
+          <p className="text-neutral-800 dark:text-neutral-200 text-[2rem] font-normal mb-3 mr-5">
             Increase in interviews 5x
           </p>
           <p className="text-neutral-800 dark:text-neutral-200 text-[2rem] font-normal mb-4">

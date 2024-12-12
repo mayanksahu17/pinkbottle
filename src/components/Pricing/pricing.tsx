@@ -6,7 +6,7 @@ import { loadStripe } from '@stripe/stripe-js';
 import Navbar from '../navbar/navbar';
 import Footer from '../footer/footer';
 import CostTimeline from './cost-timeline';
-import { Perspective } from './perspective';
+import PerspectiveCards  from './perspective';
 import { AnimatedTooltip } from "../ui/animated-tooltip";
 
 const people = [
@@ -221,7 +221,7 @@ const PricingUser = () => {
         </div>
       </div>
       <CostTimeline />
-      <Perspective />
+      <PerspectiveCards />
       <Footer />
     </div>
   );

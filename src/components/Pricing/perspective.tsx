@@ -1,4 +1,4 @@
-'use client'
+/*'use client'
 
 import React from 'react'
 import { motion } from 'framer-motion'
@@ -62,7 +62,7 @@ export const Perspective = () => {
       </div>
     </section>
   )
-}
+}*/
  /*
  'use client'
 
@@ -170,3 +170,118 @@ export const Perspective = () => {
   );
 };
 */
+
+'use client'
+
+import React, { useRef, useEffect, useState } from 'react'
+import { motion, useScroll, useTransform } from 'framer-motion'
+import { Card } from '@/components/ui/card'
+import { FileText, Music, Briefcase, GraduationCap } from 'lucide-react'
+
+export default function PerspectiveCards() {
+  const containerRef = useRef<HTMLDivElement>(null)
+  const [containerHeight, setContainerHeight] = useState(0)
+
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "end start"]
+  })
+
+  const gradientHeight = useTransform(scrollYProgress, [0, 1], ["0%", "100%"])
+
+  useEffect(() => {
+    if (containerRef.current) {
+      setContainerHeight(containerRef.current.scrollHeight)
+    }
+  }, [])
+
+  const items = [
+    {
+      icon: <FileText className="h-10 w-10" />,
+      title: "Resume Consultation",
+      description: "Expert guidance for your career journey",
+      cost: "$500/hour",
+    },
+    {
+      icon: <Music className="h-10 w-10" />,
+      title: "Concert Tickets",
+      description: "Premium entertainment experience",
+      cost: "$500",
+    },
+    {
+      icon: <Briefcase className="h-10 w-10" />,
+      title: "Long Weekend Trip",
+      description: "Escape to your dream destination",
+      cost: "$300",
+    },
+    {
+      icon: <GraduationCap className="h-10 w-10" />,
+      title: "University Lecture",
+      description: "Knowledge from industry experts",
+      cost: "$300/hour",
+    },
+  ]
+
+  return (
+    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-950 pl-20">
+      <div className="max-w-4xl mx-auto py-20 px-4" ref={containerRef}>
+        <h2 className="text-4xl md:text-5xl font-bold text-center mb-16 bg-clip-text text-transparent bg-gradient-to-r from-gray-900 to-gray-600 dark:from-gray-100 dark:to-gray-400">
+          To Put Things into Perspective
+        </h2>
+        <div className="relative">
+          <div className="absolute left-8 top-0 bottom-0 w-[2px] bg-gray-200 dark:bg-gray-800" />
+          <motion.div 
+            className="absolute left-8 top-0 w-[2px] bg-gradient-to-b from-purple-500 via-blue-500 to-cyan-500"
+            style={{ height: gradientHeight, originY: 0 }}
+          />
+          
+          <div className="space-y-20">
+            {items.map((item, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, x: -50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ duration: 0.8, delay: index * 0.2 }}
+              >
+                <div className="relative pl-16">
+                  <div className="absolute left-[26px] top-8 -translate-x-1/2 w-6 h-6 rounded-full border-4 border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950" />
+                  
+                  <motion.div
+                    whileHover={{ 
+                      scale: 1.02,
+                      rotateX: 5,
+                      rotateY: 5,
+                      transition: { duration: 0.2 }
+                    }}
+                    className="perspective-1000"
+                  >
+                    <Card className="overflow-hidden bg-white/70 dark:bg-gray-900/70 backdrop-blur-sm border border-gray-200 dark:border-gray-800">
+                      <div className="p-6">
+                        <div className="flex items-center gap-4 mb-4">
+                          <div className="p-3 rounded-lg bg-gray-100 dark:bg-gray-800">
+                            {item.icon}
+                          </div>
+                          <div>
+                            <h3 className="text-xl font-semibold mb-1">{item.title}</h3>
+                            <p className="text-sm text-gray-600 dark:text-gray-400">{item.description}</p>
+                          </div>
+                        </div>
+                        <div className="pt-4 border-t border-gray-200 dark:border-gray-800">
+                          <p className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-gray-900 to-gray-600 dark:from-gray-100 dark:to-gray-400">
+                            {item.cost}
+                          </p>
+                        </div>
+                      </div>
+                    </Card>
+                  </motion.div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+

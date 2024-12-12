@@ -26,7 +26,7 @@ export default function AssistantCard() {
   ]
 
   return (
-    <section className="py-16 bg-[#fafafa]">
+    <section className="py-16 bg-white">
       <h2
         className="text-center text-4xl font-bold text-gray-800 mb-2"
         style={{ fontFamily: 'Josefin Sans, sans-serif' }}

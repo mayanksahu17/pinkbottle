@@ -3,8 +3,8 @@ import React, { useState } from 'react';
 
 const Message = () => {
   return (
-    <section className="bg-[#ffffff] py-8 mb-10">
-      <div className="max-w-2xl mx-auto px-6 text-justify bg-white shadow-lg rounded-lg p-8 bg-gradient-to-r from-gray-100 via-gray-50 to-gray-100">
+    <section className="bg-gray-100 py-8 mt-10 ">
+      <div className="max-w-2xl mx-auto px-6 text-justify bg-white shadow-2xl rounded-lg p-8 bg-gradient-to-r from-white-100 via-gray-50 to-gray-100">
         <h2
           className="text-3xl font-bold mb-8 text-gray-800"
           style={{ fontFamily: 'Calibri, sans-serif' }}

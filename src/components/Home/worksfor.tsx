@@ -2,7 +2,7 @@ import React, {useState} from "react";
 
 const WorksFor = () => {
     return (
-        <div className="bg-white -py-16 mb-32">
+        <div className="bg-gray-100 -py-16 mb-32 mt-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 className="text-3xl font-extrabold text-gray-900">
               We Proudly say, Our clients now works at{' '}

@@ -25,7 +25,7 @@ const resultHome = () => {
             {/* <h1 className="md:text-xl text-xl lg:text-5xl font-bold text-center text-black relative z-20 mt-10">
             
             </h1> */}
-            <h1 className="relative z-10 text-lg md:text-7xl pt-11 from-neutral-100 to-neutral-800  text-center font-sans font-bold">
+            <h1 className="relative z-10 text-lg md:text-7xl pt-11 from-white to-neutral-800  text-center font-sans font-bold">
             <Cover>91% Increase in Calls with HiredEasy </Cover>
         </h1>
             <div className="w-[4rem] h-4 relative">
@@ -44,7 +44,7 @@ const resultHome = () => {
             </div>
 
             <section
-        className="py-16"
+        className="py-8"
         style={{ fontFamily: 'Calibri, sans-serif' }}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -220,7 +220,7 @@ const resultHome = () => {
         </div>
       </section>
           </div>
-      <div className="mt-10">
+      <div className="mt-2">
         <h2 className="text-3xl font-bold text-gray-800 text-center">
           Our results speak for
           <br /> themselves.
@@ -270,7 +270,7 @@ const resultHome = () => {
         </div>
       </div>
 
-      <section className="bg-white py-10 bg-[#ffffff] mt-5">
+      <section className="bg-white py-5 bg-[#ffffff]">
         <div className="max-w-6xl mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mt-10">
             <div>
