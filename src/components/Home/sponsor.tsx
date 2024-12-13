@@ -6,10 +6,10 @@ const Sponsor = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-16">
         {/* Header Section */}
         <div className="flex flex-col items-center text-center mb-10">
-          <h2 className="text-3xl md:text-2xl font-bold text-gray-800">
+          <h2 className="text-3xl md:text-xl font-bold text-gray-800">
             Featured In:
           </h2>
-          <p className="text-gray-600 text-lg mt-4">
+          <p className="text-gray-600 text-sm mt-4">
           Proudly supported by the University of Central Florida and recognized by leading media outlets.
           </p>
         </div>

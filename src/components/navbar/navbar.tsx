@@ -13,7 +13,7 @@ const NavLink = ({ href, children }: { href: string; children: React.ReactNode }
   </Link>
 );
 
-const Navbar = ({ onTalkToUsClick }: { onTalkToUsClick: () => void }) => {
+const Navbar = () => {
   const { isSignedIn, user } = useUser();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
@@ -38,6 +38,11 @@ const Navbar = ({ onTalkToUsClick }: { onTalkToUsClick: () => void }) => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, [lastScrollTop]);
+
+  const handleTalkToUsClick = () => {
+    alert('Talk to Us form or modal would appear here.');
+    // Replace the alert with your modal display logic
+  };
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50">
@@ -100,7 +105,7 @@ const Navbar = ({ onTalkToUsClick }: { onTalkToUsClick: () => void }) => {
               Ready to get a Job?{' '}
               <a
                 href="#"
-                onClick={onTalkToUsClick}
+                onClick={handleTalkToUsClick}
                 className="text-blue-300 font-extrabold underline hover:text-blue-400 transition duration-300 ease-in-out"
               >
                 Talk to Us!

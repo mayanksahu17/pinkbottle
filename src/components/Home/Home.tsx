@@ -76,7 +76,7 @@ const HomePage = () => {
         className="min-h-screen text-black"
         style={{ backgroundColor: '#FFFFFF' }}
       >
-    <Navbar onTalkToUsClick={() => setShowForm(true)} />
+    <Navbar/>
 
         <FrontMain />
         <Sponsor />
