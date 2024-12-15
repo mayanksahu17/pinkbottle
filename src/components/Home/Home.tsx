@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import Head from 'next/head';
@@ -14,7 +14,7 @@ import Universities from './Universities';
 import Message from './Message';
 import HeroScrollDemo from './HeroScrollDemo';
 import Features from './Features';
-import LazyLoad from './LazyLoad'; // Import the LazyLoad component
+import LazyLoad from './LazyLoad';
 import { FloatingNav } from '../ui/floating-navbar';
 import LogoShowcase from './logo-showcase';
 import Testimonials from './newtestimonials';
@@ -28,6 +28,74 @@ const Sidekick = dynamic(() => import('./sidekick'), { ssr: false });
 const FAQSection = dynamic(() => import('../FAQ/faq'), { ssr: false });
 const Widget = dynamic(() => import('./Widget'), { ssr: false });
 const Testimonial = dynamic(() => import('./Testimonial'), { ssr: false });
+
+const ScrollBackgroundEffect = () => {
+  const [bgColor, setBgColor] = useState('#ffffff')
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.scrollY
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight
+      const scrollFraction = scrollTop / docHeight
+
+      const colors = [
+        '#ffffff', // White
+        '#f8f9fa', // Very light gray
+        '#f1f3f5', // Light grayish blue
+        '#fff5f5', // Very light pink
+        '#fff0f6', // Very light magenta
+        '#f8f0fc', // Very light purple
+        '#f3f0ff', // Very light violet
+        '#edf2ff', // Very light blue
+        '#e7f5ff', // Very light cyan
+        '#e3fafc', // Very light teal
+        '#e6fcf5', // Very light green
+        '#ebfbee', // Very light lime
+        '#f4fce3', // Very light yellow-green
+        '#fff9db', // Very light yellow
+        '#fff4e6'  // Very light orange
+      ];
+
+      // Calculate the current index and mix colors
+      const index = Math.min(Math.floor(scrollFraction * (colors.length - 1)), colors.length - 2)
+      const nextIndex = index + 1
+
+      const color1 = colors[index]
+      const color2 = colors[nextIndex]
+
+      // Interpolate between color1 and color2
+      const interpolate = (start: number, end: number, factor: number) =>
+        Math.round(start + (end - start) * factor).toString(16).padStart(2, '0')
+
+      const mixColors = (c1: string, c2: string, factor: number) => {
+        const [r1, g1, b1] = c1.match(/\w\w/g)!.map((hex) => parseInt(hex, 16))
+        const [r2, g2, b2] = c2.match(/\w\w/g)!.map((hex) => parseInt(hex, 16))
+        return `#${interpolate(r1, r2, factor)}${interpolate(g1, g2, factor)}${interpolate(b1, b2, factor)}`
+      }
+
+      const factor = (scrollFraction * (colors.length - 1)) % 1
+      setBgColor(mixColors(color1, color2, factor))
+    }
+
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  return (
+    <div 
+      style={{ 
+        backgroundColor: bgColor, 
+        transition: 'background-color 0.5s ease', 
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        zIndex: -1
+      }}
+    />
+  )
+}
 
 const HomePage = () => {
   const [showForm, setShowForm] = useState(false);
@@ -72,49 +140,27 @@ const HomePage = () => {
         <link rel="canonical" href="https://hiredeasy.com" />
       </Head>
 
-      <div
-        className="min-h-screen text-black"
-        style={{ backgroundColor: '#FFFFFF' }}
-      >
-    <Navbar/>
-
-        <FrontMain />
-        <Sponsor />
-        <IncreaseResult />
-        
-
-   
-        {/* <EnterpriseShowcase /> //newone not needed */}
-        <WorksFor />  {/* //remove  Done */}
-        <Universities />   {/* //remove  Done */}
-        {/* <ModularSolutions />  //newone not need */}
-        <Features />
-
-        {/* Lazy-loaded components */}
-        <LazyLoad>
+      <div className="relative min-h-screen text-black">
+        <ScrollBackgroundEffect />
+        <div className="relative z-10">
+          <Navbar />
+          <FrontMain />
+          <Sponsor />
+          <IncreaseResult />
+          <WorksFor />
+          <Universities />
+          <Features />
           <Sidekick />
-        </LazyLoad>
-
-        <LazyLoad>
           <Testimonial />
-        </LazyLoad>
-
-        <LazyLoad>
           <FAQSection />
-        </LazyLoad>
-
-        <LazyLoad>
           <Message />
-        </LazyLoad>
-
-        <LazyLoad>
           <Widget />
-        </LazyLoad>
-
-        <Footer />
+          <Footer />
+        </div>
       </div>
     </>
   );
 };
 
 export default HomePage;
+

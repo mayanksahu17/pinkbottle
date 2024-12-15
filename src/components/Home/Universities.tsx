@@ -51,46 +51,35 @@ export default function EnterpriseSection() {
   const [contentIndex, setContentIndex] = useState(0);
 
   useEffect(() => {
-    // Ensure we always have 15 logos, pulling from a larger pool
     setLogos(getUniqueRandomLogos(15, ALL_LOGOS));
   }, []);
 
   function getUniqueRandomLogos(count: number, availableLogos: string[]): string[] {
-    // Shuffle the entire logo array
     const shuffled = [...availableLogos].sort(() => Math.random() - 0.5);
-    
-    // Return exactly the number of logos requested
     return shuffled.slice(0, count);
   }
 
   function swapLogosInGrid() {
     setLogos((prevLogos) => {
-      // Create a copy of current logos to modify
       const remainingLogos = ALL_LOGOS.filter(logo => !prevLogos.includes(logo));
       const newLogos = [...prevLogos];
-      
-      // Randomly choose number of logos to swap (between 3 and 4)
-      const swapCount = Math.floor(Math.random() * 2) + 3; // 3 to 4
+
+      const swapCount = Math.floor(Math.random() * 2) + 3;
       const swapIndices = new Set<number>();
-      
-      // Ensure unique indices to swap
+
       while (swapIndices.size < swapCount) {
         swapIndices.add(Math.floor(Math.random() * newLogos.length));
       }
 
-      // Convert set to array for easier manipulation
       const indicesArray = Array.from(swapIndices);
-      
-      // Replace logos at chosen indices with new logos
       indicesArray.forEach(index => {
         if (remainingLogos.length > 0) {
-          // Pick a random logo from remaining logos
           const newLogoIndex = Math.floor(Math.random() * remainingLogos.length);
           const newLogo = remainingLogos.splice(newLogoIndex, 1)[0];
           newLogos[index] = newLogo;
         }
       });
-      
+
       return newLogos;
     });
   }
@@ -103,7 +92,6 @@ export default function EnterpriseSection() {
   }, []);
 
   useEffect(() => {
-    // Exactly 2 seconds interval for logo swapping
     const interval = setInterval(swapLogosInGrid, 2000);
     return () => clearInterval(interval);
   }, []);
@@ -129,7 +117,6 @@ export default function EnterpriseSection() {
             key={contentIndex}
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -50 }}
             transition={{ duration: 0.5 }}
             className="space-y-6"
           >
@@ -145,38 +132,24 @@ export default function EnterpriseSection() {
                 </div>
               ))}
             </div>
-            <div className="space-y-2 mt-8">
-              <p className="font-semibold">Products used</p>
-              <ul className="text-gray-600">
-                {currentContent.products.map((product, index) => (
-                  <li key={index}>{product}</li>
-                ))}
-              </ul>
-            </div>
           </motion.div>
         </div>
 
-        <div className="lg:w-[70%] bg-white rounded-lg p-4">
-          <div 
-            className="grid grid-rows-3 grid-cols-5 gap-4"
-            style={{ 
-              height: '300px',
-              gridTemplateColumns: 'repeat(5, minmax(0, 1fr))',
-            }}
-          >
+        <div className="lg:w-[70%] bg-transparent rounded-lg p-4">
+          <div className="grid grid-rows-3 grid-cols-5 gap-4">
             {logos.map((logo, index) => (
               <motion.div
                 key={logo + index}
-                initial={{ opacity: 0.8 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0.8 }}
-                transition={{ duration: 0.3 }}
-                className="bg-white p-2 rounded-lg flex items-center justify-center"
+                initial={{ scale: 1 }}
+                animate={{ scale: [1, 0.8, 1.05, 1], opacity: [1, 0.5, 1] }}
+                transition={{
+                  duration: 0.6,
+                  ease: "easeInOut",
+                  times: [0, 0.3, 0.7, 1],
+                }}
+                className="bg-white p-2 rounded-lg flex items-center justify-center shadow-lg"
                 style={{
                   height: '100%',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
                 }}
               >
                 <Image
@@ -185,12 +158,6 @@ export default function EnterpriseSection() {
                   width={80}
                   height={80}
                   className="object-contain max-w-full max-h-full"
-                  style={{
-                    maxWidth: '100%',
-                    maxHeight: '100%',
-                    width: 'auto',
-                    height: 'auto',
-                  }}
                 />
               </motion.div>
             ))}

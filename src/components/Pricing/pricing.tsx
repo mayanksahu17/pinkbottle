@@ -220,7 +220,6 @@ const PricingUser = () => {
           ))}
         </div>
       </div>
-      <CostTimeline />
       <PerspectiveCards />
       <Footer />
     </div>

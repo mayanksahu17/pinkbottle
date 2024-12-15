@@ -4,6 +4,11 @@ import { UserButton, useUser } from '@clerk/nextjs';
 import Link from 'next/link';
 import React, { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
+import dynamic from 'next/dynamic';
+
+// Dynamically importing modal and other components
+const Model = dynamic(() => import('../GetInTouch/Model'), { ssr: false });
+const Help = dynamic(() => import('../GetInTouch/Help'), { ssr: false });
 
 const NavLink = ({ href, children }: { href: string; children: React.ReactNode }) => (
   <Link href={href} passHref>
@@ -18,6 +23,7 @@ const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
   const [lastScrollTop, setLastScrollTop] = useState(0);
+  const [showForm, setShowForm] = useState(false); // State for showing the form modal
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
@@ -26,23 +32,19 @@ const Navbar = () => {
       const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
 
       if (scrollTop > lastScrollTop && scrollTop > 50) {
-        // Scrolling down
-        setIsVisible(false);
+        setIsVisible(false); // Hides navbar on scroll down
       } else if (scrollTop < lastScrollTop || scrollTop < 50) {
-        // Scrolling up
-        setIsVisible(true);
+        setIsVisible(true); // Shows navbar when scrolling up
       }
-      setLastScrollTop(scrollTop <= 0 ? 0 : scrollTop); // For Mobile or negative scrolling
+      setLastScrollTop(scrollTop <= 0 ? 0 : scrollTop); // Prevents negative scroll values
     };
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, [lastScrollTop]);
 
-  const handleTalkToUsClick = () => {
-    alert('Talk to Us form or modal would appear here.');
-    // Replace the alert with your modal display logic
-  };
+  const handleTalkToUsClick = () => setShowForm(true); // Show the modal on click
+  const handleClose = () => setShowForm(false); // Close the modal
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50">
@@ -105,7 +107,7 @@ const Navbar = () => {
               Ready to get a Job?{' '}
               <a
                 href="#"
-                onClick={handleTalkToUsClick}
+                onClick={handleTalkToUsClick} // Trigger the modal here
                 className="text-blue-300 font-extrabold underline hover:text-blue-400 transition duration-300 ease-in-out"
               >
                 Talk to Us!
@@ -147,6 +149,51 @@ const Navbar = () => {
           </div>
         )}
       </div>
+
+      {/* Modal Form (Talk to Us) */}
+      <Model show={showForm} onClose={handleClose}>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-6">
+          <div className="flex flex-col justify-center items-center p-4">
+            <h2 className="text-xl md:text-2xl font-bold text-gray-800 mt-4 text-center">
+              Schedule a Call With Founders
+            </h2>
+            <Link
+              href="https://apply.neetocal.com/meeting-with-nikhil-jain"
+              target="_blank"
+            >
+              <button className="flex items-center justify-center gap-2 px-6 py-2 text-sm md:text-lg font-medium text-primary-foreground bg-primary rounded-full hover:bg-primary-dark transition-all shadow-lg border">
+                <span className="rounded-full bg-white p-2">
+                  <img
+                    src="Nikhil.jpeg"
+                    alt="Nikhil Jain"
+                    className="h-6 w-6"
+                    loading="lazy"
+                  />
+                </span>
+                <span>Schedule a call</span>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="md:ml-1 h-5 w-5 text-gray-400 animate-pulse"
+                >
+                  <path d="m9 18 6-6-6-6"></path>
+                </svg>
+              </button>
+            </Link>
+            <p className="mt-4 text-sm md:text-lg text-center text-gray-600">
+              Schedule a personal call with our founders
+            </p>
+          </div>
+          <Help />
+        </div>
+      </Model>
     </header>
   );
 };

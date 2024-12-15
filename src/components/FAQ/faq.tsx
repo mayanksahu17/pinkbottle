@@ -55,7 +55,7 @@ const FAQSection = () => {
   );
 
   return (
-    <section className="py-16 bg-white">
+    <section className="py-16 bg-transparent">
       <div className="max-w-4xl mx-auto px-1">
         <h2 className="text-5xl font-bold text-center mb-8" style={{ fontFamily: 'Calibri, sans-serif' }}>
             Frequently Asked Questions
