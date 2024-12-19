@@ -8,6 +8,7 @@ import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/h
 import Footer from "../footer/footer";
 import Navbar from "../navbar/navbar";
 import Testimonials from "./review";
+import { LRUCache } from "lru-cache"; // Correct import for LRUCache
 
 interface Testimonial {
   _id: string;
@@ -19,6 +20,12 @@ interface Testimonial {
   description: string;
 }
 
+// Initialize LRU Cache
+const cache = new LRUCache<string, Testimonial[]>({
+  max: 5, // Store up to 5 items in cache
+  ttl: 60 * 1000, // Cache expiry: 1 minute
+});
+
 export default function PremiumWallOfLove() {
   const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -27,6 +34,16 @@ export default function PremiumWallOfLove() {
   useEffect(() => {
     const fetchTestimonials = async () => {
       try {
+        // Check LRU Cache
+        const cachedData = cache.get("testimonials");
+        if (cachedData) {
+          console.log("Serving from LRU cache");
+          setTestimonials(cachedData);
+          setIsLoading(false);
+          return;
+        }
+
+        console.log("Fetching from API...");
         setIsLoading(true);
         const response = await fetch("/api/testimonials");
 
@@ -35,12 +52,10 @@ export default function PremiumWallOfLove() {
         }
 
         const data: Testimonial[] = await response.json();
+        setTestimonials(data);
 
-        if (!data || data.length === 0) {
-          setError("No testimonials found.");
-        } else {
-          setTestimonials(data);
-        }
+        // Save data to LRU Cache
+        cache.set("testimonials", data);
       } catch (error) {
         console.error("Error fetching testimonials:", error);
         setError(error instanceof Error ? error.message : "Failed to fetch testimonials");
@@ -56,11 +71,10 @@ export default function PremiumWallOfLove() {
     <div className="min-h-screen bg-gray-50 p-8 sm:p-12 md:p-16">
       <Navbar />
       <h1 className="text-[5rem] font-bold text-center text-gray-800 mt-5">
-        Our clients <span className="text-red-500 ">❤️</span> us
+        Our clients <span className="text-red-500">❤️</span> us
       </h1>
       <p className="text-center text-gray-600 mb-12 max-w-2xl mx-auto">
-        Discover how HiredEasy has transformed careers and opened doors to new
-        opportunities for professionals across various industries.
+        Discover how HiredEasy has transformed careers and opened doors to new opportunities for professionals across various industries.
       </p>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-5 mx-7">

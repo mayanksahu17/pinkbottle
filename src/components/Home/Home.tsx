@@ -14,12 +14,13 @@ import Universities from './Universities';
 import Message from './Message';
 import HeroScrollDemo from './HeroScrollDemo';
 import Features from './Features';
-import LazyLoad from './LazyLoad';
+import StatsAndCTA from './StatsAndCTA'
 import { FloatingNav } from '../ui/floating-navbar';
 import LogoShowcase from './logo-showcase';
 import Testimonials from './newtestimonials';
 import { EnterpriseShowcase } from '../ui/enterprise-showcase';
 import ModularSolutions from '../ui/dynamicLogos';
+import Call from './call';
 
 // Dynamic imports with SSR disabled for non-critical components
 const Help = dynamic(() => import('../GetInTouch/Help'), { ssr: false });
@@ -43,18 +44,21 @@ const ScrollBackgroundEffect = () => {
         '#f8f9fa', // Very light gray
         '#f1f3f5', // Light grayish blue
         '#fff5f5', // Very light pink
-        '#fff0f6', // Very light magenta
-        '#f8f0fc', // Very light purple
+        '#f8f0fc', // Very light lavender
         '#f3f0ff', // Very light violet
         '#edf2ff', // Very light blue
         '#e7f5ff', // Very light cyan
-        '#e3fafc', // Very light teal
-        '#e6fcf5', // Very light green
-        '#ebfbee', // Very light lime
-        '#f4fce3', // Very light yellow-green
-        '#fff9db', // Very light yellow
-        '#fff4e6'  // Very light orange
+        '#e3fafc', // Very light sky blue
+        '#f0f4f8', // Soft light slate gray
+        '#fdf1f1', // Light rose
+        '#f2f2f2', // Neutral light gray
+        '#fef7f1', // Soft peach cream
+        '#f3f2fc', // Light misty purple
+        '#faf6f9', // Light pinkish gray
+        '#f9f4ff', // Soft lavender blush
+        '#fef3f7', // Light cherry blossom pink
       ];
+      
 
       // Calculate the current index and mix colors
       const index = Math.min(Math.floor(scrollFraction * (colors.length - 1)), colors.length - 2)
@@ -146,7 +150,8 @@ const HomePage = () => {
           <Navbar />
           <FrontMain />
           <Sponsor />
-          <IncreaseResult />
+          <Call/>
+          <StatsAndCTA/>
           <WorksFor />
           <Universities />
           <Features />

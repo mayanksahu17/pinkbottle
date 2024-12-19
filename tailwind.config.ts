@@ -30,6 +30,8 @@ const config: Config = {
         'accordion-up': 'accordion-up 0.2s ease-out', // Accordion up animation
         // "scroll-up": "scroll-up 10s linear infinite", //added anshul
         // "scroll-down": "scroll-down 12s linear infinite", //added anshul
+        float: 'float 3s ease-in-out infinite',
+        moveRightToLeft: 'moveRightToLeft 5s linear infinite',
       },
       keyframes: {
         // "scroll-up": {
@@ -40,6 +42,15 @@ const config: Config = {
         //   "0%": { transform: "translateY(0%)" },
         //   "100%": { transform: "translateY(100%)" },
         // },
+        float: {
+          '0%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-10px)' },
+          '100%': { transform: 'translateY(0)' },
+        },
+        moveRightToLeft: {
+          '0%': { transform: 'translateX(100%)' },
+          '100%': { transform: 'translateX(-100%)' },
+        },
         shimmer: {
           from: {
             backgroundPosition: '0 0',
@@ -69,6 +80,8 @@ const config: Config = {
     addVariablesForColors, // Custom plugin to add CSS variables for colors
   ],
 };
+
+
 
 // Custom plugin to convert Tailwind color palette to CSS variables
 function addVariablesForColors({ addBase, theme }: any) {

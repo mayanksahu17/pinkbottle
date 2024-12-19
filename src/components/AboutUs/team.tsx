@@ -3,7 +3,7 @@
 import { motion } from "framer-motion"
 import { Card, CardContent } from "@/components/ui/card"
 
-export default function team() {
+export default function Team() { // Updated to PascalCase
   const teamMembers = [
     {
       name: "Sarah Wilson",
@@ -73,4 +73,3 @@ export default function team() {
     </section>
   )
 }
-

@@ -2,9 +2,7 @@
 
 import React from 'react'
 import Image from 'next/image'
-import Link from 'next/link'
 import { motion } from 'framer-motion'
-import { BackgroundGradient } from '@/components/ui/background-gradient'
 import { SparklesCore } from "@/components/ui/sparkles"
 import { Cover } from "@/components/ui/cover"
 
@@ -56,6 +54,7 @@ const TestimonialCard: React.FC<{
   gridArea: string
 }> = ({ name, status, description, image, gridArea }) => {
   const isAadvik = gridArea === 'aadvik'
+  const isSadiaOrAshutosh = gridArea === 'sadia1' || gridArea === 'sadia2' || gridArea === 'ashutosh';
   
   return (
     <motion.div 
@@ -74,7 +73,7 @@ const TestimonialCard: React.FC<{
           src={image}
           alt={`${name}'s success story`}
           fill
-          className={`rounded-lg object-cover`}
+          className={`rounded-lg ${isSadiaOrAshutosh ? 'object-contain' : 'object-cover'}`} 
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         />
       </div>
@@ -88,7 +87,7 @@ const TestimonialsGrid = () => {
     <div 
       className="grid grid-cols-1 gap-8 px-4 md:grid-cols-3 md:gap-8 lg:gap-6"
       style={{
-        gridTemplateAreas: `
+        gridTemplateAreas: ` 
           'aadvik sadia1 ashutosh'
           'aadvik sadia2 anshul'
         `,
@@ -100,20 +99,6 @@ const TestimonialsGrid = () => {
         <TestimonialCard key={index} {...testimonial} />
       ))}
     </div>
-  )
-}
-
-// Animated Button Component
-const AnimatedButton: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  return (
-    <motion.button
-      className="relative inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-white bg-gradient-to-r from-blue-600 to-green-500 rounded-full overflow-hidden group"
-      whileHover={{ scale: 1.05 }}
-      whileTap={{ scale: 0.95 }}
-    >
-      <span className="absolute w-0 h-0 transition-all duration-300 ease-out bg-white rounded-full group-hover:w-full group-hover:h-full opacity-10"></span>
-      <span className="relative">{children}</span>
-    </motion.button>
   )
 }
 
@@ -174,69 +159,6 @@ const IncreaseInCalls = () => {
             </motion.div>
           ))}
         </div>
-
-        {/* Call to Action */}
-        <motion.div 
-          className="text-center mt-16"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-        >
-          <h2 className="text-3xl font-bold text-gray-800 mb-6">
-            Ready to get started?
-          </h2>
-          <Link href="/onboarding">
-            <AnimatedButton>
-              <Image
-                src="/Ashwin_jain.png"
-                alt="Custom Image"
-                width={24}
-                height={24}
-                className="mr-2 rounded-full inline-block"
-              />
-              Start your Free Trial
-              <motion.span
-                className="ml-2 inline-block"
-                animate={{ x: [0, 5, 0] }}
-                transition={{ repeat: Infinity, duration: 1.5 }}
-              >
-                →→
-              </motion.span>
-            </AnimatedButton>
-          </Link>
-        </motion.div>
-
-        {/* Statistics Section */}
-        <motion.div 
-          className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
-        >
-          {[
-            {
-              title: "1300+",
-              subtitle: "Landed Full-Time Roles",
-              description: "72% secured full-time positions in USA with strategic applications."
-            },
-            {
-              title: "80x",
-              subtitle: "Less time spent in job search",
-              description: "72% secured roles in 3 months using our streamlined methods."
-            },
-            {
-              title: "600x",
-              subtitle: "Return on Investment",
-              description: "Cut weeks off job search, boosting earnings by $20K-$30K."
-            }
-          ].map((stat, index) => (
-            <BackgroundGradient key={index} className="rounded-2xl p-6 bg-white dark:bg-zinc-900">
-              <h3 className="text-4xl font-bold text-black dark:text-neutral-200 mb-2">{stat.title}</h3>
-              <h4 className="text-xl font-semibold mb-4">{stat.subtitle}</h4>
-              <p className="text-sm text-neutral-600 dark:text-neutral-400">{stat.description}</p>
-            </BackgroundGradient>
-          ))}
-        </motion.div>
       </div>
     </section>
   )

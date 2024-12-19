@@ -15,6 +15,7 @@ import {
   Mail,
   ChevronRight,
 } from 'lucide-react';
+import ScheduleCallButton from '../buttons/schedule-call';
 import Testimonials from './newtestimonials';
 
 const FloatingElement = ({
@@ -144,21 +145,7 @@ export default function Home() {
                   Start Free Trial
                   <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </Link>
-
-                <Link
-                  href="/schedule"
-                  className="inline-flex items-center justify-center gap-2 px-6 py-3 text-lg font-medium text-gray-700 bg-white rounded-full hover:bg-gray-50 transition-all border border-gray-200 shadow-sm group"
-                >
-                  <Image
-                    src="/placeholder.svg"
-                    alt="Avatar"
-                    width={24}
-                    height={24}
-                    className="rounded-full"
-                  />
-                  Schedule a Call
-                  <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                </Link>
+               <ScheduleCallButton/>
               </motion.div>
             </div>
             <div className="flex justify-center items-center gap-8 mt-8">

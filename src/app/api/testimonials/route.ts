@@ -1,33 +1,55 @@
-import { MongoClient } from 'mongodb';
-import { NextRequest, NextResponse } from 'next/server';
+import { MongoClient } from "mongodb";
+import { NextRequest, NextResponse } from "next/server";
+import { LRUCache } from "lru-cache";
 
-const uri = process.env.MONGODB_URI || 'mongodb+srv://mayank0real0world:PbI4kPBE9s5Z7IBA@hired.ecupz.mongodb.net/hr_database?retryWrites=true&w=majority';
+const uri = process.env.MONGODB_URI;
 
-export async function GET(request: NextRequest) {
-  if (!uri) {
-    return NextResponse.json({ error: 'MongoDB URI not configured' }, { status: 500 });
-  }
+if (!uri) throw new Error("MongoDB URI not configured");
 
-  const client = new MongoClient(uri);
+// Initialize MongoDB client
+const client = new MongoClient(uri);
 
+// Set up LRU Cache
+const options = {
+  max: 100, // Maximum items in cache
+  ttl: 60 * 1000, // Cache time-to-live: 1 minute (in milliseconds)
+};
+
+const cache = new LRUCache<string, any>(options);
+
+export async function GET(req: NextRequest) {
   try {
+    // Check if data exists in the cache
+    if (cache.has("testimonials")) {
+      console.log("Serving from cache");
+      return NextResponse.json(cache.get("testimonials"));
+    }
+
+    console.log("Fetching from MongoDB");
     await client.connect();
-    const database = client.db('hiredeasy');
-    const collection = database.collection('testimonials');
+    const database = client.db("hiredeasy");
+    const collection = database.collection("testimonials");
 
-    console.log("Collection ..", collection); 
-    
+    // Query database
+    const testimonials = await collection.find({}).project({
+      _id: 1,
+      client_name: 1,
+      position_at_company_and_location: 1,
+      company_profile: 1,
+      linkedin_url: 1,
+      profile_image_url: 1,
+      description: 1,
+    }).toArray();
 
-    const testimonials = await collection.find().toArray();
+    // Store the result in the cache
+    cache.set("testimonials", testimonials);
 
-    console.log("Testimonials fetched successfully", testimonials); 
-    
-
-    return NextResponse.json(testimonials, { status: 200 });
+    // Return data
+    return NextResponse.json(testimonials);
   } catch (error) {
-    console.error('Testimonials Fetch Error:', error);
+    console.error("Error fetching testimonials:", error);
     return NextResponse.json(
-      { error: 'Failed to retrieve testimonials' }, 
+      { error: "Failed to retrieve testimonials" },
       { status: 500 }
     );
   } finally {
