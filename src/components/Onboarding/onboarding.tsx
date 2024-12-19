@@ -13,7 +13,6 @@ import { HeroParallaxDemo } from "./HeroParallex"
 import { motion, AnimatePresence } from "framer-motion"
 
 export function Onboarding() {
-  // Keeping all the existing state and handlers
   const [isFormValid, setIsFormValid] = useState(false);
   const [currentStep, setCurrentStep] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -47,13 +46,21 @@ export function Onboarding() {
     resumemimetype: ""
   });
 
-  // Keeping all the existing handlers
+  const [errors, setErrors] = useState<{[key: string]: string}>({});
+
   const handleChange = (e: { target: { id: any; value: any } }) => {
     const { id, value } = e.target;
     setFormData(prevState => ({
       ...prevState,
       [id]: value
     }));
+    // Clear error when field is filled
+    if (value.trim() !== '') {
+      setErrors(prevErrors => ({
+        ...prevErrors,
+        [id]: ''
+      }));
+    }
   };
 
   const handleFileChange = (e: { target: { id: any; files: any } }) => {
@@ -69,6 +76,10 @@ export function Onboarding() {
             resume: base64String,
             resumename: file.name,
             resumemimetype: file.type
+          }));
+          setErrors(prevErrors => ({
+            ...prevErrors,
+            resume: ''
           }));
         }
       };
@@ -100,7 +111,7 @@ export function Onboarding() {
 
   const handleFinalSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    if (isFormValid) {
+    if (isFormValid && validateStep(currentStep)) {
       handleSubmit(e);
     }
   };
@@ -109,10 +120,50 @@ export function Onboarding() {
     window.location.href = "https://apply.neetocal.com/meeting-with-nikhil-jain";
   };
 
+  const validateStep = (step: number): boolean => {
+    let stepErrors: {[key: string]: string} = {};
+    let isStepValid = true;
+
+    const validateField = (field: string, value: string) => {
+      if (value.trim() === '') {
+        stepErrors[field] = 'This field is required';
+        isStepValid = false;
+      }
+    };
+
+    switch (step) {
+      case 1:
+        validateField('firstname', formData.firstname);
+        validateField('lastname', formData.lastname);
+        validateField('email', formData.email);
+        validateField('phone', formData.phone);
+        break;
+      case 2:
+        validateField('education', formData.education);
+        validateField('major', formData.major);
+        validateField('graduationyear', formData.graduationyear);
+        break;
+      case 3:
+        validateField('currentrole', formData.currentrole);
+        validateField('currentcompany', formData.currentcompany);
+        validateField('yearsofexperience', formData.yearsofexperience);
+        break;
+      case 4:
+        if (!formData.resume) {
+          stepErrors['resume'] = 'Please upload your resume';
+          isStepValid = false;
+        }
+        break;
+    }
+
+    setErrors(stepErrors);
+    return isStepValid;
+  };
+
   useEffect(() => {
-    const isValid = Object.values(formData).every(value => value !== "" && value !== null);
+    const isValid = Object.values(formData).every(value => value !== "" && value !== null) && Object.values(errors).every(error => error === '');
     setIsFormValid(isValid);
-  }, [formData]);
+  }, [formData, errors]);
 
   const steps = [
     { title: "Personal Info", description: "Basic details about you" },
@@ -189,22 +240,24 @@ export function Onboarding() {
                           <Input
                             id="firstname"
                             placeholder="Alex"
-                            className="bg-gray-800/50 border-gray-700 text-white placeholder:text-gray-500 focus:border-blue-400 focus:ring-blue-400/20"
+                            className={`bg-gray-800/50 border-gray-700 text-white placeholder:text-gray-500 focus:border-blue-400 focus:ring-blue-400/20 ${errors.firstname ? 'border-red-500' : ''}`}
                             value={formData.firstname}
                             onChange={handleChange}
                             required
                           />
+                          {errors.firstname && <p className="text-red-500 text-sm mt-1">{errors.firstname}</p>}
                         </div>
                         <div className="space-y-2">
                           <Label htmlFor="lastname" className="text-gray-300">Last Name</Label>
                           <Input
                             id="lastname"
                             placeholder="Doe"
-                            className="bg-gray-800/50 border-gray-700 text-white placeholder:text-gray-500 focus:border-blue-400 focus:ring-blue-400/20"
+                            className={`bg-gray-800/50 border-gray-700 text-white placeholder:text-gray-500 focus:border-blue-400 focus:ring-blue-400/20 ${errors.lastname ? 'border-red-500' : ''}`}
                             value={formData.lastname}
                             onChange={handleChange}
                             required
                           />
+                          {errors.lastname && <p className="text-red-500 text-sm mt-1">{errors.lastname}</p>}
                         </div>
                       </div>
                       <div className="space-y-2">
@@ -213,11 +266,12 @@ export function Onboarding() {
                           id="email"
                           type="email"
                           placeholder="alex@example.com"
-                          className="bg-gray-800/50 border-gray-700 text-white placeholder:text-gray-500 focus:border-blue-400 focus:ring-blue-400/20"
+                          className={`bg-gray-800/50 border-gray-700 text-white placeholder:text-gray-500 focus:border-blue-400 focus:ring-blue-400/20 ${errors.email ? 'border-red-500' : ''}`}
                           value={formData.email}
                           onChange={handleChange}
                           required
                         />
+                        {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
                       </div>
                       <div className="space-y-2">
                         <Label htmlFor="phone" className="text-gray-300">Phone</Label>
@@ -225,11 +279,12 @@ export function Onboarding() {
                           id="phone"
                           type="tel"
                           placeholder="+1 (555) 555-5555"
-                          className="bg-gray-800/50 border-gray-700 text-white placeholder:text-gray-500 focus:border-blue-400 focus:ring-blue-400/20"
+                          className={`bg-gray-800/50 border-gray-700 text-white placeholder:text-gray-500 focus:border-blue-400 focus:ring-blue-400/20 ${errors.phone ? 'border-red-500' : ''}`}
                           value={formData.phone}
                           onChange={handleChange}
                           required
                         />
+                        {errors.phone && <p className="text-red-500 text-sm mt-1">{errors.phone}</p>}
                       </div>
                     </div>
                   )}
@@ -237,10 +292,16 @@ export function Onboarding() {
                     <div className="space-y-6">
                       <div className="space-y-2">
                         <Label htmlFor="education" className="text-gray-300">Education</Label>
-                        <Select value={formData.education} onValueChange={(value) => setFormData(prevState => ({ ...prevState, education: value }))}>
+                        <Select 
+                          value={formData.education} 
+                          onValueChange={(value) => {
+                            setFormData(prevState => ({ ...prevState, education: value }));
+                            setErrors(prevErrors => ({ ...prevErrors, education: '' }));
+                          }}
+                        >
                           <SelectTrigger
                             id="education"
-                            className="bg-gray-800/50 border-gray-700 text-white"
+                            className={`bg-gray-800/50 border-gray-700 text-white ${errors.education ? 'border-red-500' : ''}`}
                           >
                             <SelectValue placeholder="Select your education level" />
                           </SelectTrigger>
@@ -250,17 +311,19 @@ export function Onboarding() {
                             <SelectItem value="doctorate">PHD</SelectItem>
                           </SelectContent>
                         </Select>
+                        {errors.education && <p className="text-red-500 text-sm mt-1">{errors.education}</p>}
                       </div>
                       <div className="space-y-2">
                         <Label htmlFor="major" className="text-gray-300">Major</Label>
                         <Input
                           id="major"
                           placeholder="Computer Science"
-                          className="bg-gray-800/50 border-gray-700 text-white placeholder:text-gray-500 focus:border-blue-400 focus:ring-blue-400/20"
+                          className={`bg-gray-800/50 border-gray-700 text-white placeholder:text-gray-500 focus:border-blue-400 focus:ring-blue-400/20 ${errors.major ? 'border-red-500' : ''}`}
                           value={formData.major}
                           onChange={handleChange}
                           required
                         />
+                        {errors.major && <p className="text-red-500 text-sm mt-1">{errors.major}</p>}
                       </div>
                       <div className="space-y-2">
                         <Label htmlFor="graduationyear" className="text-gray-300">Graduation Year</Label>
@@ -268,11 +331,12 @@ export function Onboarding() {
                           id="graduationyear"
                           type="number"
                           placeholder="2023"
-                          className="bg-gray-800/50 border-gray-700 text-white placeholder:text-gray-500 focus:border-blue-400 focus:ring-blue-400/20"
+                          className={`bg-gray-800/50 border-gray-700 text-white placeholder:text-gray-500 focus:border-blue-400 focus:ring-blue-400/20 ${errors.graduationyear ? 'border-red-500' : ''}`}
                           value={formData.graduationyear}
                           onChange={handleChange}
                           required
                         />
+                        {errors.graduationyear && <p className="text-red-500 text-sm mt-1">{errors.graduationyear}</p>}
                       </div>
                     </div>
                   )}
@@ -283,22 +347,24 @@ export function Onboarding() {
                         <Input
                           id="currentrole"
                           placeholder="Software Engineer"
-                          className="bg-gray-800/50 border-gray-700 text-white placeholder:text-gray-500 focus:border-blue-400 focus:ring-blue-400/20"
+                          className={`bg-gray-800/50 border-gray-700 text-white placeholder:text-gray-500 focus:border-blue-400 focus:ring-blue-400/20 ${errors.currentrole ? 'border-red-500' : ''}`}
                           value={formData.currentrole}
                           onChange={handleChange}
                           required
                         />
+                        {errors.currentrole && <p className="text-red-500 text-sm mt-1">{errors.currentrole}</p>}
                       </div>
                       <div className="space-y-2">
                         <Label htmlFor="currentcompany" className="text-gray-300">Current Company</Label>
                         <Input
                           id="currentcompany"
                           placeholder="Acme Inc"
-                          className="bg-gray-800/50 border-gray-700 text-white placeholder:text-gray-500 focus:border-blue-400 focus:ring-blue-400/20"
+                          className={`bg-gray-800/50 border-gray-700 text-white placeholder:text-gray-500 focus:border-blue-400 focus:ring-blue-400/20 ${errors.currentcompany ? 'border-red-500' : ''}`}
                           value={formData.currentcompany}
                           onChange={handleChange}
                           required
                         />
+                        {errors.currentcompany && <p className="text-red-500 text-sm mt-1">{errors.currentcompany}</p>}
                       </div>
                       <div className="space-y-2">
                         <Label htmlFor="yearsofexperience" className="text-gray-300">Years of Experience</Label>
@@ -306,11 +372,12 @@ export function Onboarding() {
                           id="yearsofexperience"
                           type="number"
                           placeholder="5"
-                          className="bg-gray-800/50 border-gray-700 text-white placeholder:text-gray-500 focus:border-blue-400 focus:ring-blue-400/20"
+                          className={`bg-gray-800/50 border-gray-700 text-white placeholder:text-gray-500 focus:border-blue-400 focus:ring-blue-400/20 ${errors.yearsofexperience ? 'border-red-500' : ''}`}
                           value={formData.yearsofexperience}
                           onChange={handleChange}
                           required
                         />
+                        {errors.yearsofexperience && <p className="text-red-500 text-sm mt-1">{errors.yearsofexperience}</p>}
                       </div>
                     </div>
                   )}
@@ -318,7 +385,7 @@ export function Onboarding() {
                     <div className="space-y-6">
                       <div className="space-y-2">
                         <Label htmlFor="resume" className="text-gray-300">Upload Resume</Label>
-                        <div className="relative border-2 border-dashed border-gray-700 rounded-xl p-8 flex flex-col items-center justify-center hover:border-blue-400 transition-colors duration-200 bg-gray-800/30">
+                        <div className={`relative border-2 border-dashed rounded-xl p-8 flex flex-col items-center justify-center hover:border-blue-400 transition-colors duration-200 bg-gray-800/30 ${errors.resume ? 'border-red-500' : 'border-gray-700'}`}>
                           <input
                             id="resume"
                             type="file"
@@ -336,6 +403,7 @@ export function Onboarding() {
                           </span>
                           <span className="text-gray-500 text-sm mt-2">PDF, DOC, DOCX up to 10MB</span>
                         </div>
+                        {errors.resume && <p className="text-red-500 text-sm mt-1">{errors.resume}</p>}
                       </div>
                     </div>
                   )}
@@ -356,7 +424,11 @@ export function Onboarding() {
                   <Button
                     type="button"
                     className="px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-400 text-white rounded-full hover:from-blue-700 hover:to-blue-500 focus:ring-2 focus:ring-blue-500/20"
-                    onClick={() => setCurrentStep(currentStep + 1)}
+                    onClick={() => {
+                      if (validateStep(currentStep)) {
+                        setCurrentStep(currentStep + 1);
+                      }
+                    }}
                   >
                     Next
                   </Button>
