@@ -33,16 +33,45 @@ const jobCategories = [
 
 function LeftContent() {
   return (
-    <div className="space-y-4 sm:space-y-6 w-full max-w-[340px] sm:max-w-xl mx-auto lg:mx-0">
-      <div className="inline-flex items-center space-x-2 bg-blue-50 rounded-full px-3 py-1">
-        <span className="text-xs sm:text-sm font-medium text-blue-600">Increase In Call</span>
+    <div className="space-y-8 sm:space-y-12 w-full max-w-[340px] sm:max-w-xl mx-auto lg:mx-0">
+      <div className="space-y-4">
+        <div className="inline-flex items-center space-x-2 bg-blue-50 rounded-full px-3 py-1">
+          <span className="text-xs sm:text-sm font-medium text-blue-600">Job Search Assistance</span>
+        </div>
+        <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-gray-900">
+          We're here for{' '}
+          <span className="relative">
+            every step
+            <span className="absolute bottom-2 left-0 w-full h-2 bg-blue-200/60 -z-10"></span>
+          </span>
+          {' '}of your search.
+        </h2>
+        <p className="text-sm sm:text-base lg:text-lg text-gray-600 max-w-lg">
+          Tell us about your career history and goals. We'll help you craft a standout profile and help you land your dream job.
+        </p>
       </div>
-      <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-gray-900">
-        91% Increase in Calls with HiredEasy
-      </h1>
-      <p className="text-sm sm:text-base lg:text-lg text-gray-600">
-        Our clients start receiving calls within the first month of having our assistants apply. Remarkably, 70% secure a job within one month of joining HiredEasy.
-      </p>
+      
+      <div className="space-y-4">
+        <div className="inline-flex items-center space-x-2 bg-green-50 rounded-full px-3 py-1">
+          <span className="text-xs sm:text-sm font-medium text-green-600">Success Rate</span>
+        </div>
+        <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-gray-900">
+          <span className="relative">
+            91% Increase
+            <span className="absolute bottom-2 left-0 w-full h-2 bg-green-200/60 -z-10"></span>
+          </span>
+          {' '}in Calls with HiredEasy
+        </h2>
+        <p className="text-sm sm:text-base lg:text-lg text-gray-600 max-w-lg">
+          Our clients start receiving calls within the first month of having our assistants apply.
+        </p>
+        <div className="flex items-center space-x-2">
+          <span className="text-3xl sm:text-4xl font-bold text-green-600">70%</span>
+          <p className="text-sm sm:text-base lg:text-lg text-gray-600">
+            secure a job within one month of joining HiredEasy.
+          </p>
+        </div>
+      </div>
     </div>
   )
 }
