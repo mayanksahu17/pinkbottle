@@ -30,7 +30,10 @@ const Sponsor = () => {
               </div>
             </div>
 
-            {/* YourStory Logo */}
+            {/* Vertical Divider */}
+            <div className="h-16 w-px bg-gray-300"></div>
+
+            {/* Other Logos */}
             <div className="h-12 w-32 relative flex justify-center">
               <img
                 src="Yourstory.png"
@@ -40,7 +43,6 @@ const Sponsor = () => {
               />
             </div>
 
-            {/* Financial Express Logo */}
             <div className="h-14 w-36 relative flex justify-center">
               <img
                 src="FinancialExpress.png"
@@ -50,7 +52,6 @@ const Sponsor = () => {
               />
             </div>
 
-            {/* Forbes Logo */}
             <div className="h-12 w-32 relative flex justify-center">
               <img
                 src="Forbes.png"
@@ -60,7 +61,6 @@ const Sponsor = () => {
               />
             </div>
 
-            {/* DNA Logo */}
             <div className="h-12 w-32 relative flex justify-center">
               <img
                 src="DNA.png"
@@ -77,4 +77,3 @@ const Sponsor = () => {
 };
 
 export default Sponsor;
-
