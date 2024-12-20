@@ -54,7 +54,7 @@ export function Onboarding() {
       ...prevState,
       [id]: value
     }));
-    // Clear error when field is filled
+    // Clear specific error when field is filled
     if (value.trim() !== '') {
       setErrors(prevErrors => ({
         ...prevErrors,
@@ -124,29 +124,29 @@ export function Onboarding() {
     let stepErrors: {[key: string]: string} = {};
     let isStepValid = true;
 
-    const validateField = (field: string, value: string) => {
+    const validateField = (field: string, value: string, errorMessage: string) => {
       if (value.trim() === '') {
-        stepErrors[field] = 'This field is required';
+        stepErrors[field] = errorMessage;
         isStepValid = false;
       }
     };
 
     switch (step) {
       case 1:
-        validateField('firstname', formData.firstname);
-        validateField('lastname', formData.lastname);
-        validateField('email', formData.email);
-        validateField('phone', formData.phone);
+        validateField('firstname', formData.firstname, 'First name is required');
+        validateField('lastname', formData.lastname, 'Last name is required');
+        validateField('email', formData.email, 'Email is required');
+        validateField('phone', formData.phone, 'Phone number is required');
         break;
       case 2:
-        validateField('education', formData.education);
-        validateField('major', formData.major);
-        validateField('graduationyear', formData.graduationyear);
+        validateField('education', formData.education, 'Education level is required');
+        validateField('major', formData.major, 'Major is required');
+        validateField('graduationyear', formData.graduationyear, 'Graduation year is required');
         break;
       case 3:
-        validateField('currentrole', formData.currentrole);
-        validateField('currentcompany', formData.currentcompany);
-        validateField('yearsofexperience', formData.yearsofexperience);
+        validateField('currentrole', formData.currentrole, 'Current role is required');
+        validateField('currentcompany', formData.currentcompany, 'Current company is required');
+        validateField('yearsofexperience', formData.yearsofexperience, 'Years of experience is required');
         break;
       case 4:
         if (!formData.resume) {
