@@ -1,14 +1,14 @@
-"use client";
-import React from "react";
+'use client';
+import React from 'react';
 import {
   motion,
   useScroll,
   useTransform,
   useSpring,
   MotionValue,
-} from "framer-motion";
-import Image from "next/image";
-import Link from "next/link";
+} from 'framer-motion';
+import Image from 'next/image';
+import Link from 'next/link';
 
 export const HeroParallax = ({
   products,
@@ -25,7 +25,7 @@ export const HeroParallax = ({
   const ref = React.useRef(null);
   const { scrollYProgress } = useScroll({
     target: ref,
-    offset: ["start start", "end start"],
+    offset: ['start start', 'end start'],
   });
 
   const springConfig = { stiffness: 300, damping: 30, bounce: 100 };
@@ -103,14 +103,17 @@ export const HeroParallax = ({
 
 export const Header = () => {
   return (
-    <div className="max-w-7xl relative mx-auto px-4 w-full left-0 top-0">
-      <h1 className="text-2xl md:text-7xl font-bold dark:text-white">
-        The Ultimate <br /> development studio
+    <div className="max-w-7xl relative mx-auto px-4 w-full left-0 top-0 mt-32">
+      <h1 className="text-3xl md:text-7xl font-extrabold dark:text-white tracking-tight">
+        Your job search made simple, <br />
+        <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-green-500">
+          We’ll take it from here.
+        </span>
       </h1>
-      <p className="max-w-2xl text-base md:text-xl mt-8 dark:text-neutral-200">
-        We build beautiful products with the latest technologies and frameworks.
-        We are a team of passionate developers and designers that love to build
-        amazing products.
+      <div className="mt-4 w-32 h-1 mx-auto bg-gradient-to-r from-blue-500 to-green-500"></div>
+      <p className="max-w-2xl text-base md:text-xl mt-8 leading-relaxed text-gray-1000 dark:text-gray-100 font-medium">
+        Sit back and relax as we filter and apply to jobs for you. <br />
+        Your dream job is just a step away.
       </p>
     </div>
   );
@@ -157,4 +160,3 @@ export const ProductCard = ({
     </motion.div>
   );
 };
-
