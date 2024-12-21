@@ -109,7 +109,7 @@ export default function Home() {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="relative z-10 max-w-2xl"
           >
-            <div className="flex flex-col justify-center items-center text-center">
+            <div className="flex flex-col justify-center items-center text-center mt-4">
               <motion.h1
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}

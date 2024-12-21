@@ -99,7 +99,7 @@ export function FloatingIcons() {
 
   return (
     <div className="relative h-64 sm:h-72 w-full max-w-xl sm:max-w-3xl mx-auto">
-      <div className="absolute inset-0">
+      <div className="absolute inset-0 top-[-80px]">
         {elements.map((element, index) => (
           <FloatingIcon
             key={element.alt || `empty-${index}`}

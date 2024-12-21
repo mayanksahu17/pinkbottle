@@ -10,7 +10,13 @@ import dynamic from 'next/dynamic';
 const Model = dynamic(() => import('../GetInTouch/Model'), { ssr: false });
 const Help = dynamic(() => import('../GetInTouch/Help'), { ssr: false });
 
-const NavLink = ({ href, children }: { href: string; children: React.ReactNode }) => (
+const NavLink = ({
+  href,
+  children,
+}: {
+  href: string;
+  children: React.ReactNode;
+}) => (
   <Link href={href} passHref>
     <span className="text-sm font-medium text-gray-700 hover:text-green-500 cursor-pointer">
       {children}
@@ -29,7 +35,8 @@ const Navbar = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      const scrollTop =
+        window.pageYOffset || document.documentElement.scrollTop;
 
       if (scrollTop > lastScrollTop && scrollTop > 50) {
         setIsVisible(false); // Hides navbar on scroll down
@@ -47,7 +54,7 @@ const Navbar = () => {
   const handleClose = () => setShowForm(false); // Close the modal
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50">
+    <header className="fixed top-0 left-0 right-0 z-50 mt-4">
       <div className="max-w-5xl mx-auto px-4">
         {/* Navbar */}
         <div className="flex items-center justify-between py-2 px-4 bg-green-100/90 border border-gray-200 rounded-full shadow-md backdrop-blur-sm">
@@ -55,7 +62,8 @@ const Navbar = () => {
           <Link href="/">
             <img
               alt="Hiredeasy Logo"
-              className="h-7 w-auto cursor-pointer"
+              className="absolute h-12 w-auto cursor-pointer transition-transform duration-200 hover:scale-110"
+              style={{ top: '50%', transform: 'translateY(-50%)' }}
               src="/Hiredeasy.png"
             />
           </Link>

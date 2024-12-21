@@ -1,8 +1,8 @@
-'use client'
+'use client';
 
-import { FloatingIcons } from './floating-icon'
-import { JobCard } from './job-card'
-import Marquee from 'react-fast-marquee'
+import { FloatingIcons } from './floating-icon';
+import { JobCard } from './job-card';
+import Marquee from 'react-fast-marquee';
 
 const jobCategories = [
   {
@@ -32,7 +32,7 @@ const jobCategories = [
     ],
     cardLogo: '/Hiredeasy.png',
   },
-]
+];
 
 function HeroSection() {
   return (
@@ -53,42 +53,77 @@ function HeroSection() {
                 fill="#3EC0DD"
               />
             </svg>
-          </span>
-          {' '}of your search.
+          </span>{' '}
+          of your search.
         </div>
       </h1>
       <p className="text-xl sm:text-2xl text-slate-600 max-w-3xl mx-auto font-medium">
-        Tell us about your career history and goals. We'll help you craft a standout profile and help you land your dream job.
+        Tell us about your career history and goals. We'll help you craft a
+        standout profile and help you land your dream job.
       </p>
     </div>
-  )
+  );
 }
 
 function LeftContent() {
   return (
     <div className="space-y-8 sm:space-y-12 w-full max-w-[340px] sm:max-w-xl mx-auto lg:mx-0">
       <div className="space-y-4">
-        <div className="inline-flex items-center space-x-2 bg-green-50 rounded-full px-3 py-1">
-          <span className="text-xs sm:text-sm font-medium text-green-600">Success Rate</span>
-        </div>
-        <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-gray-900">
-          <span className="relative">
-            91% Increase
+        <div className="inline-flex items-center space-x-2 bg-green-50 rounded-full px-3 py-1 border border-blue-600 shadow-sm">
+          <span className="text-xs sm:text-sm font-medium text-blue-600">
+            Success Rate
           </span>
-          {' '}in Calls with HiredEasy
+        </div>
+
+        <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-gray-900 relative">
+          <span className="relative inline-block">
+            91% Increase
+            <svg
+              className="absolute -bottom-5 left-0 w-full h-8"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 200 10"
+            >
+              <path
+                d="M4.10469 5.70282C10.9443 4.017 50.5812 2.44003 80.3237 1.55065C110.418 0.450715 120.303 0.812961 136.986 2.52828C150.064 4.29481 148.738 5.59483 130.374 6.22212C100.88 7.28186 0.00182429 7.24952 4.10469 5.70282Z"
+                fill="#3EC0DD"
+              />
+            </svg>
+          </span>
+          <br />
+          <span className="text-gray-800 block mt-2">
+            {' '}
+            in Calls with HiredEasy
+          </span>
         </h2>
+
         <p className="text-sm sm:text-base lg:text-lg text-gray-600 max-w-lg">
-          Our clients start receiving calls within the first month of having our assistants apply.
+          Our clients start receiving calls within the first month of having our
+          assistants apply.
         </p>
         <div className="flex items-center space-x-2">
-          <span className="text-3xl sm:text-4xl font-bold text-green-600">70%</span>
+          <span className="relative inline-block text-4xl">
+            70%
+            <svg
+              className="absolute -bottom-5 left-0 w-full h-10"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 200 10"
+            >
+              <path
+                d="M4.10469 5.70282C10.9443 4.017 50.5812 2.44003 80.3237 1.55065C110.418 0.450715 120.303 0.812961 136.986 2.52828C150.064 4.29481 148.738 5.59483 130.374 6.22212C100.88 7.28186 0.00182429 7.24952 4.10469 5.70282Z"
+                fill="#3EC0DD"
+              />
+            </svg>
+          </span>
+
           <p className="text-sm sm:text-base lg:text-lg text-gray-600">
             secure a job within one month of joining HiredEasy.
           </p>
         </div>
       </div>
     </div>
-  )
+  );
 }
 
 function JobMatches() {
@@ -97,11 +132,21 @@ function JobMatches() {
       <div className="absolute inset-0 rounded-2xl bg-gray-50/80 backdrop-blur-sm shadow-xl" />
       <div className="relative p-3 sm:p-4 lg:p-6">
         <FloatingIcons />
-        <div className="mt-4 overflow-hidden">
+        <div className="overflow-hidden">
+          {' '}
+          {/* Reduced mt-4 to mt-2 */}
+          <div className="relative flex items-center justify-center mb-4">
+            <h2 className="text-xs sm:text-base font-medium text-gray-500 relative">
+              <span className="relative z-10">Personalized Job Matches</span>
+            </h2>
+          </div>
           <Marquee gradient={false} speed={20} className="overflow-hidden">
             <div className="flex">
               {jobCategories.map((category, index) => (
-                <div key={`${category.title}-${index}`} className="flex-shrink-0 px-1.5">
+                <div
+                  key={`${category.title}-${index}`}
+                  className="flex-shrink-0 px-1.5"
+                >
                   <JobCard
                     title={category.title}
                     companies={category.companies}
@@ -112,7 +157,10 @@ function JobMatches() {
             </div>
             <div className="flex">
               {jobCategories.map((category, index) => (
-                <div key={`${category.title}-repeat-${index}`} className="flex-shrink-0 px-1.5">
+                <div
+                  key={`${category.title}-repeat-${index}`}
+                  className="flex-shrink-0 px-1.5"
+                >
                   <JobCard
                     title={category.title}
                     companies={category.companies}
@@ -125,7 +173,7 @@ function JobMatches() {
         </div>
       </div>
     </div>
-  )
+  );
 }
 
 export default function JobMatcher() {
@@ -139,5 +187,5 @@ export default function JobMatcher() {
         </div>
       </div>
     </section>
-  )
+  );
 }

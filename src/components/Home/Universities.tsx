@@ -63,26 +63,27 @@ export default function EnterpriseSection() {
     setLogos((prevLogos) => {
       const remainingLogos = ALL_LOGOS.filter(logo => !prevLogos.includes(logo));
       const newLogos = [...prevLogos];
-
-      const swapCount = Math.floor(Math.random() * 2) + 3;
-      const swapIndices = new Set<number>();
-
-      while (swapIndices.size < swapCount) {
-        swapIndices.add(Math.floor(Math.random() * newLogos.length));
+  
+      const swapIndices = [];
+      while (swapIndices.length < 3) { // Ensure exactly 3 unique swaps
+        const randomIndex = Math.floor(Math.random() * newLogos.length);
+        if (!swapIndices.includes(randomIndex)) {
+          swapIndices.push(randomIndex);
+        }
       }
-
-      const indicesArray = Array.from(swapIndices);
-      indicesArray.forEach(index => {
+  
+      swapIndices.forEach(index => {
         if (remainingLogos.length > 0) {
           const newLogoIndex = Math.floor(Math.random() * remainingLogos.length);
           const newLogo = remainingLogos.splice(newLogoIndex, 1)[0];
           newLogos[index] = newLogo;
         }
       });
-
+  
       return newLogos;
     });
   }
+  
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -92,7 +93,7 @@ export default function EnterpriseSection() {
   }, []);
 
   useEffect(() => {
-    const interval = setInterval(swapLogosInGrid, 2000);
+    const interval = setInterval(swapLogosInGrid, 600);
     return () => clearInterval(interval);
   }, []);
 
