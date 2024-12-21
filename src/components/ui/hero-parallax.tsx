@@ -110,7 +110,7 @@ export const Header = () => {
           We’ll take it from here.
         </span>
       </h1>
-      <div className="mt-4 w-32 h-1 mx-auto bg-gradient-to-r from-blue-500 to-green-500"></div>
+      <div className="w-32 h-1 mx-auto bg-gradient-to-r from-blue-500 to-green-500"></div>
       <p className="max-w-2xl text-base md:text-xl mt-8 leading-relaxed text-gray-1000 dark:text-gray-100 font-medium">
         Sit back and relax as we filter and apply to jobs for you. <br />
         Your dream job is just a step away.

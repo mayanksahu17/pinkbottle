@@ -6,13 +6,13 @@ import Marquee from 'react-fast-marquee'
 
 const jobCategories = [
   {
-    title: 'Senior Roles in Digital Marketing',
+    title: 'Full Time Roles in FAANG',
     companies: [
       { logo: '/float/google.png', name: 'Google' },
       { logo: '/float/meta.png', name: 'Meta' },
       { logo: '/float/amazon.png', name: 'Amazon' },
     ],
-    cardLogo: '/try.jpg',
+    cardLogo: '/Hiredeasy.png',
   },
   {
     title: 'New Product Management Jobs',
@@ -21,7 +21,7 @@ const jobCategories = [
       { logo: '/float/spotify.png', name: 'Spotify' },
       { logo: '/float/apple.png', name: 'Apple' },
     ],
-    cardLogo: '/try.jpg',
+    cardLogo: '/Hiredeasy.png',
   },
   {
     title: 'Internships at Unicorn Startups',
@@ -30,7 +30,7 @@ const jobCategories = [
       { logo: '/float/notion.png', name: 'Notion' },
       { logo: '/float/vercel.png', name: 'Vercel' },
     ],
-    cardLogo: '/try.jpg',
+    cardLogo: '/Hiredeasy.png',
   },
 ]
 
@@ -116,6 +116,7 @@ function JobMatches() {
                   <JobCard
                     title={category.title}
                     companies={category.companies}
+                    cardLogo={category.cardLogo}
                   />
                 </div>
               ))}

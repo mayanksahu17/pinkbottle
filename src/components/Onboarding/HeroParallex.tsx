@@ -8,58 +8,58 @@ export function HeroParallaxDemo() {
 
 export const products = [
   {
-    title: "Moonbeam",
+    title: "BYN Career",
     link: "https://gomoonbeam.com",
     thumbnail:
-      "https://aceternity.com/images/products/thumbnails/new/moonbeam.png",
+      "https://res.cloudinary.com/dmky9t4sr/image/upload/v1734800718/BNYCarrer_vuudav.jpg",
   },
   {
-    title: "Cursor",
+    title: "IBM Career",
     link: "https://cursor.so",
     thumbnail:
-      "https://aceternity.com/images/products/thumbnails/new/cursor.png",
+      "https://res.cloudinary.com/dmky9t4sr/image/upload/v1734800707/IBMCareer_fgqzgi.jpg",
   },
   {
-    title: "Rogue",
+    title: "Spotify Career",
     link: "https://userogue.com",
     thumbnail:
-      "https://aceternity.com/images/products/thumbnails/new/rogue.png",
+      "https://res.cloudinary.com/dmky9t4sr/image/upload/v1734800707/SpotifyCareer_copjdm.jpg",
   },
   {
-    title: "Editorially",
+    title: "Google Career",
     link: "https://editorially.org",
     thumbnail:
-      "https://aceternity.com/images/products/thumbnails/new/editorially.png",
+      "https://res.cloudinary.com/dmky9t4sr/image/upload/v1734800707/GoogleCareer_mq9x1m.jpg",
   },
   {
-    title: "Editrix AI",
+    title: "Netflix Career",
     link: "https://editrix.ai",
     thumbnail:
-      "https://aceternity.com/images/products/thumbnails/new/editrix.png",
+      "https://res.cloudinary.com/dmky9t4sr/image/upload/v1734800707/NetflixCareer_vle3sl.jpg",
   },
   {
     title: "Pixel Perfect",
     link: "https://app.pixelperfect.quest",
     thumbnail:
-      "https://aceternity.com/images/products/thumbnails/new/pixelperfect.png",
+      "https://res.cloudinary.com/dmky9t4sr/image/upload/v1734801375/OracleCareer_dhgaqb.png",
   },
   {
     title: "Algochurn",
     link: "https://algochurn.com",
     thumbnail:
-      "https://aceternity.com/images/products/thumbnails/new/algochurn.png",
+      "https://res.cloudinary.com/dmky9t4sr/image/upload/v1734800707/GoogleCareer_mq9x1m.jpg",
   },
   {
     title: "Aceternity UI",
     link: "https://ui.aceternity.com",
     thumbnail:
-      "https://aceternity.com/images/products/thumbnails/new/aceternityui.png",
+      "https://res.cloudinary.com/dmky9t4sr/image/upload/v1734800707/NetflixCareer_vle3sl.jpg",
   },
   {
     title: "Tailwind Master Kit",
     link: "https://tailwindmasterkit.com",
     thumbnail:
-      "https://aceternity.com/images/products/thumbnails/new/tailwindmasterkit.png",
+      "https://res.cloudinary.com/dmky9t4sr/image/upload/v1734801375/OracleCareer_dhgaqb.png",
   },
   {
     title: "SmartBridge",

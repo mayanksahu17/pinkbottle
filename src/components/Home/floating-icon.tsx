@@ -66,7 +66,7 @@ export function FloatingIcons() {
   if (!mounted) return null
 
   // Background empty boxes (more of them, lower z-index)
-  const emptyBoxes = Array.from({ length: 20 }, (_, i) => ({
+  const emptyBoxes = Array.from({ length: 7 }, (_, i) => ({
     alt:`Empty box ${i}`,
     delay: Math.random(),
     x: (Math.random() - 0.5) * 300,

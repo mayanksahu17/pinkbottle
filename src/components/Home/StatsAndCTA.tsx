@@ -13,21 +13,21 @@ const sectionsData = [
     subtitle: "Landed Full-Time Roles",
     description: "Our clients achieve remarkable results, with 72% securing full-time positions in USA. Impressively, 47% of these roles are obtained through our strategic applications, while the remaining 44% come from leveraging personal networks and individual efforts.",
     bgColor: "#4338CA",
-    image: "/blackrock.svg?height=600&width=550"
+    image: "/Testimonial3.png?height=600&width=550"
   },
   {
     title: "80x",
     subtitle: "Less time spent in job search",
     description: "Our clients achieve remarkable results, with 72% securing full-time positions in just three months. Impressively, 47% of these roles are obtained through our strategic applications, while the remaining 44% come from leveraging personal networks and individual efforts.",
     bgColor: "#2563EB",
-    image: "/cocacola.svg?height=600&width=550"
+    image: "/Testimonial2.png?height=600&width=550"
   },
   {
     title: "600x",
     subtitle: "Return on Investment",
     description: "By cutting weeks off the job search, we help clients gain an extra $20K in earnings. Additionally, receiving multiple offers can boost salaries by an average of $30K, leading to a substantial increase in overall compensation.",
     bgColor: "#059669",
-    image: "/DEShaw.svg?height=600&width=550"
+    image: "/Testimonial1.png?height=600&width=550"
   },
 ]
 
@@ -136,7 +136,7 @@ const Section = ({ data, index }: { data: typeof sectionsData[0], index: number 
         >
           <BackgroundGradient className="rounded-2xl p-4 bg-white dark:bg-zinc-900 shadow-lg">
             {/* Dynamic width and height control via class */}
-            <div className="w-[550px] h-[600px]">
+            <div className="w-[500px] h-[300px]">
               <Image
                 src={data.image}
                 alt={`${data.subtitle} Interface`}

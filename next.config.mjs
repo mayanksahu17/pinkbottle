@@ -9,7 +9,7 @@ const nextConfig = {
   },
   images: {
     dangerouslyAllowSVG: true,
-    domains: ['images.unsplash.com','aceternity.com'],
+    domains: ['images.unsplash.com','aceternity.com', 'res.cloudinary.com'],
   },
 };
 
