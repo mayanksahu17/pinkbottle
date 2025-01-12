@@ -1,6 +1,8 @@
 'use client';
 
 import { SVGProps } from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
 
 const Footer = () => {
   return (
@@ -12,6 +14,7 @@ const Footer = () => {
             <p className="text-gray-600 text-sm">
               Empowering job seekers with smart and efficient tools<br />  to land their dream job.
             </p>
+            {/* Social Media Links */}
             <div className="flex space-x-4">
               <a href="https://www.instagram.com/hiredeasy/" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-blue-500 transition-colors duration-300">
                 <InstagramIcon className="h-6 w-6" />
@@ -21,45 +24,61 @@ const Footer = () => {
               </a>
               <a href="#" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-red-500 transition-colors duration-300">
                 <YouTubeIcon className="h-6 w-6" />
-              </a>
+                <span className="sr-only">YouTube</span>
+              </Link>
             </div>
           </div>
 
-          <div className="flex flex-col md:flex-row space-y-8 md:space-y-0 md:space-x-12 md:w-1/3">
+          {/* Navigation Links */}
+          <div className="grid grid-cols-2 gap-8 text-center lg:text-left">
+            {/* Company Links */}
             <div>
               <h4 className="text-gray-800 text-lg font-semibold">COMPANY</h4>
               <ul className="mt-4 space-y-2">
                 <li>
-                  <a className="text-gray-600 hover:text-gray-800" href="/pricing">Pricing</a>
+                  <Link href="/pricing" className="text-gray-600 hover:text-gray-800">
+                    Pricing
+                  </Link>
                 </li>
                 <li>
-                  <a className="text-gray-600 hover:text-gray-800" href="/Wall">Wall of Love</a>
+                  <Link href="/Wall" className="text-gray-600 hover:text-gray-800">
+                    Wall of Love
+                  </Link>
                 </li>
                 <li>
-                  <a className="text-gray-600 hover:text-gray-800" href="https://hiredeasyco.trackdesk.com/sign-up">Join as an Affiliate</a>
+                  <Link
+                    href="https://hiredeasyco.trackdesk.com/sign-up"
+                    className="text-gray-600 hover:text-gray-800"
+                  >
+                    Join as an Affiliate
+                  </Link>
                 </li>
               </ul>
             </div>
+            {/* Resources Links */}
             <div>
               <h4 className="text-gray-800 text-lg font-semibold">RESOURCES</h4>
               <ul className="mt-4 space-y-2">
                 <li>
-                  {/* <a className="text-gray-600 hover:text-gray-800" href="/blog">Blog</a> */}
+                  <Link href="/blog" className="text-gray-600 hover:text-gray-800">
+                    Blog
+                  </Link>
                 </li>
               </ul>
             </div>
           </div>
 
-          <div className="md:w-1/3 text-center md:text-right">
+          {/* Our Story */}
+          <div className="text-center lg:text-left">
             <h4 className="text-gray-800 text-lg font-semibold">OUR STORY</h4>
             <p className="mt-4 text-gray-600 text-sm">
-              Created by a team of corporate professionals guys who understand the challenges of today's job market.
-              <br />
-                Made without a choice in 
-                  <span className="inline-flex items-center">
-                    <span className="fi fi-us mx-1" style={{ fontSize: '16px' }}>🇺🇸</span>
-                    <span className="fi fi-in mx-1" style={{ fontSize: '16px' }}>🇮🇳</span>
-                  </span>
+              Created by two corporate professionals who understand the challenges of today's job market.
+              <br className="hidden sm:inline" />
+              Made without a choice in{' '}
+              <span className="inline-flex items-center">
+                <span className="mx-1 text-base">🇺🇸</span>
+                <span className="mx-1 text-base">🇮🇳</span>
+              </span>
             </p>
           </div>
         </div>
@@ -86,14 +105,12 @@ const Footer = () => {
 
 export default Footer;
 
-function InstagramIcon(props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) {
+// SVG Components remain unchanged
+function InstagramIcon(props: SVGProps<SVGSVGElement>) {
   return (
     <svg
       {...props}
       xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
       strokeWidth="2"
@@ -112,9 +129,6 @@ function LinkedinIcon(props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) 
     <svg
       {...props}
       xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
       strokeWidth="2"
@@ -128,14 +142,11 @@ function LinkedinIcon(props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) 
   );
 }
 
-function YouTubeIcon(props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) {
+function YouTubeIcon(props: SVGProps<SVGSVGElement>) {
   return (
     <svg
       {...props}
       xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
       strokeWidth="2"
@@ -147,4 +158,5 @@ function YouTubeIcon(props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) {
     </svg>
   );
 }
+
 

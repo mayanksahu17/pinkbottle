@@ -1,3 +1,4 @@
+import { withUt } from "uploadthing/tw";
 import type { Config } from 'tailwindcss';
 import { default as flattenColorPalette } from 'tailwindcss/lib/util/flattenColorPalette';
 import colors from 'tailwindcss/colors';
@@ -12,7 +13,7 @@ const config: Config = {
     './pages/**/*.{ts,tsx}',
     './components/**/*.{ts,tsx}',
     './app/**/*.{ts,tsx}',
-    './src/**/*.{ts,tsx}',
+    './src/**/*.{ts,tsx,mdx}',
   ],
   theme: {
     container: {
@@ -96,3 +97,4 @@ function addVariablesForColors({ addBase, theme }: any) {
 }
 
 export default config;
+
