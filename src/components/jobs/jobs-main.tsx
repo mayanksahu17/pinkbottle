@@ -19,7 +19,7 @@ interface Job {
 }
 
 const JobsMain: React.FC = () => {
-  const [savedJobs, setSavedJobs] = useState<Job[]>([]); // Ensure savedJobs is always an array
+  const [savedJobs, setSavedJobs] = useState<Job[]>([]);
   const [delegatedJobs, setDelegatedJobs] = useState<Job[]>([]);
   const [showNotification, setShowNotification] = useState(false);
   const [isLoadingDelegatedJobs, setIsLoadingDelegatedJobs] = useState(true);
@@ -34,17 +34,10 @@ const JobsMain: React.FC = () => {
         },
       });
       const data = await response.json();
-      
-      // Validate the response to ensure it's an array
-      if (Array.isArray(data)) {
-        setSavedJobs(data);
-      } else {
-        console.error("Invalid saved jobs response:", data);
-        setSavedJobs([]); // Fallback to an empty array
-      }
+      setSavedJobs(Array.isArray(data) ? data : []);
     } catch (error) {
       console.error("Failed to fetch saved jobs:", error);
-      setSavedJobs([]); // Fallback to an empty array on error
+      setSavedJobs([]);
     }
   }, []);
 
@@ -59,12 +52,10 @@ const JobsMain: React.FC = () => {
         },
       });
       const data = await response.json();
-
-      // Validate the response to ensure it's an array
       setDelegatedJobs(Array.isArray(data) ? data : []);
     } catch (error) {
       console.error("Failed to fetch delegated jobs:", error);
-      setDelegatedJobs([]); // Fallback to an empty array on error
+      setDelegatedJobs([]);
     } finally {
       setIsLoadingDelegatedJobs(false);
     }
@@ -95,7 +86,6 @@ const JobsMain: React.FC = () => {
           throw new Error("Failed to delete jobs");
         }
 
-        // Update delegatedJobs state after successful deletion
         setDelegatedJobs((prevJobs) =>
           prevJobs.filter(
             (job) => !jobsToDelete.includes(job._id || `${job.title}-${job.company}`)
@@ -114,12 +104,12 @@ const JobsMain: React.FC = () => {
 
   const tabs = [
     {
-      title: `Saved (${savedJobs.length || 0})`, // Ensure savedJobs.length is never undefined
+      title: `Saved (${savedJobs.length || 0})`,
       value: "jobs1",
       content: <SavedJobsTable jobData={savedJobs} />,
     },
     {
-      title: `Delegated (${delegatedJobs.length || 0})`, // Ensure delegatedJobs.length is never undefined
+      title: `Delegated (${delegatedJobs.length || 0})`,
       value: "jobs2",
       content: (
         <DelegatedJobsTable
@@ -140,7 +130,7 @@ const JobsMain: React.FC = () => {
   return (
     <main className="flex flex-col w-full p-4 sm:p-6 pt-16 bg-gray-50">
       {showNotification && (
-        <div className="bg-gradient-to-r from-red-500 to-red-700 text-white p-4 rounded-lg mb-6 flex flex-col sm:flex-row justify-between items-center shadow-lg">
+        <div className="bg-gradient-to-r from-red-500 to-red-700 text-white p-4 rounded-lg mb-6 flex flex-col sm:flex-row justify-between items-center shadow-lg space-y-2 sm:space-y-0 sm:space-x-4">
           <div className="flex items-center space-x-3">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -152,11 +142,11 @@ const JobsMain: React.FC = () => {
             </svg>
             <span className="font-medium text-lg">Subscription Limit Reached!</span>
           </div>
-          <span className="text-sm text-center sm:text-left mt-2 sm:mt-0">
+          <span className="text-sm text-center sm:text-left">
             Your subscription has exceeded the limit. Please renew to continue applying for more jobs.
           </span>
           <button
-            className="bg-white text-red-700 px-4 py-2 rounded-full font-semibold shadow-lg hover:bg-gray-100 transition ease-in-out duration-300 mt-2 sm:mt-0"
+            className="bg-white text-red-700 px-4 py-2 rounded-full font-semibold shadow-lg hover:bg-gray-100 transition ease-in-out duration-300"
             onClick={() => alert("Redirecting to renew subscription")}
           >
             Renew Now
@@ -167,9 +157,9 @@ const JobsMain: React.FC = () => {
       <Tabs
         tabs={tabs}
         containerClassName="w-full"
-        tabClassName="text-gray-500 bg-gray-100"
+        tabClassName="text-gray-500 bg-gray-100 text-sm sm:text-base"
         activeTabClassName="bg-white text-gray-900 border border-gray-300 shadow-md"
-        contentClassName="mt-8"
+        contentClassName="mt-4 sm:mt-8"
       />
     </main>
   );
