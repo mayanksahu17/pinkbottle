@@ -6,23 +6,45 @@ import Link from 'next/link';
 
 const Footer = () => {
   return (
-    <footer className="bg-[#f7fafc] py-16 shadow-lg w-full md:px-4" style={{ fontFamily: 'Calibri, sans-serif', boxShadow: '0 -2px 10px rgba(0, 0, 0, 0.1)', position: 'relative', zIndex: '1000' }}>
-      <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-4">
-        <div className="flex flex-col md:flex-row justify-between items-center text-center md:text-left space-y-8 md:space-y-0">
-          <div className="flex flex-col items-center md:items-start md:w-1/3 space-y-4">
-            <img src="Hiredeasy.png" alt="HiredEasy Logo" className="h-20" />
-            <p className="text-gray-600 text-sm">
-              Empowering job seekers with smart and efficient tools<br />  to land their dream job.
+    <footer className="w-full bg-[#f7fafc] py-8 shadow-[0_-2px_10px_rgba(0,0,0,0.1)] relative z-[50] font-[Calibri,sans-serif]">
+      <div className="container mx-auto px-4 md:px-6 lg:max-w-7xl lg:px-8">
+        {/* Top Section */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
+          {/* Logo & Description */}
+          <div className="flex flex-col items-center lg:items-start space-y-4">
+            <Image
+              src="/Hiredeasy.png"
+              alt="Hiredeasy Logo"
+              width={160}
+              height={64}
+              className="h-16 w-auto"
+            />
+            <p className="text-gray-600 text-sm text-center lg:text-left">
+              Empowering job seekers with smart and efficient tools to land their dream job.
             </p>
             {/* Social Media Links */}
             <div className="flex space-x-4">
-              <a href="https://www.instagram.com/hiredeasy/" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-blue-500 transition-colors duration-300">
+              <Link
+                href="https://www.instagram.com/hiredeasy/"
+                target="_blank"
+                className="text-gray-600 hover:text-blue-500 transition-colors duration-300"
+              >
                 <InstagramIcon className="h-6 w-6" />
-              </a>
-              <a href="#" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-blue-700 transition-colors duration-300">
+                <span className="sr-only">Instagram</span>
+              </Link>
+              <Link
+                href="#"
+                target="_blank"
+                className="text-gray-600 hover:text-blue-700 transition-colors duration-300"
+              >
                 <LinkedinIcon className="h-6 w-6" />
-              </a>
-              <a href="#" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-red-500 transition-colors duration-300">
+                <span className="sr-only">LinkedIn</span>
+              </Link>
+              <Link
+                href="#"
+                target="_blank"
+                className="text-gray-600 hover:text-red-500 transition-colors duration-300"
+              >
                 <YouTubeIcon className="h-6 w-6" />
                 <span className="sr-only">YouTube</span>
               </Link>
@@ -83,19 +105,20 @@ const Footer = () => {
           </div>
         </div>
 
+        {/* Bottom Section */}
         <div className="border-t border-gray-200 mt-8 pt-8">
-          <div className="w-full flex flex-col md:flex-row justify-between items-center">
-            <p className="text-gray-600 text-sm">
+          <div className="flex flex-col lg:flex-row justify-between items-center gap-4">
+            <p className="text-gray-600 text-sm text-center lg:text-left">
               © 2023 HiredEasy.com. All rights reserved.
             </p>
-            <a 
-              href="https://www.freeprivacypolicy.com/live/82686a7c-687b-4f0f-b60f-90e0075f7c6b" 
-              className="text-gray-600 hover:text-gray-800 text-sm mt-4 md:mt-0"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Privacy Policy
-            </a>
+            <div className="flex flex-col sm:flex-row gap-4 sm:gap-8 text-center">
+              <Link href="/privacy" className="text-gray-600 hover:text-gray-800">
+                Privacy Policy
+              </Link>
+              <Link href="/terms" className="text-gray-600 hover:text-gray-800">
+                Terms of Service
+              </Link>
+            </div>
           </div>
         </div>
       </div>
@@ -124,7 +147,7 @@ function InstagramIcon(props: SVGProps<SVGSVGElement>) {
   );
 }
 
-function LinkedinIcon(props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) {
+function LinkedinIcon(props: SVGProps<SVGSVGElement>) {
   return (
     <svg
       {...props}
@@ -158,5 +181,3 @@ function YouTubeIcon(props: SVGProps<SVGSVGElement>) {
     </svg>
   );
 }
-
-
