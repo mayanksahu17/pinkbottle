@@ -91,50 +91,47 @@ const SavedJobsTable: React.FC<JobTableProps> = ({ jobData = [] }) => {
     new Date(dateString).toLocaleDateString();
 
   return (
-    <div className="bg-white border border-gray-200 rounded-lg pt-26 shadow-lg">
+    <div className="flex flex-col w-full space-y-6 bg-white border border-gray-200 rounded-lg p-4 md:p-6 shadow-lg">
       {/* Search Bar */}
-      <div className="flex flex-col items-center w-full mb-4">
+      <div className="flex justify-center w-full">
         <input
           type="text"
           placeholder="Search jobs..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="p-2 w-full max-w-md border rounded shadow mt-4 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
+          className="p-3 w-full max-w-md border rounded shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
       </div>
   
-      {/* Table */}
-      <div className="overflow-x-auto relative shadow-md sm:rounded-lg bg-white">
-        <table className="w-full text-sm text-left text-gray-500 bg-white">
-          <thead className="text-xs text-gray-700 uppercase bg-gray-100">
+      {/* Jobs Table */}
+      <div className="overflow-x-auto bg-white rounded-md shadow-lg">
+        <table className="w-full text-sm text-left text-gray-500" style={{ minWidth: '600px' }}>
+          <thead className="bg-gray-100 text-xs uppercase text-gray-700">
             <tr>
-              <th className="py-3 px-6">
+              <th className="p-4 w-12">
                 <input type="checkbox" />
               </th>
-              <th className="py-3 px-6">Title</th>
-              <th className="py-3 px-6">Position</th>
-              <th className="py-3 px-6">Location</th>
-              <th
-                className="py-3 px-6 cursor-pointer"
-                onClick={() => setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc')}
-              >
+              <th className="p-4">Title</th>
+              <th className="p-4">Position</th>
+              <th className="p-4">Location</th>
+              <th className="p-4 cursor-pointer" onClick={() => setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc')}>
                 Date <span>{sortOrder === 'asc' ? '⇅' : '⇅'}</span>
               </th>
-              <th className="py-3 px-6">Status</th>
+              <th className="p-4">Status</th>
             </tr>
           </thead>
-          <tbody className="bg-white">
+          <tbody className="bg-white divide-y divide-gray-200">
             {currentJobs.length > 0 ? (
               currentJobs.map((job) => (
-                <tr key={job._id} className="border-b hover:bg-gray-100">
-                  <td className="py-4 px-6 bg-white">
+                <tr key={job._id} className="border-b hover:bg-gray-50">
+                  <td className="p-4">
                     <input type="checkbox" />
                   </td>
-                  <td className="py-4 px-6 bg-white">{job.title}</td>
-                  <td className="py-4 px-6 bg-white">{job.position}</td>
-                  <td className="py-4 px-6 bg-white">{job.location}</td>
-                  <td className="py-4 px-6 bg-white">{formatDate(job.date)}</td>
-                  <td className="py-4 px-6 bg-white">
+                  <td className="p-4 truncate">{job.title}</td>
+                  <td className="p-4 truncate">{job.position}</td>
+                  <td className="p-4 truncate">{job.location}</td>
+                  <td className="p-4">{formatDate(job.date)}</td>
+                  <td className="p-4">
                     <select
                       value={job.status}
                       onChange={async (e) => {
@@ -143,18 +140,11 @@ const SavedJobsTable: React.FC<JobTableProps> = ({ jobData = [] }) => {
                           const response = await fetch(`/api/updatejobstatus`, {
                             method: 'PUT',
                             headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({
-                              id: job._id,
-                              status: newStatus,
-                            }),
+                            body: JSON.stringify({ id: job._id, status: newStatus }),
                           });
                           if (response.ok) {
                             setJobs((prevJobs) =>
-                              prevJobs.map((j) =>
-                                j._id === job._id
-                                  ? { ...j, status: newStatus }
-                                  : j
-                              )
+                              prevJobs.map((j) => (j._id === job._id ? { ...j, status: newStatus } : j))
                             );
                           } else {
                             console.error('Failed to update job status');
@@ -175,8 +165,8 @@ const SavedJobsTable: React.FC<JobTableProps> = ({ jobData = [] }) => {
               ))
             ) : (
               <tr>
-                <td colSpan={6} className="text-center py-4 bg-white">
-                  No results.
+                <td colSpan={6} className="px-3 py-4 text-center text-sm text-gray-500">
+                  No results found.
                 </td>
               </tr>
             )}
@@ -184,50 +174,44 @@ const SavedJobsTable: React.FC<JobTableProps> = ({ jobData = [] }) => {
         </table>
       </div>
   
-      {/* Pagination & Options */}
-      <div className="flex justify-between items-center mt-4 flex-col sm:flex-row bg-white p-4 rounded shadow-md">
-        <div className="text-sm text-gray-500">
-          {filteredJobs.length} result(s) found.
+      {/* Footer Controls */}
+      <div className="mt-4 flex flex-col space-y-4 sm:space-y-0 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex flex-col space-y-2 sm:space-y-0 sm:flex-row sm:items-center sm:space-x-4">
+          <span className="text-sm text-gray-700">{filteredJobs.length} result(s) found</span>
         </div>
-        <div className="flex items-center space-x-4">
-          <div>
-            Rows per page:
+  
+        <div className="flex flex-col space-y-2 sm:space-y-0 sm:flex-row sm:items-center sm:space-x-4">
+          <div className="flex items-center space-x-2">
+            <label className="text-sm text-gray-700">Rows per page:</label>
             <select
               value={jobsPerPage}
               onChange={(e) => {
                 setJobsPerPage(Number(e.target.value));
-                setCurrentPage(1); // Reset to first page on change
+                setCurrentPage(1);
               }}
-              className="ml-2 p-1 border rounded bg-white"
+              className="mt-1 block w-full rounded-md border-black py-2 pl-3 pr-10 text-base focus:border-blue-800 focus:outline-none focus:ring-blue-800 hover:border-blue-800 transition duration-150 ease-in-out sm:text-sm"
             >
               <option value={5}>5</option>
               <option value={10}>10</option>
               <option value={50}>50</option>
             </select>
           </div>
-          <div className="flex items-center">
+  
+          <div className="flex items-center justify-center space-x-2">
             <button
-              disabled={currentPage === 1}
               onClick={() => setCurrentPage(currentPage - 1)}
-              className={`px-3 py-2 border rounded ${
-                currentPage === 1
-                  ? 'opacity-50 cursor-not-allowed'
-                  : 'hover:bg-gray-100'
-              } bg-white`}
+              disabled={currentPage === 1}
+              className="relative inline-flex items-center px-2 py-2 rounded-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               &laquo;
             </button>
-            <div className="mx-2 px-3 py-2 border rounded bg-gray-200">
-              Page {currentPage} of {pageCount}
-            </div>
+            <span className="relative inline-flex items-center px-4 py-2 rounded-md border border-gray-300 bg-white text-sm font-medium text-gray-700">
+              Page {currentPage} of {pageCount || 1}
+            </span>
             <button
-              disabled={currentPage === pageCount}
               onClick={() => setCurrentPage(currentPage + 1)}
-              className={`px-3 py-2 border rounded ${
-                currentPage === pageCount
-                  ? 'opacity-50 cursor-not-allowed'
-                  : 'hover:bg-gray-100'
-              } bg-white`}
+              disabled={currentPage === pageCount || pageCount === 0}
+              className="relative inline-flex items-center px-2 py-2 rounded-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               &raquo;
             </button>
@@ -235,7 +219,8 @@ const SavedJobsTable: React.FC<JobTableProps> = ({ jobData = [] }) => {
         </div>
       </div>
     </div>
-  );  
+  );
+    
 };
 
 export default SavedJobsTable;

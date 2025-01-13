@@ -128,7 +128,7 @@ const JobsMain: React.FC = () => {
   ];
 
   return (
-    <main className="flex flex-col w-full p-4 sm:p-6 pt-16 bg-gray-50">
+    <main className="flex flex-col w-full p-4 sm:p-6 pt-20 bg-gray-50">
       {showNotification && (
         <div className="bg-gradient-to-r from-red-500 to-red-700 text-white p-4 rounded-lg mb-6 flex flex-col sm:flex-row justify-between items-center shadow-lg space-y-2 sm:space-y-0 sm:space-x-4">
           <div className="flex items-center space-x-3">
@@ -157,7 +157,7 @@ const JobsMain: React.FC = () => {
       <Tabs
         tabs={tabs}
         containerClassName="w-full"
-        tabClassName="text-gray-500 bg-gray-100 text-sm sm:text-base"
+        tabClassName="text-gray-500 bg-gray-100 text-sm sm:text-base "
         activeTabClassName="bg-white text-gray-900 border border-gray-300 shadow-md"
         contentClassName="mt-4 sm:mt-8"
       />

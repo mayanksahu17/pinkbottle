@@ -23,7 +23,8 @@ const sectionsData = [
     description:
       'Our clients achieve remarkable results, with 82% securing full-time positions in just three months. Impressively, 47% of these roles are obtained through our strategic applications, while the remaining 44% come from leveraging personal networks and individual efforts.',
     bgColor: '#2563EB',
-    image: 'https://res.cloudinary.com/dmky9t4sr/video/upload/v1736745520/20250113_1048_Dream_Job_Unveiled_simple_compose_01jhf1hgdffddtm8v04v6y9nfs_dlh4i8.mp4?height=600&width=550',
+    image:
+      'https://res.cloudinary.com/dmky9t4sr/video/upload/v1736745520/20250113_1048_Dream_Job_Unveiled_simple_compose_01jhf1hgdffddtm8v04v6y9nfs_dlh4i8.mp4?height=600&width=550',
   },
   {
     title: '600x',
@@ -31,7 +32,8 @@ const sectionsData = [
     description:
       'By cutting weeks off the job search, we help clients gain an extra $20K in earnings. Additionally, receiving multiple offers can boost salaries by an average of $30K, leading to a substantial increase in overall compensation.',
     bgColor: '#059669',
-    image: 'https://res.cloudinary.com/dmky9t4sr/video/upload/v1736745713/20250113_1051_Entering_Google_s_Office_simple_compose_01jhf1qt9gfrs8yv1m823kw6t8_w2u1bs.mp4?height=600&width=550',
+    image:
+      'https://res.cloudinary.com/dmky9t4sr/video/upload/v1736745713/20250113_1051_Entering_Google_s_Office_simple_compose_01jhf1qt9gfrs8yv1m823kw6t8_w2u1bs.mp4?height=600&width=550',
   },
 ];
 
@@ -63,7 +65,6 @@ const Section = ({
     offset: ['start end', 'end start'],
   });
 
-  // Image animation: moves from right to left with blur
   const x = useTransform(scrollYProgress, [0, 1], ['50%', '0%']);
   const opacity = useTransform(scrollYProgress, [0, 0.2, 1], [0, 1, 1]);
   const filter = useTransform(
@@ -72,7 +73,6 @@ const Section = ({
     ['blur(20px)', 'blur(0px)', 'blur(0px)']
   );
 
-  // Smooth background color transition
   const backgroundColor = useTransform(
     scrollYProgress,
     [0, 0.5, 1],
@@ -88,16 +88,18 @@ const Section = ({
   return (
     <div
       ref={sectionRef}
-      className="min-h-screen relative flex items-center overflow-hidden"
+      className="min-h-[80vh] relative flex items-center overflow-hidden"
     >
-      {/* Background Div with smooth transition */}
       <motion.div
-        className={`absolute top-0 right-0 h-full w-[35%] ${index === 0 ? 'rounded-tl-[200px]' : ''} ${index === sectionsData.length - 1 ? 'rounded-bl-[200px]' : ''}`}
+        className={`absolute top-0 right-0 h-full w-[35%] ${
+          index === 0 ? 'rounded-tl-[200px]' : ''
+        } ${
+          index === sectionsData.length - 1 ? 'rounded-bl-[200px]' : ''
+        }`}
         style={{ backgroundColor }}
         transition={{ duration: 0.5 }}
       />
-      <div className="container mx-auto px-4 flex flex-col lg:flex-row items-center gap-12 relative z-10">
-        {/* Text Content */}
+      <div className="container mx-auto px-4 flex flex-col lg:flex-row items-center gap-8 relative z-10">
         <div className="lg:w-1/2 space-y-6">
           <motion.h3
             initial={{ opacity: 0, y: 20 }}
@@ -153,20 +155,6 @@ const Section = ({
                 >
                   <path d="m9 18 6-6-6-6"></path>
                 </svg>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="-ml-2 h-4 w-4 text-gray-400"
-                >
-                  <path d="m9 18 6-6-6-6"></path>
-                </svg>
                 <span className="absolute top-0 right-0 mt-1 -mr-1 h-3 w-3 bg-green-500 rounded-full animate-ping"></span>
                 <span className="absolute top-0 right-0 mt-1 -mr-1 h-3 w-3 bg-green-500 rounded-full"></span>
               </button>
@@ -174,13 +162,11 @@ const Section = ({
           </motion.div>
         </div>
 
-        {/* Animated Image Section */}
         <motion.div
           className="lg:w-1/3 relative flex justify-end"
           style={{ x, opacity, filter }}
         >
           <BackgroundGradient className="rounded-2xl p-4 bg-white dark:bg-zinc-900 shadow-lg">
-            {/* Dynamic width and height control via class */}
             <div className="w-[560px] h-[315px]">
               <video
                 src={data.image}
@@ -189,9 +175,7 @@ const Section = ({
                 loop
                 muted
                 playsInline
-                controls={false} // Remove this line if controls are needed
               />
-              {/* Accessibility: Add a caption or description for screen readers */}
               <p className="sr-only">{`${data.subtitle} Interface`}</p>
             </div>
           </BackgroundGradient>

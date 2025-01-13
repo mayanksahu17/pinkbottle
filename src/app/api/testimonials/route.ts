@@ -3,11 +3,10 @@ import { NextRequest, NextResponse } from "next/server";
 import { LRUCache } from "lru-cache";
 
 // MongoDB Connection URI
-const uri = process.env.MONGODB_URI;
+const uri = process.env.INTERNAL_DB;
 
 if (!uri) throw new Error("MongoDB URI not configured");
 
-// Initialize MongoDB client
 const client = new MongoClient(uri);
 
 // Set up LRU Cache

@@ -49,7 +49,7 @@ const FloatingElement = ({
 export default function Home() {
   return (
     <div className="min-h-screen bg-transparent text-black overflow-x-hidden">
-      <div className="container px-4 mx-auto mt-32">
+      <div className="container px-4 mx-auto mt-16 md:mt-32">
         {/* Hero Section */}
         <section className="relative flex flex-col justify-center items-center text-center min-h-[90vh]">
           {/* Background floating elements */}
@@ -106,14 +106,14 @@ export default function Home() {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="relative z-10 max-w-2xl"
+            className="relative z-10 max-w-2xl mx-auto"
           >
             <div className="flex flex-col justify-center items-center text-center mt-4">
               <motion.h1
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.3 }}
-                className="text-5xl md:text-7xl font-bold mb-8 leading-[1.1]"
+                className="text-4xl sm:text-5xl md:text-7xl font-bold mb-8 leading-[1.1]"
               >
                 Land Your <br />
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-green-500">
@@ -125,7 +125,7 @@ export default function Home() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.4 }}
-                className="text-xl text-gray-600 mb-12"
+                className="text-lg sm:text-xl text-gray-600 mb-12"
               >
                 Our assistants help you get more interviews and ace them for top
                 companies like Google, Amazon, McKinsey and more.
@@ -147,7 +147,7 @@ export default function Home() {
                <ScheduleCallButton/>
               </motion.div>
             </div>
-            <div className="flex justify-center items-center gap-8 mt-8">
+            <div className="flex flex-wrap justify-center items-center gap-4 mt-8">
               {/* Job Seekers Helped */}
               <div className="flex items-center gap-2 px-4 py-2 bg-gray-50 rounded-full shadow-sm">
                 <svg
