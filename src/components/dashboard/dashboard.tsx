@@ -65,6 +65,10 @@ export default function DashboardPage() {
     }
   };
 
+  const closeSidebar = () => {
+    setSidebarOpen(false);
+  };
+
   return (
     <div className="flex flex-col min-h-screen bg-gray-50">
       <Navbar />
@@ -84,7 +88,7 @@ export default function DashboardPage() {
         {sidebarOpen && (
           <div
             className="fixed inset-0 bg-black bg-opacity-50 z-[50] lg:hidden"
-            onClick={() => setSidebarOpen(false)}
+            onClick={closeSidebar} // Closes sidebar on clicking overlay
           />
         )}
 

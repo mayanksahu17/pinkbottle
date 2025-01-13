@@ -32,6 +32,7 @@ const Navbar = () => {
   const [showForm, setShowForm] = useState(false); // State for showing the form modal
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+  const closeMenu = () => setIsMenuOpen(false); // Function to close the menu
 
   useEffect(() => {
     const handleScroll = () => {
@@ -124,9 +125,17 @@ const Navbar = () => {
           </div>
         )}
 
+        {/* Background Overlay */}
+        {isMenuOpen && (
+          <div
+            className="fixed inset-0 bg-black bg-opacity-50 z-40"
+            onClick={closeMenu} // Clicking on overlay closes menu
+          />
+        )}
+
         {/* Mobile Navigation */}
         {isMenuOpen && (
-          <div className="md:hidden mt-2 bg-green-100/90 border border-gray-200 rounded-lg shadow-lg p-4 backdrop-blur-sm">
+          <div className="md:hidden mt-2 bg-green-100/90 border border-gray-200 rounded-lg shadow-lg p-4 backdrop-blur-sm z-50 relative">
             <nav className="flex flex-col space-y-4">
               <NavLink href="/about">About Us</NavLink>
               <NavLink href="/Wall">Wall of Love</NavLink>
