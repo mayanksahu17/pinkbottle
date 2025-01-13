@@ -154,7 +154,7 @@ const HomePage = () => {
           <StatsAndCTA/>
           <WorksFor />
           <Universities />
-          <Features />
+          {/* <Features /> */}
           <Sidekick />
           <Testimonial />
           <FAQSection />
