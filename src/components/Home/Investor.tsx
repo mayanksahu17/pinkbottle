@@ -1,4 +1,4 @@
-import React, { SVGProps, useState } from 'react';
+import React, { SVGProps } from 'react';
 
 
 const Investor = () => {
