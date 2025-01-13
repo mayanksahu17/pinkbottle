@@ -3,13 +3,17 @@ import React, { SVGProps } from 'react';
 import Navbar from '../navbar/navbar';
 import Footer from '../footer/footer';
 import { Metadata } from 'next';
+import { InfiniteMovingCardsDemo } from '../Home/InfiniteMovingCardsDemo';
+import { FlipWords } from '../ui/flip-words'
+import  MarketingSection  from './marketing-section';
+
 
 export const metadata: Metadata = {
   title: 'HiredEasy - About Us | Simplifying Job Applications',
   description:
     'Learn more about HiredEasy and our mission to simplify job applications, and meet our founders dedicated to helping job seekers find their dream jobs.',
   keywords:
-    'HiredEasy, About HiredEasy, job applications, career services, job seekers, Nikhil Jain, Anuj Jain',
+    'HiredEasy, About HiredEasy, job applications, career services, job seekers, Nikhil Jain, Ashwin Jain',
   robots: 'index, follow',
   viewport: 'width=device-width, initial-scale=1.0',
   authors: [{ name: 'HiredEasy' }],
@@ -71,6 +75,7 @@ const structuredData = {
 };
 
 const Aboutus = () => {
+  const words = ["faster", "smarter", "efficient", "tailored"]
   return (
     <div
       className="min-h-screen text-black py-12"
@@ -87,11 +92,13 @@ const Aboutus = () => {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbData) }}
         />
       </head>
-      <main className="max-w-6xl mx-auto px-6 py-12">
+      <main className="max-w-6xl mx-auto px-6 py-12 mt-12">
         <section className="text-center mb-12">
-          <h1 className="text-4xl font-bold mb-4">
-            We understand you better than anyone
-          </h1>
+        <div className="text-4xl mx-auto font-normal text-neutral-600 dark:text-neutral-400">
+            We understand you
+            <FlipWords words={words} /> 
+            than anyone
+          </div>
           <p className="text-lg text-gray-600 mb-6">
             We have been in your shoes and understand the challenges of job
             hunting. Our mission is to help job seekers find their dream jobs.
@@ -210,11 +217,13 @@ const Aboutus = () => {
           </div>
         </section>
       </main>
+      <MarketingSection/>
+      <InfiniteMovingCardsDemo/>
       <Footer />
     </div>
   );
 };
-
+//modular solution
 export default Aboutus;
 
 function InstagramIcon(

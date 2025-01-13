@@ -8,7 +8,7 @@ import { NextResponse } from 'next/server';
 import { Webhook } from 'svix';
 import { dbConnect } from '@/lib/database/mongodb';
 import User from '@/lib/database/models/User/User';
-import Lead from '@/lib/database/models/Leads/leads'; // Assuming you have a Lead model
+import Lead from '@/lib/database/models/Leads/leads'; 
 
 const webhookSecret = process.env.WEBHOOK_SECRET || '';
 

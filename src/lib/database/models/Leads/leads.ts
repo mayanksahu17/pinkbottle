@@ -1,10 +1,13 @@
 // models/Subscription.ts
 import mongoose from 'mongoose';
 import { IUser } from '../User/types';
+import { ProfileSchema } from '../Profile/profile';
 
 const leadSchema = new mongoose.Schema<IUser>({
   clerkId: {
     type: String,
+    required: true,
+    unique: true,
   },
   firstName: {
     type: String,
@@ -30,15 +33,12 @@ const leadSchema = new mongoose.Schema<IUser>({
       position: String,
       date: Date,
       status: String,
+      location: String,
     },
   ],
-  resume: {
-    type: String,
-  },
-  coverLetter: {
-    type: String,
-  },
+  profiles: [ProfileSchema], // Use the centralized ProfileSchema
 });
+
 
 const Lead =
   mongoose.models?.Lead || mongoose.model<IUser>('Lead', leadSchema, 'leads');

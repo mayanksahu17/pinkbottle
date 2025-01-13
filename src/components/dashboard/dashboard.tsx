@@ -1,174 +1,141 @@
-'use client';
-import { Button } from '@/components/ui/button';
-import { useUser } from '@clerk/nextjs';
-import React, { useState } from 'react';
-import { CiLock } from 'react-icons/ci';
-import DashboardMain from './dashboard-main';
-import Warmup from '../Interview/warmup';
-import JobsMain from '../jobs/jobs-main';
-import { Jobs } from '@/lib/database/models/User/types';
-import { useRouter } from 'next/navigation';
-import Navbar from '../navbar/navbar';
-import Footer from '../footer/footer';
-import Resume from '../profile/resume';
-import { FaHome, FaCalendarAlt, FaLaptopCode, FaBriefcase, FaFileAlt } from "react-icons/fa";
-import { AiOutlineChrome, AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
+"use client";
 
-interface Job {
-  _id?: string;
-  image: string;
-  title: string;
-  position: string;
-  date: string;
-  status: string;
-  location: string; // Add this field to match the expected type in JobsMain
-}
+import React, { useState, useEffect } from "react";
+import Navbar from "../navbar/navbar";
+import Footer from "../footer/footer";
+import Sidebar from "../SideBar/sideBar";
+import DashboardMain from "./dashboard-main";
+import Warmup from "../Interview/warmup";
+import JobsMain from "../jobs/jobs-main";
+import ProfilePage from "@/app/profile/page";
+import { RxHamburgerMenu } from "react-icons/rx";
+import { useAuth } from "@clerk/nextjs";
 
-const DashboardPage = ({
-  isPaidUser,
-  jobs,
-  firstName,
-  resume,
-  cover,
-}: {
-  isPaidUser: boolean;
-  jobs: Jobs[];
-  firstName: string;
-  resume: string;
-  cover: string;
-}) => {
-  const [currentTab, setCurrentTab] = useState('dashboard');
+export default function DashboardPage() {
+  const [currentTab, setCurrentTab] = useState("dashboard");
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
+  const [isPaidUser, setIsPaidUser] = useState(false); // Paid user state
 
-  const transformedJobs: Job[] = (jobs || []).map((job) => ({
-    _id: job._id,
-    image: job.image,
-    title: job.title,
-    position: job.position,
-    date: job.date.toString(), 
-    status: job.status,
-    location: job.location || 'Unknown', 
-  }));
+  const { isLoaded, userId, sessionId, getToken } = useAuth();
+
+  useEffect(() => {
+    if (!userId) {
+      console.warn("No user ID provided to DashboardPage");
+      return;
+    }
+
+    const fetchPaymentStatus = async () => {
+      try {
+        const token = await getToken();
+        const response = await fetch("/api/checkPaid", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "X-User-Id": userId,
+          },
+        });
+
+        const data = await response.json();
+        setIsPaidUser(data.paidstatus === "Paid"); // Update paid status
+      } catch (error) {
+        console.error("Failed to fetch payment status:", error);
+      }
+    };
+
+    fetchPaymentStatus();
+  }, [userId, getToken]);
+
+  useEffect(() => {
+    if (sidebarOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = ""; // Restore scroll when sidebar is closed
+    }
+  }, [sidebarOpen]);
+
+  const handleTabChange = async (tab: string) => {
+    setIsLoading(true);
+    try {
+      setCurrentTab(tab);
+      setSidebarOpen(false);
+    } catch (error) {
+      console.error("Error while changing tab:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const closeSidebar = () => {
+    setSidebarOpen(false);
+  };
 
   return (
-    <>
+    <div className="flex flex-col min-h-screen bg-gray-50">
       <Navbar />
-      <div className="flex min-h-screen pt-8 relative">
-        {/* Sidebar */}
-        <aside 
-          className={`fixed top-16 left-0 z-40 w-64 bg-white p-4 transform transition-transform duration-300 ease-in-out h-full ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0 md:block shadow-xl`}
+
+      <div className="flex flex-1 relative">
+        {/* Hamburger Menu */}
+        <button
+          className="lg:hidden fixed top-20 left-4 z-[60] p-2 rounded-md hover:bg-gray-100 focus:outline-none"
+          onClick={() => setSidebarOpen(!sidebarOpen)}
+          aria-label="Toggle menu"
+          disabled={isLoading}
         >
-          <nav className="mt-16 flex flex-col space-y-4">
-            <Button
-              className={`flex items-center justify-start text-base font-medium text-black rounded-lg py-2.5 transition-transform duration-300 ${
-                currentTab === "dashboard" && "bg-gray-200 shadow-lg"
-              } hover:bg-gray-100 hover:scale-105`}
-              variant="ghost"
-              onClick={() => {
-                setCurrentTab("dashboard");
-                setSidebarOpen(false);
-              }}
-            >
-              <FaHome className="text-xl mr-2" />
-              Dashboard
-            </Button>
-            <Button
-              className={`flex items-center justify-start text-base font-medium text-black rounded-lg py-2.5 transition-transform duration-300 ${
-                currentTab === "call" && "bg-gray-200 shadow-lg"
-              } hover:bg-gray-100 hover:scale-105`}
-              variant="ghost"
-              onClick={() => {
-                router.push("https://apply.neetocal.com/meeting-with-nikhil-jain");
-                setSidebarOpen(false);
-              }}
-            >
-              <FaCalendarAlt className="text-xl mr-2" />
-              Call with Founders
-            </Button>
-            <Button
-              className={`flex items-center justify-start text-base font-medium text-black rounded-lg py-2.5 transition-transform duration-300 ${
-                currentTab === "interview" && "bg-gray-200 shadow-lg"
-              } hover:bg-gray-100 hover:scale-105`}
-              variant="ghost"
-              onClick={() => {
-                setCurrentTab("interview");
-                setSidebarOpen(false);
-              }}
-            >
-              <FaLaptopCode className="text-xl mr-2" />
-              Interview Warmup
-            </Button>
-            <div className="flex items-center">
-              <Button
-                disabled={!isPaidUser}
-                className={`flex items-center justify-start w-full disabled:cursor-not-allowed text-base font-medium text-black rounded-lg py-2.5 transition-transform duration-300 ${
-                  currentTab === "jobs" && "bg-gray-200 shadow-lg"
-                } hover:bg-gray-100 hover:scale-105`}
-                variant="ghost"
-                onClick={() => {
-                  setCurrentTab("jobs");
-                  setSidebarOpen(false);
-                }}
-              >
-                <FaBriefcase className="text-xl mr-2" />
-                Jobs
-              </Button>
-              {!isPaidUser && <CiLock className="ml-2 text-xl" />}
-            </div>
-            <div className="flex items-center">
-              <Button
-                disabled={!isPaidUser}
-                className={`flex items-center justify-start w-full disabled:cursor-not-allowed text-base font-medium text-black rounded-lg py-2.5 transition-transform duration-300 ${
-                  currentTab === "profile" && "bg-gray-200 shadow-lg"
-                } hover:bg-gray-100 hover:scale-105`}
-                variant="ghost"
-                onClick={() => {
-                  setCurrentTab("profile");
-                  setSidebarOpen(false);
-                }}
-              >
-                <FaFileAlt className="text-xl mr-2" />
-                Profile
-              </Button>
-              {!isPaidUser && <CiLock className="ml-2 text-xl" />}
-            </div>
-            <Button
-              className="flex items-center justify-center text-base font-medium text-black rounded-lg py-2.5 border border-gray-300 hover:bg-gray-100 transition-all duration-300"
-              onClick={() => {
-                router.push("https://chromewebstore.google.com/detail/hiredeasy/lklnlahilalmcnhgdkghjkcjiokggnkp");
-                setSidebarOpen(false);
-              }}
-            >
-              <AiOutlineChrome className="text-xl mr-2" />
-              Add to Chrome
-            </Button>
-          </nav>
+          <RxHamburgerMenu className="text-2xl" />
+        </button>
+
+        {/* Background overlay for mobile */}
+        {sidebarOpen && (
+          <div
+            className="fixed inset-0 bg-black bg-opacity-50 z-[50] lg:hidden"
+            onClick={closeSidebar} // Closes sidebar on clicking overlay
+          />
+        )}
+
+        {/* Sidebar */}
+        <aside
+          className={`fixed lg:sticky top-16 ${
+            sidebarOpen ? "z-[55]" : "z-[10]"
+          } lg:z-[5] h-[calc(100vh-4rem)] transition-transform duration-300 ease-in-out ${
+            sidebarOpen ? "translate-x-0" : "-translate-x-full"
+          } lg:translate-x-0 w-64 bg-white shadow-xl`}
+        >
+          <Sidebar
+            currentTab={currentTab}
+            setCurrentTab={handleTabChange}
+            setSidebarOpen={setSidebarOpen}
+            isPaidUser={isPaidUser} // Use paid user state
+            sidebarOpen={sidebarOpen}
+            className="h-full"
+          />
         </aside>
 
         {/* Main Content */}
-        <div className="flex-1 p-6 overflow-y-auto md:ml-64">
-          <div className="md:hidden flex justify-between items-center mb-4">
-            <Button
-              className="text-xl"
-              onClick={() => setSidebarOpen(!sidebarOpen)}
-            >
-              {sidebarOpen ? <AiOutlineClose /> : <AiOutlineMenu />}
-            </Button>
-          </div>
-          {currentTab === 'dashboard' && (
-            <DashboardMain isPaidUser={isPaidUser} />
+        <main className="flex-1 flex flex-col min-h-0">
+          {isLoading && (
+            <div className="absolute inset-0 bg-white bg-opacity-50 z-[70] flex items-center justify-center">
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>
+            </div>
           )}
-          {currentTab === 'profile' && <Resume resume={resume} cover={cover} />}
-          {currentTab === 'jobs' && isPaidUser && (
-            <JobsMain />
-          )}
-          {currentTab === 'interview' && <Warmup />}
-        </div>
-      </div>
-      <Footer />
-    </>
-  );
-};
 
-export default DashboardPage;
+          <div className="flex-1 overflow-y-auto">
+            <div
+              className={`p-4 md:p-6 lg:p-8 ${
+                currentTab === "jobs" ? "lg:pt-20" : ""
+              } max-w-7xl mx-auto`}
+            >
+              {currentTab === "dashboard" && (
+                <DashboardMain isPaidUser={isPaidUser} />
+              )}
+              {currentTab === "profile" && <ProfilePage />}
+              {currentTab === "jobs" && <JobsMain />}
+              {currentTab === "interview" && <Warmup />}
+            </div>
+          </div>
+        </main>
+      </div>
+
+      <Footer />
+    </div>
+  );
+}

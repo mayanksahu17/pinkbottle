@@ -190,31 +190,33 @@ const FAQTable: React.FC = () => {
   return (
     <div className="p-4 sm:p-8">
       <div className="mb-6">
-        <h1 className="text-4xl font-extrabold text-gray-900 text-center">Message Templates</h1>
+        <h1 className="text-2xl sm:text-4xl font-extrabold text-gray-900 text-center">Message Templates</h1>
       </div>
       <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-        <table className="w-full text-left text-gray-800">
-          <thead className="bg-gradient-to-r from-purple-500 to-blue-500 text-white">
-            <tr>
-              <th className="px-6 py-4 text-sm font-semibold">NAME</th>
-              <th className="px-6 py-4 text-sm font-semibold">SUBJECT</th>
-              <th className="px-6 py-4 text-sm font-semibold">UPDATED</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-gray-200">
-            {FAQ_CONTENT.map((faq) => (
-              <tr
-                key={faq.id}
-                className="hover:bg-gray-100 cursor-pointer transition duration-200"
-                onClick={() => openModal(faq)}
-              >
-                <td className="px-6 py-4 font-medium">{faq.name}</td>
-                <td className="px-6 py-4">{faq.subject}</td>
-                <td className="px-6 py-4">{faq.updated}</td>
+        <div className="overflow-x-auto">
+          <table className="w-full text-left text-gray-800">
+            <thead className="bg-gradient-to-r from-purple-500 to-blue-500 text-white">
+              <tr>
+                <th className="px-4 sm:px-6 py-3 sm:py-4 text-xs sm:text-sm font-semibold">NAME</th>
+                <th className="px-4 sm:px-6 py-3 sm:py-4 text-xs sm:text-sm font-semibold">SUBJECT</th>
+                <th className="px-4 sm:px-6 py-3 sm:py-4 text-xs sm:text-sm font-semibold">UPDATED</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody className="divide-y divide-gray-200">
+              {FAQ_CONTENT.map((faq) => (
+                <tr
+                  key={faq.id}
+                  className="hover:bg-gray-100 cursor-pointer transition duration-200"
+                  onClick={() => openModal(faq)}
+                >
+                  <td className="px-4 sm:px-6 py-3 sm:py-4 text-xs sm:text-sm font-medium">{faq.name}</td>
+                  <td className="px-4 sm:px-6 py-3 sm:py-4 text-xs sm:text-sm">{faq.subject}</td>
+                  <td className="px-4 sm:px-6 py-3 sm:py-4 text-xs sm:text-sm">{faq.updated}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
 
       <AnimatePresence>
@@ -223,53 +225,53 @@ const FAQTable: React.FC = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-70"
+            className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-70 p-4"
           >
             <motion.div
               initial={{ y: "100vh" }}
               animate={{ y: 0 }}
               exit={{ y: "100vh" }}
-              className="bg-white rounded-xl shadow-xl p-6 sm:p-10 max-w-3xl w-full relative"
+              className="bg-white rounded-xl shadow-xl p-4 sm:p-6 md:p-10 max-w-3xl w-full relative max-h-[90vh] overflow-y-auto"
             >
               <button
-                className="absolute top-4 right-4 text-gray-600 hover:text-gray-900"
+                className="absolute top-2 right-2 sm:top-4 sm:right-4 text-gray-600 hover:text-gray-900"
                 onClick={closeModal}
               >
-                <AiOutlineClose size={28} />
+                <AiOutlineClose size={24} />
               </button>
-              <h2 className="text-2xl font-bold mb-4 text-gray-900">{selectedFAQ.subject}</h2>
-              <div className="space-y-6">
+              <h2 className="text-xl sm:text-2xl font-bold mb-4 text-gray-900 pr-8">{selectedFAQ.subject}</h2>
+              <div className="space-y-4 sm:space-y-6">
                 <div>
                   <label className="block text-sm font-medium text-gray-700">To</label>
                   <input
                     type="text"
-                    value="hr@example.com" // Hardcoded "To" field
+                    value="hr@example.com"
                     readOnly
-                    className="w-full border border-gray-300 rounded-lg p-3 mt-1 bg-gray-50 text-gray-800 shadow-sm"
+                    className="w-full border border-gray-300 rounded-lg p-2 sm:p-3 mt-1 bg-gray-50 text-gray-800 shadow-sm text-sm"
                   />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700">Subject</label>
                   <input
                     type="text"
-                    value={selectedFAQ.subject} // Dynamic subject
+                    value={selectedFAQ.subject}
                     readOnly
-                    className="w-full border border-gray-300 rounded-lg p-3 mt-1 bg-gray-50 text-gray-800 shadow-sm"
+                    className="w-full border border-gray-300 rounded-lg p-2 sm:p-3 mt-1 bg-gray-50 text-gray-800 shadow-sm text-sm"
                   />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700">Content</label>
                   <textarea
-                    value={selectedFAQ.content} // Dynamic content
+                    value={selectedFAQ.content}
                     readOnly
-                    className="w-full border border-gray-300 rounded-lg p-3 mt-1 bg-gray-50 text-gray-800 shadow-sm h-40 resize-none"
+                    className="w-full border border-gray-300 rounded-lg p-2 sm:p-3 mt-1 bg-gray-50 text-gray-800 shadow-sm h-32 sm:h-40 resize-none text-sm"
                   />
                 </div>
               </div>
-              <div className="flex justify-end mt-6">
+              <div className="flex justify-end mt-4 sm:mt-6">
                 <button
                   onClick={() => handleCopyContent(selectedFAQ.content)}
-                  className="inline-flex items-center px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow-lg hover:bg-blue-700 transition ease-in-out duration-300"
+                  className="inline-flex items-center px-4 sm:px-6 py-2 sm:py-3 bg-blue-600 text-white text-sm font-semibold rounded-lg shadow-lg hover:bg-blue-700 transition ease-in-out duration-300"
                 >
                   <FiCopy className="mr-2" /> Copy Content
                 </button>

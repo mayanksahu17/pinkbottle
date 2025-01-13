@@ -1,4 +1,3 @@
-// /src/app/api/savedjobs/route.ts
 import { NextResponse, NextRequest } from 'next/server';
 import { dbConnect } from '@/lib/database/mongodb';
 import User from '@/lib/database/models/User/User';
@@ -19,12 +18,13 @@ export async function GET(req: NextRequest) {
     const user = await User.findOne({ clerkId: userId });
 
     if (!user) {
-      return NextResponse.json({ error: 'User not found' }, { status: 404 });
+      return NextResponse.json({ error: 'User not found', jobs: [] }, { status: 200 });
     }
 
-    return NextResponse.json(user.jobs, { status: 200 });
+    // Ensure jobs is an array, even if it's undefined
+    return NextResponse.json({ jobs: user.jobs || [] }, { status: 200 });
   } catch (error) {
     console.error('Error fetching jobs:', error);
-    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
+    return NextResponse.json({ error: 'Internal Server Error', jobs: [] }, { status: 500 });
   }
 }

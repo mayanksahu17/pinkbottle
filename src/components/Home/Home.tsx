@@ -1,18 +1,19 @@
 'use client';
-import React, { useState } from 'react';
+
+import React, { useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
-import Link from 'next/link';
 import Head from 'next/head';
 import Navbar from '../navbar/navbar';
 import Footer from '../footer/footer';
 import FrontMain from './FrontMain';
 import Sponsor from './sponsor';
-import IncreaseResult from './IncreaseInCalls';
 import WorksFor from './worksfor';
 import Universities from './Universities';
 import Message from './Message';
+import StatsAndCTA from './StatsAndCTA'
+import Call from './call';
 
-// Dynamic imports with SSR disabled for non-critical components
+
 const Help = dynamic(() => import('../GetInTouch/Help'), { ssr: false });
 const Model = dynamic(() => import('../GetInTouch/Model'), { ssr: false });
 const Sidekick = dynamic(() => import('./sidekick'), { ssr: false });
@@ -20,92 +21,76 @@ const FAQSection = dynamic(() => import('../FAQ/faq'), { ssr: false });
 const Widget = dynamic(() => import('./Widget'), { ssr: false });
 const Testimonial = dynamic(() => import('./Testimonial'), { ssr: false });
 
-const structuredData = {
-  '@context': 'https://schema.org',
-  '@type': 'WebSite',
-  name: 'HiredEasy',
-  url: 'https://hiredeasy.com',
-  sameAs: [
-    'https://www.linkedin.com/company/hiredeasy',
-    'https://www.instagram.com/hiredeasy',
-  ],
-  mainEntity: [
-    {
-      '@type': 'WebPage',
-      url: 'https://hiredeasy.com/pricing',
-      name: 'Pricing',
-    },
-    {
-      '@type': 'WebPage',
-      url: 'https://hiredeasy.com/about',
-      name: 'About Us',
-    },
-    {
-      '@type': 'WebPage',
-      url: 'https://hiredeasy.com/sign-up',
-      name: 'Sign Up',
-    },
-    {
-      '@type': 'WebPage',
-      url: 'https://hiredeasy.com/sign-in',
-      name: 'Sign In',
-    },
-    {
-      '@type': 'WebPage',
-      url: 'https://hiredeasy.com/Wall',
-      name: 'Wall of Love',
-    },
-  ],
-};
+const ScrollBackgroundEffect = () => {
+  const [bgColor, setBgColor] = useState('#ffffff')
 
-const breadcrumbData = {
-  '@context': 'https://schema.org',
-  '@type': 'BreadcrumbList',
-  itemListElement: [
-    {
-      '@type': 'ListItem',
-      position: 1,
-      name: 'Home',
-      item: 'https://hiredeasy.com',
-    },
-    {
-      '@type': 'ListItem',
-      position: 2,
-      name: 'Pricing',
-      item: 'https://hiredeasy.com/pricing',
-    },
-    {
-      '@type': 'ListItem',
-      position: 3,
-      name: 'About Us',
-      item: 'https://hiredeasy.com/about',
-    },
-    {
-      '@type': 'ListItem',
-      position: 4,
-      name: 'Career',
-      item: 'https://hiredeasy.com/career',
-    },
-    {
-      '@type': 'ListItem',
-      position: 5,
-      name: 'Sign Up',
-      item: 'https://hiredeasy.com/sign-up',
-    },
-    {
-      '@type': 'ListItem',
-      position: 6,
-      name: 'Sign In',
-      item: 'https://hiredeasy.com/sign-in',
-    },
-    {
-      '@type': 'ListItem',
-      position: 7,
-      name: 'Wall of Love',
-      item: 'https://hiredeasy.com/Wall',
-    },
-  ],
-};
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.scrollY
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight
+      const scrollFraction = scrollTop / docHeight
+
+      const colors = [
+        '#ffffff', // White
+        '#f8f9fa', // Very light gray
+        '#f1f3f5', // Light grayish blue
+        '#fff5f5', // Very light pink
+        '#f8f0fc', // Very light lavender
+        '#f3f0ff', // Very light violet
+        '#edf2ff', // Very light blue
+        '#e7f5ff', // Very light cyan
+        '#e3fafc', // Very light sky blue
+        '#f0f4f8', // Soft light slate gray
+        '#fdf1f1', // Light rose
+        '#f2f2f2', // Neutral light gray
+        '#fef7f1', // Soft peach cream
+        '#f3f2fc', // Light misty purple
+        '#faf6f9', // Light pinkish gray
+        '#f9f4ff', // Soft lavender blush
+        '#fef3f7', // Light cherry blossom pink
+      ];
+      
+
+      // Calculate the current index and mix colors
+      const index = Math.min(Math.floor(scrollFraction * (colors.length - 1)), colors.length - 2)
+      const nextIndex = index + 1
+
+      const color1 = colors[index]
+      const color2 = colors[nextIndex]
+
+      // Interpolate between color1 and color2
+      const interpolate = (start: number, end: number, factor: number) =>
+        Math.round(start + (end - start) * factor).toString(16).padStart(2, '0')
+
+      const mixColors = (c1: string, c2: string, factor: number) => {
+        const [r1, g1, b1] = c1.match(/\w\w/g)!.map((hex) => parseInt(hex, 16))
+        const [r2, g2, b2] = c2.match(/\w\w/g)!.map((hex) => parseInt(hex, 16))
+        return `#${interpolate(r1, r2, factor)}${interpolate(g1, g2, factor)}${interpolate(b1, b2, factor)}`
+      }
+
+      const factor = (scrollFraction * (colors.length - 1)) % 1
+      setBgColor(mixColors(color1, color2, factor))
+    }
+
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  return (
+    <div 
+      style={{ 
+        backgroundColor: bgColor, 
+        transition: 'background-color 0.5s ease', 
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        zIndex: -1
+      }}
+    />
+  )
+}
 
 const HomePage = () => {
   const [showForm, setShowForm] = useState(false);
@@ -148,109 +133,30 @@ const HomePage = () => {
         />
         <meta name="twitter:site" content="@HiredEasy" />
         <link rel="canonical" href="https://hiredeasy.com" />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
-        />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbData) }}
-        />
       </Head>
 
-      <div
-        className="min-h-screen text-black"
-        style={{ backgroundColor: '#FFFFFF' }}
-      >
-        <Navbar />
-
-        <div className="bg-[#bafff1] py-2 shadow-md mt-16">
-          <div className="max-w-xl mx-auto text-center px-4">
-            <p className="text-base font-medium text-gray-800 animate-bounce">
-              Ready to get a Job
-              <a
-                href="#"
-                onClick={() => setShowForm(true)}
-                className="text-blue-600 hover:text-blue-700 underline pl-1 transition duration-300 ease-in-out"
-              >
-                Talk to Us!
-              </a>
-            </p>
-          </div>
-          <Model show={showForm} onClose={handleClose}>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-6">
-              <div className="flex flex-col justify-center items-center p-4">
-                <h2 className="text-xl md:text-2xl font-bold text-gray-800 mt-4 text-center">
-                  Schedule a Call With Founders
-                </h2>
-                <Link
-                  href="https://apply.neetocal.com/meeting-with-nikhil-jain"
-                  target="_blank"
-                >
-                  <button className="flex items-center justify-center gap-2 px-6 py-2 text-sm md:text-lg font-medium text-primary-foreground bg-primary rounded-full hover:bg-primary-dark transition-all shadow-lg border">
-                    <span className="rounded-full bg-white p-2">
-                      <img
-                        src="Nikhil.jpeg"
-                        alt="Nikhil Jain"
-                        className="h-6 w-6"
-                        loading="lazy"
-                      />
-                    </span>
-                    <span>Schedule a call</span>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      className="md:ml-1 h-5 w-5 text-gray-400 animate-pulse"
-                    >
-                      <path d="m9 18 6-6-6-6"></path>
-                    </svg>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      className="-ml-3 h-5 w-5 animate-pulse"
-                    >
-                      <path d="m9 18 6-6-6-6"></path>
-                    </svg>
-                  </button>
-                </Link>
-
-                <p className="mt-4 text-sm md:text-lg text-center text-gray-600">
-                  Schedule a personal call with our founders
-                </p>
-              </div>
-              <Help />
-            </div>
-          </Model>
+      <div className="relative min-h-screen text-black">
+        <ScrollBackgroundEffect />
+        <div className="relative z-10">
+          <Navbar />
+          <FrontMain />
+          <Sponsor />
+          <Call/>
+          <StatsAndCTA/>
+          <WorksFor />
+          <Universities />
+          {/* <Features /> */}
+          <Sidekick />
+          <Testimonial />
+          <FAQSection />
+          <Message />
+          <Widget />
+          <Footer />
         </div>
-
-        <FrontMain />
-        <Sponsor />
-        <IncreaseResult />
-        <WorksFor />
-        <Universities />
-        <Sidekick />
-        <Testimonial />
-        <FAQSection />
-        <Message />
-        <Widget />
-        <Footer />
       </div>
     </>
   );
 };
 
 export default HomePage;
+

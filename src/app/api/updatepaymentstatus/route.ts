@@ -1,4 +1,4 @@
-import { users } from '@clerk/clerk-sdk-node';
+import { clerkClient } from '@clerk/clerk-sdk-node';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(req: NextRequest, res: NextResponse) {
@@ -12,8 +12,8 @@ export async function GET(req: NextRequest, res: NextResponse) {
     }
 
     try {
-      const user = await users.getUser(userId);
-      await users.updateUser(userId, {
+      const user = await clerkClient.users.getUser(userId);
+      await clerkClient.users.updateUser(userId, {
         publicMetadata: { isPaid: true },
       });
       return NextResponse.redirect(new URL('/dashboard', req.url));
@@ -22,4 +22,6 @@ export async function GET(req: NextRequest, res: NextResponse) {
       return NextResponse.redirect(new URL('/pricing', req.url));
     }
   }
+  // Add a default return statement for when the stripeToken condition isn't met
+  return NextResponse.redirect(new URL('/pricing', req.url));
 }
