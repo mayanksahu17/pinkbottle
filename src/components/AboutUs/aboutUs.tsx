@@ -75,7 +75,7 @@ const structuredData = {
 };
 
 const Aboutus = () => {
-  const words = ["better", "cute", "beautiful", "modern"]
+  const words = ["faster", "smarter", "efficient", "tailored"]
   return (
     <div
       className="min-h-screen text-black py-12"
@@ -92,7 +92,7 @@ const Aboutus = () => {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbData) }}
         />
       </head>
-      <main className="max-w-6xl mx-auto px-6 py-12">
+      <main className="max-w-6xl mx-auto px-6 py-12 mt-12">
         <section className="text-center mb-12">
         <div className="text-4xl mx-auto font-normal text-neutral-600 dark:text-neutral-400">
             We understand you

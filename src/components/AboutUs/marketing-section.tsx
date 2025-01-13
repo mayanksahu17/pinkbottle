@@ -77,14 +77,14 @@ export default function MarketingSection() {
                   ))}
                 </div>
               </div>
-              <p className="text-gray-400">Trusted by 2,000+ students</p>
+              <p className="text-gray-400">Trusted by 1,000+ students</p>
             </div>
           </div>
 
           {/* CTA Button */}
           <div className="flex items-center justify-end md:justify-end w-full md:w-auto mt-8 md:mt-0">
             <Link 
-              href="http://localhost:3000/pricing"
+              href="https://apply.neetocal.com/meeting-with-nikhil-jain"
               className="inline-block bg-[#40E0D0]  hover:bg-[#3CC8BA] text-black font-semibold px-8 py-4 rounded-lg transition-colors duration-200 text-lg"
             >
               Book a demo →
