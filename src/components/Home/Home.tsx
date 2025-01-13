@@ -2,24 +2,15 @@
 
 import React, { useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
-import Link from 'next/link';
 import Head from 'next/head';
 import Navbar from '../navbar/navbar';
 import Footer from '../footer/footer';
 import FrontMain from './FrontMain';
 import Sponsor from './sponsor';
-import IncreaseResult from './IncreaseInCalls';
 import WorksFor from './worksfor';
 import Universities from './Universities';
 import Message from './Message';
-import HeroScrollDemo from './HeroScrollDemo';
-import Features from './Features';
 import StatsAndCTA from './StatsAndCTA'
-import { FloatingNav } from '../ui/floating-navbar';
-import LogoShowcase from './logo-showcase';
-import Testimonials from './newtestimonials';
-import { EnterpriseShowcase } from '../ui/enterprise-showcase';
-import ModularSolutions from '../ui/dynamicLogos';
 import Call from './call';
 
 
@@ -154,7 +145,7 @@ const HomePage = () => {
           <StatsAndCTA/>
           <WorksFor />
           <Universities />
-          <Features />
+          {/* <Features /> */}
           <Sidekick />
           <Testimonial />
           <FAQSection />

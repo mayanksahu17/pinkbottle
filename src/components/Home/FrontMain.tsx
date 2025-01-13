@@ -16,7 +16,6 @@ import {
   ChevronRight,
 } from 'lucide-react';
 import ScheduleCallButton from '../buttons/schedule-call';
-import Testimonials from './newtestimonials';
 
 const FloatingElement = ({
   icon: Icon,
