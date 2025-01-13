@@ -5,7 +5,6 @@ import React from 'react';
 import { loadStripe } from '@stripe/stripe-js';
 import Navbar from '../navbar/navbar';
 import Footer from '../footer/footer';
-import CostTimeline from './cost-timeline';
 import PerspectiveCards  from './perspective';
 import { AnimatedTooltip } from "../ui/animated-tooltip";
 

@@ -5,10 +5,7 @@ import Footer from '../footer/footer';
 import { Metadata } from 'next';
 import { InfiniteMovingCardsDemo } from '../Home/InfiniteMovingCardsDemo';
 import { FlipWords } from '../ui/flip-words'
-import  Head from './head';
 import  MarketingSection  from './marketing-section';
-import team from './team';
-
 
 
 export const metadata: Metadata = {
