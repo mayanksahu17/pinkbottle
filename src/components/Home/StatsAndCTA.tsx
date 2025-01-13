@@ -14,15 +14,16 @@ const sectionsData = [
     description:
       'Our clients achieve remarkable results, with 72% securing full-time positions in USA. Impressively, 47% of these roles are obtained through our strategic applications, while the remaining 44% come from leveraging personal networks and individual efforts.',
     bgColor: '#4338CA',
-    image: '/Testimonial3.png?height=600&width=550',
+    image:
+      'https://res.cloudinary.com/dmky9t4sr/video/upload/v1736744484/20250113_1028_Focused_Student_Job_Application_simple_compose_01jhf0dzfjf8zrehtvb5sqbv8k_acc4ru.mp4?height=600&width=550',
   },
   {
     title: '80x',
     subtitle: 'Less time spent in job search',
     description:
-      'Our clients achieve remarkable results, with 72% securing full-time positions in just three months. Impressively, 47% of these roles are obtained through our strategic applications, while the remaining 44% come from leveraging personal networks and individual efforts.',
+      'Our clients achieve remarkable results, with 82% securing full-time positions in just three months. Impressively, 47% of these roles are obtained through our strategic applications, while the remaining 44% come from leveraging personal networks and individual efforts.',
     bgColor: '#2563EB',
-    image: '/Testimonial2.png?height=600&width=550',
+    image: 'https://res.cloudinary.com/dmky9t4sr/video/upload/v1736745520/20250113_1048_Dream_Job_Unveiled_simple_compose_01jhf1hgdffddtm8v04v6y9nfs_dlh4i8.mp4?height=600&width=550',
   },
   {
     title: '600x',
@@ -30,7 +31,7 @@ const sectionsData = [
     description:
       'By cutting weeks off the job search, we help clients gain an extra $20K in earnings. Additionally, receiving multiple offers can boost salaries by an average of $30K, leading to a substantial increase in overall compensation.',
     bgColor: '#059669',
-    image: '/Testimonial1.png?height=600&width=550',
+    image: 'https://res.cloudinary.com/dmky9t4sr/video/upload/v1736745713/20250113_1051_Entering_Google_s_Office_simple_compose_01jhf1qt9gfrs8yv1m823kw6t8_w2u1bs.mp4?height=600&width=550',
   },
 ];
 
@@ -180,15 +181,18 @@ const Section = ({
         >
           <BackgroundGradient className="rounded-2xl p-4 bg-white dark:bg-zinc-900 shadow-lg">
             {/* Dynamic width and height control via class */}
-            <div className="w-[500px] h-[300px]">
-              <Image
+            <div className="w-[560px] h-[315px]">
+              <video
                 src={data.image}
-                alt={`${data.subtitle} Interface`}
-                layout="fill"
-                objectFit="contain"
-                className="rounded-lg"
-                priority
+                className="rounded-lg border-0 outline-none"
+                autoPlay
+                loop
+                muted
+                playsInline
+                controls={false} // Remove this line if controls are needed
               />
+              {/* Accessibility: Add a caption or description for screen readers */}
+              <p className="sr-only">{`${data.subtitle} Interface`}</p>
             </div>
           </BackgroundGradient>
         </motion.div>
