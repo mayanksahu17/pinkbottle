@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   description:
     'Learn more about HiredEasy and our mission to simplify job applications, and meet our founders dedicated to helping job seekers find their dream jobs.',
   keywords:
-    'HiredEasy, About HiredEasy, job applications, career services, job seekers, Nikhil Jain, Anuj Jain',
+    'HiredEasy, About HiredEasy, job applications, career services, job seekers, Nikhil Jain, Ashwin Jain',
   robots: 'index, follow',
   viewport: 'width=device-width, initial-scale=1.0',
   authors: [{ name: 'HiredEasy' }],
