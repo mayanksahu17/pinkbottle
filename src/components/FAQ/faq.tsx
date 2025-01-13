@@ -55,45 +55,76 @@ const FAQSection = () => {
   );
 
   return (
-    <section className="py-16 bg-transparent">
-      <div className="max-w-4xl mx-auto px-1">
-        <h2 className="text-5xl font-bold text-center mb-8" style={{ fontFamily: 'Calibri, sans-serif' }}>
-            Frequently Asked Questions
-        </h2>
-        <p className="text-center mb-6 text-gray-700 text-lg leading-relaxed" style={{ fontFamily: 'Calibri, sans-serif' }}>
-            95% of questions are answered here. Can't find <br />
-            what you're looking for? Feel free to reach out!
-        </p>
+<section className="py-16 bg-gradient-to-b from-gray-50 to-white">
+  <div className="max-w-4xl mx-auto px-4">
+    {/* Heading */}
+    <h2
+      className="text-4xl font-extrabold text-center text-gray-800 mb-6"
+      style={{ fontFamily: 'Calibri, sans-serif' }}
+    >
+      Frequently Asked Questions
+    </h2>
+    <p
+      className="text-center mb-8 text-gray-600 text-lg leading-relaxed"
+      style={{ fontFamily: 'Calibri, sans-serif' }}
+    >
+      95% of questions are answered here. Can't find <br />
+      what you're looking for? Feel free to reach out!
+    </p>
 
-        <div className="mb-10">
-          <div className="relative">
-            <input
-              type="text"
-              placeholder="Search FAQs..."
-              value={searchQuery}
-              onChange={e => setSearchQuery(e.target.value)}
-              className="w-full pl-4 pr-4 py-2 border border-gray-500 rounded-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300 ease-in-out"
-              style={{ fontFamily: 'Calibri, sans-serif' }}
-            />
-          </div>
-        </div>
-        <div>
-          {filteredFaqs.map((faq, index) => (
-            <details key={index} className="group py-4">
-              <summary className="text-lg font-semibold cursor-pointer bg-white p-4 rounded-lg shadow-md hover:bg-blue-50 hover:shadow-lg transition duration-300 ease-in-out flex justify-between items-center" style={{ fontFamily: 'Calibri, sans-serif', color: '#333' }}>
-                <span>{faq.question}</span>
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
-                </svg>
-              </summary>
-              <p className="mt-4 leading-relaxed text-sm text-gray-700">
-                {faq.answer}
-              </p>
-            </details>
-          ))}
-        </div>
+    {/* Search Bar */}
+    <div className="mb-10">
+      <div className="relative">
+        <input
+          type="text"
+          placeholder="Search FAQs..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className="w-full pl-4 pr-4 py-3 border border-gray-300 rounded-full shadow-sm focus:outline-none focus:ring-2 focus:ring-green-400 transition duration-300 ease-in-out"
+          style={{ fontFamily: 'Calibri, sans-serif' }}
+        />
       </div>
-    </section>
+    </div>
+
+    {/* FAQs List */}
+    <div>
+      {filteredFaqs.map((faq, index) => (
+        <details
+          key={index}
+          className="group py-4 border-b border-gray-200"
+        >
+          <summary
+            className="text-lg font-medium cursor-pointer bg-white p-4 rounded-lg shadow-md hover:bg-green-50 hover:shadow-lg transition duration-300 ease-in-out flex justify-between items-center"
+            style={{
+              fontFamily: 'Calibri, sans-serif',
+              color: '#333',
+            }}
+          >
+            <span>{faq.question}</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-5 w-5 text-green-500 group-open:rotate-180 transform transition-transform"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M19 9l-7 7-7-7"
+              />
+            </svg>
+          </summary>
+          <p className="mt-4 leading-relaxed text-sm text-gray-600">
+            {faq.answer}
+          </p>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>
+
   );
 };
 
