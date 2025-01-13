@@ -1,6 +1,7 @@
 import { UploadButton } from "@/utils/uploadthing";
 import { Button } from "@/components/ui/button";
 
+//test comment
 interface UploadPhotoButtonProps {
   onClientUploadComplete?: (res: any) => void;
   onUploadError?: (error: Error) => void;
