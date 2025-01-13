@@ -1,6 +1,6 @@
 import { Label } from "@/components/ui/label";
 import { UseFormReturn } from 'react-hook-form';
-import CVButton from "@/components/Buttons/cv-upload-button"
+import CVButton from "@/components/buttons/cv-upload-button"
 
 interface CVProps {
   form: UseFormReturn<any>;

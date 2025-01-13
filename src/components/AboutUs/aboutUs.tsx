@@ -7,7 +7,6 @@ import { InfiniteMovingCardsDemo } from '../Home/InfiniteMovingCardsDemo';
 import { FlipWords } from '../ui/flip-words'
 import  Head from './head';
 import  MarketingSection  from './marketing-section';
-import ModularSolutions from '../ui/dynamicLogos';
 import team from './team';
 
 

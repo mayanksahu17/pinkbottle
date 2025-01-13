@@ -12,7 +12,7 @@ const DashboardMain = ({ isPaidUser }: { isPaidUser: boolean }) => {
   const [profileIndex, setProfileIndex] = useState(0); // Track profile index if you have multiple profiles
 
   return (
-    <main className="w-full p-4 sm:p-6 bg-white rounded-lg shadow-md mt-4 sm:mt-10 pt-20 mx-auto max-w-7xl">
+    <main className="w-full p-4 sm:p-6 bg-white rounded-lg shadow-md mt-4 sm:mt-16 pt-20 mx-auto max-w-7xl">
       {/* Header Section */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center space-y-4 sm:space-y-0 sm:space-x-4">
         <Avatar className="w-12 h-12 sm:w-16 sm:h-16">

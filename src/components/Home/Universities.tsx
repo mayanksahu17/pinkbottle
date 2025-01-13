@@ -226,64 +226,67 @@ export default function EnterpriseSection() {
         </button>
       </div>
 
-      <div className="flex flex-col lg:flex-row gap-8">
-        <div className="lg:w-[30%] space-y-6 min-h-[500px] flex-shrink-0">
-          <motion.div
-            key={contentIndex}
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5 }}
-            className="space-y-6"
-          >
-            <h3 className="text-3xl font-bold text-blue-600">
-              {currentContent.title}
-            </h3>
-            <div className="grid gap-4">
-              {currentContent.stats.map((stat, index) => (
-                <div key={index} className="flex items-start space-x-4">
-                  <div
-                    className={`w-1 h-12 bg-gradient-to-b ${currentContent.gradientColor} self-stretch`}
-                  />
-                  <div>
-                    <h4 className="text-2xl font-bold text-gray-800">
-                      {stat.number}
-                    </h4>
-                    <p className="text-gray-600">{stat.text}</p>
-                  </div>
-                </div>
-              ))}
+      <div className="flex flex-col lg:flex-row gap-4 lg:gap-8">
+  {/* Metrics Section */}
+  <div className="lg:w-[30%] space-y-6 flex-shrink-0 mb-6 lg:mb-0">
+    <motion.div
+      key={contentIndex}
+      initial={{ opacity: 0, x: 50 }}
+      animate={{ opacity: 1, x: 0 }}
+      transition={{ duration: 0.5 }}
+      className="space-y-6"
+    >
+      <h3 className="text-3xl font-bold text-blue-600">
+        {currentContent.title}
+      </h3>
+      <div className="grid gap-4">
+        {currentContent.stats.map((stat, index) => (
+          <div key={index} className="flex items-start space-x-4">
+            <div
+              className={`w-1 h-12 bg-gradient-to-b ${currentContent.gradientColor} self-stretch`}
+            />
+            <div>
+              <h4 className="text-2xl font-bold text-gray-800">
+                {stat.number}
+              </h4>
+              <p className="text-gray-600">{stat.text}</p>
             </div>
-          </motion.div>
-        </div>
-
-        <div className="lg:w-[70%] bg-transparent rounded-lg p-4">
-          <div className="grid grid-rows-3 grid-cols-5 gap-4">
-            {logos.map((logo, index) => (
-              <motion.div
-                key={logo + index}
-                initial={{ scale: 1 }}
-                animate={{ scale: [1, 0.8, 1.05, 1], opacity: [1, 0.5, 1] }}
-                transition={{
-                  duration: 0.6,
-                  ease: 'easeInOut',
-                  times: [0, 0.3, 0.7, 1],
-                }}
-                className="bg-white p-2 rounded-lg flex items-center justify-center shadow-lg"
-                style={{
-                  height: '100%',
-                }}
-              >
-                <Image
-                  src={`/${logo}`}
-                  alt={`Logo ${index + 1}`}
-                  width={80}
-                  height={80}
-                  className="object-contain max-w-full max-h-full"
-                />
-              </motion.div>
-            ))}
           </div>
-        </div>
+        ))}
+      </div>
+    </motion.div>
+  </div>
+
+  {/* Logos Section */}
+  <div className="lg:w-[70%] bg-transparent rounded-lg p-4">
+    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+      {logos.map((logo, index) => (
+        <motion.div
+          key={logo + index}
+          initial={{ scale: 1 }}
+          animate={{ scale: [1, 0.8, 1.05, 1], opacity: [1, 0.5, 1] }}
+          transition={{
+            duration: 0.6,
+            ease: 'easeInOut',
+            times: [0, 0.3, 0.7, 1],
+          }}
+          className="bg-white p-4 rounded-lg flex items-center justify-center shadow-lg"
+          style={{
+            height: '100%',
+          }}
+        >
+          <Image
+            src={`/${logo}`}
+            alt={`Logo ${index + 1}`}
+            width={100}
+            height={100}
+            className="object-contain max-w-full max-h-full"
+          />
+        </motion.div>
+      ))}
+    </div>
+  </div>
+
       </div>
     </div>
   );
