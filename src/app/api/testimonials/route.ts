@@ -21,7 +21,7 @@ const cache = new LRUCache<string, any>(options);
 async function fetchTestimonialsFromDatabase() {
   console.log("Fetching from MongoDB");
   await client.connect();
-  const database = client.db("hiredeasy");
+  const database = client.db("hiredeasy_testimonials");
   const collection = database.collection("testimonials");
 
   // Query the database
