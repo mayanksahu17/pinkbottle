@@ -14,6 +14,7 @@ const myMiddleware = authMiddleware({
     '/api/deletejobs',
     '/api/profile',
     '/api/savedjobs',
+    "/api/testimonials",
     '/Wall',
     '/api/profile',
     '/api/ProfileForm',
@@ -22,6 +23,7 @@ const myMiddleware = authMiddleware({
     '/sitemap.xml',
     '/robots.txt',
     '/Home/',
+
   ],
   ignoredRoutes: [
     '/api/uploadthing',

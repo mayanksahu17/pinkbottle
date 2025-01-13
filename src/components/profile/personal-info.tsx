@@ -7,7 +7,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Pencil, Camera, X, Save } from 'lucide-react';
-import ChangePhotoButton from "@/components/Buttons/change-photo-button";
+import ChangePhotoButton from "@/components/buttons/change-photo-button";
 
 export default function PersonalInfo({ data, onUpdate }) {
   const [isEditing, setIsEditing] = useState(false);

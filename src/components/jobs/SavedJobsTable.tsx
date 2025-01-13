@@ -91,7 +91,7 @@ const SavedJobsTable: React.FC<JobTableProps> = ({ jobData = [] }) => {
     new Date(dateString).toLocaleDateString();
 
   return (
-    <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-lg">
+    <div className="bg-white border border-gray-200 rounded-lg pt-26 shadow-lg">
       {/* Search Bar */}
       <div className="flex flex-col items-center w-full mb-4">
         <input

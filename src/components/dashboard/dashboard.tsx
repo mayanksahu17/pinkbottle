@@ -1,18 +1,18 @@
-'use client';
+"use client";
 
-import React, { useState, useEffect } from 'react';
-import Navbar from '../navbar/navbar';
-import Footer from '../footer/footer';
-import Sidebar from '../SideBar/sideBar';
-import DashboardMain from './dashboard-main';
-import Warmup from '../Interview/warmup';
-import JobsMain from '../jobs/jobs-main';
-import ProfilePage from '@/app/profile/page';
-import { RxHamburgerMenu } from 'react-icons/rx';
-import { useAuth } from '@clerk/nextjs';
+import React, { useState, useEffect } from "react";
+import Navbar from "../navbar/navbar";
+import Footer from "../footer/footer";
+import Sidebar from "../SideBar/sideBar";
+import DashboardMain from "./dashboard-main";
+import Warmup from "../Interview/warmup";
+import JobsMain from "../jobs/jobs-main";
+import ProfilePage from "@/app/profile/page";
+import { RxHamburgerMenu } from "react-icons/rx";
+import { useAuth } from "@clerk/nextjs";
 
 export default function DashboardPage() {
-  const [currentTab, setCurrentTab] = useState('dashboard');
+  const [currentTab, setCurrentTab] = useState("dashboard");
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isPaidUser, setIsPaidUser] = useState(false); // Paid user state
@@ -21,24 +21,24 @@ export default function DashboardPage() {
 
   useEffect(() => {
     if (!userId) {
-      console.warn('No user ID provided to DashboardPage');
+      console.warn("No user ID provided to DashboardPage");
       return;
     }
 
     const fetchPaymentStatus = async () => {
       try {
         const token = await getToken();
-        const response = await fetch('/api/checkPaid', {
+        const response = await fetch("/api/checkPaid", {
           headers: {
             Authorization: `Bearer ${token}`,
-            'X-User-Id': userId,
+            "X-User-Id": userId,
           },
         });
 
         const data = await response.json();
-        setIsPaidUser(data.paidstatus === 'Paid'); // Update paid status
+        setIsPaidUser(data.paidstatus === "Paid"); // Update paid status
       } catch (error) {
-        console.error('Failed to fetch payment status:', error);
+        console.error("Failed to fetch payment status:", error);
       }
     };
 
@@ -47,9 +47,9 @@ export default function DashboardPage() {
 
   useEffect(() => {
     if (sidebarOpen) {
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflow = "hidden";
     } else {
-      document.body.style.overflow = ''; // Restore scroll when sidebar is closed
+      document.body.style.overflow = ""; // Restore scroll when sidebar is closed
     }
   }, [sidebarOpen]);
 
@@ -59,10 +59,14 @@ export default function DashboardPage() {
       setCurrentTab(tab);
       setSidebarOpen(false);
     } catch (error) {
-      console.error('Error while changing tab:', error);
+      console.error("Error while changing tab:", error);
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const closeSidebar = () => {
+    setSidebarOpen(false);
   };
 
   return (
@@ -84,16 +88,16 @@ export default function DashboardPage() {
         {sidebarOpen && (
           <div
             className="fixed inset-0 bg-black bg-opacity-50 z-[50] lg:hidden"
-            onClick={() => setSidebarOpen(false)}
+            onClick={closeSidebar} // Closes sidebar on clicking overlay
           />
         )}
 
         {/* Sidebar */}
         <aside
           className={`fixed lg:sticky top-16 ${
-            sidebarOpen ? 'z-[55]' : 'z-[10]'
+            sidebarOpen ? "z-[55]" : "z-[10]"
           } lg:z-[5] h-[calc(100vh-4rem)] transition-transform duration-300 ease-in-out ${
-            sidebarOpen ? 'translate-x-0' : '-translate-x-full'
+            sidebarOpen ? "translate-x-0" : "-translate-x-full"
           } lg:translate-x-0 w-64 bg-white shadow-xl`}
         >
           <Sidebar
@@ -115,11 +119,17 @@ export default function DashboardPage() {
           )}
 
           <div className="flex-1 overflow-y-auto">
-            <div className="p-4 md:p-6 lg:p-8 max-w-7xl mx-auto">
-              {currentTab === 'dashboard' && <DashboardMain isPaidUser={isPaidUser} />}
-              {currentTab === 'profile' && <ProfilePage />}
-              {currentTab === 'jobs' && <JobsMain />}
-              {currentTab === 'interview' && <Warmup />}
+            <div
+              className={`p-4 md:p-6 lg:p-8 ${
+                currentTab === "jobs" ? "lg:pt-20" : ""
+              } max-w-7xl mx-auto`}
+            >
+              {currentTab === "dashboard" && (
+                <DashboardMain isPaidUser={isPaidUser} />
+              )}
+              {currentTab === "profile" && <ProfilePage />}
+              {currentTab === "jobs" && <JobsMain />}
+              {currentTab === "interview" && <Warmup />}
             </div>
           </div>
         </main>

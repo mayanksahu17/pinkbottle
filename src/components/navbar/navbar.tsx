@@ -1,184 +1,216 @@
 'use client';
+
 import { UserButton, useUser } from '@clerk/nextjs';
 import Link from 'next/link';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { Menu, X } from 'lucide-react';
+import dynamic from 'next/dynamic';
+
+// Dynamically importing modal and other components
+const Model = dynamic(() => import('../GetInTouch/Model'), { ssr: false });
+const Help = dynamic(() => import('../GetInTouch/Help'), { ssr: false });
+
+const NavLink = ({
+  href,
+  children,
+}: {
+  href: string;
+  children: React.ReactNode;
+}) => (
+  <Link href={href} passHref>
+    <span className="text-sm font-medium text-gray-700 hover:text-green-500 cursor-pointer">
+      {children}
+    </span>
+  </Link>
+);
 
 const Navbar = () => {
   const { isSignedIn, user } = useUser();
-
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
+  const [lastScrollTop, setLastScrollTop] = useState(0);
+  const [showForm, setShowForm] = useState(false); // State for showing the form modal
 
-  const toggleMenu = () => {
-    setIsMenuOpen((prev) => !prev);
-  };
+  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+  const closeMenu = () => setIsMenuOpen(false); // Function to close the menu
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop =
+        window.pageYOffset || document.documentElement.scrollTop;
+
+      if (scrollTop > lastScrollTop && scrollTop > 50) {
+        setIsVisible(false); // Hides navbar on scroll down
+      } else if (scrollTop < lastScrollTop || scrollTop < 50) {
+        setIsVisible(true); // Shows navbar when scrolling up
+      }
+      setLastScrollTop(scrollTop <= 0 ? 0 : scrollTop); // Prevents negative scroll values
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [lastScrollTop]);
+
+  const handleTalkToUsClick = () => setShowForm(true); // Show the modal on click
+  const handleClose = () => setShowForm(false); // Close the modal
 
   return (
-    <header className="top-0 left-0 w-full bg-white z-50 fixed">
-      <div className="flex items-center justify-between p-2 border-b border-gray-200">
-        <Link href="/">
-          <img
-            alt="Your Logo"
-            className="cursor-pointer h-10 md:h-12 transform scale-125 ml-4 md:ml-6"
-            src="/Hiredeasy.png"
-            style={{ transform: 'scale(2.1)' }}
-          />
-        </Link>
+    <header className="fixed top-0 left-0 right-0 z-50 mt-4">
+      <div className="max-w-5xl mx-auto px-4">
+        {/* Navbar */}
+        <div className="flex items-center justify-between py-2 px-4 bg-green-100/90 border border-gray-200 rounded-full shadow-md backdrop-blur-sm">
+          {/* Logo */}
+          <Link href="/">
+            <img
+              alt="Hiredeasy Logo"
+              className="absolute h-12 w-auto cursor-pointer transition-transform duration-200 hover:scale-110"
+              style={{ top: '50%', transform: 'translateY(-50%)' }}
+              src="/Hiredeasy.png"
+            />
+          </Link>
 
-        {/* Hamburger Icon for Mobile */}
-        <button
-          className="md:hidden text-gray-600 focus:outline-none"
-          onClick={toggleMenu}
-        >
-          <svg
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            className="w-6 h-6"
+          {/* Mobile Menu Toggle */}
+          <button
+            onClick={toggleMenu}
+            className="md:hidden text-gray-500 hover:text-gray-600 focus:outline-none focus:text-gray-600"
           >
-            {isMenuOpen ? (
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M6 18L18 6M6 6l12 12"
-              />
-            ) : (
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M4 6h16M4 12h16m-7 6h7"
-              />
-            )}
-          </svg>
-        </button>
+            {isMenuOpen ? <X size={20} /> : <Menu size={20} />}
+          </button>
 
-        {/* Mobile Menu Items */}
-        <div
-          className={`fixed inset-x-0 top-16 z-10 bg-white p-4 transform transition-transform duration-300 ease-in-out ${
-            isMenuOpen ? 'block' : 'hidden'
-          } md:hidden`}
-        >
-          <nav className="flex flex-col space-y-2 bg-white p-4">
-            <Link href="/about" passHref>
-              <span className="text-sm font-medium text-gray-700 hover:text-green-500 cursor-pointer block py-2">
-                About Us
-              </span>
-            </Link>
-            {/* <Link href="/works" passHref>
-              <span className="text-sm font-medium text-gray-700 hover:text-green-500 cursor-pointer block py-2">
-                How it works
-              </span>
-            </Link> */}
-            <Link href="/Wall" passHref>
-              <span className="text-sm font-medium text-gray-700 hover:text-green-500 cursor-pointer block py-2">
-                Wall of Love
-              </span>
-            </Link> 
-            <Link href="/pricing" passHref>
-              <span className="text-sm font-medium text-gray-700 hover:text-green-500 cursor-pointer block py-2">
-                Pricing
-              </span>
-            </Link>
-            {/* <Link href="/career" passHref>
-              <span className="text-sm font-medium text-gray-700 hover:text-green-500 cursor-pointer block py-2">
-                Career
-              </span>
-            </Link> */}
+          {/* Desktop Navigation */}
+          <nav className="hidden md:flex items-center space-x-6">
+            <NavLink href="/about">About Us</NavLink>
+            <NavLink href="/Wall">Wall of Love</NavLink>
+            <NavLink href="/pricing">Pricing</NavLink>
             <Link href="/" passHref>
-              <span className="text-sm font-medium text-gray-700 hover:text-green-500 cursor-pointer block py-2">
-                Try the Copilot Free
+              <span className="text-sm font-medium bg-green-600 text-white py-1.5 px-4 rounded-full hover:bg-green-700 cursor-pointer transition-colors duration-200">
+                Try Copilot Free
               </span>
             </Link>
-            {user ? (
-              <div className="flex flex-col space-y-2">
-                <Link href="/dashboard" passHref>
-                  <span className="text-sm font-medium text-gray-700 hover:text-green-500 cursor-pointer block py-2">
-                    Dashboard
-                  </span>
-                </Link>
-                <div className="pt-2">
-                  <UserButton afterSignOutUrl="/" />
-                </div>
-              </div>
-            ) : (
-              <div className="flex flex-col space-y-2">
-                <Link href="/sign-in" passHref>
-                  <span className="text-sm font-medium text-gray-700 hover:text-green-500 cursor-pointer block py-2">
-                    Login
-                  </span>
-                </Link>
-                <Link href="/sign-up" passHref>
-                  <span className="text-sm font-medium text-gray-700 hover:text-green-500 cursor-pointer block py-2">
-                    Sign Up
-                  </span>
-                </Link>
-              </div>
-            )}
           </nav>
-        </div>
 
-        {/* Desktop Menu and Auth Links */}
-        <div className="hidden md:flex md:items-center md:justify-between md:flex-grow">
-          {/* Desktop Menu Links */}
-          <nav className="hidden md:flex md:items-center md:justify-center md:flex-grow">
-            <Link href="/about" passHref>
-              <span className="text-sm font-medium text-gray-500 hover:text-green-600 cursor-pointer mx-2">
-                About Us
-              </span>
-            </Link>
-            {/* <Link href="/works" passHref>
-              <span className="text-sm font-medium text-gray-500 hover:text-green-600 cursor-pointer mx-2">
-                How it works
-              </span>
-            </Link> */}
-              <Link href="/Wall" passHref>
-              <span className="text-sm font-medium text-gray-500 hover:text-green-600 cursor-pointer mx-2">
-                Wall of Love
-              </span>
-            </Link> 
-            <Link href="/pricing" passHref>
-              <span className="text-sm font-medium text-gray-500 hover:text-green-600 cursor-pointer mx-2">
-                Pricing
-              </span>
-            </Link>
-            {/* <Link href="/career" passHref>
-              <span className="text-sm font-medium text-gray-500 hover:text-green-600 cursor-pointer mx-2">
-                Career
-              </span>
-            </Link> */}
-            <Link href="#" passHref>
-              <span className="text-sm bg-green-600 text-white py-2 px-4 rounded-full hover:bg-green-700 cursor-not-allowed relative group mx-2">
-                Try the Copilot Free
-                <span className="absolute left-1/2 transform -translate-x-1/2 top-full mt-2 w-max bg-gray-800 text-white text-xs rounded-md px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
-                  Coming Soon.
-                </span>
-              </span>
-            </Link>
-          </nav>
-          <div>
+          {/* User Controls */}
+          <div className="hidden md:flex items-center space-x-4">
             {user ? (
-              <div className="flex gap-4 items-center">
+              <>
                 <Link href="/dashboard" passHref>
-                  <span className="text-sm font-medium text-gray-700 bg-white border border-gray-300 hover:border-green-500 rounded-md py-2 px-4 cursor-pointer shadow-sm hover:shadow transition-all duration-150 ease-in-out transform hover:-translate-y-0.5">
+                  <span className="text-sm font-medium text-gray-700 bg-white border border-gray-300 hover:border-green-500 rounded-md py-1.5 px-4 cursor-pointer shadow-sm hover:shadow transition-all duration-150 ease-in-out transform hover:-translate-y-0.5">
                     Dashboard
                   </span>
                 </Link>
                 <UserButton afterSignOutUrl="/" />
-              </div>
+              </>
             ) : (
-              <div className="space-x-4">
-                <Link href="/sign-in" passHref>
-                  <span className="text-sm cursor-pointer">Login</span>
-                </Link>
-                <Link href="/sign-up" passHref>
-                  <span className="text-sm cursor-pointer">Sign Up</span>
-                </Link>
-              </div>
+              <>
+                <NavLink href="/sign-in">Login</NavLink>
+                <NavLink href="/sign-up">Sign Up</NavLink>
+              </>
             )}
           </div>
         </div>
+
+        {/* "Ready to Get a Job?" Section */}
+        {isVisible && (
+          <div className="mt-2 px-4 py-2 bg-transparent text-black font-bold text-center">
+            <p className="text-base animate-bounce">
+              Ready to get a Job?{' '}
+              <a
+                href="#"
+                onClick={handleTalkToUsClick} // Trigger the modal here
+                className="text-blue-300 font-extrabold underline hover:text-blue-400 transition duration-300 ease-in-out"
+              >
+                Talk to Us!
+              </a>
+            </p>
+          </div>
+        )}
+
+        {/* Background Overlay */}
+        {isMenuOpen && (
+          <div
+            className="fixed inset-0 bg-black bg-opacity-50 z-40"
+            onClick={closeMenu} // Clicking on overlay closes menu
+          />
+        )}
+
+        {/* Mobile Navigation */}
+        {isMenuOpen && (
+          <div className="md:hidden mt-2 bg-green-100/90 border border-gray-200 rounded-lg shadow-lg p-4 backdrop-blur-sm z-50 relative">
+            <nav className="flex flex-col space-y-4">
+              <NavLink href="/about">About Us</NavLink>
+              <NavLink href="/Wall">Wall of Love</NavLink>
+              <NavLink href="/pricing">Pricing</NavLink>
+              <Link href="/" passHref>
+                <span className="text-sm font-medium bg-green-600 text-white py-2 px-4 rounded-full hover:bg-green-700 cursor-pointer transition-colors duration-200 text-center block">
+                  Try Copilot Free
+                </span>
+              </Link>
+              {user ? (
+                <>
+                  <Link href="/dashboard" passHref>
+                    <span className="text-sm font-medium text-gray-700 bg-white border border-gray-300 hover:border-green-500 rounded-md py-2 px-4 cursor-pointer shadow-sm hover:shadow transition-all duration-150 ease-in-out transform hover:-translate-y-0.5 text-center block">
+                      Dashboard
+                    </span>
+                  </Link>
+                  <div className="flex justify-center">
+                    <UserButton afterSignOutUrl="/" />
+                  </div>
+                </>
+              ) : (
+                <>
+                  <NavLink href="/sign-in">Login</NavLink>
+                  <NavLink href="/sign-up">Sign Up</NavLink>
+                </>
+              )}
+            </nav>
+          </div>
+        )}
       </div>
+
+      {/* Modal Form (Talk to Us) */}
+      <Model show={showForm} onClose={handleClose}>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-6">
+          <div className="flex flex-col justify-center items-center p-4">
+            <h2 className="text-xl md:text-2xl font-bold text-gray-800 mt-4 text-center">
+              Schedule a Call With Founders
+            </h2>
+            <Link
+              href="https://apply.neetocal.com/meeting-with-nikhil-jain"
+              target="_blank"
+            >
+              <button className="flex items-center justify-center gap-2 px-6 py-2 text-sm md:text-lg font-medium text-primary-foreground bg-primary rounded-full hover:bg-primary-dark transition-all shadow-lg border">
+                <span className="rounded-full bg-white p-2">
+                  <img
+                    src="Nikhil.jpeg"
+                    alt="Nikhil Jain"
+                    className="h-6 w-6"
+                    loading="lazy"
+                  />
+                </span>
+                <span>Schedule a call</span>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="md:ml-1 h-5 w-5 text-gray-400 animate-pulse"
+                >
+                  <path d="m9 18 6-6-6-6"></path>
+                </svg>
+              </button>
+            </Link>
+            <p className="mt-4 text-sm md:text-lg text-center text-gray-600">
+              Schedule a personal call with our founders
+            </p>
+          </div>
+          <Help />
+        </div>
+      </Model>
     </header>
   );
 };

@@ -81,11 +81,11 @@ const Footer = () => {
             <div>
               <h4 className="text-gray-800 text-lg font-semibold">RESOURCES</h4>
               <ul className="mt-4 space-y-2">
-                <li>
+                {/* <li>
                   <Link href="/blog" className="text-gray-600 hover:text-gray-800">
                     Blog
                   </Link>
-                </li>
+                </li> */}
               </ul>
             </div>
           </div>
@@ -109,16 +109,16 @@ const Footer = () => {
         <div className="border-t border-gray-200 mt-8 pt-8">
           <div className="flex flex-col lg:flex-row justify-between items-center gap-4">
             <p className="text-gray-600 text-sm text-center lg:text-left">
-              © {new Date().getFullYear()} HiredEasy.com. All rights reserved.
+              © 2023 HiredEasy.com. All rights reserved.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 sm:gap-8 text-center">
+            {/* <div className="flex flex-col sm:flex-row gap-4 sm:gap-8 text-center">
               <Link href="/privacy" className="text-gray-600 hover:text-gray-800">
                 Privacy Policy
               </Link>
               <Link href="/terms" className="text-gray-600 hover:text-gray-800">
                 Terms of Service
               </Link>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
@@ -181,4 +181,3 @@ function YouTubeIcon(props: SVGProps<SVGSVGElement>) {
     </svg>
   );
 }
-

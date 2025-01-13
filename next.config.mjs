@@ -1,9 +1,16 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  images: {
-    domains: ['assets.aceternity.com'],  // Add the domain to the array
+  webpack(config, options) {
+    config.module.rules.push({
+      test: /\.svg$/,
+      use: ['@svgr/webpack'],
+    });
+    return config;
   },
-  }
-  
-  export default nextConfig;
-  
+  images: {
+    dangerouslyAllowSVG: true,
+    domains: ['images.unsplash.com','aceternity.com', 'res.cloudinary.com'],
+  },
+};
+
+export default nextConfig;
