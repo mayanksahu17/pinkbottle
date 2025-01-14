@@ -70,9 +70,10 @@ export default function PremiumWallOfLove() {
   return (
     <div className="min-h-screen bg-gray-50 p-8 sm:p-12 md:p-16">
       <Navbar />
-      <h1 className="text-[5rem] font-bold text-center text-gray-800 mt-5">
-        Our clients <span className="text-red-500">❤️</span> us
-      </h1>
+      <h1 className="text-4xl sm:text-5xl md:text-[5rem] font-bold text-center text-gray-800 mt-5">
+  Our clients <span className="text-red-500">❤️</span> us
+</h1>
+
       <p className="text-center text-gray-600 mb-12 max-w-2xl mx-auto">
         Discover how HiredEasy has transformed careers and opened doors to new opportunities for professionals across various industries.
       </p>

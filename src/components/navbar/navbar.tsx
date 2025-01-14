@@ -27,38 +27,41 @@ const NavLink = ({
 const Navbar = () => {
   const { isSignedIn, user } = useUser();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isVisible, setIsVisible] = useState(true);
+  const [isTalkToUsVisible, setIsTalkToUsVisible] = useState(true); // State to control visibility of "Talk to Us"
   const [lastScrollTop, setLastScrollTop] = useState(0);
-  const [showForm, setShowForm] = useState(false); // State for showing the form modal
+  const [showForm, setShowForm] = useState(false);
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
-  const closeMenu = () => setIsMenuOpen(false); // Function to close the menu
+  const closeMenu = () => setIsMenuOpen(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      const scrollTop =
-        window.pageYOffset || document.documentElement.scrollTop;
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
 
       if (scrollTop > lastScrollTop && scrollTop > 50) {
-        setIsVisible(false); // Hides navbar on scroll down
+        setIsTalkToUsVisible(false); // Hide "Talk to Us" section on scroll down
       } else if (scrollTop < lastScrollTop || scrollTop < 50) {
-        setIsVisible(true); // Shows navbar when scrolling up
+        setIsTalkToUsVisible(true); // Show "Talk to Us" section on scroll up
       }
-      setLastScrollTop(scrollTop <= 0 ? 0 : scrollTop); // Prevents negative scroll values
+      setLastScrollTop(scrollTop <= 0 ? 0 : scrollTop);
     };
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, [lastScrollTop]);
 
-  const handleTalkToUsClick = () => setShowForm(true); // Show the modal on click
-  const handleClose = () => setShowForm(false); // Close the modal
+  const handleTalkToUsClick = () => setShowForm(true);
+  const handleClose = () => setShowForm(false);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 mt-4">
+    <header className="fixed top-0 left-0 right-0 z-[100]">
       <div className="max-w-5xl mx-auto px-4">
         {/* Navbar */}
-        <div className="flex items-center justify-between py-2 px-4 bg-green-100/90 border border-gray-200 rounded-full shadow-md backdrop-blur-sm">
+        <div
+          className={`flex items-center justify-between py-2 px-4 bg-green-100/90 border border-gray-200 rounded-full shadow-md backdrop-blur-sm ${
+            isMenuOpen ? 'z-[200]' : ''
+          }`}
+        >
           {/* Logo */}
           <Link href="/">
             <img
@@ -110,13 +113,17 @@ const Navbar = () => {
         </div>
 
         {/* "Ready to Get a Job?" Section */}
-        {isVisible && (
-          <div className="mt-2 px-4 py-2 bg-transparent text-black font-bold text-center">
+        {isTalkToUsVisible && (
+          <div
+            className={`mt-2 px-4 py-2 bg-transparent text-black font-bold text-center z-[50] ${
+              isMenuOpen ? 'pointer-events-none' : ''
+            }`}
+          >
             <p className="text-base animate-bounce">
               Ready to get a Job?{' '}
               <a
                 href="#"
-                onClick={handleTalkToUsClick} // Trigger the modal here
+                onClick={handleTalkToUsClick}
                 className="text-blue-300 font-extrabold underline hover:text-blue-400 transition duration-300 ease-in-out"
               >
                 Talk to Us!
@@ -128,14 +135,14 @@ const Navbar = () => {
         {/* Background Overlay */}
         {isMenuOpen && (
           <div
-            className="fixed inset-0 bg-black bg-opacity-50 z-40"
-            onClick={closeMenu} // Clicking on overlay closes menu
+            className="fixed inset-0 bg-black bg-opacity-50 z-[150]"
+            onClick={closeMenu}
           />
         )}
 
         {/* Mobile Navigation */}
         {isMenuOpen && (
-          <div className="md:hidden mt-2 bg-green-100/90 border border-gray-200 rounded-lg shadow-lg p-4 backdrop-blur-sm z-50 relative">
+          <div className="md:hidden mt-2 bg-green-100/90 border border-gray-200 rounded-lg shadow-lg p-4 backdrop-blur-sm z-[200] relative">
             <nav className="flex flex-col space-y-4">
               <NavLink href="/about">About Us</NavLink>
               <NavLink href="/Wall">Wall of Love</NavLink>

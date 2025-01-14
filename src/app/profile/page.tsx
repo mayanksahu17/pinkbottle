@@ -10,6 +10,7 @@ import CV from '../../components/profile/cv';
 import DiversityInclusion from '../../components/profile/diversity-inclusion';
 import SectionNavigation from './SectionNavigation';
 import ProfileStrength from './ProfileStrength';
+import CompleteProfileButton from '../../components/buttons/completeProfileButton';
 import { Section } from '@/types';
 import { useAuth } from '@clerk/nextjs';
 
@@ -123,10 +124,10 @@ export default function ProfilePage() {
 
         const data = await response.json();
         if (!data?.profiles || !data.profiles[0]) {
-          throw new Error('No profile data available');
+          setProfileData(null);
+        } else {
+          setProfileData(data.profiles[0]);
         }
-
-        setProfileData(data.profiles[0]);
       } catch (err: any) {
         setError(err.message);
       } finally {
@@ -194,7 +195,13 @@ export default function ProfilePage() {
     );
   }
 
-  if (!profileData) return null;
+  if (!profileData) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <CompleteProfileButton profileData={profileData} isLoading={loading} />
+      </div>
+    );
+  }
 
   const ActiveSection = sections.find((section) => section.id === activeSection);
   
@@ -225,6 +232,9 @@ export default function ProfilePage() {
 
               <div className="hidden lg:block lg:w-1/4">
                 <ProfileStrength profileData={profileData} />
+                <div className="mt-6">
+                  <CompleteProfileButton profileData={profileData} isLoading={loading} />
+                </div>
               </div>
             </div>
           </div>
