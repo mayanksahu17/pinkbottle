@@ -44,6 +44,19 @@ const userSchema = new mongoose.Schema<IUser>({
   coverLetter: {
     type: String,
   },
+  status : {
+    type : String,
+    enum : ['active', 'inactive','FT'],
+    default : 'inactive'
+  },
+  isRenewal : {
+    type : Boolean,
+    default : false
+  },
+  plan : {
+  type : String,
+  default : 'none'
+  }
 });
 
 const User =

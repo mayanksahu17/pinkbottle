@@ -24,4 +24,7 @@ export interface IUser extends Document{
   jobs: Jobs[];
   resume: string;
   coverLetter: string;
+  status : string;
+  isRenewal : boolean;
+  plan : string
 }

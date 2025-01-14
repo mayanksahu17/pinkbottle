@@ -38,8 +38,15 @@ const leadSchema = new mongoose.Schema<IUser>({
   coverLetter: {
     type: String,
   },
+  isRenewal : {
+    type : Boolean,
+    default : false
+  },
+  plan : {
+  type : String,
+  default : 'none'
+  }
 });
 
-const Lead =
-  mongoose.models?.Lead || mongoose.model<IUser>('Lead', leadSchema, 'leads');
+const Lead = mongoose.models?.Lead || mongoose.model<IUser>('Lead', leadSchema, 'leads');
 export default Lead;
