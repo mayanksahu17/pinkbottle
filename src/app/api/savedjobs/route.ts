@@ -18,7 +18,7 @@ export async function GET(req: NextRequest) {
     const user = await User.findOne({ clerkId: userId });
 
     if (!user) {
-      return NextResponse.json({ error: 'User not found', jobs: [] }, { status: 200 });
+      return NextResponse.json({ error: 'User not found', jobs: [] }, { status: 404 });
     }
 
     // Ensure jobs is an array, even if it's undefined
