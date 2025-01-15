@@ -24,7 +24,6 @@ export async function GET(req: NextRequest) {
     // Ensure jobs is an array, even if it's undefined
     return NextResponse.json({ jobs: user.jobs || [] }, { status: 200 });
   } catch (error) {
-    console.error('Error fetching jobs:', error);
     return NextResponse.json({ error: 'Internal Server Error', jobs: [] }, { status: 500 });
   }
 }

@@ -34,7 +34,8 @@ const JobsMain: React.FC = () => {
         },
       });
       const data = await response.json();
-      setSavedJobs(Array.isArray(data) ? data : []);
+      const jobsArray = Array.isArray(data) ? data : Array.isArray(data.jobs) ? data.jobs : [];
+      setSavedJobs(jobsArray);
     } catch (error) {
       console.error("Failed to fetch saved jobs:", error);
       setSavedJobs([]);
@@ -102,11 +103,15 @@ const JobsMain: React.FC = () => {
     fetchDelegatedJobs();
   }, [fetchDelegatedJobs]);
 
+  const handleSavedJobsUpdated = useCallback(() => {
+    fetchSavedJobs();
+  }, [fetchSavedJobs]);
+
   const tabs = [
     {
       title: `Saved (${savedJobs.length || 0})`,
       value: "jobs1",
-      content: <SavedJobsTable jobData={savedJobs} />,
+      content: <SavedJobsTable jobData={savedJobs} onJobsUpdated={handleSavedJobsUpdated} />,
     },
     {
       title: `Delegated (${delegatedJobs.length || 0})`,
