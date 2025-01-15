@@ -40,7 +40,7 @@ export default function RolesSkills({ form, profileIndex }: RolesSkillsProps) {
   const roles = getValues(`profiles.${profileIndex}.rolesSkills.roles`) || [];
 
   const handleRoleAdd = () => {
-    if (roleInput && /^[a-zA-Z\s]+$/.test(roleInput)) {
+    if (roleInput && /^[a-zA-Z\s#@\$_.+\-]+$/.test(roleInput)) { // Allow special characters
       const role = roleInput.trim();
       if (!roles.includes(role)) {
         setValue(`profiles.${profileIndex}.rolesSkills.roles`, [...roles, role]);
@@ -48,14 +48,14 @@ export default function RolesSkills({ form, profileIndex }: RolesSkillsProps) {
       setRoleInput("");
     }
   };
-
+  
   const handleSkillAdd = () => {
-    if (skillInput && /^[a-zA-Z0-9.\s\-]+$/.test(skillInput)) {
+    if (skillInput && /^[a-zA-Z0-9#@\$_.+\-\s]+$/.test(skillInput)) { // Allow special characters
       appendSkill({ name: skillInput.trim() });
       setSkillInput("");
     }
   };
-
+  
   const removePrimaryRole = (role: string) => {
     setValue(`profiles.${profileIndex}.rolesSkills.roles`, roles.filter((r) => r !== role));
   };

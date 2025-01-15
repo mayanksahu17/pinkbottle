@@ -31,7 +31,7 @@ const companies = [
 
 const WorksFor: React.FC = () => {
   return (
-    <section className="bg-transparent py-16 mb-32 mt-20">
+    <section className="bg-transparent py-8 mb-12 mt-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <h2 className="text-4xl font-extrabold text-gray-900 mb-4">
           We Proudly Say, Our Clients Now Work At

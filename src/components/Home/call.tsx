@@ -36,14 +36,14 @@ const jobCategories = [
 
 function HeroSection() {
   return (
-    <div className="text-center max-w-5xl mx-auto mb-24 space-y-8">
-      <h1 className="space-y-2 text-[2.30rem] sm:text-6xl lg:text-7xl font-bold tracking-tight text-slate-900">
+    <div className="text-center max-w-5xl mx-auto mb-8 sm:mb-12 lg:mb-24 space-y-4 sm:space-y-6 lg:space-y-8"> {/* Adjust margin-bottom for mobile */}
+      <h1 className="space-y-1 sm:space-y-2 lg:space-y-3 text-3xl sm:text-5xl lg:text-7xl font-bold tracking-tight text-slate-900">
         <div>We're here for</div>
         <div>
           <span className="relative inline-block">
             every step
             <svg
-              className="absolute -bottom-4 left-0 w-full h-2"
+              className="absolute -bottom-2 sm:-bottom-3 lg:-bottom-4 left-0 w-full h-1 sm:h-2 lg:h-3"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 242 6"
@@ -57,13 +57,14 @@ function HeroSection() {
           of your search.
         </div>
       </h1>
-      <p className="text-xl sm:text-2xl text-slate-600 max-w-3xl mx-auto font-medium">
+      <p className="text-base sm:text-lg lg:text-xl text-slate-600 max-w-3xl mx-auto font-medium">
         Tell us about your career history and goals. We'll help you craft a
         standout profile and help you land your dream job.
       </p>
     </div>
   );
 }
+
 
 function LeftContent() {
   return (
@@ -181,7 +182,7 @@ export default function JobMatcher() {
     <section className="min-h-screen w-full bg-transparent">
       <div className="container mx-auto px-4 py-6 sm:py-8 lg:py-10">
         <HeroSection />
-        <div className="grid gap-6 lg:grid-cols-2 items-center">
+        <div className="grid gap-2 lg:grid-cols-2 sm:gap-2 lg:gap-6 items-center"> {/* Adjust gap only for mobile */}
           <LeftContent />
           <JobMatches />
         </div>

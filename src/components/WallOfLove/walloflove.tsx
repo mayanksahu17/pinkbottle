@@ -68,17 +68,21 @@ export default function PremiumWallOfLove() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gray-50 p-8 sm:p-12 md:p-16">
+    <div className="min-h-screen bg-gray-50 pt-6 sm:pt-8 md:pt-12">
       <Navbar />
-      <h1 className="text-4xl sm:text-5xl md:text-[5rem] font-bold text-center text-gray-800 mt-5">
-  Our clients <span className="text-red-500">❤️</span> us
-</h1>
+      {/* Title Section */}
+      <div className="text-center">
+        <h1 className="text-3xl mt-12 pt-5 sm:text-4xl md:text-5xl font-bold text-gray-800 ">
+          Our clients <span className="text-red-500">❤️</span> us
+        </h1>
+        <p className="text-gray-600 mt-4 mb-10 max-w-2xl mx-auto text-sm sm:text-base">
+          Discover how HiredEasy has transformed careers and opened doors to new opportunities
+          for professionals across various industries.
+        </p>
+      </div>
 
-      <p className="text-center text-gray-600 mb-12 max-w-2xl mx-auto">
-        Discover how HiredEasy has transformed careers and opened doors to new opportunities for professionals across various industries.
-      </p>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-5 mx-7">
+      {/* Testimonials Section */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-10 px-4 sm:px-8">
         {isLoading && !testimonials.length && (
           <div className="col-span-full text-center text-gray-500">Loading testimonials...</div>
         )}
@@ -92,52 +96,60 @@ export default function PremiumWallOfLove() {
             key={testimonial._id}
             className="overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 bg-white"
           >
-            <CardHeader className="p-4 bg-green-50 border-b border-green-100">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center flex-grow">
-                  <img
-                    src={testimonial.profile_image_url}
-                    alt={testimonial.client_name}
-                    className="w-12 h-12 rounded-full border border-green-200"
-                  />
-                  <div className="ml-3 overflow-hidden">
-                    <HoverCard>
-                      <HoverCardTrigger asChild>
-                        <p className="text-sm font-medium text-gray-900 truncate cursor-pointer">
-                          {testimonial.client_name}
-                        </p>
-                      </HoverCardTrigger>
-                      <HoverCardContent className="w-80">
-                        <div className="flex justify-between space-x-4">
-                          <div className="space-y-1">
-                            <h4 className="text-sm font-semibold">
-                              {testimonial.client_name}
-                            </h4>
-                            <p className="text-sm">{testimonial.position_at_company_and_location}</p>
-                          </div>
-                        </div>
-                      </HoverCardContent>
-                    </HoverCard>
-                    <p className="text-xs text-gray-600 truncate">
-                      {testimonial.position_at_company_and_location}
-                    </p>
-                  </div>
-                </div>
-                <a
-                  href={testimonial.linkedin_url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-gray-400 hover:text-blue-600 transition-colors duration-200 mx-2"
-                >
-                  <LinkedInLogoIcon className="w-5 h-5" />
-                </a>
-                <img
-                  src={testimonial.company_profile}
-                  alt={testimonial.client_name}
-                  className="h-6"
-                />
+<CardHeader className="p-4 bg-green-50 border-b border-green-100">
+  <div className="flex items-center justify-between">
+    {/* Left Section: Profile Image, Name, and Role */}
+    <div className="flex items-center flex-grow space-x-3 w-1/2">
+      <img
+        src={testimonial.profile_image_url}
+        alt={testimonial.client_name}
+        className="w-12 h-12 rounded-full border border-green-200"
+      />
+      <div className="overflow-hidden">
+        {/* Name */}
+        <HoverCard>
+          <HoverCardTrigger asChild>
+            <p className="text-sm font-medium text-gray-900 truncate w-full">
+              {testimonial.client_name}
+            </p>
+          </HoverCardTrigger>
+          <HoverCardContent className="w-80">
+            <div className="flex justify-between space-x-4">
+              <div className="space-y-1">
+                <h4 className="text-sm font-semibold">
+                  {testimonial.client_name}
+                </h4>
+                <p className="text-sm">{testimonial.position_at_company_and_location}</p>
               </div>
-            </CardHeader>
+            </div>
+          </HoverCardContent>
+        </HoverCard>
+        {/* Role */}
+        <p className="text-xs text-gray-600 truncate w-full">
+          {testimonial.position_at_company_and_location}
+        </p>
+      </div>
+    </div>
+
+    {/* Right Section: Company Logo */}
+    <div className="flex items-center justify-end w-1/2">
+      <a
+        href={testimonial.linkedin_url}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="text-gray-400 hover:text-blue-600 transition-colors duration-200 mx-2"
+      >
+        <LinkedInLogoIcon className="w-5 h-5" />
+      </a>
+      <img
+        src={testimonial.company_profile}
+        alt="Company Logo"
+        className="h-12 w-auto object-contain max-w-[50%] md:max-w-[80px]" // Fixing the size
+      />
+    </div>
+  </div>
+</CardHeader>
+
             <CardContent className="p-4">
               <ScrollArea className="h-48 pr-4">
                 <p className="text-sm text-gray-700 leading-relaxed">
@@ -148,6 +160,8 @@ export default function PremiumWallOfLove() {
           </Card>
         ))}
       </div>
+
+      {/* Footer Section */}
       <Testimonials />
       <Footer />
     </div>
