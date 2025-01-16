@@ -85,9 +85,9 @@ const Navbar = () => {
             <NavLink href="/about">About Us</NavLink>
             <NavLink href="/Wall">Wall of Love</NavLink>
             <NavLink href="/pricing">Pricing</NavLink>
-            <Link href="/" passHref>
+            <Link href="/Job-Data" passHref>
               <span className="text-sm font-medium bg-green-600 text-white py-1.5 px-4 rounded-full hover:bg-green-700 cursor-pointer transition-colors duration-200">
-                Try Copilot Free
+                Job-Data
               </span>
             </Link>
           </nav>
