@@ -36,10 +36,30 @@ const leadSchema = new mongoose.Schema<IUser>({
       location: String,
     },
   ],
+<<<<<<< HEAD
   profiles: [ProfileSchema], // Use the centralized ProfileSchema
 });
 
 
 const Lead =
   mongoose.models?.Lead || mongoose.model<IUser>('Lead', leadSchema, 'leads');
+=======
+  resume: {
+    type: String,
+  },
+  coverLetter: {
+    type: String,
+  },
+  isRenewal : {
+    type : Boolean,
+    default : false
+  },
+  plan : {
+  type : String,
+  default : 'none'
+  }
+});
+
+const Lead = mongoose.models?.Lead || mongoose.model<IUser>('Lead', leadSchema, 'leads');
+>>>>>>> updated_schema
 export default Lead;
