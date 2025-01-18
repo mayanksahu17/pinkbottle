@@ -101,13 +101,9 @@ export interface IUser extends Document {
   jobs: Jobs[];
   profiles: Profile[];
   resume: string;
-<<<<<<< HEAD
-coverLetter: string;
-=======
   coverLetter: string;
   status : string;
   isRenewal : boolean;
   plan : string
->>>>>>> updated_schema
 }
 
