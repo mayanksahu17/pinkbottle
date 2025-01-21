@@ -1,16 +1,60 @@
 'use client'
 
-import { useState } from 'react'
-import {  Clock } from 'lucide-react'
-import Navbar from '@/components/navbar/navbar' 
-import Footer from '@/components/footer/footer'
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+import { Clock } from 'lucide-react';
+import Navbar from '@/components/navbar/navbar';
+import Footer from '@/components/footer/footer';
+
+// Airtable API setup
+const AIRTABLE_API_URL = 'https://api.airtable.com/v0';
+const BASE_ID = 'appzGIJzpA2DdUULP'; 
+const GRADUATES_TABLE = 'Agencies'; 
+const INTERNSHIPS_TABLE = 'interns'; 
+const AIRTABLE_API_KEY = 'patiSLqkAqfA6qzug.3b7715f1f1b1faba7158f721e593b33bc2d7e6cf932af71cac52e0e832f0e17a'; 
+
+// Function to fetch Airtable data
+const fetchAirtableData = async (Interns) => {
+  try {
+    const response = await axios.get(`${AIRTABLE_API_URL}/${BASE_ID}/${Interns}`, {
+      headers: {
+        Authorization: `Bearer ${AIRTABLE_API_KEY}`,
+      },
+    });
+    return response.data.records;
+  } catch (error) {
+    console.error('Error fetching data from Airtable:', error);
+    return [];
+  }
+};
 
 export default function JobListingPage() {
-  const [activeView, setActiveView] = useState('graduates') // 'graduates' or 'internships'
+  const [activeView, setActiveView] = useState('Interns'); // 'graduates' or 'internships'
+  const [graduatesCount, setGraduatesCount] = useState(0);
+  const [internshipsCount, setInternshipsCount] = useState(0);
 
-  // Airtable embed URLs - replace internshipTableUrl with actual URL when available
-  const graduatesTableUrl = "https://airtable.com/embed/app9puVMCLbdwj4Dn/shrFKQl9cnRZflq1q?viewControls=on"
-  const internshipTableUrl = "https://airtable.com/embed/appzGIJzpA2DdUULP/shrY7FbIDMSrAqXGN?viewControls=on" // TODO: Replace with actual internship table URL
+  useEffect(() => {
+    // Fetch data for graduates table
+    const fetchGraduates = async () => {
+      const data = await fetchAirtableData(GRADUATES_TABLE);
+      setGraduatesCount(data.length);
+    };
+
+    // Fetch data for internships table
+    const fetchInternships = async () => {
+      const data = await fetchAirtableData(INTERNSHIPS_TABLE);
+      setInternshipsCount(data.length);
+      console.log("interns",data.length)
+    };
+
+    fetchGraduates();
+    fetchInternships();
+  }, []);
+
+  const graduatesTableUrl =
+    'https://airtable.com/embed/app9puVMCLbdwj4Dn/shrFKQl9cnRZflq1q?viewControls=on';
+  const internshipTableUrl =
+    'https://airtable.com/embed/appzGIJzpA2DdUULP/shrY7FbIDMSrAqXGN?viewControls=on'; // Replace with actual URL
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -45,16 +89,12 @@ export default function JobListingPage() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div className="bg-white p-8 rounded-lg shadow-md">
-              <h2 className="text-5xl font-bold text-emerald-500 mb-2">
-                10,790
-              </h2>
-              <p className="text-gray-600 font-medium">New Openings Today</p>
+              <h2 className="text-5xl font-bold text-emerald-500 mb-2">{graduatesCount}</h2>
+              <p className="text-gray-600 font-medium">Graduate Openings</p>
             </div>
             <div className="bg-white p-8 rounded-lg shadow-md">
-              <h2 className="text-5xl font-bold text-emerald-500 mb-2">
-                39,689
-              </h2>
-              <p className="text-gray-600 font-medium">Total Openings</p>
+              <h2 className="text-5xl font-bold text-emerald-500 mb-2">{internshipsCount}</h2>
+              <p className="text-gray-600 font-medium">Internship Openings</p>
             </div>
           </div>
         </div>
@@ -266,4 +306,3 @@ export default function JobListingPage() {
     </div>
   )
 }
-
