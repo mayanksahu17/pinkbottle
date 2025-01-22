@@ -1,10 +1,11 @@
 'use client'
 
-import { useEffect, useState } from 'react';
-import axios from 'axios';
-import { Clock } from 'lucide-react';
-import Navbar from '@/components/navbar/navbar';
-import Footer from '@/components/footer/footer';
+import { useEffect, useState } from "react"
+import axios from "axios"
+import { Clock, Search, Briefcase, BookOpen, ChevronRight } from "lucide-react"
+import Navbar from "@/components/navbar/navbar"
+import Footer from "@/components/footer/footer"
+
 
 // Airtable API setup
 const AIRTABLE_API_URL = 'https://api.airtable.com/v0';
@@ -29,109 +30,106 @@ const fetchAirtableData = async (Interns) => {
 };
 
 export default function JobListingPage() {
-  const [activeView, setActiveView] = useState('Interns'); // 'graduates' or 'internships'
+  const [activeView, setActiveView] = useState('graduates');
   const [graduatesCount, setGraduatesCount] = useState(0);
   const [internshipsCount, setInternshipsCount] = useState(0);
 
   useEffect(() => {
-    // Fetch data for graduates table
     const fetchGraduates = async () => {
       const data = await fetchAirtableData(GRADUATES_TABLE);
       setGraduatesCount(data.length);
     };
 
-    // Fetch data for internships table
     const fetchInternships = async () => {
       const data = await fetchAirtableData(INTERNSHIPS_TABLE);
       setInternshipsCount(data.length);
-      console.log("interns",data.length)
     };
 
     fetchGraduates();
     fetchInternships();
   }, []);
 
-  const graduatesTableUrl =
-    'https://airtable.com/embed/app9puVMCLbdwj4Dn/shrFKQl9cnRZflq1q?viewControls=on';
-  const internshipTableUrl =
-    'https://airtable.com/embed/appzGIJzpA2DdUULP/shrY7FbIDMSrAqXGN?viewControls=on'; // Replace with actual URL
+  const graduatesTableUrl = 'https://airtable.com/embed/app9puVMCLbdwj4Dn/shrFKQl9cnRZflq1q?viewControls=on';
+  const internshipTableUrl = 'https://airtable.com/embed/appzGIJzpA2DdUULP/shrY7FbIDMSrAqXGN?viewControls=on';
 
   return (
     <div className="min-h-screen bg-gray-50">
       <Navbar />
 
       {/* Hero Section */}
-      <section className="bg-white py-12 md:py-20">
+      <section className="bg-gradient-to-r from-emerald-500 to-teal-600 py-20 text-white">
         <div className="container mx-auto px-4">
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-            2025 Entry-Level Jobs for New Graduates | U.S.
+          <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight">
+            2025 Entry-Level Jobs for New Graduates
           </h1>
-          <p className="text-xl text-gray-600 mb-8 max-w-3xl">
-            This job repository delivers hourly updates on entry-level positions for new graduates with 0-2 years of experience across the United States. We aggregate opportunities from multiple sources, including 200,000+ company career sites and major job boards (LinkedIn, Indeed, Glassdoor, etc.). All listings are carefully verified - no fake jobs, just real opportunities to start your career!
+          <p className="text-xl mb-8 max-w-3xl opacity-90">
+            Discover hourly updates on entry-level positions for new graduates with 0-2 years of experience across the United States. Real opportunities to kickstart your career!
           </p>
           <div className="flex flex-wrap gap-4">
-            <button className="bg-emerald-500 hover:bg-emerald-600 text-white font-semibold py-2 px-6 rounded-lg transition-all">
-              The Top AI/ML Jobs from Trending AI Companies →
+            <button className="bg-white text-emerald-600 hover:bg-emerald-100 font-semibold py-3 px-6 rounded-lg transition-all flex items-center">
+              Top AI/ML Jobs <ChevronRight className="ml-2" />
             </button>
-            <button className="bg-emerald-500 hover:bg-emerald-600 text-white font-semibold py-2 px-6 rounded-lg transition-all">
-              The Ultimate 2025 U.S. Internships List →
+            <button className="bg-white text-emerald-600 hover:bg-emerald-100 font-semibold py-3 px-6 rounded-lg transition-all flex items-center">
+              2025 U.S. Internships <ChevronRight className="ml-2" />
             </button>
           </div>
         </div>
       </section>
 
       {/* Stats Section */}
-      <section className="py-8 bg-gray-100">
+      <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
-          <div className="flex items-center text-sm text-gray-600 mb-6">
-            <Clock className="w-4 h-4 mr-2" />
-            January 15, 2025, 08:08 PM PST
+          <div className="flex items-center justify-center text-sm text-gray-600 mb-8">
+            <Clock className="w-5 h-5 mr-2" />
+            Last updated: January 15, 2025, 08:08 PM PST
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="bg-white p-8 rounded-lg shadow-md">
-              <h2 className="text-5xl font-bold text-emerald-500 mb-2">{graduatesCount}</h2>
-              <p className="text-gray-600 font-medium">Graduate Openings</p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            <div className="bg-emerald-50 p-8 rounded-lg shadow-md text-center">
+              <Briefcase className="w-12 h-12 text-emerald-500 mx-auto mb-4" />
+              <h2 className="text-5xl font-bold text-emerald-600 mb-2">{graduatesCount}</h2>
+              <p className="text-gray-700 font-medium text-lg">Graduate Openings</p>
             </div>
-            <div className="bg-white p-8 rounded-lg shadow-md">
-              <h2 className="text-5xl font-bold text-emerald-500 mb-2">{internshipsCount}</h2>
-              <p className="text-gray-600 font-medium">Internship Openings</p>
+            <div className="bg-teal-50 p-8 rounded-lg shadow-md text-center">
+              <BookOpen className="w-12 h-12 text-teal-500 mx-auto mb-4" />
+              <h2 className="text-5xl font-bold text-teal-600 mb-2">{internshipsCount}</h2>
+              <p className="text-gray-700 font-medium text-lg">Internship Openings</p>
             </div>
           </div>
         </div>
       </section>
 
       {/* View Selection Section */}
-      <section className="py-8">
+      <section className="py-12 bg-gray-100">
         <div className="container mx-auto px-4">
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center max-w-3xl mx-auto">
             <button
               onClick={() => setActiveView('graduates')}
-              className={`px-8 py-4 rounded-lg text-lg font-semibold transition-all ${
+              className={`px-8 py-4 rounded-lg text-lg font-semibold transition-all flex-1 ${
                 activeView === 'graduates'
                   ? 'bg-emerald-500 text-white shadow-lg'
-                  : 'bg-white text-gray-700 hover:bg-gray-50'
+                  : 'bg-white text-gray-700 hover:bg-emerald-50'
               }`}
             >
-              Graduates (0-2 years of experience)
+              Graduates (0-2 years)
             </button>
             <button
               onClick={() => setActiveView('internships')}
-              className={`px-8 py-4 rounded-lg text-lg font-semibold transition-all ${
+              className={`px-8 py-4 rounded-lg text-lg font-semibold transition-all flex-1 ${
                 activeView === 'internships'
-                  ? 'bg-emerald-500 text-white shadow-lg'
-                  : 'bg-white text-gray-700 hover:bg-gray-50'
+                  ? 'bg-teal-500 text-white shadow-lg'
+                  : 'bg-white text-gray-700 hover:bg-teal-50'
               }`}
             >
-              Internships (for current students)
+              Internships
             </button>
           </div>
         </div>
       </section>
 
       {/* Airtable Embedded Section */}
-      <section className="py-8 bg-gray-100">
+      <section className="py-12 bg-white">
         <div className="container mx-auto px-4">
-          <div className="bg-white p-4 rounded-lg shadow-md">
+          <div className="bg-white p-4 rounded-lg shadow-lg">
             <iframe
               className="airtable-embed w-full h-[800px]"
               src={activeView === 'graduates' ? graduatesTableUrl : internshipTableUrl}
@@ -145,78 +143,54 @@ export default function JobListingPage() {
       </section>
 
       {/* Guide Section */}
-      <section className="py-12 bg-[#F8FAFC]">
+      <section className="py-20 bg-gray-50">
         <div className="container mx-auto px-4 max-w-5xl">
-          <div className="space-y-8">
-            <div>
-              <h2 className="text-3xl font-bold text-black mb-1 font-['SF Pro Display']">
-                Step by Step Guide to Securing
-              </h2>
-              <h2 className="text-3xl font-bold text-black mb-8 font-['SF Pro Display']">
-                Full time role in 2025
-              </h2>
-            </div>
-
+          <h2 className="text-4xl font-bold text-gray-800 mb-12 text-center">
+            Step-by-Step Guide to Securing a Full-Time Role in 2025
+          </h2>
+          <div className="space-y-12">
             {/* Step 1 */}
-            <div className="space-y-4">
-              <h3 className="text-[#00FF7F] text-xl font-semibold">Step 1: Identify the Goal</h3>
+            <div className="bg-white p-8 rounded-lg shadow-md">
+              <h3 className="text-2xl font-semibold text-emerald-600 mb-4">Step 1: Identify the Goal</h3>
               <div className="space-y-2">
-                <a href="#" className="block text-gray-600 hover:text-emerald-500">
-                  How to set clear career goals →
+                <a href="#" className="block text-gray-700 hover:text-emerald-500 transition-colors">
+                  • How to set clear career goals
                 </a>
-                <a href="#" className="block text-gray-600 hover:text-emerald-500">
-                  How To Choose a Career Path in 9 Steps (With Examples) →
+                <a href="#" className="block text-gray-700 hover:text-emerald-500 transition-colors">
+                  • How To Choose a Career Path in 9 Steps (With Examples)
                 </a>
               </div>
             </div>
 
             {/* Step 2 */}
-            <div className="space-y-4">
-              <h3 className="text-[#00FF7F] text-xl font-semibold">Step 2: Build the Foundation</h3>
+            <div className="bg-white p-8 rounded-lg shadow-md">
+              <h3 className="text-2xl font-semibold text-emerald-600 mb-4">Step 2: Build the Foundation</h3>
               <div className="grid md:grid-cols-2 gap-8">
-                <div className="space-y-4">
-                  <h4 className="font-semibold text-black">Prep Your Resume</h4>
+                <div>
+                  <h4 className="font-semibold text-gray-800 mb-2">Prep Your Resume</h4>
                   <div className="space-y-2">
-                    <a href="#" className="block text-gray-600 hover:text-emerald-500">
-                      How To Make a Comprehensive Resume (With Examples) →
+                    <a href="#" className="block text-gray-700 hover:text-emerald-500 transition-colors">
+                      • How To Make a Comprehensive Resume (With Examples)
                     </a>
-                    <a href="#" className="block text-gray-600 hover:text-emerald-500">
-                      How to Use Keywords and Phrases in Your Resume →
+                    <a href="#" className="block text-gray-700 hover:text-emerald-500 transition-colors">
+                      • How to Use Keywords and Phrases in Your Resume
                     </a>
-                    <a href="#" className="block text-gray-600 hover:text-emerald-500">
-                      Do NOT make these resume mistakes! →
-                    </a>
-                  </div>
-
-                  <h4 className="font-semibold text-black pt-4">Build Your LinkedIn Profile</h4>
-                  <div className="space-y-2">
-                    <a href="#" className="block text-gray-600 hover:text-emerald-500">
-                      How To Make A LinkedIn Profile →
-                    </a>
-                    <a href="#" className="block text-gray-600 hover:text-emerald-500">
-                      How to Write a Professional LinkedIn Summary →
-                    </a>
-                    <a href="#" className="block text-gray-600 hover:text-emerald-500">
-                      Make Yourself a LinkedIn Headshot (Tool!) →
+                    <a href="#" className="block text-gray-700 hover:text-emerald-500 transition-colors">
+                      • Do NOT make these resume mistakes!
                     </a>
                   </div>
                 </div>
-
-                <div className="space-y-4">
-                  <h4 className="font-semibold text-black">Prep Your Cover Letter</h4>
+                <div>
+                  <h4 className="font-semibold text-gray-800 mb-2">Build Your LinkedIn Profile</h4>
                   <div className="space-y-2">
-                    <a href="#" className="block text-gray-600 hover:text-emerald-500">
-                      How to write a Cover Letter (with example) →
+                    <a href="#" className="block text-gray-700 hover:text-emerald-500 transition-colors">
+                      • How To Make A LinkedIn Profile
                     </a>
-                  </div>
-
-                  <h4 className="font-semibold text-black pt-4">Attend Career Fair</h4>
-                  <div className="space-y-2">
-                    <a href="#" className="block text-gray-600 hover:text-emerald-500">
-                      What To Do at a Career Fair To Stand Out →
+                    <a href="#" className="block text-gray-700 hover:text-emerald-500 transition-colors">
+                      • How to Write a Professional LinkedIn Summary
                     </a>
-                    <a href="#" className="block text-gray-600 hover:text-emerald-500">
-                      Tips for a Successful Career Fair →
+                    <a href="#" className="block text-gray-700 hover:text-emerald-500 transition-colors">
+                      • Make Yourself a LinkedIn Headshot (Tool!)
                     </a>
                   </div>
                 </div>
@@ -224,38 +198,37 @@ export default function JobListingPage() {
             </div>
 
             {/* Step 3 */}
-            <div className="space-y-4">
-              <h3 className="text-[#00FF7F] text-xl font-semibold">Step 3: Take Action</h3>
+            <div className="bg-white p-8 rounded-lg shadow-md">
+              <h3 className="text-2xl font-semibold text-emerald-600 mb-4">Step 3: Take Action</h3>
               <div className="grid md:grid-cols-2 gap-8">
-                <div className="space-y-4">
-                  <h4 className="font-semibold text-black">Apply to New Grad Roles</h4>
+                <div>
+                  <h4 className="font-semibold text-gray-800 mb-2">Apply to New Grad Roles</h4>
                   <div className="space-y-2">
-                    <a href="#" className="block text-gray-600 hover:text-emerald-500">
-                      When? →
+                    <a href="#" className="block text-gray-700 hover:text-emerald-500 transition-colors">
+                      • When to Apply?
                     </a>
-                    <a href="#" className="block text-gray-600 hover:text-emerald-500">
-                      The Essential Guide to Industry Recruiting Timelines: 2024-2025 →
+                    <a href="#" className="block text-gray-700 hover:text-emerald-500 transition-colors">
+                      • The Essential Guide to Industry Recruiting Timelines: 2024-2025
                     </a>
-                    <a href="#" className="block text-gray-600 hover:text-emerald-500">
-                      Where? →
+                    <a href="#" className="block text-gray-700 hover:text-emerald-500 transition-colors">
+                      • Where to Find Jobs?
                     </a>
-                    <a href="#" className="block text-gray-600 hover:text-emerald-500">
-                      Need Help? →
+                    <a href="#" className="block text-gray-700 hover:text-emerald-500 transition-colors">
+                      • Need Help with Applications?
                     </a>
                   </div>
                 </div>
-
-                <div className="space-y-4">
-                  <h4 className="font-semibold text-black">Network</h4>
+                <div>
+                  <h4 className="font-semibold text-gray-800 mb-2">Network</h4>
                   <div className="space-y-2">
-                    <a href="#" className="block text-gray-600 hover:text-emerald-500">
-                      What is Networking? Why is it so important? →
+                    <a href="#" className="block text-gray-700 hover:text-emerald-500 transition-colors">
+                      • What is Networking? Why is it so important?
                     </a>
-                    <a href="#" className="block text-gray-600 hover:text-emerald-500">
-                      5 tips with sample scripts!—for cold outreach in your job search →
+                    <a href="#" className="block text-gray-700 hover:text-emerald-500 transition-colors">
+                      • 5 tips with sample scripts for cold outreach in your job search
                     </a>
-                    <a href="#" className="block text-gray-600 hover:text-emerald-500">
-                      What to say? →
+                    <a href="#" className="block text-gray-700 hover:text-emerald-500 transition-colors">
+                      • What to say in networking conversations?
                     </a>
                   </div>
                 </div>
@@ -263,35 +236,31 @@ export default function JobListingPage() {
             </div>
 
             {/* Step 4 */}
-            <div className="space-y-4">
-              <h3 className="text-[#00FF7F] text-xl font-semibold">Step 4: Show Yourself</h3>
+            <div className="bg-white p-8 rounded-lg shadow-md">
+              <h3 className="text-2xl font-semibold text-emerald-600 mb-4">Step 4: Show Yourself</h3>
               <div className="grid md:grid-cols-2 gap-8">
-                <div className="space-y-4">
-                  <h4 className="font-semibold text-black">Practice Interview Questions</h4>
+                <div>
+                  <h4 className="font-semibold text-gray-800 mb-2">Practice Interview Questions</h4>
                   <div className="space-y-2">
-                    <a href="#" className="block text-gray-600 hover:text-emerald-500">
-                      How to Prepare for a Job Interview →
+                    <a href="#" className="block text-gray-700 hover:text-emerald-500 transition-colors">
+                      • How to Prepare for a Job Interview
                     </a>
-                    <a href="#" className="block text-gray-600 hover:text-emerald-500">
-                      How To Use the STAR Interview Method →
+                    <a href="#" className="block text-gray-700 hover:text-emerald-500 transition-colors">
+                      • How To Use the STAR Interview Method
                     </a>
-                    <a href="#" className="block text-gray-600 hover:text-emerald-500">
-                      36 Questions To Ask in a Job Interview →
-                    </a>
-                    <a href="#" className="block text-gray-600 hover:text-emerald-500">
-                      How To Prepare for an Interview →
+                    <a href="#" className="block text-gray-700 hover:text-emerald-500 transition-colors">
+                      • 36 Questions To Ask in a Job Interview
                     </a>
                   </div>
                 </div>
-
-                <div className="space-y-4">
-                  <h4 className="font-semibold text-black">Interview Day</h4>
+                <div>
+                  <h4 className="font-semibold text-gray-800 mb-2">Interview Day</h4>
                   <div className="space-y-2">
-                    <a href="#" className="block text-gray-600 hover:text-emerald-500">
-                      Advice for the day before and day of interview →
+                    <a href="#" className="block text-gray-700 hover:text-emerald-500 transition-colors">
+                      • Advice for the day before and day of interview
                     </a>
-                    <a href="#" className="block text-gray-600 hover:text-emerald-500">
-                      Remember to write a Thank-You Email after the interview! →
+                    <a href="#" className="block text-gray-700 hover:text-emerald-500 transition-colors">
+                      • Remember to write a Thank-You Email after the interview!
                     </a>
                   </div>
                 </div>
@@ -301,7 +270,6 @@ export default function JobListingPage() {
         </div>
       </section>
 
-      {/* Footer Section */}
       <Footer/>
     </div>
   )
