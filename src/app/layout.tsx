@@ -1,8 +1,7 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import { ClerkProvider } from '@clerk/nextjs';
-import { useEffect } from 'react';
-import { injectSpeedInsights } from '@vercel/speed-insights'; 
+import { SpeedInsights } from '@vercel/speed-insights/next';
 
 export const metadata: Metadata = {
   title: 'HiredEasy',
@@ -31,11 +30,6 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  useEffect(() => {
-    // Initialize Vercel Speed Insights tracking
-    injectSpeedInsights();
-  }, []);
-
   return (
     <html lang="en">
       <head>
@@ -46,9 +40,8 @@ export default function RootLayout({
         />
       </head>
       <body>
-        <ClerkProvider>
-          {children}
-        </ClerkProvider>
+      <SpeedInsights />
+        <ClerkProvider>{children}</ClerkProvider>
       </body>
     </html>
   );
