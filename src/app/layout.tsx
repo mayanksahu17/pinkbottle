@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import { ClerkProvider } from '@clerk/nextjs';
+import { useEffect } from 'react';
+import { injectSpeedInsights } from '@vercel/speed-insights'; 
 
 export const metadata: Metadata = {
   title: 'HiredEasy',
@@ -20,7 +22,7 @@ const structuredData = {
   "potentialAction": {
     "@type": "Action",
     "name": "Schedule a Call",
-    "target": "https://apply.neetocal.com/meeting-with-nikhil-jain" 
+    "target": "https://apply.neetocal.com/meeting-with-nikhil-jain"
   }
 };
 
@@ -29,6 +31,11 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  useEffect(() => {
+    // Initialize Vercel Speed Insights tracking
+    injectSpeedInsights();
+  }, []);
+
   return (
     <html lang="en">
       <head>
@@ -39,7 +46,9 @@ export default function RootLayout({
         />
       </head>
       <body>
-        <ClerkProvider>{children}</ClerkProvider>
+        <ClerkProvider>
+          {children}
+        </ClerkProvider>
       </body>
     </html>
   );
