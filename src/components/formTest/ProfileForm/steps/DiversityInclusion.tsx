@@ -21,14 +21,14 @@ export default function DiversityInclusion({ form, profileIndex }: DiversityIncl
   ];
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 ">
       <div>
         <Label htmlFor={`profiles.${profileIndex}.diversityInclusion.gender`}>Gender</Label>
         <Select onValueChange={(value) => form.setValue(`profiles.${profileIndex}.diversityInclusion.gender`, value)}>
           <SelectTrigger>
             <SelectValue placeholder="Select gender" />
           </SelectTrigger>
-          <SelectContent className="bg-white">
+          <SelectContent className="bg-white z-[120]">
             {genderOptions.map((option) => (
               <SelectItem key={option} value={option}>
                 {option}
@@ -44,7 +44,7 @@ export default function DiversityInclusion({ form, profileIndex }: DiversityIncl
           <SelectTrigger>
             <SelectValue placeholder="Select pronouns" />
           </SelectTrigger>
-          <SelectContent className="bg-white">
+          <SelectContent className="bg-white z-[120]">
             {pronounOptions.map((option) => (
               <SelectItem key={option} value={option}>
                 {option}
@@ -60,7 +60,7 @@ export default function DiversityInclusion({ form, profileIndex }: DiversityIncl
           <SelectTrigger>
             <SelectValue placeholder="Select ethnicity" />
           </SelectTrigger>
-          <SelectContent className="bg-white">
+          <SelectContent className="bg-white z-[120]">
             {ethnicityOptions.map((option) => (
               <SelectItem key={option} value={option}>
                 {option}
