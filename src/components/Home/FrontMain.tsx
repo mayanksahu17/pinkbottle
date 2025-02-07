@@ -256,41 +256,41 @@ export default function Home() {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               transition={{ duration: 1, delay: 0.6 }}
             >
-              <div
-                className="relative w-[90vw] h-[70vh] flex items-center justify-center overflow-hidden bg-white mt-8"
-                style={{
-                  transform:
-                    'perspective(1000px) rotateX(5deg) rotateY(5deg) rotateZ(-10deg) skewX(10deg)',
-                  transformOrigin: 'center bottom',
-                  boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
-                  zIndex: 1,
-                  maskImage:
-                    'linear-gradient(to bottom, rgba(0, 0, 0, 1) 70%, rgba(0, 0, 0, 0) 100%)',
-                  WebkitMaskImage:
-                    'linear-gradient(to bottom, rgba(0, 0, 0, 1) 70%, rgba(0, 0, 0, 0) 100%)',
-                  maskSize: '100% 100%',
-                  WebkitMaskSize: '100% 100%',
-                }}
-              >
-                {/* Window controls */}
-                <div className="absolute top-0 left-0 right-0 h-8 bg-gray-100/80 backdrop-blur flex items-center gap-1.5 px-4 z-10">
-                  <div className="w-3 h-3 rounded-full bg-[#ff5f57]" />
-                  <div className="w-3 h-3 rounded-full bg-[#febc2e]" />
-                  <div className="w-3 h-3 rounded-full bg-[#28c840]" />
-                </div>
+        <div
+  className=" relative w-[90vw]  h-auto ml-10 md:ml-0   md:h-[70vh] flex items-center justify-center overflow-hidden bg-white mt-8"
+  style={{
+    transform:
+      'perspective(1000px) rotateX(5deg) rotateY(5deg) rotateZ(-10deg) skewX(10deg)',
+    transformOrigin: 'center bottom',
+    boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
+    zIndex: 1,
+    maskImage:
+      'linear-gradient(to bottom, rgba(0, 0, 0, 1) 70%, rgba(0, 0, 0, 0) 100%)',
+    WebkitMaskImage:
+      'linear-gradient(to bottom, rgba(0, 0, 0, 1) 70%, rgba(0, 0, 0, 0) 100%)',
+    maskSize: '100% 100%',
+    WebkitMaskSize: '100% 100%',
+  }}
+>
+  {/* Window controls */}
+  <div className="absolute top-0 left-0 right-0 h-8 bg-gray-100/80 backdrop-blur flex items-center gap-1.5 px-4 z-10">
+    <div className="w-3 h-3 rounded-full bg-[#ff5f57]" />
+    <div className="w-3 h-3 rounded-full bg-[#febc2e]" />
+    <div className="w-3 h-3 rounded-full bg-[#28c840]" />
+  </div>
 
-                <Image
-                  src="/LinkedinJobs.png"
-                  alt="Application Interface"
-                  fill
-                  className="object-cover"
-                  style={{
-                    width: '100%',
-                    height: '100%',
-                    objectFit: 'cover',
-                  }}
-                />
-              </div>
+  <Image
+    src="/LinkedinJobs.png"
+    alt="Application Interface"
+    width={1920} // Desktop width
+    height={1080} // Desktop height
+    className="w-full h-auto object-cover md:object-contain"
+  />
+</div>
+
+
+
+
               {/* Subtle gradient background */}
               <div className="absolute -inset-4 -z-10 bg-gradient-to-r from-blue-500/20 to-green-500/20 opacity-20 blur-3xl" />
             </motion.div>

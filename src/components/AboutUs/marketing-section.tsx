@@ -61,7 +61,7 @@ export default function MarketingSection() {
                 Get started today with Us
               </h1>
               <p className="text-gray-400 text-lg">
-              HiredEasy offers the best-in-class job opportunities to jumpstart your career. Join 27+ other professionals to get started!.
+              HiredEasy offers the best-in-class job opportunities to jumpstart your career. Join 27+ other professionals to get started!
               </p>
             </div>
 
@@ -77,15 +77,17 @@ export default function MarketingSection() {
                   ))}
                 </div>
               </div>
-              <p className="text-gray-400">Trusted by 1,000+ students</p>
+              <p className="text-gray-400 text-center sm:text-left">
+                Trusted by 1,000+ students
+              </p>
             </div>
           </div>
 
           {/* CTA Button */}
-          <div className="flex items-center justify-end md:justify-end w-full md:w-auto mt-8 md:mt-0">
+          <div className="flex w-full md:w-auto justify-center md:justify-end md:mt-0">
             <Link 
               href="https://apply.neetocal.com/meeting-with-nikhil-jain"
-              className="inline-block bg-[#40E0D0]  hover:bg-[#3CC8BA] text-black font-semibold px-8 py-4 rounded-lg transition-colors duration-200 text-lg"
+              className="inline-block bg-[#40E0D0] hover:bg-[#3CC8BA] text-black font-semibold px-8 py-4 rounded-lg transition-colors duration-200 text-lg"
             >
               Book a demo →
             </Link>

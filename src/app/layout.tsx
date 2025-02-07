@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import { ClerkProvider } from '@clerk/nextjs';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 
 export const metadata: Metadata = {
   title: 'HiredEasy',
@@ -20,7 +21,7 @@ const structuredData = {
   "potentialAction": {
     "@type": "Action",
     "name": "Schedule a Call",
-    "target": "https://apply.neetocal.com/meeting-with-nikhil-jain" 
+    "target": "https://apply.neetocal.com/meeting-with-nikhil-jain"
   }
 };
 
@@ -39,6 +40,7 @@ export default function RootLayout({
         />
       </head>
       <body>
+      <SpeedInsights />
         <ClerkProvider>{children}</ClerkProvider>
       </body>
     </html>

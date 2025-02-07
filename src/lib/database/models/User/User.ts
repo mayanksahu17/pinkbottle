@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import { ProfileSchema } from '../Profile/profile';
+import { IUser } from '@/lib/types';
 
 const userSchema = new mongoose.Schema({
   clerkId: {
@@ -34,9 +35,27 @@ const userSchema = new mongoose.Schema({
       location: String,
     },
   ],
-  profiles: [ProfileSchema], // Use the centralized ProfileSchema
+  resume: {
+    type: String,
+  },
+  coverLetter: {
+    type: String,
+  },
+  status : {
+    type : String,
+    enum : ['active', 'inactive','FT'],
+    default : 'inactive'
+  },
+  isRenewal : {
+    type : Boolean,
+    default : false
+  },
+  plan : {
+  type : String,
+  default : 'none'
+  }
 });
 
-const User = mongoose.models?.User || mongoose.model('User', userSchema);
-
+const User =
+  mongoose.models?.User || mongoose.model<IUser>('User', userSchema, 'users');
 export default User;

@@ -11,44 +11,27 @@ interface Job {
 }
 
 interface JobTableProps {
-  jobData?: Job[]; // Optional to accommodate both fetched and passed data
+  jobData?: Job[];
+  onJobsUpdated: () => void;
 }
 
-const SavedJobsTable: React.FC<JobTableProps> = ({ jobData = [] }) => {
-  //const [jobs, setJobs] = useState<Job[]>(jobData);//use this later
-  const [jobs, setJobs] = useState<Job[]>(Array.isArray(jobData) ? jobData : []);//
+const SavedJobsTable: React.FC<JobTableProps> = ({ jobData = [], onJobsUpdated }) => {
+  const [jobs, setJobs] = useState<Job[]>(Array.isArray(jobData) ? jobData : []);
   const [currentPage, setCurrentPage] = useState(1);
   const [jobsPerPage, setJobsPerPage] = useState(10);
   const [searchTerm, setSearchTerm] = useState('');
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
-
- /* useEffect(() => {
-    // Fetch jobs only if jobData is not passed or is empty
-    if (jobData.length === 0) {
-      async function fetchJobs() {
-        try {
-          const response = await fetch('/api/savedjobs'); // This will default to GET method
-          const data = await response.json();
-          setJobs(data);
-          console.log("data of saved jobs :",data)
-          console.log("data of saved jobs data:",jobData)
-        } catch (error) {
-          console.error('Failed to fetch jobs:', error);
-        }
-      }
-
-      fetchJobs();
-    }
-  }, [jobData]);*/
+  const [loading, setLoading] = useState(false); // New state for loading
 
   useEffect(() => {
     async function fetchJobs() {
       try {
+        setLoading(true); // Set loading to true when data fetching starts
         const response = await fetch('/api/savedjobs');
         const data = await response.json();
-        console.log('API Response Data:', data);
-        if (Array.isArray(data)) {
-          setJobs(data);
+        if (Array.isArray(data.jobs)) {
+          setJobs(data.jobs);
+          onJobsUpdated(); // Call this to update the parent component
         } else {
           console.error('Unexpected response format:', data);
           setJobs([]);
@@ -56,11 +39,17 @@ const SavedJobsTable: React.FC<JobTableProps> = ({ jobData = [] }) => {
       } catch (error) {
         console.error('Failed to fetch jobs:', error);
         setJobs([]);
+      } finally {
+        setLoading(false); // Set loading to false once fetching is done
       }
     }
 
-    fetchJobs();
-  }, []); // Fetch jobs on initial render only
+    if (jobData.length === 0) {
+      fetchJobs();
+    } else {
+      setJobs(jobData);
+    }
+  }, [jobData, onJobsUpdated]);
 
   const filteredJobs = useMemo(
     () =>
@@ -90,6 +79,10 @@ const SavedJobsTable: React.FC<JobTableProps> = ({ jobData = [] }) => {
   const formatDate = (dateString: string) =>
     new Date(dateString).toLocaleDateString();
 
+  if (loading) {
+    return <div className="text-center p-6">Loading jobs, please wait...</div>; // Display a loading text
+  }
+
   return (
     <div className="flex flex-col w-full space-y-6 bg-white border border-gray-200 rounded-lg p-4 md:p-6 shadow-lg">
       {/* Search Bar */}
@@ -102,22 +95,25 @@ const SavedJobsTable: React.FC<JobTableProps> = ({ jobData = [] }) => {
           className="p-3 w-full max-w-md border rounded shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
       </div>
-  
+
       {/* Jobs Table */}
       <div className="overflow-x-auto bg-white rounded-md shadow-lg">
-        <table className="w-full text-sm text-left text-gray-500" style={{ minWidth: '600px' }}>
+        <table className="w-full text-sm text-left text-gray-500" style={{ tableLayout: 'fixed', minWidth: '600px' }}>
           <thead className="bg-gray-100 text-xs uppercase text-gray-700">
             <tr>
               <th className="p-4 w-12">
                 <input type="checkbox" />
               </th>
-              <th className="p-4">Title</th>
-              <th className="p-4">Position</th>
-              <th className="p-4">Location</th>
-              <th className="p-4 cursor-pointer" onClick={() => setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc')}>
+              <th className="p-4 w-40">Title</th>
+              <th className="p-4 w-40">Position</th>
+              <th className="p-4 w-40">Location</th>
+              <th
+                className="p-4 w-32 cursor-pointer"
+                onClick={() => setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc')}
+              >
                 Date <span>{sortOrder === 'asc' ? '⇅' : '⇅'}</span>
               </th>
-              <th className="p-4">Status</th>
+              <th className="p-4 w-32">Status</th>
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
@@ -173,13 +169,13 @@ const SavedJobsTable: React.FC<JobTableProps> = ({ jobData = [] }) => {
           </tbody>
         </table>
       </div>
-  
+
       {/* Footer Controls */}
       <div className="mt-4 flex flex-col space-y-4 sm:space-y-0 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex flex-col space-y-2 sm:space-y-0 sm:flex-row sm:items-center sm:space-x-4">
           <span className="text-sm text-gray-700">{filteredJobs.length} result(s) found</span>
         </div>
-  
+
         <div className="flex flex-col space-y-2 sm:space-y-0 sm:flex-row sm:items-center sm:space-x-4">
           <div className="flex items-center space-x-2">
             <label className="text-sm text-gray-700">Rows per page:</label>
@@ -196,7 +192,7 @@ const SavedJobsTable: React.FC<JobTableProps> = ({ jobData = [] }) => {
               <option value={50}>50</option>
             </select>
           </div>
-  
+
           <div className="flex items-center justify-center space-x-2">
             <button
               onClick={() => setCurrentPage(currentPage - 1)}
@@ -220,7 +216,6 @@ const SavedJobsTable: React.FC<JobTableProps> = ({ jobData = [] }) => {
       </div>
     </div>
   );
-    
 };
 
 export default SavedJobsTable;

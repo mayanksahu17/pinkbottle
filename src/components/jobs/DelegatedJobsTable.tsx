@@ -16,7 +16,12 @@ interface DelegatedJobsTableProps {
   isLoading: boolean;
 }
 
-const DelegatedJobsTable: React.FC<DelegatedJobsTableProps> = ({ jobData, onDeleteJobs, onJobsUpdated, isLoading }) => {
+const DelegatedJobsTable: React.FC<DelegatedJobsTableProps> = ({
+  jobData,
+  onDeleteJobs,
+  onJobsUpdated,
+  isLoading,
+}) => {
   const [jobs, setJobs] = useState<Job[]>([]);
   const [selectedJobs, setSelectedJobs] = useState<string[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -50,31 +55,35 @@ const DelegatedJobsTable: React.FC<DelegatedJobsTableProps> = ({ jobData, onDele
     return isNaN(date.getTime()) ? 'N/A' : date.toLocaleDateString();
   }, []);
 
-  const handleSelectAll = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.checked) {
-      const allJobIds = currentJobs.map((job) => job._id || `${job.title}-${job.company}`);
-      setSelectedJobs(allJobIds);
-    } else {
-      setSelectedJobs([]);
-    }
-  }, [currentJobs]);
+  const handleSelectAll = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      if (e.target.checked) {
+        const allJobIds = currentJobs.map((job) => job._id || `${job.title}-${job.company}`);
+        setSelectedJobs(allJobIds);
+      } else {
+        setSelectedJobs([]);
+      }
+    },
+    [currentJobs]
+  );
 
-  const handleSelectRow = useCallback((e: React.ChangeEvent<HTMLInputElement>, job: Job) => {
-    const jobId = job._id || `${job.title}-${job.company}`;
-    if (e.target.checked) {
-      setSelectedJobs((prevSelectedJobs) => [...prevSelectedJobs, jobId]);
-    } else {
-      setSelectedJobs((prevSelectedJobs) => prevSelectedJobs.filter((id) => id !== jobId));
-    }
-  }, []);
+  const handleSelectRow = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>, job: Job) => {
+      const jobId = job._id || `${job.title}-${job.company}`;
+      if (e.target.checked) {
+        setSelectedJobs((prevSelectedJobs) => [...prevSelectedJobs, jobId]);
+      } else {
+        setSelectedJobs((prevSelectedJobs) => prevSelectedJobs.filter((id) => id !== jobId));
+      }
+    },
+    []
+  );
 
   const handleDelete = useCallback(async () => {
     try {
       await onDeleteJobs(selectedJobs);
-      setJobs((prevJobs) => 
-        prevJobs.filter((job) => 
-          !selectedJobs.includes(job._id || `${job.title}-${job.company}`)
-        )
+      setJobs((prevJobs) =>
+        prevJobs.filter((job) => !selectedJobs.includes(job._id || `${job.title}-${job.company}`))
       );
       setSelectedJobs([]);
       onJobsUpdated();
@@ -110,7 +119,7 @@ const DelegatedJobsTable: React.FC<DelegatedJobsTableProps> = ({ jobData, onDele
         <table className="w-full text-sm text-left text-gray-500" style={{ minWidth: '600px' }}>
           <thead className="bg-gray-100 text-xs uppercase text-gray-700">
             <tr>
-              <th className="p-4 w-12">
+              <th style={{ width: '5%' }} className="p-4">
                 <input
                   type="checkbox"
                   checked={selectedJobs.length === currentJobs.length && currentJobs.length > 0}
@@ -118,11 +127,11 @@ const DelegatedJobsTable: React.FC<DelegatedJobsTableProps> = ({ jobData, onDele
                   className="h-4 w-4 rounded border-gray-300"
                 />
               </th>
-              <th className="p-4">Title</th>
-              <th className="p-4">Company</th>
-              <th className="p-4">Location</th>
-              <th className="p-4">Date</th>
-              <th className="p-4">Link</th>
+              <th style={{ width: '30%' }} className="p-4">Title</th>
+              <th style={{ width: '20%' }} className="p-4">Company</th>
+              <th style={{ width: '20%' }} className="p-4">Location</th>
+              <th style={{ width: '15%' }} className="p-4">Date</th>
+              <th style={{ width: '10%' }} className="p-4">Link</th>
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
@@ -182,7 +191,7 @@ const DelegatedJobsTable: React.FC<DelegatedJobsTableProps> = ({ jobData, onDele
             🗑️ Delete Selected
           </button>
         </div>
-        
+
         <div className="flex flex-col space-y-2 sm:space-y-0 sm:flex-row sm:items-center sm:space-x-4">
           <div className="flex items-center space-x-2">
             <label className="text-sm text-gray-700">Rows per page:</label>
@@ -199,7 +208,7 @@ const DelegatedJobsTable: React.FC<DelegatedJobsTableProps> = ({ jobData, onDele
               <option value={50}>50</option>
             </select>
           </div>
-          
+
           <div className="flex items-center justify-center space-x-2">
             <button
               onClick={() => setCurrentPage(currentPage - 1)}
@@ -209,11 +218,11 @@ const DelegatedJobsTable: React.FC<DelegatedJobsTableProps> = ({ jobData, onDele
               &laquo;
             </button>
             <span className="relative inline-flex items-center px-4 py-2 rounded-md border border-gray-300 bg-white text-sm font-medium text-gray-700">
-              Page {currentPage} of {pageCount || 1}
+              Page {currentPage} of {pageCount}
             </span>
             <button
               onClick={() => setCurrentPage(currentPage + 1)}
-              disabled={currentPage === pageCount || pageCount === 0}
+              disabled={currentPage >= pageCount}
               className="relative inline-flex items-center px-2 py-2 rounded-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               &raquo;
