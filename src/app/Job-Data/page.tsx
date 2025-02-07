@@ -49,8 +49,8 @@ export default function JobListingPage() {
     fetchInternships();
   }, []);
 
-  const graduatesTableUrl = 'https://airtable.com/embed/app9puVMCLbdwj4Dn/shrFKQl9cnRZflq1q?viewControls=on';
-  const internshipTableUrl = 'https://airtable.com/embed/appzGIJzpA2DdUULP/shrY7FbIDMSrAqXGN?viewControls=on';
+  const graduatesTableUrl = 'https://airtable.com/embed/app80LbegGdEENGZE/shrabnfURYxOUkZTn';
+  const internshipTableUrl = 'https://airtable.com/embed/app80LbegGdEENGZE/shrabnfURYxOUkZTn';
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -58,22 +58,24 @@ export default function JobListingPage() {
 
       {/* Hero Section */}
       <section className="bg-gradient-to-r from-emerald-500 to-teal-600 py-20 text-white">
-        <div className="container mx-auto px-4">
-          <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight">
-            2025 Entry-Level Jobs for New Graduates
-          </h1>
-          <p className="text-xl mb-8 max-w-3xl opacity-90">
-            Discover hourly updates on entry-level positions for new graduates with 0-2 years of experience across the United States. Real opportunities to kickstart your career!
-          </p>
-          <div className="flex flex-wrap gap-4">
-            <button className="bg-white text-emerald-600 hover:bg-emerald-100 font-semibold py-3 px-6 rounded-lg transition-all flex items-center">
-              Top AI/ML Jobs <ChevronRight className="ml-2" />
-            </button>
-            <button className="bg-white text-emerald-600 hover:bg-emerald-100 font-semibold py-3 px-6 rounded-lg transition-all flex items-center">
-              2025 U.S. Internships <ChevronRight className="ml-2" />
-            </button>
-          </div>
-        </div>
+      <div className="container mx-auto px-6 text-center">
+  <h1 className="text-4xl md:text-6xl font-extrabold mb-6 leading-tight mt-20">
+    2025 Entry-Level Jobs for New Graduates
+  </h1>
+  <p className="text-lg md:text-xl mb-10 max-w-3xl mx-auto opacity-90">
+    Stay updated with hourly job listings for new graduates (0-2 years experience) across the U.S. 
+    Find real opportunities to launch your career!
+  </p>
+  <div className="flex flex-col sm:flex-row justify-center gap-4">
+    <button className="bg-white shadow-lg text-emerald-600 hover:bg-emerald-100 font-semibold py-3 px-8 rounded-xl transition-all flex items-center justify-center border border-emerald-300">
+      Top AI/ML Jobs <ChevronRight className="ml-2" />
+    </button>
+    <button className="bg-white shadow-lg text-emerald-600 hover:bg-emerald-100 font-semibold py-3 px-8 rounded-xl transition-all flex items-center justify-center border border-emerald-300">
+      2025 U.S. Internships <ChevronRight className="ml-2" />
+    </button>
+  </div>
+</div>
+
       </section>
 
       {/* Stats Section */}

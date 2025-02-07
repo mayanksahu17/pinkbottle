@@ -54,7 +54,7 @@ const Navbar = () => {
   const handleClose = () => setShowForm(false);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-[100]">
+    <header className="fixed top-0 left-0 right-0 z-[100] mt-4">
       <div className="max-w-5xl mx-auto px-4">
         {/* Navbar */}
         <div
@@ -87,7 +87,7 @@ const Navbar = () => {
             <NavLink href="/pricing">Pricing</NavLink>
             <Link href="/Job-Data" passHref>
               <span className="text-sm font-medium bg-green-600 text-white py-1.5 px-4 rounded-full hover:bg-green-700 cursor-pointer transition-colors duration-200">
-                Job-Data
+                New Grad Jobs
               </span>
             </Link>
           </nav>

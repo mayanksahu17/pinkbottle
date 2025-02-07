@@ -23,6 +23,7 @@ const myMiddleware = authMiddleware({
     '/sitemap.xml',
     '/robots.txt',
     '/Home/',
+    '/Job-Data',
 
   ],
   ignoredRoutes: [
