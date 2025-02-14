@@ -35,6 +35,7 @@ const userSchema = new mongoose.Schema({
       location: String,
     },
   ],
+  profiles: [ProfileSchema],
   resume: {
     type: String,
   },

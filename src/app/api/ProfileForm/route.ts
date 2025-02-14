@@ -3,10 +3,13 @@ import { clerkClient } from '@clerk/nextjs/server';
 import { NextResponse } from 'next/server';
 import { dbConnect } from '@/lib/database/mongodb';
 import User from '@/lib/database/models/User/User';
+import { log } from 'node:console';
 
 export async function POST(req: Request) {
   try {
     const { userId } = auth();
+    console.log(userId);
+    
     if (!userId) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
@@ -80,14 +83,24 @@ export async function POST(req: Request) {
     await dbConnect();
 
     let user = await User.findOne({ clerkId: userId });
+
     if (!user) {
-      user = new User({
-        clerkId: userId,
-        email: clerkUser.emailAddresses[0]?.emailAddress,
-        firstName: clerkUser.firstName,
-        lastName: clerkUser.lastName,
-        profiles: [],
-      });
+      const userEmail = clerkUser.emailAddresses[0]?.emailAddress;
+      user = await User.findOne({ email: userEmail });
+      
+      // If user exists with email but different clerkId, update the clerkId
+      if (user) {
+        user.clerkId = userId;
+      } else {
+        // Only create new user if no user exists with either clerkId or email
+        user = new User({
+          clerkId: userId,
+          email: userEmail,
+          firstName: clerkUser.firstName,
+          lastName: clerkUser.lastName,
+          profiles: [],
+        });
+      }
     }
 
     if (!Array.isArray(user.profiles)) {
@@ -112,9 +125,21 @@ export async function POST(req: Request) {
     } else {
       user.profiles.push(profiles[0]);
     }
+    console.log('Modified user document:', JSON.stringify(user.toObject(), null, 2));
 
-    await user.save();
 
+try {
+      const savedUser = await user.save();
+      console.log('Save operation completed');
+      console.log('Saved user document:', JSON.stringify(savedUser.toObject(), null, 2));
+  
+} catch (saveError) {
+  console.error('Save operation failed:', saveError);
+  return NextResponse.json(
+    { error: 'Failed to save user data', details: saveError.message },
+    { status: 500 }
+  );
+}
     return NextResponse.json(
       {
         message: 'Profile updated successfully',
